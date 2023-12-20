@@ -25,7 +25,7 @@ class Main extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       title: strAppName,
-      defaultTransition: Transition.cupertino,
+      defaultTransition: Transition.rightToLeftWithFade,
       transitionDuration: const Duration(milliseconds: 350),
       initialBinding: MyBindings(),
       scrollBehavior: MyBehavior(),
