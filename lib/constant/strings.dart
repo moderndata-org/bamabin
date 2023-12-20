@@ -1,4 +1,4 @@
-String strAppName = 'Smart Simote Multi';
+String strAppName = 'BamaBin';
 String strIncreaseCharge = 'افزایش شارژ';
 String strDirectCharge = 'شارژ مستقیم(مخصوص سیمکارت اعتباری):';
 String strSearch = 'جستجو...';

@@ -39,7 +39,7 @@ class SaveTextFieldWidget extends StatelessWidget {
           children: [
             CupertinoButton(
               padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-              color: btnColor ?? cDarkGrey,
+              color: btnColor,
               onPressed: onClick,
               child: MyText(
                 text: btnText,
