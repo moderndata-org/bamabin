@@ -26,10 +26,6 @@ class MainScreen extends GetView<PublicController> {
         height: Get.height,
         child: NotificationListener<ScrollEndNotification>(
             onNotification: (notification) {
-              // print('notification.scrollDelta');
-              // print(notification.dragDetails);
-              // print('notification.metrics');
-              // print(notification.metrics);
               return true;
             },
             child: ListView(
