@@ -110,7 +110,7 @@ class SigninScreen extends GetView<AuthController> {
               MyTextButton(
                 size: Size(Get.width * .8, 55),
                 bgColor: cAccent,
-                onTap: () {},
+                onTap: () =>Get.toNamed('/main'),
                 child: MyText(
                   text: 'ورود',
                   color: cB,

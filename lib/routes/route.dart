@@ -3,6 +3,7 @@ import 'package:bamabin/screens/signin_screen.dart';
 import 'package:bamabin/screens/signup_screen.dart';
 import 'package:get/get.dart';
 
+import '../screens/main_screen.dart';
 import '../screens/splash_screen.dart';
 
 class Routes {
@@ -12,5 +13,6 @@ class Routes {
         GetPage(
             name: '/forgetpassword', page: () => const ForgetPasswordScreen()),
         GetPage(name: '/signup', page: () => const SignupScreen()),
+        GetPage(name: '/main', page: () => const MainScreen()),
       ];
 }
