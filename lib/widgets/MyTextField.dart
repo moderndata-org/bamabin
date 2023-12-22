@@ -1,3 +1,4 @@
+import 'package:bamabin/constant/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -18,11 +19,21 @@ class MyTextField extends StatelessWidget {
     this.isEnabled,
     this.hintColor,
     this.hintFontSize,
+    this.width,
+    this.height,
+    this.prefixIcon,
+    this.hasBorder,
+    this.paddingHorizontal,
+    this.paddingVertical,
     super.key,
   });
   final String hint;
   final double? borderRadius;
   final double? hintFontSize;
+  final double? width;
+  final double? height;
+  final double? paddingHorizontal;
+  final double? paddingVertical;
   final TextEditingController controller;
   final TextInputType? inputType;
   final int? length;
@@ -34,33 +45,46 @@ class MyTextField extends StatelessWidget {
   final TextDirection? textDirection;
   final bool? isPassword;
   final bool? isEnabled;
+  final bool? hasBorder;
   final Color? hintColor;
+  final Widget? prefixIcon;
 
   @override
   Widget build(BuildContext context) {
-    return TextField(
-      enabled: isEnabled,
-      obscureText: isPassword == true ? true : false,
-      focusNode: focusNode,
-      textInputAction: action,
-      maxLines: maxLines ?? 1,
-      textDirection: textDirection ?? TextDirection.rtl,
-      keyboardType: inputType,
-      controller: controller,
-      onChanged: onchangedAction,
-      textAlign: textAlign ?? TextAlign.right,
-      inputFormatters: addlist(length, inputType),
-      decoration: InputDecoration(
-        isCollapsed: true,
-        contentPadding:
-            const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-        hintText: hint,
-        hintStyle: TextStyle(
-            color: hintColor ?? Color.fromARGB(255, 185, 185, 185),
-            fontSize: hintFontSize ?? 13),
-        enabledBorder: InputBorder.none,
-        focusedBorder: InputBorder.none,
-        disabledBorder: InputBorder.none,
+    return SizedBox(
+      width: width,
+      height: height,
+      child: TextField(
+        enabled: isEnabled,
+        obscureText: isPassword == true ? true : false,
+        focusNode: focusNode,
+        textInputAction: action,
+        maxLines: maxLines ?? 1,
+        textDirection: textDirection ?? TextDirection.rtl,
+        keyboardType: inputType,
+        controller: controller,
+        onChanged: onchangedAction,
+        textAlign: textAlign ?? TextAlign.right,
+        inputFormatters: addlist(length, inputType),
+        decoration: InputDecoration(
+          fillColor: cBgTextfield,
+          prefixIcon: prefixIcon,
+          filled: true,
+          isCollapsed: true,
+          contentPadding: EdgeInsets.symmetric(
+              horizontal: paddingHorizontal ?? 20,
+              vertical: paddingVertical ?? 15),
+          hintText: hint,
+          hintStyle: TextStyle(
+              color: hintColor ?? cHint, fontSize: hintFontSize ?? 13),
+          enabledBorder: hasBorder == true
+              ? InputBorder.none
+              : OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(borderRadius ?? 15),
+                  borderSide: BorderSide(color: cStrokeGrey, width: 1)),
+          focusedBorder: InputBorder.none,
+          disabledBorder: InputBorder.none,
+        ),
       ),
     );
   }

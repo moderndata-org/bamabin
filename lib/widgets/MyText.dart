@@ -41,7 +41,7 @@ class MyText extends StatelessWidget {
             fontWeight: fontWeight,
             overflow: textOverflow,
             color: color ?? cW,
-            fontSize: size ?? 15,
+            fontSize: size ?? 13,
             shadows: shadows,
             decoration: textDecoration,
             fontFamily: 'iransans'),

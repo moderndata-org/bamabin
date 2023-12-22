@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:bamabin/constant/colors.dart';
 import 'package:bamabin/widgets/MyCircularProgress.dart';
 import 'package:bamabin/widgets/MyText.dart';
@@ -9,6 +11,9 @@ class SplashScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Timer(Duration(seconds: 2), () {
+      Get.offNamed('/signin');
+    });
     return SafeArea(
         child: Scaffold(
       backgroundColor: cPrimary,
