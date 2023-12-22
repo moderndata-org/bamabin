@@ -121,6 +121,7 @@ class MainScreen extends GetView<PublicController> {
                           isSerial: true,
                           year: '1920',
                         ),
+
                         MovieItemWidget(
                           title: 'Forrest Gump',
                           isSerial: false,
