@@ -128,7 +128,9 @@ class SigninScreen extends GetView<AuthController> {
                     Expanded(
                       child: MyTextButton(
                         size: Size.fromHeight(55),
-                        onTap: () {},
+                        onTap: () {
+                          Get.toNamed("/signin-qrcode");
+                        },
                         bgColor: Colors.transparent,
                         strokeColor: cAccent,
                         child: Row(
