@@ -30,7 +30,7 @@ class Main extends StatelessWidget {
       initialBinding: MyBindings(),
       scrollBehavior: MyBehavior(),
       getPages: Routes.page,
-      initialRoute: '/signin-qrcode',
+      initialRoute: '/splash',
       theme: ThemeData(fontFamily: "iransans"),
       debugShowCheckedModeBanner: false,
     );
