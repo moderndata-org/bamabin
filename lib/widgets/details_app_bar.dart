@@ -18,7 +18,7 @@ class DetailsAppBar extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
         leftWidget!,
-        Text("$title",style: TextStyle(color: cAccent),),
+        Text("$title",style: TextStyle(color: cAccent,fontSize: 16),),
         rightWidget!
 
       ],),
