@@ -1,58 +1,46 @@
-
+import 'package:bamabin/constant/colors.dart';
+import 'package:bamabin/widgets/MyText.dart';
+import 'package:bamabin/widgets/MyTextButton.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../constant/colors.dart';
-import '../controller/public_controller.dart';
-import 'MyTextButton.dart';
-
-class CustomAppBar extends GetView<PublicController>
-    implements PreferredSizeWidget {
-  const CustomAppBar({
-    super.key,
-  });
+class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
+  const CustomAppbar({this.title, this.iconColor, this.icon, super.key});
+  final String? title;
+  final IconData? icon;
+  final Color? iconColor;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-        alignment: Alignment.center,
-        height: 60,
-        child: Row(
-          textDirection: TextDirection.rtl,
-          children: [
-            SizedBox(
-              width: 10,
-            ),
-            MyTextButton(
-                onTap: () {},
-                bgColor: cPrimaryDark,
-                size: Size(40, 40),
-                child: Icon(
-                  Icons.menu_rounded,
-                  color: cGrey,
-                )),
-            Spacer(),
-            Obx(() => controller.bottomIndex == 0
-                ? SizedBox(
-                height: 50,
-                child: Image.asset('assets/images/ic_logotype.png'))
-                : SizedBox()),
-            Spacer(),
-            MyTextButton(
-                onTap: () {},
-                bgColor: cPrimaryDark,
-                size: Size(40, 40),
-                child: Icon(
-                  Icons.manage_search,
-                  color: cGrey,
-                )),
-            SizedBox(
-              width: 10,
-            ),
-          ],
-        ));
+      color: cBgCustomAppbar,
+      padding: EdgeInsets.symmetric(horizontal: 20),
+      child: Row(
+        textDirection: TextDirection.rtl,
+        children: [
+          MyTextButton(
+              onTap: () {},
+              size: Size(40, 40),
+              child: Icon(
+            icon,
+            color: iconColor ?? cY,
+          )),
+          Spacer(),
+          MyText(text: '$title',color: cY,),
+          Spacer(),
+          MyTextButton(
+              onTap: () {},
+              size: Size(40, 40),
+              child: Icon(
+                Icons.menu_rounded,
+                color: cGrey,
+              )),
+        ],
+      ),
+    );
   }
 
   @override
+  // TODO: implement preferredSize
   Size get preferredSize => Size(Get.width, 60);
 }

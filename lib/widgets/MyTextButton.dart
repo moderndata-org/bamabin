@@ -33,7 +33,7 @@ class MyTextButton extends StatelessWidget {
           foregroundColor: fgColor ?? cW.withOpacity(.5),
           minimumSize: size ?? Size(Get.width * .8, 45),
           fixedSize: size ?? Size(Get.width * .8, 45),
-          backgroundColor: bgColor ?? Colors.white,
+          backgroundColor: bgColor ?? cPrimaryDark,
           shape: RoundedRectangleBorder(
             side: BorderSide(color: strokeColor ?? Colors.transparent),
             borderRadius: BorderRadius.circular(borderRadius ?? 10),
