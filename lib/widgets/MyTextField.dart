@@ -25,6 +25,7 @@ class MyTextField extends StatelessWidget {
     this.hasBorder,
     this.paddingHorizontal,
     this.paddingVertical,
+    this.textStyle,
     super.key,
   });
   final String hint;
@@ -37,6 +38,7 @@ class MyTextField extends StatelessWidget {
   final TextEditingController controller;
   final TextInputType? inputType;
   final int? length;
+  final TextStyle? textStyle;
   final TextAlign? textAlign;
   final TextInputAction? action;
   final Function(String text)? onchangedAction;
@@ -60,6 +62,7 @@ class MyTextField extends StatelessWidget {
         focusNode: focusNode,
         textInputAction: action,
         maxLines: maxLines ?? 1,
+        style: textStyle,
         textDirection: textDirection ?? TextDirection.rtl,
         keyboardType: inputType,
         controller: controller,
