@@ -10,7 +10,9 @@ class TicketDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(child: Scaffold(body: Container(
+    return SafeArea(child: Scaffold(
+      backgroundColor: cPrimaryBG,
+      body: Container(
       width: Get.width,
       height: Get.height,
       child: Column(children: [
