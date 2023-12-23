@@ -4,6 +4,7 @@ Color cB = Colors.black;
 Color cW = Colors.white;
 Color cR = Colors.red;
 Color cPrimary = const Color.fromARGB(255, 35, 35, 35);
+Color cPrimaryBG = const Color.fromARGB(255, 40, 40, 40);
 Color cPrimaryDark = Color.fromARGB(255, 27, 27, 27);
 Color cAccent = const Color.fromARGB(255, 251, 177, 0);
 Color cGrey = const Color.fromARGB(255, 178, 178, 178);
