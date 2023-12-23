@@ -1,4 +1,5 @@
 import 'package:bamabin/screens/forget_password_screen.dart';
+import 'package:bamabin/screens/signin_qrcode_screen.dart';
 import 'package:bamabin/screens/signin_screen.dart';
 import 'package:bamabin/screens/signup_screen.dart';
 import 'package:get/get.dart';
@@ -10,6 +11,7 @@ class Routes {
   static List<GetPage> get page => [
         GetPage(name: '/splash', page: () => const SplashScreen()),
         GetPage(name: '/signin', page: () => const SigninScreen()),
+        GetPage(name: '/signin-qrcode', page: () => const SignInQrCodeScreen()),
         GetPage(
             name: '/forgetpassword', page: () => const ForgetPasswordScreen()),
         GetPage(name: '/signup', page: () => const SignupScreen()),

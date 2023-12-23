@@ -10,6 +10,7 @@ Color cGrey = const Color.fromARGB(255, 178, 178, 178);
 Color cBgTextfield = Color.fromARGB(255, 52, 52, 52);
 Color cBgGener = Color.fromARGB(255, 66, 66, 66);
 Color cStrokeGrey = Color.fromARGB(255, 78, 78, 78);
+Color cIconGrey = Color.fromARGB(255, 173, 173, 173);
 Color cHint = const Color.fromARGB(255, 124, 124, 124);
 Color cSuccessColor = const Color.fromARGB(255, 29, 248, 13);
 Color cWarningColor = Colors.amber;
