@@ -1,14 +1,15 @@
-import 'package:bamabin/constant/colors.dart';
 import 'package:bamabin/controller/auth_controller.dart';
-import 'package:bamabin/screens/signin_screen.dart';
-import 'package:bamabin/widgets/MyText.dart';
-import 'package:bamabin/widgets/MyTextField.dart';
+import 'package:bamabin/screens/authentication/signin_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:bamabin/widgets/MyTextButton.dart';
 
-class SignupScreen extends GetView<AuthController> {
-  const SignupScreen({super.key});
+import '../../constant/colors.dart';
+import '../../widgets/MyText.dart';
+import '../../widgets/MyTextButton.dart';
+import '../../widgets/MyTextField.dart';
+
+class ForgetPasswordScreen extends GetView<AuthController> {
+  const ForgetPasswordScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -55,6 +56,14 @@ class SignupScreen extends GetView<AuthController> {
                     borderRadius: BorderRadius.circular(20)),
                 child: Column(
                   children: [
+                    MyText(
+                      text: 'فراموشی رمز عبور',
+                      color: cAccent,
+                      size: 15,
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
                     MyTextField(
                       hint: 'نام کاربری',
                       controller: controller.txtUsername,
@@ -67,53 +76,26 @@ class SignupScreen extends GetView<AuthController> {
                     SizedBox(
                       height: 15,
                     ),
-                    MyTextField(
-                      hint: 'رمز عبور',
-                      controller: controller.txtPasswrod,
-                      prefixIcon: Icon(
-                        Icons.lock,
-                        size: 25,
-                        color: cGrey,
-                      ),
-                    ),
-                    SizedBox(
-                      height: 15,
-                    ),
-                    MyTextField(
-                      hint: 'تکرار رمز عبور',
-                      controller: controller.txtPasswrod,
-                      prefixIcon: Icon(
-                        Icons.lock,
-                        size: 25,
-                        color: cGrey,
-                      ),
-                    ),
-                    SizedBox(
-                      height: 15,
-                    ),
                     Row(
                       textDirection: TextDirection.rtl,
                       children: [
-                        Obx(() => Checkbox(
-                              checkColor: cPrimaryDark,
-                              splashRadius: 0,
-                              visualDensity: VisualDensity.compact,
-                              activeColor: cAccent,
-                              side: BorderSide(color: cAccent),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(5),
-                              ),
-                              value: controller.terms.value,
-                              onChanged: (value) => controller.terms(value),
-                            )),
-                        MyText(
-                          text: 'با شرایط و قوانین موافقم',
-                          textAlign: TextAlign.right,
-                          color: cW,
-                          textDecoration: TextDecoration.underline,
+                        Icon(
+                          size: 25,
+                          Icons.info,
+                          color: cGrey,
                         ),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Expanded(
+                          child: MyText(
+                            textAlign: TextAlign.right,
+                            text: 'رمز به ایمیل شما ارسال خواهد شد',
+                            color: cW,
+                          ),
+                        )
                       ],
-                    ),
+                    )
                   ],
                 ),
               ),
@@ -123,7 +105,7 @@ class SignupScreen extends GetView<AuthController> {
                 bgColor: cAccent,
                 onTap: () {},
                 child: MyText(
-                  text: 'ثبت نام',
+                  text: 'ارسال',
                   color: cB,
                   size: 15,
                 ),

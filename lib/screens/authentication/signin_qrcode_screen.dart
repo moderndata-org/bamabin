@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 
-import '../constant/colors.dart';
-import '../widgets/MyTextButton.dart';
+import '../../constant/colors.dart';
+import '../../widgets/MyTextButton.dart';
 
 class SignInQrCodeScreen extends StatefulWidget {
   const SignInQrCodeScreen({Key? key}) : super(key: key);
