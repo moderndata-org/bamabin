@@ -44,7 +44,7 @@ class CustomMainAppBar extends GetView<PublicController> {
               Spacer(),
               controller.isVisibleAppbar.isFalse
                   ? SizedBox()
-                  : Obx(() => controller.bottomIndex == 0
+                  : Obx(() => controller.bottomIndex == 2
                       ? SizedBox(
                           height: 50,
                           child: Image.asset('assets/images/ic_logotype.png'))

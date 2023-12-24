@@ -1,6 +1,9 @@
 import 'package:bamabin/screens/authentication/forget_password_screen.dart';
+import 'package:bamabin/screens/favorite_screen.dart';
 import 'package:bamabin/screens/notifications_screen.dart';
 import 'package:bamabin/screens/authentication/signin_screen.dart';
+import 'package:bamabin/screens/order_list_edit_items_screen.dart';
+import 'package:bamabin/screens/order_list_screen.dart';
 import 'package:bamabin/screens/tickets/ticket_details.dart';
 import 'package:get/get.dart';
 
@@ -20,5 +23,8 @@ class Routes {
             name: '/forgetpassword', page: () => const ForgetPasswordScreen()),
         GetPage(name: '/signup', page: () => const SignupScreen()),
         GetPage(name: '/main', page: () => const MainScreen()),
+        GetPage(name: '/favorite', page: () => const FavoriteScreen()),
+        GetPage(name: '/order', page: () => const OrderlistScreen()),
+        GetPage(name: '/order-edit-item', page: () => const OrderlistEditItemsScreen()),
       ];
 }
