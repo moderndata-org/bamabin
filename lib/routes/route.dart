@@ -1,6 +1,7 @@
 import 'package:bamabin/screens/authentication/forget_password_screen.dart';
 import 'package:bamabin/screens/notifications_screen.dart';
 import 'package:bamabin/screens/authentication/signin_screen.dart';
+import 'package:bamabin/screens/player/player_screen.dart';
 import 'package:bamabin/screens/tickets/ticket_details.dart';
 import 'package:get/get.dart';
 
@@ -16,6 +17,7 @@ class Routes {
         GetPage(name: '/signin-qrcode', page: () => const SignInQrCodeScreen()),
         GetPage(name: '/notifications', page: () => const NotificationScreen()),
         GetPage(name: '/ticket-details', page: () => const TicketDetails()),
+        GetPage(name: '/player', page: () => const PlayerScreen()),
         GetPage(
             name: '/forgetpassword', page: () => const ForgetPasswordScreen()),
         GetPage(name: '/signup', page: () => const SignupScreen()),
