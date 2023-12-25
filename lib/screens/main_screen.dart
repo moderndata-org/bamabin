@@ -37,10 +37,6 @@ class MainScreen extends GetView<PublicController> {
                     HomeScreen(),
                     SizedBox(),
                     SizedBox(),
-                    // HomeScreen(),
-                    // HomeScreen(),
-                    // HomeScreen(),
-                    // HomeScreen(),
                   ],);
                 }),
               ),

@@ -38,7 +38,8 @@ class _OrderlistEditListDialogState extends State<OrderlistEditListDialog> {
   Widget build(BuildContext context) {
     return Dialog(
       shadowColor: cB,
-      surfaceTintColor: cB,elevation: 20,
+      surfaceTintColor: cB,
+      elevation: 20,
       backgroundColor: cPrimary,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
       child: SizedBox(

@@ -1,3 +1,4 @@
+import 'package:bamabin/screens/aboutus_screen.dart';
 import 'package:bamabin/screens/authentication/forget_password_screen.dart';
 import 'package:bamabin/screens/favorite_screen.dart';
 import 'package:bamabin/screens/notifications_screen.dart';
@@ -30,5 +31,8 @@ class Routes {
         GetPage(
             name: '/order-edit-item',
             page: () => const OrderlistEditItemsScreen()),
+        GetPage(
+            name: '/aboutus',
+            page: () => const AboutusScreen()),
       ];
 }

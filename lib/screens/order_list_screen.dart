@@ -21,10 +21,12 @@ class _OrderlistScreenState extends State<OrderlistScreen> {
     return SafeArea(
         child: Scaffold(
       floatingActionButton: FloatingActionButton(
+        shape: CircleBorder(),
         elevation: 10,
         backgroundColor: cY,
         onPressed: () {
-          showDialog(barrierColor: cBgDialogColor,
+          showDialog(
+            barrierColor: cBgDialogColor,
             context: context,
             barrierDismissible: true,
             builder: (context) => OrderlistAddListDialog(),
@@ -57,7 +59,11 @@ class _OrderlistScreenState extends State<OrderlistScreen> {
                   itemCount: '2',
                   type: 'فیلم',
                   date: '1402/10/22',
-                  edit: () => showDialog(barrierColor: cBgDialogColor,context: context, builder: (context) => OrderlistEditListDialog(),),
+                  edit: () => showDialog(
+                    barrierColor: cBgDialogColor,
+                    context: context,
+                    builder: (context) => OrderlistEditListDialog(),
+                  ),
                 ),
                 OrderItemWidget(
                   title: 'لیست جدید من',

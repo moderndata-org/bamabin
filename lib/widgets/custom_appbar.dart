@@ -20,9 +20,13 @@ class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
         textDirection: TextDirection.rtl,
         children: [
           MyTextButton(
-              onTap:null,
+              onTap: null,
               size: Size(40, 40),
-              child: icon ?? SizedBox()),
+              child: Stack(clipBehavior: Clip.none,
+                children: [
+                  Positioned( left: -4, child: icon ?? SizedBox())
+                ],
+              )),
           Spacer(),
           MyText(
             text: '$title',
@@ -32,9 +36,18 @@ class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
           MyTextButton(
               onTap: () => Navigator.pop(context),
               size: Size(40, 40),
-              child: Icon(
-                Icons.arrow_back_ios_new_rounded,
-                color: cGrey,
+              child: Stack(
+                clipBehavior: Clip.none,
+                children: [
+                  Positioned(
+                    top: 0,
+                    left: -4,
+                    child: Icon(
+                      Icons.arrow_back_ios_new_rounded,
+                      color: cGrey,
+                    ),
+                  ),
+                ],
               )),
         ],
       ),

@@ -44,9 +44,8 @@ class MovieItemWidget extends StatelessWidget {
             //! Black Container with Movie Title
             Positioned(
                 bottom: 0,
-                right: 0,
-                left: 0,
                 child: Container(
+                  width: width,
                   padding: EdgeInsets.symmetric(horizontal: 5),
                   alignment: Alignment.bottomLeft,
                   height: 50,
@@ -64,8 +63,6 @@ class MovieItemWidget extends StatelessWidget {
             isSerial == true
                 ? Positioned(
                     bottom: 30,
-                    right: 10,
-                    left: 10,
                     child: Opacity(
                       opacity: .2,
                       child: Container(
@@ -91,8 +88,6 @@ class MovieItemWidget extends StatelessWidget {
             isSerial == true
                 ? Positioned(
                     bottom: 25,
-                    right: 5,
-                    left: 5,
                     child: Opacity(
                       opacity: .5,
                       child: Container(
@@ -116,8 +111,6 @@ class MovieItemWidget extends StatelessWidget {
             //! Main Picture
             Positioned(
                 bottom: 20,
-                right: 0,
-                left: 0,
                 child: Container(
                   width: width,
                   height: 175,
