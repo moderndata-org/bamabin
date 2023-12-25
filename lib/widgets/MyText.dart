@@ -13,6 +13,7 @@ class MyText extends StatelessWidget {
     this.fontWeight,
     this.padding,
     this.maxLines,
+    this.lineHeight,
     this.textDecoration = TextDecoration.none,
     required this.text,
     super.key,
@@ -20,6 +21,7 @@ class MyText extends StatelessWidget {
   final Color? color;
   final String text;
   final double? size;
+  final double? lineHeight;
   final int? maxLines;
   final TextAlign? textAlign;
   final TextDirection? textDirection;
@@ -37,11 +39,13 @@ class MyText extends StatelessWidget {
       padding: padding ?? const EdgeInsets.all(0),
       child: Text(
         text,
+
         maxLines: maxLines,
         overflow: textOverflow,
         textDirection: textDirection,
         textAlign: textAlign ?? TextAlign.center,
         style: TextStyle(
+            height: lineHeight,
             fontWeight: fontWeight,
             color: color ?? cW,
             fontSize: size ?? 13,

@@ -7,33 +7,47 @@ import 'package:get/get.dart';
 class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
   const CustomAppbar({this.title, this.iconColor, this.icon, super.key});
   final String? title;
-  final IconData? icon;
+  final Widget? icon;
   final Color? iconColor;
 
   @override
   Widget build(BuildContext context) {
     return Container(
       color: cBgCustomAppbar,
+      height: 60,
       padding: EdgeInsets.symmetric(horizontal: 20),
       child: Row(
         textDirection: TextDirection.rtl,
         children: [
           MyTextButton(
-              onTap: () {},
+              onTap: null,
               size: Size(40, 40),
-              child: Icon(
-            icon,
-            color: iconColor ?? cY,
-          )),
+              child: Stack(clipBehavior: Clip.none,
+                children: [
+                  Positioned( left: -4, child: icon ?? SizedBox())
+                ],
+              )),
           Spacer(),
-          MyText(text: '$title',color: cY,),
+          MyText(
+            text: '$title',
+            color: cY,
+          ),
           Spacer(),
           MyTextButton(
-              onTap: () {},
+              onTap: () => Navigator.pop(context),
               size: Size(40, 40),
-              child: Icon(
-                Icons.menu_rounded,
-                color: cGrey,
+              child: Stack(
+                clipBehavior: Clip.none,
+                children: [
+                  Positioned(
+                    top: 0,
+                    left: -4,
+                    child: Icon(
+                      Icons.arrow_back_ios_new_rounded,
+                      color: cGrey,
+                    ),
+                  ),
+                ],
               )),
         ],
       ),

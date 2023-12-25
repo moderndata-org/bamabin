@@ -32,11 +32,11 @@ class MainScreen extends GetView<PublicController> {
                 height: Get.height,
                 child: Obx(() {
                   return IndexedStack(index: controller.bottomIndex.value,children: [
+                    SizedBox(),
+                    SizedBox(),
                     HomeScreen(),
-                    // HomeScreen(),
-                    // HomeScreen(),
-                    // HomeScreen(),
-                    // HomeScreen(),
+                    SizedBox(),
+                    SizedBox(),
                   ],);
                 }),
               ),

@@ -169,7 +169,10 @@ class CustomDrawerMenu extends GetView<PublicController> {
               height: 5,
             ),
             MyTextButton(
-                onTap: () {},
+                onTap: () {
+                  Get.toNamed('/favorite');
+                  controller.scaffolState.currentState!.closeEndDrawer();
+                },
                 child: Row(
                   textDirection: TextDirection.rtl,
                   children: [
@@ -215,7 +218,10 @@ class CustomDrawerMenu extends GetView<PublicController> {
               height: 5,
             ),
             MyTextButton(
-                onTap: () {},
+                onTap: () {
+                  Get.toNamed('/order');
+                  controller.scaffolState.currentState!.closeEndDrawer();
+                },
                 child: Row(
                   textDirection: TextDirection.rtl,
                   children: [
@@ -307,7 +313,10 @@ class CustomDrawerMenu extends GetView<PublicController> {
               height: 5,
             ),
             MyTextButton(
-                onTap: () {},
+                onTap: () {
+                  Navigator.pop(context);
+                  Get.toNamed('/aboutus');
+                },
                 child: Row(
                   textDirection: TextDirection.rtl,
                   children: [
@@ -361,6 +370,7 @@ class CustomDrawerMenu extends GetView<PublicController> {
                   ])),
               child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
+                      foregroundColor: cW.withOpacity(.1),
                       padding: EdgeInsets.symmetric(horizontal: 10),
                       elevation: 0,
                       shadowColor: Colors.transparent,

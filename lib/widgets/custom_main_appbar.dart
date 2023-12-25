@@ -17,7 +17,6 @@ class CustomMainAppBar extends GetView<PublicController> {
           alignment: Alignment.center,
           height: 60,
           decoration: BoxDecoration(
-              // color: controller.isVisibleAppbar.value ? cPrimary : null,
               gradient: controller.isVisibleAppbar.value
                   ? null
                   : LinearGradient(
@@ -37,14 +36,23 @@ class CustomMainAppBar extends GetView<PublicController> {
                       ? cPrimaryDark
                       : Colors.transparent,
                   size: Size(40, 40),
-                  child: Icon(
-                    Icons.menu_rounded,
-                    color: controller.isVisibleAppbar.value ? cGrey : cW,
+                  child: Stack(
+                    clipBehavior: Clip.none,
+                    children: [
+                      Positioned(
+                          top: 0,
+                          left: -4,
+                          child: Icon(
+                            Icons.menu_rounded,
+                            color:
+                                controller.isVisibleAppbar.value ? cGrey : cW,
+                          ))
+                    ],
                   )),
               Spacer(),
               controller.isVisibleAppbar.isFalse
                   ? SizedBox()
-                  : Obx(() => controller.bottomIndex == 0
+                  : Obx(() => controller.bottomIndex == 2
                       ? SizedBox(
                           height: 50,
                           child: Image.asset('assets/images/ic_logotype.png'))
@@ -56,9 +64,18 @@ class CustomMainAppBar extends GetView<PublicController> {
                       ? cPrimaryDark
                       : Colors.transparent,
                   size: Size(40, 40),
-                  child: Icon(
-                    Icons.manage_search,
-                    color: controller.isVisibleAppbar.value ? cGrey : cW,
+                  child: Stack(
+                    clipBehavior: Clip.none,
+                    children: [
+                      Positioned(
+                        top: -2,
+                        left: -3,
+                        child: Icon(
+                          Icons.manage_search,
+                          color: controller.isVisibleAppbar.value ? cGrey : cW,
+                        ),
+                      ),
+                    ],
                   )),
               SizedBox(
                 width: 10,

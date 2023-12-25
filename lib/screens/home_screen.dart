@@ -106,6 +106,7 @@ class HomeScreen extends GetView<PublicController> {
                 MovieItemWidget(
                   isSerial: true,
                   year: '1920',
+                  imdbRate: '9',
                 ),
                 MovieItemWidget(
                   title: 'Forrest Gump',

@@ -26,6 +26,7 @@ class MyTextField extends StatelessWidget {
     this.paddingHorizontal,
     this.paddingVertical,
     this.textStyle,
+    this.suffixIcon,
     super.key,
   });
   final String hint;
@@ -50,6 +51,7 @@ class MyTextField extends StatelessWidget {
   final bool? hasBorder;
   final Color? hintColor;
   final Widget? prefixIcon;
+  final Widget? suffixIcon;
 
   @override
   Widget build(BuildContext context) {
@@ -62,7 +64,11 @@ class MyTextField extends StatelessWidget {
         focusNode: focusNode,
         textInputAction: action,
         maxLines: maxLines ?? 1,
-        style: textStyle,
+        style: textStyle ??
+            TextStyle(
+              color: cW,
+              fontSize: 13,
+            ),
         textDirection: textDirection ?? TextDirection.rtl,
         keyboardType: inputType,
         controller: controller,
@@ -72,6 +78,7 @@ class MyTextField extends StatelessWidget {
         decoration: InputDecoration(
           fillColor: cBgTextfield,
           prefixIcon: prefixIcon,
+          suffixIcon: suffixIcon,
           filled: true,
           isCollapsed: true,
           contentPadding: EdgeInsets.symmetric(
@@ -79,13 +86,19 @@ class MyTextField extends StatelessWidget {
               vertical: paddingVertical ?? 15),
           hintText: hint,
           hintStyle: TextStyle(
-              color: hintColor ?? cHint, fontSize: hintFontSize ?? 13),
+              height: 1,
+              color: hintColor ?? cHint,
+              fontSize: hintFontSize ?? 13),
           enabledBorder: hasBorder == true
               ? InputBorder.none
               : OutlineInputBorder(
                   borderRadius: BorderRadius.circular(borderRadius ?? 15),
                   borderSide: BorderSide(color: cStrokeGrey, width: 1)),
-          focusedBorder: InputBorder.none,
+          focusedBorder: hasBorder == true
+              ? InputBorder.none
+              : OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(borderRadius ?? 15),
+                  borderSide: BorderSide(color: cStrokeGrey, width: 1)),
           disabledBorder: InputBorder.none,
         ),
       ),
