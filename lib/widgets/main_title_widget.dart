@@ -51,9 +51,6 @@ class MainTitleWidget extends StatelessWidget {
             ],
           ),
         ),
-        SizedBox(
-          width: 5,
-        ),
       ],
     );
   }

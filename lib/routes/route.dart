@@ -3,15 +3,15 @@ import 'package:bamabin/screens/authentication/forget_password_screen.dart';
 import 'package:bamabin/screens/favorite_screen.dart';
 import 'package:bamabin/screens/notifications_screen.dart';
 import 'package:bamabin/screens/authentication/signin_screen.dart';
-import 'package:bamabin/screens/order_list_edit_items_screen.dart';
-import 'package:bamabin/screens/order_list_screen.dart';
 import 'package:bamabin/screens/player/player_screen.dart';
+import 'package:bamabin/screens/profile_screen.dart';
 import 'package:bamabin/screens/tickets/ticket_details.dart';
 import 'package:get/get.dart';
-
 import '../screens/authentication/signin_qrcode_screen.dart';
 import '../screens/authentication/signup_screen.dart';
 import '../screens/main_screen.dart';
+import '../screens/orders/order_list_edit_items_screen.dart';
+import '../screens/orders/order_list_screen.dart';
 import '../screens/splash_screen.dart';
 
 class Routes {
@@ -31,8 +31,7 @@ class Routes {
         GetPage(
             name: '/order-edit-item',
             page: () => const OrderlistEditItemsScreen()),
-        GetPage(
-            name: '/aboutus',
-            page: () => const AboutusScreen()),
+        GetPage(name: '/aboutus', page: () => const AboutusScreen()),
+        GetPage(name: '/profile', page: () => const ProfileScreen()),
       ];
 }

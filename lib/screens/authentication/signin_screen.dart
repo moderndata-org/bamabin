@@ -27,13 +27,20 @@ class SigninScreen extends GetView<AuthController> {
                   child: Padding(
                     padding: const EdgeInsets.only(left: 20),
                     child: MyTextButton(
-                        size: const Size(40, 40),
-                        onTap: () {},
-                        fgColor: cGrey,
-                        bgColor: cPrimaryDark,
-                        child: Icon(
-                          Icons.arrow_back_ios_new_rounded,
-                          color: cGrey,
+                        onTap: () => Navigator.pop(context),
+                        size: Size(40, 40),
+                        child: Stack(
+                          clipBehavior: Clip.none,
+                          children: [
+                            Positioned(
+                              top: 0,
+                              left: -4,
+                              child: Icon(
+                                Icons.arrow_back_ios_new_rounded,
+                                color: cGrey,
+                              ),
+                            ),
+                          ],
                         )),
                   )),
               SizedBox(
@@ -110,7 +117,7 @@ class SigninScreen extends GetView<AuthController> {
               MyTextButton(
                 size: Size(Get.width * .8, 55),
                 bgColor: cAccent,
-                onTap: () =>Get.toNamed('/main'),
+                onTap: () => Get.toNamed('/main'),
                 child: MyText(
                   text: 'ورود',
                   color: cB,

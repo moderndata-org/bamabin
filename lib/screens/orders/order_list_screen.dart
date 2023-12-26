@@ -5,8 +5,8 @@ import 'package:bamabin/widgets/MyTextButton.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../constant/colors.dart';
-import '../widgets/custom_appbar.dart';
+import '../../constant/colors.dart';
+import '../../widgets/custom_appbar.dart';
 
 class OrderlistScreen extends StatefulWidget {
   const OrderlistScreen({super.key});
@@ -93,7 +93,6 @@ class _OrderlistScreenState extends State<OrderlistScreen> {
             ),
           )),
     ));
-    ;
   }
 }
 

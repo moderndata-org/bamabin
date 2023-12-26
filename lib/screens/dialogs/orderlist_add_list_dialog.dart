@@ -65,7 +65,8 @@ class _OrderlistAddListDialogState extends State<OrderlistAddListDialog> {
                   Positioned(
                     top: 0,
                     child: Container(
-                      padding: EdgeInsets.only(top: 5, right: 10, left: 10),
+                      padding: EdgeInsets.only(
+                          top: 5, right: 10, left: 10, bottom: 5),
                       decoration: BoxDecoration(
                           color: cY,
                           borderRadius: BorderRadius.only(
