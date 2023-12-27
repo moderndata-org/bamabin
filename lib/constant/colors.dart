@@ -6,6 +6,7 @@ Color cR = Colors.red;
 Color cY = Colors.amber;
 Color cBgDialogColor = Colors.black.withOpacity(.8);
 Color cPrimary = const Color.fromARGB(255, 40, 40, 40);
+Color cAppBar = const Color.fromARGB(255, 35, 35, 35);
 Color cPink = const Color.fromARGB(255, 244, 80, 80);
 Color cPrimaryBG = const Color.fromARGB(255, 40, 40, 40);
 Color cPrimaryDark = Color.fromARGB(255, 27, 27, 27);

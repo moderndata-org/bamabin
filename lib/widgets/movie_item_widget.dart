@@ -40,6 +40,7 @@ class MovieItemWidget extends StatelessWidget {
         height: 300,
         margin: EdgeInsetsDirectional.symmetric(horizontal: 3),
         child: Stack(
+          alignment: Alignment.center,
           children: [
             //! Black Container with Movie Title
             Positioned(
@@ -66,7 +67,7 @@ class MovieItemWidget extends StatelessWidget {
                     child: Opacity(
                       opacity: .2,
                       child: Container(
-                        width: width,
+                        width: width! - 20,
                         height: 175,
                         child: ClipRRect(
                             borderRadius: BorderRadius.circular(radius!),
@@ -92,7 +93,7 @@ class MovieItemWidget extends StatelessWidget {
                       opacity: .5,
                       child: Container(
                         height: 175,
-                        width: width,
+                        width: width! - 10,
                         child: ClipRRect(
                             borderRadius: BorderRadius.circular(radius!),
                             child: Stack(
