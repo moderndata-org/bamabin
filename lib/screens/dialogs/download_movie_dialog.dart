@@ -19,7 +19,7 @@ class DownloadMovieDialog extends GetView<PublicController> {
           color: cPrimary,
           width: Get.width,
           height: Get.height,
-          child: ListView(
+          child: Column(
             children: [
               SizedBox(
                 height: 40,
@@ -74,12 +74,11 @@ class DownloadMovieDialog extends GetView<PublicController> {
                   ],
                 ),
               ),
-              SizedBox(
-                  width: Get.width,
-                  height: Get.height,
+              Expanded(
                   child: ListView(
-                    children: [MovieItemDialogWidget()],
-                  ))
+                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 30),
+                children: [MovieItemDialogWidget()],
+              ))
             ],
           ),
         ));
