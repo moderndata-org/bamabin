@@ -7,8 +7,8 @@ class MyText extends StatelessWidget {
     this.color,
     this.size,
     this.shadows,
-    this.textAlign,
-    this.textDirection,
+    this.textAlign = TextAlign.right,
+    this.textDirection = TextDirection.rtl,
     this.textOverflow,
     this.fontWeight,
     this.padding,
@@ -33,13 +33,10 @@ class MyText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    textDirection ?? TextDirection.rtl;
-    textAlign ?? TextAlign.right;
     return Padding(
       padding: padding ?? const EdgeInsets.all(0),
       child: Text(
         text,
-
         maxLines: maxLines,
         overflow: textOverflow,
         textDirection: textDirection,

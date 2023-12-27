@@ -1,4 +1,5 @@
 import 'package:bamabin/controller/public_controller.dart';
+import 'package:bamabin/screens/dialogs/download_movie_dialog.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +17,7 @@ class HomeScreen extends GetView<PublicController> {
   @override
   Widget build(BuildContext context) {
     return ListView(
-      padding: EdgeInsets.only(top: 60,bottom: 20),
+      padding: EdgeInsets.only(top: 60, bottom: 20),
       controller: controller.mainScrollController,
       physics: BouncingScrollPhysics(),
       children: [
@@ -104,7 +105,15 @@ class HomeScreen extends GetView<PublicController> {
               scrollDirection: Axis.horizontal,
               children: [
                 MovieItemWidget(
+                  onTap: () {
+                    showDialog(
+                      context: context,
+                      builder: (context) =>
+                          DownloadMovieDialog(title: 'Forest'),
+                    );
+                  },
                   isSerial: true,
+                  title: 'show Dialog',
                   year: '1920',
                   imdbRate: '9',
                 ),
