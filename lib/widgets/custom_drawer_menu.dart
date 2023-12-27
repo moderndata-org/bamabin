@@ -24,13 +24,30 @@ class CustomDrawerMenu extends GetView<PublicController> {
             Row(
               textDirection: TextDirection.rtl,
               children: [
-                SizedBox(
+                Container(
                   width: 70,
                   height: 70,
-                  child: CircleAvatar(
-                    backgroundColor: cGrey,
+                  decoration: BoxDecoration(
+                    color: cDrawerGrey,
+                    boxShadow: [bs010of],
+                    shape: BoxShape.circle,
+                    // image: DecorationImage(
+                    //   image: AssetImage('assets/images/bg_crausel.jpg'),
+                    //   fit: BoxFit.cover,
+                  ),
+                  child: Icon(
+                    Icons.account_circle_outlined,
+                    color: cPrimary,
+                    size: 60,
                   ),
                 ),
+
+                // child:
+                // CircleAvatar(
+                //   backgroundColor: cGrey,
+                //   backgroundImage: AssetImage(''),
+                // ),
+
                 SizedBox(
                   width: 10,
                 ),
@@ -69,7 +86,11 @@ class CustomDrawerMenu extends GetView<PublicController> {
                         Align(
                           alignment: Alignment.centerRight,
                           child: GestureDetector(
-                            onTap: () {},
+                            onTap: () {
+                              Get.toNamed('/profile');
+                              controller.scaffolState.currentState!
+                                  .closeEndDrawer();
+                            },
                             child: Container(
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(50),
@@ -169,7 +190,7 @@ class CustomDrawerMenu extends GetView<PublicController> {
               height: 5,
             ),
             MyTextButton(
-                onTap: (){
+                onTap: () {
                   Get.toNamed('/favorite');
                   controller.scaffolState.currentState!.closeEndDrawer();
                 },
@@ -220,7 +241,8 @@ class CustomDrawerMenu extends GetView<PublicController> {
             MyTextButton(
                 onTap: () {
                   Get.toNamed('/order');
-                  controller.scaffolState.currentState!.closeEndDrawer();},
+                  controller.scaffolState.currentState!.closeEndDrawer();
+                },
                 child: Row(
                   textDirection: TextDirection.rtl,
                   children: [
@@ -312,7 +334,10 @@ class CustomDrawerMenu extends GetView<PublicController> {
               height: 5,
             ),
             MyTextButton(
-                onTap: () {},
+                onTap: () {
+                  Navigator.pop(context);
+                  Get.toNamed('/aboutus');
+                },
                 child: Row(
                   textDirection: TextDirection.rtl,
                   children: [
@@ -366,6 +391,7 @@ class CustomDrawerMenu extends GetView<PublicController> {
                   ])),
               child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
+                      foregroundColor: cW.withOpacity(.1),
                       padding: EdgeInsets.symmetric(horizontal: 10),
                       elevation: 0,
                       shadowColor: Colors.transparent,

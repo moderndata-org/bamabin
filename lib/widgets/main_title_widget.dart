@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 import '../constant/colors.dart';
@@ -8,10 +7,12 @@ import 'MyTextButton.dart';
 class MainTitleWidget extends StatelessWidget {
   const MainTitleWidget({
     this.title,
+    this.onTapMore,
     super.key,
   });
 
   final String? title;
+  final Function()? onTapMore;
 
   @override
   Widget build(BuildContext context) {
@@ -27,32 +28,28 @@ class MainTitleWidget extends StatelessWidget {
           padding: EdgeInsets.only(top: 5),
         ),
         Spacer(),
-        SizedBox(
-          width: 66,
-          child: MyTextButton(
-            onTap: () {},
-            bgColor: cPrimary,
-            child: Row(
-              textDirection: TextDirection.rtl,
-              children: [
-                MyText(
-                  text: 'بیشتر',
-                  color: cAccent,
-                ),
-                SizedBox(
-                  width: 5,
-                ),
-                Icon(
-                  Icons.arrow_back_ios_new_rounded,
-                  color: cAccent,
-                  size: 15,
-                )
-              ],
-            ),
+        MyTextButton(
+          size: Size(75, 45),
+          onTap: onTapMore ?? () {},
+          bgColor: cPrimary,
+          child: Row(
+            textDirection: TextDirection.rtl,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              MyText(
+                text: 'بیشتر',
+                color: cAccent,
+              ),
+              SizedBox(
+                width: 5,
+              ),
+              Icon(
+                Icons.arrow_back_ios_new_rounded,
+                color: cAccent,
+                size: 15,
+              )
+            ],
           ),
-        ),
-        SizedBox(
-          width: 5,
         ),
       ],
     );

@@ -27,3 +27,11 @@ BoxShadow bs010 = BoxShadow(
     blurRadius: 35,
     offset: const Offset(0, 10),
     color: Colors.black.withOpacity(.02));
+BoxShadow bs010o5 = BoxShadow(
+    blurRadius: 35,
+    offset: const Offset(0, 10),
+    color: Colors.black.withOpacity(.05));
+BoxShadow bs010of = BoxShadow(
+    blurRadius: 35,
+    offset: const Offset(0, 10),
+    color: Colors.black.withOpacity(.8));

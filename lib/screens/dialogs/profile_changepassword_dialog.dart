@@ -7,30 +7,34 @@ import 'package:get/get.dart';
 import '../../widgets/MyTextButton.dart';
 import '../../widgets/MyTextField.dart';
 
-class OrderlistEditListDialog extends StatefulWidget {
-  const OrderlistEditListDialog({super.key});
+class ProfileChangePasswordDialog extends StatefulWidget {
+  const ProfileChangePasswordDialog({super.key});
 
   @override
-  State<OrderlistEditListDialog> createState() =>
-      _OrderlistEditListDialogState();
+  State<ProfileChangePasswordDialog> createState() =>
+      _ProfileChangePasswordDialogState();
 }
 
-class _OrderlistEditListDialogState extends State<OrderlistEditListDialog> {
+class _ProfileChangePasswordDialogState
+    extends State<ProfileChangePasswordDialog> {
   final controller = Get.find<PublicController>();
-  TextEditingController? txtAddlistTitle;
-  TextEditingController? txtAddlistDescription;
+  TextEditingController? txtOldPassword;
+  TextEditingController? txtNewPassword;
+  TextEditingController? txtNewPasswordRepeat;
 
   @override
   void initState() {
-    txtAddlistTitle = TextEditingController();
-    txtAddlistDescription = TextEditingController();
+    txtOldPassword = TextEditingController();
+    txtNewPassword = TextEditingController();
+    txtNewPasswordRepeat = TextEditingController();
     super.initState();
   }
 
   @override
   void dispose() {
-    txtAddlistTitle?.dispose();
-    txtAddlistDescription?.dispose();
+    txtOldPassword?.dispose();
+    txtNewPassword?.dispose();
+    txtNewPasswordRepeat?.dispose();
     super.dispose();
   }
 
@@ -75,7 +79,7 @@ class _OrderlistEditListDialogState extends State<OrderlistEditListDialog> {
                             bottomLeft: Radius.circular(10),
                           )),
                       child: MyText(
-                        text: 'ویرایش',
+                        text: 'تغییر رمز ورود',
                         color: cB,
                         size: 15,
                       ),
@@ -91,11 +95,11 @@ class _OrderlistEditListDialogState extends State<OrderlistEditListDialog> {
               padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
               child: MyTextField(
                 height: 45,
-                hint: 'عنوان لیست',
-                controller: txtAddlistTitle!,
+                hint: 'رمز عبور قبلی',
+                controller: txtOldPassword!,
                 maxLines: 1,
-                suffixIcon: Icon(
-                  Icons.article_rounded,
+                prefixIcon: Icon(
+                  Icons.lock,
                   size: 25,
                   color: cGrey,
                 ),
@@ -104,58 +108,45 @@ class _OrderlistEditListDialogState extends State<OrderlistEditListDialog> {
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
               child: MyTextField(
-                height: 70,
-                hint: 'توضیحات',
-                controller: txtAddlistDescription!,
-                maxLines: 3,
-                suffixIcon: Icon(
-                  Icons.description,
+                height: 45,
+                hint: 'رمز عبور جدید',
+                controller: txtNewPassword!,
+                maxLines: 1,
+                prefixIcon: Icon(
+                  Icons.lock,
+                  size: 25,
+                  color: cGrey,
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+              child: MyTextField(
+                height: 45,
+                hint: 'تکرار رمز عبور جدید',
+                controller: txtNewPasswordRepeat!,
+                maxLines: 1,
+                prefixIcon: Icon(
+                  Icons.lock,
                   size: 25,
                   color: cGrey,
                 ),
               ),
             ),
             SizedBox(
-              height: 20,
+              height: 5,
             ),
-            Row(
-              textDirection: TextDirection.rtl,
-              children: [
-                SizedBox(
-                  width: 10,
-                ),
-                Expanded(
-                  child: MyTextButton(
-                      onTap: () {},
-                      size: Size.fromHeight(40),
-                      bgColor: cY,
-                      child: MyText(
-                        text: 'ثبت',
-                        size: 14,
-                        color: cB,
-                      )),
-                ),
-                SizedBox(
-                  width: 10,
-                ),
-                Expanded(
-                  child: MyTextButton(
-                      onTap: () {
-                        Navigator.pop(context);
-                        Get.toNamed('/order-edit-item');
-                      },
-                      size: Size.fromHeight(40),
-                      bgColor: cY,
-                      child: MyText(
-                        text: 'ویرایش آیتم ها',
-                        size: 14,
-                        color: cB,
-                      )),
-                ),
-                SizedBox(
-                  width: 10,
-                ),
-              ],
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+              child: MyTextButton(
+                  onTap: () {},
+                  size: Size.fromHeight(40),
+                  bgColor: cY,
+                  child: MyText(
+                    text: 'ثبت',
+                    size: 15,
+                    color: cB,
+                  )),
             ),
             SizedBox(
               height: 20,

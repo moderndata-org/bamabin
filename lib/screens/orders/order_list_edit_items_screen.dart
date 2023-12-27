@@ -1,10 +1,10 @@
+import 'package:bamabin/screens/dialogs/orderlist_add_movie_with_search_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../constant/colors.dart';
-import '../widgets/custom_appbar.dart';
-import '../widgets/movie_item_widget.dart';
-import 'dialogs/orderlist_add_list_dialog.dart';
+import '../../constant/colors.dart';
+import '../../widgets/custom_appbar.dart';
+import '../../widgets/movie_item_widget.dart';
 
 class OrderlistEditItemsScreen extends StatelessWidget {
   const OrderlistEditItemsScreen({super.key});
@@ -14,6 +14,7 @@ class OrderlistEditItemsScreen extends StatelessWidget {
     return SafeArea(
         child: Scaffold(
             floatingActionButton: FloatingActionButton(
+              shape: CircleBorder(),
               elevation: 10,
               backgroundColor: cY,
               onPressed: () {
@@ -21,7 +22,7 @@ class OrderlistEditItemsScreen extends StatelessWidget {
                   barrierColor: cBgDialogColor,
                   context: context,
                   barrierDismissible: true,
-                  builder: (context) => OrderlistAddListDialog(),
+                  builder: (context) => OrderlistAddMovieWithSearchDialog(),
                 );
               },
               child: Icon(
@@ -43,7 +44,8 @@ class OrderlistEditItemsScreen extends StatelessWidget {
                   textDirection: TextDirection.rtl,
                   child: GridView.count(
                     physics: BouncingScrollPhysics(),
-                    padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                    padding: EdgeInsets.only(
+                        left: 10, right: 10, top: 10, bottom: 50),
                     childAspectRatio: .58,
                     crossAxisCount: 3,
                     children: List.generate(

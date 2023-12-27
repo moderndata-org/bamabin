@@ -5,8 +5,8 @@ import 'package:bamabin/widgets/MyTextButton.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../constant/colors.dart';
-import '../widgets/custom_appbar.dart';
+import '../../constant/colors.dart';
+import '../../widgets/custom_appbar.dart';
 
 class OrderlistScreen extends StatefulWidget {
   const OrderlistScreen({super.key});
@@ -21,10 +21,12 @@ class _OrderlistScreenState extends State<OrderlistScreen> {
     return SafeArea(
         child: Scaffold(
       floatingActionButton: FloatingActionButton(
+        shape: CircleBorder(),
         elevation: 10,
         backgroundColor: cY,
         onPressed: () {
-          showDialog(barrierColor: cBgDialogColor,
+          showDialog(
+            barrierColor: cBgDialogColor,
             context: context,
             barrierDismissible: true,
             builder: (context) => OrderlistAddListDialog(),
@@ -57,7 +59,11 @@ class _OrderlistScreenState extends State<OrderlistScreen> {
                   itemCount: '2',
                   type: 'فیلم',
                   date: '1402/10/22',
-                  edit: () => showDialog(barrierColor: cBgDialogColor,context: context, builder: (context) => OrderlistEditListDialog(),),
+                  edit: () => showDialog(
+                    barrierColor: cBgDialogColor,
+                    context: context,
+                    builder: (context) => OrderlistEditListDialog(),
+                  ),
                 ),
                 OrderItemWidget(
                   title: 'لیست جدید من',
@@ -87,7 +93,6 @@ class _OrderlistScreenState extends State<OrderlistScreen> {
             ),
           )),
     ));
-    ;
   }
 }
 

@@ -36,6 +36,9 @@ class _OrderlistAddListDialogState extends State<OrderlistAddListDialog> {
   @override
   Widget build(BuildContext context) {
     return Dialog(
+      shadowColor: cB,
+      surfaceTintColor: cB,
+      elevation: 20,
       backgroundColor: cPrimary,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
       child: SizedBox(
@@ -62,7 +65,8 @@ class _OrderlistAddListDialogState extends State<OrderlistAddListDialog> {
                   Positioned(
                     top: 0,
                     child: Container(
-                      padding: EdgeInsets.only(top: 5, right: 10, left: 10),
+                      padding: EdgeInsets.only(
+                          top: 5, right: 10, left: 10, bottom: 5),
                       decoration: BoxDecoration(
                           color: cY,
                           borderRadius: BorderRadius.only(
@@ -157,7 +161,7 @@ class _OrderlistAddListDialogState extends State<OrderlistAddListDialog> {
             ),
             MyTextButton(
                 onTap: () {},
-                size: Size(Get.width*.6, 35),
+                size: Size(Get.width * .6, 35),
                 bgColor: cY,
                 child: MyText(
                   text: 'ثبت لیست',

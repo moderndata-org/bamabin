@@ -28,13 +28,20 @@ class SignupScreen extends GetView<AuthController> {
                   child: Padding(
                     padding: const EdgeInsets.only(left: 20),
                     child: MyTextButton(
-                        size: const Size(40, 40),
                         onTap: () => Navigator.pop(context),
-                        fgColor: cGrey,
-                        bgColor: cPrimaryDark,
-                        child: Icon(
-                          Icons.arrow_back_ios_new_rounded,
-                          color: cGrey,
+                        size: Size(40, 40),
+                        child: Stack(
+                          clipBehavior: Clip.none,
+                          children: [
+                            Positioned(
+                              top: 0,
+                              left: -4,
+                              child: Icon(
+                                Icons.arrow_back_ios_new_rounded,
+                                color: cGrey,
+                              ),
+                            ),
+                          ],
                         )),
                   )),
               SizedBox(
