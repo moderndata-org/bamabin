@@ -1,5 +1,6 @@
 import 'package:accordion/accordion.dart';
 import 'package:accordion/controllers.dart';
+import 'package:bamabin/constant/classes.dart';
 import 'package:bamabin/constant/colors.dart';
 import 'package:bamabin/controller/public_controller.dart';
 import 'package:bamabin/widgets/MyText.dart';
@@ -77,7 +78,20 @@ class DownloadMovieDialog extends GetView<PublicController> {
               Expanded(
                   child: ListView(
                 padding: EdgeInsets.symmetric(horizontal: 20, vertical: 30),
-                children: [MovieItemDialogWidget()],
+                children: [
+                  MovieItemDialogWidget(
+                    quality: Quality.FourK,
+                  ),
+                  MovieItemDialogWidget(
+                    quality: Quality.FHD,
+                  ),
+                  MovieItemDialogWidget(
+                    quality: Quality.HD,
+                  ),
+                  MovieItemDialogWidget(
+                    quality: Quality.SD,
+                  ),
+                ],
               ))
             ],
           ),
