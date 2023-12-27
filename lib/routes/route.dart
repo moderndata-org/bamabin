@@ -5,6 +5,7 @@ import 'package:bamabin/screens/authentication/signin_screen.dart';
 import 'package:bamabin/screens/order_list_edit_items_screen.dart';
 import 'package:bamabin/screens/order_list_screen.dart';
 import 'package:bamabin/screens/player/player_screen.dart';
+import 'package:bamabin/screens/subscribes/subscribe_screen.dart';
 import 'package:bamabin/screens/tickets/ticket_details.dart';
 import 'package:get/get.dart';
 
@@ -30,5 +31,7 @@ class Routes {
         GetPage(
             name: '/order-edit-item',
             page: () => const OrderlistEditItemsScreen()),
-      ];
+        GetPage(name: '/subscribe', page: () => const SubscribeScreen()),
+
+  ];
 }
