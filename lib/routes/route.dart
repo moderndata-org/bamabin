@@ -14,6 +14,7 @@ import '../screens/authentication/signup_screen.dart';
 import '../screens/main_screen.dart';
 import '../screens/orders/order_list_edit_items_screen.dart';
 import '../screens/orders/order_list_screen.dart';
+import '../screens/requests/request_list.dart';
 import '../screens/splash_screen.dart';
 
 class Routes {
@@ -35,7 +36,8 @@ class Routes {
             page: () => const OrderlistEditItemsScreen()),
         GetPage(name: '/aboutus', page: () => const AboutusScreen()),
         GetPage(name: '/profile', page: () => const ProfileScreen()),
-      GetPage(name: '/subscribe', page: () => const SubscribeScreen()),
+        GetPage(name: '/subscribe', page: () => const SubscribeScreen()),
+        GetPage(name: '/request', page: () => const RequestListScreen()),
       ];
 
 }

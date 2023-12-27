@@ -13,7 +13,7 @@ class DetailsAppBar extends StatelessWidget {
     return Container(
       padding: EdgeInsets.only(left: 10,right: 10,top: 10,bottom: 10),
       width: Get.width,
-      decoration: BoxDecoration(color: cPrimary),
+      decoration: BoxDecoration(color: cAppBar),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
