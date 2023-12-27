@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../widgets/MyTextButton.dart';
+import '../../widgets/request_list_item.dart.dart';
 
 class RequestListScreen extends StatelessWidget {
   const RequestListScreen({super.key});
@@ -47,15 +48,9 @@ class RequestListScreen extends StatelessWidget {
                   padding: EdgeInsets.only(right: 10,left: 10),
 
                   children: [
-                    SubscribeItem(
-                      price: "35,000",
-                      price_of: "30,000",
-                    ),
-                    SubscribeItem(
-                      is_selected: true,
-                      price: "45,000",
-                      price_of: "35,000",
-                    )
+                    RequestItem()
+
+
                   ],
                 ))
               ],

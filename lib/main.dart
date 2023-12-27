@@ -30,7 +30,7 @@ class Main extends StatelessWidget {
       initialBinding: MyBindings(),
       scrollBehavior: MyBehavior(),
       getPages: Routes.page,
-      initialRoute: '/main',
+      initialRoute: '/request',
       theme: ThemeData(fontFamily: "iransans"),
       debugShowCheckedModeBanner: false,
     );
