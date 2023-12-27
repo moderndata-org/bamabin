@@ -8,6 +8,7 @@ import 'package:bamabin/screens/subscribes/subscribe_screen.dart';
 import 'package:bamabin/screens/tickets/ticket_details.dart';
 import 'package:get/get.dart';
 
+import '../screens/aboutus_screen.dart';
 import '../screens/authentication/signin_qrcode_screen.dart';
 import '../screens/authentication/signup_screen.dart';
 import '../screens/main_screen.dart';
@@ -34,8 +35,7 @@ class Routes {
             page: () => const OrderlistEditItemsScreen()),
         GetPage(name: '/aboutus', page: () => const AboutusScreen()),
         GetPage(name: '/profile', page: () => const ProfileScreen()),
+      GetPage(name: '/subscribe', page: () => const SubscribeScreen()),
       ];
-        GetPage(name: '/subscribe', page: () => const SubscribeScreen()),
 
-  ];
 }
