@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../constant/colors.dart';
+import 'MyTextButton.dart';
 
 class RequestItem extends StatelessWidget {
   String?id;
@@ -83,10 +84,12 @@ class RequestItem extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              Text(
-                "$referral_link",
-                style: TextStyle(color: cAccent, fontSize: 16),
-              ),
+              (referral_link == null) ?
+              Text("ندارد",style: TextStyle(color: Colors.white,fontSize: 16),) : MyTextButton(
+                size: Size(70,35),
+                  bgColor: cAccent,
+                  child: Text("مشاهده",style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,),))
+              ,
               SizedBox(
                 width: 5,
               ),

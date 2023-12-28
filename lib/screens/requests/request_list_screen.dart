@@ -47,7 +47,7 @@ class RequestListScreen extends StatelessWidget {
             Expanded(
               child: ListView(
                 padding: EdgeInsets.only(right: 10, left: 10),
-                children: [RequestItem(), RequestItem()],
+                children: [RequestItem(referral_link: "dsfd",), RequestItem()],
               ),
             ),
          Container(
