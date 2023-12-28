@@ -1,6 +1,7 @@
 import 'package:bamabin/constant/colors.dart';
 import 'package:bamabin/controller/public_controller.dart';
 import 'package:bamabin/screens/home_screen.dart';
+import 'package:bamabin/screens/part_screen.dart';
 import 'package:bamabin/widgets/custom_bottom_navigation.dart';
 import 'package:bamabin/widgets/custom_drawer_menu.dart';
 import 'package:flutter/material.dart';
@@ -27,7 +28,7 @@ class MainScreen extends GetView<PublicController> {
               return IndexedStack(
                 index: controller.bottomIndex.value,
                 children: [
-                  SizedBox(),
+                  PartScreen(),
                   SizedBox(),
                   HomeScreen(),
                   SizedBox(),
