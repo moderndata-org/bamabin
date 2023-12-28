@@ -1,5 +1,6 @@
 import 'package:bamabin/constant/colors.dart';
 import 'package:bamabin/controller/public_controller.dart';
+import 'package:bamabin/screens/genre_screen.dart';
 import 'package:bamabin/screens/home_screen.dart';
 import 'package:bamabin/screens/part_screen.dart';
 import 'package:bamabin/widgets/custom_bottom_navigation.dart';
@@ -33,6 +34,7 @@ class MainScreen extends GetView<PublicController> {
                   HomeScreen(),
                   SizedBox(),
                   SizedBox(),
+                  GenreScreen()
                 ],
               );
             }),

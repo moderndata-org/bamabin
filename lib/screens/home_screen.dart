@@ -165,23 +165,33 @@ class HomeScreen extends GetView<PublicController> {
                 children: [
                   GenerItemMainWidget(
                     title: 'کمدی',
-                    onTap: () {},
+                    onTap: () {
+                      controller.bottomIndex(5);
+                    },
                   ),
                   GenerItemMainWidget(
                     title: 'علمی تخیلی',
-                    onTap: () {},
+                    onTap: () {
+                      controller.bottomIndex(5);
+                    },
                   ),
                   GenerItemMainWidget(
                     title: 'کمدی',
-                    onTap: () {},
+                    onTap: () {
+                      controller.bottomIndex(5);
+                    },
                   ),
                   GenerItemMainWidget(
                     title: 'علمی تخیلی',
-                    onTap: () {},
+                    onTap: () {
+                      controller.bottomIndex(5);
+                    },
                   ),
                   GenerItemMainWidget(
                     title: 'کمدی',
-                    onTap: () {},
+                    onTap: () {
+                      controller.bottomIndex(5);
+                    },
                   ),
                   GenerItemMainWidget(
                     title: 'علمی تخیلی',

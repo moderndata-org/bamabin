@@ -116,13 +116,13 @@ class SearchScreen extends StatelessWidget {
             ),
             Expanded(
                 child: GridView.count(
-                  physics: BouncingScrollPhysics(),
-                  padding: EdgeInsets.symmetric(horizontal: 10),
-                  childAspectRatio: .58,
-                  crossAxisCount: 3,
-                  children: List.generate(
-                      20,
-                          (index) => MovieItemWidget(
+              physics: BouncingScrollPhysics(),
+              padding: EdgeInsets.symmetric(horizontal: 10),
+              childAspectRatio: .58,
+              crossAxisCount: 3,
+              children: List.generate(
+                  20,
+                  (index) => MovieItemWidget(
                         title: 'Monarch',
                         isSerial: index % 2 == 0,
                         hasDubbed: true,
@@ -130,7 +130,7 @@ class SearchScreen extends StatelessWidget {
                         imdbRate: '5.5',
                         year: '20${index.toString().padLeft(2, '0')}',
                       )),
-                )),
+            )),
           ],
         ),
       ),
