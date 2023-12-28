@@ -1,5 +1,6 @@
 import 'package:bamabin/controller/public_controller.dart';
 import 'package:bamabin/screens/dialogs/download_movie_dialog.dart';
+import 'package:bamabin/screens/dialogs/download_serial_dialog.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
@@ -107,10 +108,10 @@ class HomeScreen extends GetView<PublicController> {
                 MovieItemWidget(
                   onTap: () {
                     showDialog(
-                      context: context,
-                      builder: (context) =>
-                          DownloadMovieDialog(title: 'Forest'),
-                    );
+                        context: context,
+                        builder: (context) => DownloadSerialDialog(
+                              title: 'Monarch',
+                            ));
                   },
                   isSerial: true,
                   title: 'show Dialog',
@@ -118,6 +119,13 @@ class HomeScreen extends GetView<PublicController> {
                   imdbRate: '9',
                 ),
                 MovieItemWidget(
+                  onTap: () {
+                    showDialog(
+                      context: context,
+                      builder: (context) =>
+                          DownloadMovieDialog(title: 'Forest'),
+                    );
+                  },
                   title: 'Forrest Gump',
                   isSerial: false,
                   year: '1994',
