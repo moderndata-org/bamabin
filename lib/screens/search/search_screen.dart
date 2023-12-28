@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 
 import '../../widgets/MyTextButton.dart';
 import '../../widgets/details_app_bar.dart';
+import '../../widgets/dialog_items/search_advanced_dialog.dart';
 import '../../widgets/movie_item_widget.dart';
 
 class SearchScreen extends StatelessWidget {
@@ -98,7 +99,12 @@ class SearchScreen extends StatelessWidget {
                   ),
                   Expanded(
                     child: MyTextButton(
-                        onTap: () {},
+                        onTap: () {
+                          showDialog(context: context, builder: (context) {
+                            return SearchAdvancedDialog();
+                          },);
+
+                        },
                         size: Size(10, 30),
                         fgColor: Colors.black,
                         bgColor: cAccent,

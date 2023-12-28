@@ -23,7 +23,7 @@ class TicketsScreen extends StatelessWidget {
               showDialog(context: context, builder:
               (context) {
 
-                return TokenBotDialog();
+                return TicketsAddDialog();
               },);
             },
             child: Icon(Icons.add),
