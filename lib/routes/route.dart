@@ -1,5 +1,6 @@
 import 'package:bamabin/screens/authentication/forget_password_screen.dart';
 import 'package:bamabin/screens/favorite_screen.dart';
+import 'package:bamabin/screens/genre_screen.dart';
 import 'package:bamabin/screens/notifications_screen.dart';
 import 'package:bamabin/screens/authentication/signin_screen.dart';
 import 'package:bamabin/screens/part_screen.dart';
