@@ -1,5 +1,3 @@
-import 'package:accordion/accordion.dart';
-import 'package:accordion/controllers.dart';
 import 'package:bamabin/constant/classes.dart';
 import 'package:bamabin/constant/colors.dart';
 import 'package:bamabin/controller/public_controller.dart';
@@ -9,8 +7,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class DownloadMovieDialog extends GetView<PublicController> {
-  const DownloadMovieDialog({this.title, super.key});
+  const DownloadMovieDialog(
+      {this.title, this.actionMethod = ActionMethod.Download, super.key});
   final String? title;
+  final ActionMethod? actionMethod;
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +32,7 @@ class DownloadMovieDialog extends GetView<PublicController> {
                         top: 0,
                         right: 7,
                         child: IconButton(
-                            splashRadius: 1,
+                            splashRadius: 10,
                             onPressed: () => Navigator.pop(context),
                             icon: Icon(
                               Icons.cancel,
@@ -59,7 +59,9 @@ class DownloadMovieDialog extends GetView<PublicController> {
                               direction: Axis.vertical,
                               children: [
                                 Icon(
-                                  Icons.download_rounded,
+                                  actionMethod == ActionMethod.Play
+                                      ? Icons.play_arrow_rounded
+                                      : Icons.download_rounded,
                                   color: cB,
                                 ),
                                 MyText(
@@ -81,15 +83,32 @@ class DownloadMovieDialog extends GetView<PublicController> {
                 children: [
                   MovieItemDialogWidget(
                     quality: Quality.FourK,
+                    movieType: MovieType.Dubbed,
+                    margin: EdgeInsets.symmetric(vertical: 5),
+                    encoder: 'e',
+                    movieSize: '4 Gb',
                   ),
                   MovieItemDialogWidget(
                     quality: Quality.FHD,
+                    movieType: MovieType.Subtitle,
+                    subtitleType: SubtitleType.HardSub,
+                    margin: EdgeInsets.symmetric(vertical: 5),
+                    encoder: 'e',
+                    movieSize: '4 Gb',
                   ),
                   MovieItemDialogWidget(
                     quality: Quality.HD,
+                    movieType: MovieType.None,
+                    margin: EdgeInsets.symmetric(vertical: 5),
+                    encoder: 'e',
+                    movieSize: '4 Gb',
                   ),
                   MovieItemDialogWidget(
                     quality: Quality.SD,
+                    movieType: MovieType.None,
+                    margin: EdgeInsets.symmetric(vertical: 5),
+                    encoder: 'e',
+                    movieSize: '4 Gb',
                   ),
                 ],
               ))

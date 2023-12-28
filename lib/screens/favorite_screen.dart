@@ -59,7 +59,7 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
               children: List.generate(
                   20,
                   (index) => MovieItemWidget(
-                        title: 's',
+                        title: 'monarch',
                         isSerial: index % 2 == 0,
                         hasDubbed: true,
                         hasSubtitle: true,
