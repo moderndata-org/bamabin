@@ -6,7 +6,6 @@ import '../constant/colors.dart';
 class RequestItem extends StatelessWidget {
   String?id;
   String?request;
-  String?text;
   String?condition;
   String?referral_link;
   String?date;

@@ -1,5 +1,6 @@
 import 'package:bamabin/constant/colors.dart';
 import 'package:bamabin/widgets/details_app_bar.dart';
+import 'package:bamabin/widgets/tickets_item.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -39,7 +40,7 @@ class TicketsScreen extends StatelessWidget {
                         fgColor: cGrey,
                         bgColor: cPrimaryDark,
                         child: Icon(
-                          Icons.video_call,
+                          Icons.support_outlined,
                           color: cAccent,
                         )),
                     title: "تیکت"),
@@ -47,8 +48,8 @@ class TicketsScreen extends StatelessWidget {
                   padding: EdgeInsets.only(right: 10,left: 10),
 
                   children: [
-                    RequestItem(),
-                    RequestItem()
+                    TicketsItem(),
+
 
 
                   ],
