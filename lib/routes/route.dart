@@ -6,6 +6,7 @@ import 'package:bamabin/screens/part_screen.dart';
 import 'package:bamabin/screens/player/player_screen.dart';
 import 'package:bamabin/screens/profile_screen.dart';
 import 'package:bamabin/screens/recent_views_screen.dart';
+import 'package:bamabin/screens/search/search_screen.dart';
 import 'package:bamabin/screens/subscribes/subscribe_screen.dart';
 import 'package:bamabin/screens/tickets/ticket_details.dart';
 import 'package:bamabin/screens/tickets/tickets_screen.dart';
@@ -44,6 +45,7 @@ class Routes {
         GetPage(name: '/tickets', page: () => const TicketsScreen()),
         GetPage(name: '/part', page: () => const PartScreen()),
         GetPage(name: '/recent-views', page: () => const RecentViewsScreen()),
+        GetPage(name: '/search', page: () => const SearchScreen()),
       ];
 
 }
