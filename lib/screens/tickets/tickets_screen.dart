@@ -1,14 +1,13 @@
 import 'package:bamabin/constant/colors.dart';
 import 'package:bamabin/widgets/details_app_bar.dart';
-import 'package:bamabin/widgets/subscribe_item.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../widgets/MyTextButton.dart';
 import '../../widgets/request_list_item.dart.dart';
 
-class RequestListScreen extends StatelessWidget {
-  const RequestListScreen({super.key});
+class TicketsScreen extends StatelessWidget {
+  const TicketsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +42,7 @@ class RequestListScreen extends StatelessWidget {
                           Icons.video_call,
                           color: cAccent,
                         )),
-                    title: "درخواست فیلم و سریال"),
+                    title: "تیکت"),
                 Expanded(child:    ListView(
                   padding: EdgeInsets.only(right: 10,left: 10),
 

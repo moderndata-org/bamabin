@@ -6,6 +6,7 @@ import 'package:bamabin/screens/player/player_screen.dart';
 import 'package:bamabin/screens/profile_screen.dart';
 import 'package:bamabin/screens/subscribes/subscribe_screen.dart';
 import 'package:bamabin/screens/tickets/ticket_details.dart';
+import 'package:bamabin/screens/tickets/tickets_screen.dart';
 import 'package:get/get.dart';
 
 import '../screens/aboutus_screen.dart';
@@ -14,7 +15,7 @@ import '../screens/authentication/signup_screen.dart';
 import '../screens/main_screen.dart';
 import '../screens/orders/order_list_edit_items_screen.dart';
 import '../screens/orders/order_list_screen.dart';
-import '../screens/requests/request_list.dart';
+import '../screens/requests/request_list_screen.dart';
 import '../screens/splash_screen.dart';
 
 class Routes {
@@ -38,6 +39,7 @@ class Routes {
         GetPage(name: '/profile', page: () => const ProfileScreen()),
         GetPage(name: '/subscribe', page: () => const SubscribeScreen()),
         GetPage(name: '/request', page: () => const RequestListScreen()),
+        GetPage(name: '/tickets', page: () => const TicketsScreen()),
       ];
 
 }
