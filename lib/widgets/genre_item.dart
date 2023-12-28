@@ -29,7 +29,7 @@ class GenreItem extends StatelessWidget {
                 Icon(
                   Icons.emoji_emotions_outlined,
                   color: Colors.white,
-                  size: 30,
+                  size: 25,
                 ),
                 SizedBox(height: 10.0),
 
