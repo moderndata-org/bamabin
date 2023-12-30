@@ -12,6 +12,11 @@ class PublicController extends GetxController {
   RxBool isVisibleAppbar = true.obs;
   RxBool hasSubscribe = false.obs;
   GlobalKey<ScaffoldState> scaffolState = GlobalKey();
+  RxInt starRate = 0.obs;
+
+  void setRate({required int rateNum}) {
+    starRate(rateNum);
+  }
 
   @override
   void onInit() {

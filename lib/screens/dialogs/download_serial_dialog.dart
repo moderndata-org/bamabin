@@ -79,6 +79,27 @@ class DownloadSerialDialog extends GetView<PublicController> {
                   ],
                 ),
               ),
+              SizedBox(
+                height: 20,
+              ),
+              Row(
+                textDirection: TextDirection.rtl,
+                children: [
+                  SizedBox(
+                    width: 10,
+                  ),
+                  MyText(text: 'فصل یک'),
+                  Expanded(
+                      child: Container(
+                    margin: EdgeInsets.only(right: 10),
+                    height: 1,
+                    color: cStrokeGrey,
+                  )),
+                  SizedBox(
+                    width: 10,
+                  ),
+                ],
+              ),
               Expanded(
                   child: SingleChildScrollView(
                 child: Accordion(

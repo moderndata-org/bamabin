@@ -60,14 +60,7 @@ class HomeScreen extends GetView<PublicController> {
                         left: 0,
                         child: Container(
                           height: 50,
-                          decoration: BoxDecoration(
-                              gradient: LinearGradient(
-                                  begin: Alignment.bottomCenter,
-                                  end: Alignment.topCenter,
-                                  colors: [
-                                cB.withOpacity(.7),
-                                Colors.transparent
-                              ])),
+                          decoration: BoxDecoration(gradient: fadeGradient()),
                           child: Align(
                             alignment: Alignment.bottomCenter,
                             child: MyText(
@@ -135,6 +128,7 @@ class HomeScreen extends GetView<PublicController> {
                   image: 'assets/images/bg_forrest.jpg',
                 ),
                 MovieItemWidget(
+                  onTap: () => Get.toNamed('/movie-detail'),
                   isSerial: false,
                   year: '2010',
                   hasDubbed: true,

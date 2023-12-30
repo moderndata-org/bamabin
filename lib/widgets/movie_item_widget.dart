@@ -37,7 +37,7 @@ class MovieItemWidget extends StatelessWidget {
       onTap: onTap,
       child: Container(
         width: width,
-        height: 300,
+        height: 100,
         margin: EdgeInsetsDirectional.symmetric(horizontal: 3),
         child: Stack(
           alignment: Alignment.center,

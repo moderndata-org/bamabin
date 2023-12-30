@@ -44,3 +44,17 @@ BoxShadow bs010of = BoxShadow(
     blurRadius: 35,
     offset: const Offset(0, 10),
     color: Colors.black.withOpacity(.8));
+
+//----------------LinearGradiends-----------------------
+
+LinearGradient fadeGradient({Color? fromColor, Color? toColor}) {
+  return LinearGradient(
+      begin: Alignment.bottomCenter,
+      end: Alignment.topCenter,
+      colors: [fromColor ?? cB.withOpacity(.7), toColor ?? Colors.transparent]);
+}
+
+// LinearGradient fadeGradiendt = LinearGradient(
+//     begin: Alignment.bottomCenter,
+//     end: Alignment.topCenter,
+//     colors: [cB.withOpacity(.7), Colors.transparent]);

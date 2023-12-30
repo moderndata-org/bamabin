@@ -79,7 +79,7 @@ class DownloadMovieDialog extends GetView<PublicController> {
               ),
               Expanded(
                   child: ListView(
-                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 30),
+                padding: EdgeInsets.symmetric(horizontal: 10, vertical: 30),
                 children: [
                   MovieItemDialogWidget(
                     quality: Quality.FourK,

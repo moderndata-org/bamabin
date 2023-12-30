@@ -1,6 +1,6 @@
 import 'package:bamabin/screens/authentication/forget_password_screen.dart';
 import 'package:bamabin/screens/favorite_screen.dart';
-import 'package:bamabin/screens/genre_screen.dart';
+import 'package:bamabin/screens/movie_details_screen.dart';
 import 'package:bamabin/screens/notifications_screen.dart';
 import 'package:bamabin/screens/authentication/signin_screen.dart';
 import 'package:bamabin/screens/part_screen.dart';
@@ -47,6 +47,6 @@ class Routes {
         GetPage(name: '/part', page: () => const PartScreen()),
         GetPage(name: '/recent-views', page: () => const RecentViewsScreen()),
         GetPage(name: '/search', page: () => const SearchScreen()),
+        GetPage(name: '/movie-detail', page: () => const MovieDetailsScreen()),
       ];
-
 }

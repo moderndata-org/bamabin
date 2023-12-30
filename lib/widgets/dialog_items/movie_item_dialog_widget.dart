@@ -14,6 +14,7 @@ class MovieItemDialogWidget extends StatelessWidget {
       this.partsCount,
       this.movieSize,
       this.margin,
+      this.width,
       this.actionMethod = ActionMethod.Download,
       super.key});
 
@@ -26,6 +27,7 @@ class MovieItemDialogWidget extends StatelessWidget {
   final String? partsCount;
   final EdgeInsetsGeometry? margin;
   final ActionMethod? actionMethod;
+  final double? width;
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +35,7 @@ class MovieItemDialogWidget extends StatelessWidget {
     return Container(
       margin: margin,
       // margin: EdgeInsets.only(top: 5),
-      width: Get.width * .8,
+      width: width ?? Get.width,
       height: isSerial == true ? 150 : 130,
       decoration: BoxDecoration(
         border: Border.all(color: cStrokeGrey),
