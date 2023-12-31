@@ -13,6 +13,7 @@ Color cSD = const Color.fromARGB(255, 229, 142, 38);
 Color cDubbed = const Color.fromARGB(255, 39, 155, 44);
 Color cSubtitle = cAccent;
 Color cNone = const Color.fromARGB(255, 161, 161, 161);
+Color cBgBtnMovieDetail = const Color.fromARGB(255, 49, 49, 49);
 Color cHardSubSoftSub = const Color.fromARGB(255, 255, 43, 43);
 Color cAppBar = const Color.fromARGB(255, 35, 35, 35);
 Color cPink = const Color.fromARGB(255, 244, 80, 80);

@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:video_player/video_player.dart';
 
 class PublicController extends GetxController {
   RxInt homeBannerIndex = 0.obs;
@@ -11,8 +12,13 @@ class PublicController extends GetxController {
   ScrollController favoriteScrollController = ScrollController();
   RxBool isVisibleAppbar = true.obs;
   RxBool hasSubscribe = false.obs;
+  RxBool isPlayingTrailer = false.obs;
+  RxBool isLoadingTrailer = false.obs;
+  RxBool isTextExpandedMovieDetail = false.obs;
   GlobalKey<ScaffoldState> scaffolState = GlobalKey();
   RxInt starRate = 0.obs;
+
+  late VideoPlayerController trailerController;
 
   void setRate({required int rateNum}) {
     starRate(rateNum);

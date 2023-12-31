@@ -1,5 +1,4 @@
 import 'package:bamabin/constant/colors.dart';
-import 'package:bamabin/widgets/details_app_bar.dart';
 import 'package:bamabin/widgets/filter_drop_down.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -18,10 +17,8 @@ class PartScreen extends StatelessWidget {
         width: Get.width,
         height: Get.height,
         padding: EdgeInsets.only(top: 60),
-
         child: Column(
           children: [
-
             // Filter Row
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -42,7 +39,9 @@ class PartScreen extends StatelessWidget {
                 )),
               ],
             ),
-            SizedBox(height: 10,),
+            SizedBox(
+              height: 10,
+            ),
 
             Expanded(
                 child: GridView.count(

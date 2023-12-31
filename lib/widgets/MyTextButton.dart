@@ -12,6 +12,8 @@ class MyTextButton extends StatelessWidget {
     this.borderRadius,
     this.size,
     this.elevation,
+    this.boxShadow,
+    this.padding,
     required this.child,
     super.key,
   });
@@ -24,22 +26,30 @@ class MyTextButton extends StatelessWidget {
   final double? borderRadius;
   final double? elevation;
   final Size? size;
+  final BoxShadow? boxShadow;
+  final EdgeInsetsGeometry? padding;
 
   @override
   Widget build(BuildContext context) {
-    return TextButton(
-        style: TextButton.styleFrom(
-          elevation: elevation,
-          foregroundColor: fgColor ?? cW.withOpacity(.5),
-          minimumSize: size ?? Size(Get.width * .8, 45),
-          fixedSize: size ?? Size(Get.width * .8, 45),
-          backgroundColor: bgColor ?? cPrimaryDark,
-          shape: RoundedRectangleBorder(
-            side: BorderSide(color: strokeColor ?? Colors.transparent),
-            borderRadius: BorderRadius.circular(borderRadius ?? 10),
+    return Container(
+      decoration: BoxDecoration(
+          boxShadow: boxShadow == null ? [] : [boxShadow!],
+          borderRadius: BorderRadius.circular(borderRadius ?? 10)),
+      child: TextButton(
+          style: TextButton.styleFrom(
+            elevation: elevation,
+            foregroundColor: fgColor ?? cW.withOpacity(.5),
+            minimumSize: size ?? Size(Get.width * .8, 45),
+            fixedSize: size ?? Size(Get.width * .8, 45),
+            padding: padding,
+            backgroundColor: bgColor ?? cPrimaryDark,
+            shape: RoundedRectangleBorder(
+              side: BorderSide(color: strokeColor ?? Colors.transparent),
+              borderRadius: BorderRadius.circular(borderRadius ?? 10),
+            ),
           ),
-        ),
-        onPressed: onTap,
-        child: child);
+          onPressed: onTap,
+          child: child),
+    );
   }
 }
