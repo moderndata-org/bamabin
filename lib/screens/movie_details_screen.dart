@@ -4,7 +4,10 @@ import 'package:bamabin/controller/public_controller.dart';
 import 'package:bamabin/widgets/MyCircularProgress.dart';
 import 'package:bamabin/widgets/MyText.dart';
 import 'package:bamabin/widgets/MyTextButton.dart';
+import 'package:bamabin/widgets/collections_section.dart';
 import 'package:bamabin/widgets/movie_item_widget.dart';
+import 'package:bamabin/widgets/scores_section.dart';
+import 'package:bamabin/widgets/user_list_section.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:video_player/video_player.dart';
@@ -25,15 +28,17 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
     controller.isLoadingTrailer(true);
     controller.trailerController = VideoPlayerController.networkUrl(Uri.parse(
         'https://flutter.github.io/assets-for-api-docs/assets/videos/bee.mp4'))
-      ..initialize().then((value) {});
+      ..initialize().then((value) {
+        controller.isLoadingTrailer(false);
+      });
     controller.trailerController.addListener(() {
       if (controller.trailerController.value.position ==
           controller.trailerController.value.duration) {
         controller.isPlayingTrailer(false);
         controller.trailerController.seekTo(Duration.zero);
       }
-      controller.isLoadingTrailer(false);
     });
+
     super.initState();
   }
 
@@ -632,6 +637,18 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
               ],
             ),
           ),
+          SizedBox(
+            height: 15,
+          ),
+          ScoreSection(),
+          SizedBox(
+            height: 15,
+          ),
+          CollectionsSection(),
+          SizedBox(
+            height: 15,
+          ),
+          UserListSection()
         ],
       ),
     );
