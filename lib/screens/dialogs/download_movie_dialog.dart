@@ -8,9 +8,13 @@ import 'package:get/get.dart';
 
 class DownloadMovieDialog extends GetView<PublicController> {
   const DownloadMovieDialog(
-      {this.title, this.actionMethod = ActionMethod.Download, super.key});
+      {this.title,
+      this.isSerial,
+      this.actionMethod = ActionMethod.Download,
+      super.key});
   final String? title;
   final ActionMethod? actionMethod;
+  final bool? isSerial;
 
   @override
   Widget build(BuildContext context) {
@@ -66,7 +70,17 @@ class DownloadMovieDialog extends GetView<PublicController> {
                                 ),
                                 MyText(
                                   textDirection: TextDirection.rtl,
-                                  text: 'لینک دانلود فیلم $title',
+                                  text:
+                                      //! Download Selected
+                                      actionMethod == ActionMethod.Download
+                                          ? isSerial == true
+                                              ? 'لینک دانلود سریال $title'
+                                              : 'لینک دانلود فیلم $title'
+                                          :
+                                          //! Play Selected
+                                          isSerial == true
+                                              ? 'پخش سریال $title'
+                                              : 'پخش فیلم $title',
                                   color: cB,
                                   size: 15,
                                 ),
@@ -82,19 +96,26 @@ class DownloadMovieDialog extends GetView<PublicController> {
                 padding: EdgeInsets.symmetric(horizontal: 10, vertical: 30),
                 children: [
                   MovieItemDialogWidget(
+                    onTap: () => Get.toNamed('/player'),
                     quality: Quality.FourK,
                     movieType: MovieType.Dubbed,
                     margin: EdgeInsets.symmetric(vertical: 5),
                     encoder: 'e',
                     movieSize: '4 Gb',
+                    actionMethod: actionMethod,
+                    partsCount: '8',
+                    isSerial: controller.isSerialOpenedDetail.value,
                   ),
                   MovieItemDialogWidget(
                     quality: Quality.FHD,
                     movieType: MovieType.Subtitle,
                     subtitleType: SubtitleType.HardSub,
                     margin: EdgeInsets.symmetric(vertical: 5),
+                    actionMethod: actionMethod,
                     encoder: 'e',
                     movieSize: '4 Gb',
+                    partsCount: '8',
+                    isSerial: controller.isSerialOpenedDetail.value,
                   ),
                   MovieItemDialogWidget(
                     quality: Quality.HD,
@@ -102,6 +123,9 @@ class DownloadMovieDialog extends GetView<PublicController> {
                     margin: EdgeInsets.symmetric(vertical: 5),
                     encoder: 'e',
                     movieSize: '4 Gb',
+                    actionMethod: actionMethod,
+                    partsCount: '8',
+                    isSerial: controller.isSerialOpenedDetail.value,
                   ),
                   MovieItemDialogWidget(
                     quality: Quality.SD,
@@ -109,6 +133,9 @@ class DownloadMovieDialog extends GetView<PublicController> {
                     margin: EdgeInsets.symmetric(vertical: 5),
                     encoder: 'e',
                     movieSize: '4 Gb',
+                    actionMethod: actionMethod,
+                    partsCount: '8',
+                    isSerial: controller.isSerialOpenedDetail.value,
                   ),
                 ],
               ))

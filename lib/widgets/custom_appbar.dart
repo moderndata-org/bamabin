@@ -13,7 +13,7 @@ class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: cBgCustomAppbar,
+      color: cAppBar,
       height: 60,
       padding: EdgeInsets.symmetric(horizontal: 20),
       child: Row(
@@ -22,15 +22,15 @@ class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
           MyTextButton(
               onTap: null,
               size: Size(40, 40),
-              child: Stack(clipBehavior: Clip.none,
-                children: [
-                  Positioned( left: -4, child: icon ?? SizedBox())
-                ],
+              child: Stack(
+                clipBehavior: Clip.none,
+                children: [Positioned(left: -4, child: icon ?? SizedBox())],
               )),
           Spacer(),
           MyText(
             text: '$title',
             color: cY,
+            size: 15,
           ),
           Spacer(),
           MyTextButton(
@@ -55,6 +55,5 @@ class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
   }
 
   @override
-  // TODO: implement preferredSize
   Size get preferredSize => Size(Get.width, 60);
 }

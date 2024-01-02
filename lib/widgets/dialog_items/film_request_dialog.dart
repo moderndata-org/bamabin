@@ -76,6 +76,7 @@ class FilmRequestDialog extends StatelessWidget {
                         child: DropdownButton(
                           // isDense: true,
 
+                          dropdownColor: cPrimary,
                           borderRadius: BorderRadius.circular(10),
                           hint: MyText(text: 'سال'),
                           // isExpanded: true,
@@ -118,6 +119,7 @@ class FilmRequestDialog extends StatelessWidget {
                         child: DropdownButton(
                           // isDense: true,
 
+                          dropdownColor: cPrimary,
                           borderRadius: BorderRadius.circular(10),
                           hint: MyText(text: 'نوع'),
                           // isExpanded: true,
@@ -153,9 +155,9 @@ class FilmRequestDialog extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
               child: MyTextField(
-                borderRadius:10,
+                borderRadius: 10,
                 height: 41,
-                hint:"نام فیلم،سریال،انیمه،انیمیشن",
+                hint: "نام فیلم،سریال،انیمه،انیمیشن",
                 controller: new TextEditingController(),
                 maxLines: 3,
                 suffixIcon: Icon(
@@ -173,7 +175,7 @@ class FilmRequestDialog extends StatelessWidget {
                 size: Size(Get.width / 1.4, 35),
                 bgColor: cY,
                 child: MyText(
-                  text:"ثبت",
+                  text: "ثبت",
                   size: 14,
                   color: cB,
                 )),

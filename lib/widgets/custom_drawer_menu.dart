@@ -118,7 +118,11 @@ class CustomDrawerMenu extends GetView<PublicController> {
               return MyTextButton(
                   bgColor: cY,
                   onTap: () {
-                    controller.hasSubscribe(!controller.hasSubscribe.value);
+                    if (controller.hasSubscribe.value)
+                      controller.hasSubscribe(!controller.hasSubscribe.value);
+
+                    Get.toNamed('/subscribe');
+                    controller.scaffolState.currentState!.closeEndDrawer();
                   },
                   child: Row(
                     textDirection: TextDirection.rtl,
@@ -144,7 +148,10 @@ class CustomDrawerMenu extends GetView<PublicController> {
               height: 5,
             ),
             MyTextButton(
-                onTap: () {},
+                onTap: () {
+                  Get.toNamed('/notifications');
+                  controller.scaffolState.currentState!.closeEndDrawer();
+                },
                 child: Row(
                   textDirection: TextDirection.rtl,
                   children: [
@@ -167,7 +174,10 @@ class CustomDrawerMenu extends GetView<PublicController> {
               height: 5,
             ),
             MyTextButton(
-                onTap: () {},
+                onTap: () {
+                  Get.toNamed('/recent-views');
+                  controller.scaffolState.currentState!.closeEndDrawer();
+                },
                 child: Row(
                   textDirection: TextDirection.rtl,
                   children: [
@@ -265,7 +275,10 @@ class CustomDrawerMenu extends GetView<PublicController> {
               height: 5,
             ),
             MyTextButton(
-                onTap: () {},
+                onTap: () {
+                  Get.toNamed('/tickets');
+                  controller.scaffolState.currentState!.closeEndDrawer();
+                },
                 child: Row(
                   textDirection: TextDirection.rtl,
                   children: [
@@ -288,7 +301,10 @@ class CustomDrawerMenu extends GetView<PublicController> {
               height: 5,
             ),
             MyTextButton(
-                onTap: () {},
+                onTap: () {
+                  Get.toNamed('/request');
+                  controller.scaffolState.currentState!.closeEndDrawer();
+                },
                 child: Row(
                   textDirection: TextDirection.rtl,
                   children: [

@@ -14,9 +14,11 @@ class PublicController extends GetxController {
   RxBool hasSubscribe = false.obs;
   RxBool isPlayingTrailer = false.obs;
   RxBool isLoadingTrailer = false.obs;
+  RxBool isSerialOpenedDetail = false.obs;
   RxBool isTextExpandedMovieDetail = false.obs;
   GlobalKey<ScaffoldState> scaffolState = GlobalKey();
   RxInt starRate = 0.obs;
+  RxString appBarCenterText = ''.obs;
 
   late VideoPlayerController trailerController;
 

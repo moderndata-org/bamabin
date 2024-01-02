@@ -15,6 +15,7 @@ class MovieItemDialogWidget extends StatelessWidget {
       this.movieSize,
       this.margin,
       this.width,
+      this.onTap,
       this.actionMethod = ActionMethod.Download,
       super.key});
 
@@ -28,13 +29,13 @@ class MovieItemDialogWidget extends StatelessWidget {
   final EdgeInsetsGeometry? margin;
   final ActionMethod? actionMethod;
   final double? width;
+  final Function()? onTap;
 
   @override
   Widget build(BuildContext context) {
     double borderRadius = 10;
     return Container(
       margin: margin,
-      // margin: EdgeInsets.only(top: 5),
       width: width ?? Get.width,
       height: isSerial == true ? 150 : 130,
       decoration: BoxDecoration(
@@ -132,34 +133,38 @@ class MovieItemDialogWidget extends StatelessWidget {
         Positioned(
             bottom: 0,
             left: 0,
-            child: Container(
-              alignment: Alignment.center,
-              padding: EdgeInsets.symmetric(vertical: 3, horizontal: 5),
-              constraints: BoxConstraints(minWidth: 90),
-              decoration: BoxDecoration(
-                  color: switch (movieType!) {
-                    MovieType.Dubbed => cDubbed,
-                    MovieType.Subtitle => cSubtitle,
-                    MovieType.None => cNone,
-                  },
-                  borderRadius: BorderRadius.only(
-                      topRight: Radius.circular(borderRadius - 1),
-                      bottomLeft: Radius.circular(borderRadius))),
-              child: Row(
-                textDirection: TextDirection.rtl,
-                children: [
-                  MyText(
-                    text: actionMethod == ActionMethod.Play ? 'پخش' : 'دانلود',
-                    color: cB,
-                    padding: EdgeInsets.only(top: 3),
-                  ),
-                  isSerial != true
-                      ? SizedBox()
-                      : Icon(
-                          Icons.keyboard_arrow_down_rounded,
-                          color: cB,
-                        )
-                ],
+            child: GestureDetector(
+              onTap: onTap,
+              child: Container(
+                alignment: Alignment.center,
+                padding: EdgeInsets.symmetric(vertical: 3, horizontal: 5),
+                constraints: BoxConstraints(minWidth: 90),
+                decoration: BoxDecoration(
+                    color: switch (movieType!) {
+                      MovieType.Dubbed => cDubbed,
+                      MovieType.Subtitle => cSubtitle,
+                      MovieType.None => cNone,
+                    },
+                    borderRadius: BorderRadius.only(
+                        topRight: Radius.circular(borderRadius - 1),
+                        bottomLeft: Radius.circular(borderRadius))),
+                child: Row(
+                  textDirection: TextDirection.rtl,
+                  children: [
+                    MyText(
+                      text:
+                          actionMethod == ActionMethod.Play ? 'پخش' : 'دانلود',
+                      color: cB,
+                      padding: EdgeInsets.only(top: 3),
+                    ),
+                    isSerial != true
+                        ? SizedBox()
+                        : Icon(
+                            Icons.keyboard_arrow_down_rounded,
+                            color: cB,
+                          )
+                  ],
+                ),
               ),
             )),
         //! Text Columns

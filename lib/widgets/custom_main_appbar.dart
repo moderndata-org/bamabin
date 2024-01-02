@@ -1,3 +1,4 @@
+import 'package:bamabin/widgets/MyText.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -19,10 +20,12 @@ class CustomMainAppBar extends GetView<PublicController> {
           decoration: BoxDecoration(
               gradient: controller.isVisibleAppbar.value
                   ? null
-                  : LinearGradient(
-                      colors: [cB, Colors.transparent],
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter)),
+                  : controller.bottomIndex.value != 2
+                      ? null
+                      : LinearGradient(
+                          colors: [cB, Colors.transparent],
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter)),
           child: Row(
             textDirection: TextDirection.rtl,
             children: [
@@ -32,7 +35,8 @@ class CustomMainAppBar extends GetView<PublicController> {
               MyTextButton(
                   onTap: () =>
                       controller.scaffolState.currentState!.openEndDrawer(),
-                  bgColor: controller.isVisibleAppbar.value
+                  bgColor: controller.isVisibleAppbar.value ||
+                          controller.bottomIndex != 2
                       ? cPrimaryDark
                       : Colors.transparent,
                   size: Size(40, 40),
@@ -44,23 +48,44 @@ class CustomMainAppBar extends GetView<PublicController> {
                           left: -4,
                           child: Icon(
                             Icons.menu_rounded,
-                            color:
-                                controller.isVisibleAppbar.value ? cGrey : cW,
+                            color: controller.isVisibleAppbar.value ||
+                                    controller.bottomIndex != 2
+                                ? cGrey
+                                : cW,
                           ))
                     ],
                   )),
               Spacer(),
-              controller.isVisibleAppbar.isFalse
-                  ? SizedBox()
-                  : Obx(() => controller.bottomIndex == 2
-                      ? SizedBox(
-                          height: 50,
-                          child: Image.asset('assets/images/ic_logotype.png'))
-                      : SizedBox()),
+              Obx(() {
+                Widget center = SizedBox();
+                if (controller.isVisibleAppbar.value) {
+                  if (controller.bottomIndex != 2) {
+                    center = MyText(
+                      text: '${controller.appBarCenterText}',
+                      size: 17,
+                      color: cY,
+                    );
+                  } else {
+                    center = SizedBox(
+                        height: 50,
+                        child: Image.asset('assets/images/ic_logotype.png'));
+                  }
+                } else if (controller.bottomIndex != 2) {
+                  center = MyText(
+                    text: '${controller.appBarCenterText}',
+                    size: 17,
+                    color: cY,
+                  );
+                }
+                return center;
+              }),
               Spacer(),
               MyTextButton(
-                  onTap: () {},
-                  bgColor: controller.isVisibleAppbar.value
+                  onTap: () {
+                    Get.toNamed('/search');
+                  },
+                  bgColor: controller.isVisibleAppbar.value ||
+                          controller.bottomIndex != 2
                       ? cPrimaryDark
                       : Colors.transparent,
                   size: Size(40, 40),
@@ -72,7 +97,10 @@ class CustomMainAppBar extends GetView<PublicController> {
                         left: -3,
                         child: Icon(
                           Icons.manage_search,
-                          color: controller.isVisibleAppbar.value ? cGrey : cW,
+                          color: controller.isVisibleAppbar.value ||
+                                  controller.bottomIndex != 2
+                              ? cGrey
+                              : cW,
                         ),
                       ),
                     ],

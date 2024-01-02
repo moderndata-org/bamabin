@@ -68,7 +68,9 @@ class DownloadSerialDialog extends GetView<PublicController> {
                                 ),
                                 MyText(
                                   textDirection: TextDirection.rtl,
-                                  text: 'لینک دانلود سریال $title',
+                                  text: actionMethod == ActionMethod.Download
+                                      ? 'لینک دانلود سریال $title'
+                                      : 'پخش سریال $title',
                                   color: cB,
                                   size: 15,
                                 ),
@@ -128,6 +130,7 @@ class DownloadSerialDialog extends GetView<PublicController> {
                         ),
                         header: MovieItemDialogWidget(
                           isSerial: true,
+                          actionMethod: actionMethod,
                           encoder: 'YIFY',
                           movieSize: '5GB',
                           movieType: MovieType.Subtitle,
@@ -155,7 +158,9 @@ class DownloadSerialDialog extends GetView<PublicController> {
                                   (index) => MyTextButton(
                                       size: Size(80, 40),
                                       bgColor: cPrimary,
-                                      onTap: () {},
+                                      onTap: () {
+                                        Get.toNamed('/player');
+                                      },
                                       child: MyText(
                                         text: 'قسمت ${index + 1}',
                                         size: 12,

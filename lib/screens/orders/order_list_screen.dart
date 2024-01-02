@@ -49,47 +49,22 @@ class _OrderlistScreenState extends State<OrderlistScreen> {
           height: Get.height,
           child: Directionality(
             textDirection: TextDirection.rtl,
-            child: ListView(
+            child: ListView.builder(
+              itemCount: 10,
               physics: BouncingScrollPhysics(),
               padding:
                   EdgeInsets.only(top: 10, left: 20, right: 20, bottom: 60),
-              children: [
-                OrderItemWidget(
-                  title: 'لیست جدید من',
-                  itemCount: '2',
-                  type: 'فیلم',
-                  date: '1402/10/22',
-                  edit: () => showDialog(
-                    barrierColor: cBgDialogColor,
-                    context: context,
-                    builder: (context) => OrderlistEditListDialog(),
-                  ),
+              itemBuilder: (context, index) => OrderItemWidget(
+                title: 'لیست جدید من',
+                itemCount: '2',
+                type: 'فیلم',
+                date: '1402/10/22',
+                edit: () => showDialog(
+                  barrierColor: cBgDialogColor,
+                  context: context,
+                  builder: (context) => OrderlistEditListDialog(),
                 ),
-                OrderItemWidget(
-                  title: 'لیست جدید من',
-                  itemCount: '2',
-                  type: 'فیلم',
-                  date: '1402/10/22',
-                ),
-                OrderItemWidget(
-                  title: 'لیست جدید من',
-                  itemCount: '2',
-                  type: 'فیلم',
-                  date: '1402/10/22',
-                ),
-                OrderItemWidget(
-                  title: 'لیست جدید من',
-                  itemCount: '2',
-                  type: 'فیلم',
-                  date: '1402/10/22',
-                ),
-                OrderItemWidget(
-                  title: 'لیست جدید من',
-                  itemCount: '2',
-                  type: 'فیلم',
-                  date: '1402/10/22',
-                ),
-              ],
+              ),
             ),
           )),
     ));

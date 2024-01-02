@@ -1,6 +1,9 @@
+import 'package:bamabin/constant/classes.dart';
 import 'package:bamabin/constant/colors.dart';
 import 'package:bamabin/constant/strings.dart';
 import 'package:bamabin/controller/public_controller.dart';
+import 'package:bamabin/screens/dialogs/download_movie_dialog.dart';
+import 'package:bamabin/screens/dialogs/download_serial_dialog.dart';
 import 'package:bamabin/widgets/MyCircularProgress.dart';
 import 'package:bamabin/widgets/MyText.dart';
 import 'package:bamabin/widgets/MyTextButton.dart';
@@ -25,15 +28,16 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
     controller.isLoadingTrailer(true);
     controller.trailerController = VideoPlayerController.networkUrl(Uri.parse(
         'https://flutter.github.io/assets-for-api-docs/assets/videos/bee.mp4'))
-      ..initialize().then((value) {});
-    controller.trailerController.addListener(() {
-      if (controller.trailerController.value.position ==
-          controller.trailerController.value.duration) {
-        controller.isPlayingTrailer(false);
-        controller.trailerController.seekTo(Duration.zero);
-      }
-      controller.isLoadingTrailer(false);
-    });
+      ..initialize().then((value) {
+        controller.isLoadingTrailer(false);
+        controller.trailerController.addListener(() {
+          if (controller.trailerController.value.position ==
+              controller.trailerController.value.duration) {
+            controller.isPlayingTrailer(false);
+            controller.trailerController.seekTo(Duration.zero);
+          }
+        });
+      });
     super.initState();
   }
 
@@ -638,7 +642,7 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
   }
 }
 
-class ButtonSectionMovieDetailWidget extends StatelessWidget {
+class ButtonSectionMovieDetailWidget extends GetView<PublicController> {
   const ButtonSectionMovieDetailWidget({
     super.key,
   });
@@ -723,7 +727,22 @@ class ButtonSectionMovieDetailWidget extends StatelessWidget {
                   borderRadius: 5,
                   padding: EdgeInsets.zero,
                   fgColor: cY,
-                  onTap: () {},
+                  onTap: () {
+                    showDialog(
+                      context: context,
+                      builder: (context) => controller
+                              .isSerialOpenedDetail.value
+                          ? DownloadSerialDialog(
+                              actionMethod: ActionMethod.Download,
+                              title: 'Monarch',
+                            )
+                          : DownloadMovieDialog(
+                              actionMethod: ActionMethod.Download,
+                              isSerial: controller.isSerialOpenedDetail.value,
+                              title: 'Forrest',
+                            ),
+                    );
+                  },
                   bgColor: cBgBtnMovieDetail,
                   boxShadow: BoxShadow(
                       blurRadius: 30,
@@ -754,7 +773,22 @@ class ButtonSectionMovieDetailWidget extends StatelessWidget {
                   borderRadius: 5,
                   padding: EdgeInsets.zero,
                   fgColor: cY,
-                  onTap: () {},
+                  onTap: () {
+                    print(controller.isSerialOpenedDetail.value);
+                    showDialog(
+                      context: context,
+                      builder: (context) =>
+                          controller.isSerialOpenedDetail.value
+                              ? DownloadSerialDialog(
+                                  actionMethod: ActionMethod.Play,
+                                  title: 'Monarch',
+                                )
+                              : DownloadMovieDialog(
+                                  actionMethod: ActionMethod.Play,
+                                  title: 'Forrest',
+                                ),
+                    );
+                  },
                   bgColor: cBgBtnMovieDetail,
                   boxShadow: BoxShadow(
                       blurRadius: 30,

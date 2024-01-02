@@ -76,6 +76,7 @@ class SearchAdvancedDialog extends StatelessWidget {
                         alignedDropdown: true,
                         child: DropdownButton(
                           // isDense: true,
+                          dropdownColor: cPrimary,
 
                           borderRadius: BorderRadius.circular(10),
                           hint: MyText(text: 'رده سنی'),
@@ -119,6 +120,7 @@ class SearchAdvancedDialog extends StatelessWidget {
                         child: DropdownButton(
                           // isDense: true,
 
+                          dropdownColor: cPrimary,
                           borderRadius: BorderRadius.circular(10),
                           hint: MyText(text: 'نوع'),
                           // isExpanded: true,
@@ -166,6 +168,7 @@ class SearchAdvancedDialog extends StatelessWidget {
                         child: DropdownButton(
                           // isDense: true,
 
+                          dropdownColor: cPrimary,
                           borderRadius: BorderRadius.circular(10),
                           hint: MyText(text: 'کشور'),
                           // isExpanded: true,
@@ -208,6 +211,7 @@ class SearchAdvancedDialog extends StatelessWidget {
                         child: DropdownButton(
                           // isDense: true,
 
+                          dropdownColor: cPrimary,
                           borderRadius: BorderRadius.circular(10),
                           hint: MyText(text: 'ژانر'),
                           // isExpanded: true,
@@ -248,7 +252,8 @@ class SearchAdvancedDialog extends StatelessWidget {
                 style: TextStyle(color: cW, fontSize: 12),
                 textAlign: TextAlign.right,
               ),
-            ),           Container(
+            ),
+            Container(
               margin: EdgeInsets.only(right: 20, top: 12),
               alignment: Alignment.topRight,
               child: Text(
@@ -258,73 +263,56 @@ class SearchAdvancedDialog extends StatelessWidget {
               ),
             ),
             Padding(
-                padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-                child:
-                Row(
+                padding:
+                    const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                child: Row(
                   children: [
                     MyTextField(
-                      width: Get.width/3,
-                      borderRadius:10,
+                      width: Get.width / 3,
+                      borderRadius: 10,
                       height: 41,
-                      hint:"تا سال",
+                      hint: "تا سال",
                       controller: new TextEditingController(),
                       maxLines: 3,
-
                     ),
-                    SizedBox(width: 10,),
+                    SizedBox(
+                      width: 10,
+                    ),
                     MyTextField(
-                      width: Get.width/3,
-                      borderRadius:10,
+                      width: Get.width / 3,
+                      borderRadius: 10,
                       height: 41,
-                      hint:"از سال",
+                      hint: "از سال",
                       controller: new TextEditingController(),
                       maxLines: 3,
-
                     ),
-
                   ],
-                )
-
-
-
-
-
-
-            ),
+                )),
             Padding(
-                padding: const EdgeInsets.symmetric( horizontal: 10),
-                child:
-                Row(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                child: Row(
                   children: [
                     MyTextField(
-                      width: Get.width/3,
-                      borderRadius:10,
+                      width: Get.width / 3,
+                      borderRadius: 10,
                       height: 41,
-                      hint:"امتیاز تا",
+                      hint: "امتیاز تا",
                       controller: new TextEditingController(),
                       maxLines: 3,
-
                     ),
-                    SizedBox(width: 10,),
+                    SizedBox(
+                      width: 10,
+                    ),
                     MyTextField(
-                      width: Get.width/3,
-                      borderRadius:10,
+                      width: Get.width / 3,
+                      borderRadius: 10,
                       height: 41,
-                      hint:"امتیاز از",
+                      hint: "امتیاز از",
                       controller: new TextEditingController(),
                       maxLines: 3,
-
                     ),
-
                   ],
-                )
-
-
-
-
-
-
-            ),
+                )),
             SizedBox(
               height: 20,
             ),

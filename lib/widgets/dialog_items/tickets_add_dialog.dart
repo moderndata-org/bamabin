@@ -50,7 +50,7 @@ class TicketsAddDialog extends StatelessWidget {
                             bottomLeft: Radius.circular(10),
                           )),
                       child: MyText(
-                        text:"افزودن تیکت",
+                        text: "افزودن تیکت",
                         color: cB,
                         size: 15,
                       ),
@@ -65,9 +65,9 @@ class TicketsAddDialog extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
               child: MyTextField(
-                borderRadius:10,
+                borderRadius: 10,
                 height: 41,
-                hint:"عنوان",
+                hint: "عنوان",
                 controller: new TextEditingController(),
                 maxLines: 3,
                 suffixIcon: Icon(
@@ -78,7 +78,7 @@ class TicketsAddDialog extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal:10),
+              padding: const EdgeInsets.symmetric(horizontal: 10),
               child: Container(
                 margin: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
                 width: Get.width,
@@ -90,6 +90,7 @@ class TicketsAddDialog extends StatelessWidget {
                       alignedDropdown: true,
                       child: DropdownButton(
                         // isDense: true,
+                        dropdownColor: cPrimary,
 
                         borderRadius: BorderRadius.circular(10),
                         hint: MyText(text: 'دپارتمان'),
@@ -122,22 +123,12 @@ class TicketsAddDialog extends StatelessWidget {
                     borderRadius: BorderRadius.circular(10)),
               ),
             ),
-
-
-
-
-
-
-
-
-
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
               child: MyTextField(
-
-                borderRadius:10,
+                borderRadius: 10,
                 height: 90,
-                hint:"توضیحات",
+                hint: "توضیحات",
                 controller: new TextEditingController(),
                 maxLines: 3,
                 suffixIcon: Icon(
@@ -147,13 +138,12 @@ class TicketsAddDialog extends StatelessWidget {
                 ),
               ),
             ),
-
             MyTextButton(
                 onTap: () {},
                 size: Size(Get.width / 1.4, 35),
                 bgColor: cY,
                 child: MyText(
-                  text:"ارسال تیکت",
+                  text: "ارسال تیکت",
                   size: 14,
                   color: cB,
                 )),

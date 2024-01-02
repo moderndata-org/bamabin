@@ -57,7 +57,7 @@ class _OrderlistAddMovieWithSearchDialogState
                       controller: txtSearch!,
                       height: 45,
                       textDirection: TextDirection.rtl,
-                      hint: 'جستجو...',
+                      hint: '...جستجو',
                       maxLines: 1,
                       suffixIcon: Icon(
                         Icons.article_rounded,
@@ -96,17 +96,15 @@ class _OrderlistAddMovieWithSearchDialogState
               crossAxisCount: 2,
               children: List.generate(
                   20,
-                  (index) => Center(
-                        child: MovieItemWidget(
-                          title: 'Monarch',
-                          isSerial: index % 2 == 0,
-                          isAddItem: true,
-                        ),
+                  (index) => MovieItemWidget(
+                        title: 'Monarch',
+                        isSerial: index % 2 == 0,
+                        isAddItem: true,
                       )),
             )),
             MyTextButton(
                 size: Size(Get.width * .7, 35),
-                onTap: () =>Navigator.pop(context),
+                onTap: () => Navigator.pop(context),
                 bgColor: cY,
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.center,

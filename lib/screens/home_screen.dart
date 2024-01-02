@@ -1,6 +1,4 @@
 import 'package:bamabin/controller/public_controller.dart';
-import 'package:bamabin/screens/dialogs/download_movie_dialog.dart';
-import 'package:bamabin/screens/dialogs/download_serial_dialog.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
@@ -93,60 +91,31 @@ class HomeScreen extends GetView<PublicController> {
           width: Get.width,
           child: Directionality(
             textDirection: TextDirection.rtl,
-            child: ListView(
+            child: ListView.builder(
+              itemCount: 10,
               physics: BouncingScrollPhysics(),
               padding: EdgeInsets.symmetric(horizontal: 10),
               scrollDirection: Axis.horizontal,
-              children: [
-                MovieItemWidget(
-                  onTap: () {
-                    showDialog(
-                        context: context,
-                        builder: (context) => DownloadSerialDialog(
-                              title: 'Monarch',
-                            ));
-                  },
-                  isSerial: true,
-                  title: 'show Dialog',
-                  year: '1920',
-                  imdbRate: '9',
-                ),
-                MovieItemWidget(
-                  onTap: () {
-                    showDialog(
-                      context: context,
-                      builder: (context) =>
-                          DownloadMovieDialog(title: 'Forest'),
-                    );
-                  },
-                  title: 'Forrest Gump',
-                  isSerial: false,
-                  year: '1994',
-                  hasDubbed: true,
-                  hasSubtitle: true,
-                  imdbRate: '8.7',
-                  image: 'assets/images/bg_forrest.jpg',
-                ),
-                MovieItemWidget(
-                  onTap: () => Get.toNamed('/movie-detail'),
-                  isSerial: false,
-                  year: '2010',
-                  hasDubbed: true,
-                  hasSubtitle: false,
-                  imdbRate: '5.7',
-                ),
-                MovieItemWidget(
-                  isSerial: false,
-                  year: '2010',
-                  hasDubbed: false,
-                  hasSubtitle: true,
-                  imdbRate: '6',
-                ),
-              ],
+              itemBuilder: (context, index) => MovieItemWidget(
+                onTap: () {
+                  Get.toNamed('/movie-detail');
+                  controller.isSerialOpenedDetail(true);
+                },
+                isSerial: true,
+                title: 'Monarch',
+                year: '1920',
+                imdbRate: '9',
+              ),
             ),
           ),
         ),
-        MainTitleWidget(title: 'ژانر ‌ها'),
+        MainTitleWidget(
+          title: 'ژانر ‌ها',
+          onTapMore: () {
+            controller.bottomIndex(5);
+            controller.appBarCenterText('ژانر ها');
+          },
+        ),
         SizedBox(
           height: 45,
           width: Get.width,
@@ -202,45 +171,30 @@ class HomeScreen extends GetView<PublicController> {
                 ],
               )),
         ),
-        MainTitleWidget(title: 'سریال های جدید'),
+        MainTitleWidget(title: 'فیلم های جدید'),
         SizedBox(
           height: 205,
           width: Get.width,
           child: Directionality(
             textDirection: TextDirection.rtl,
-            child: ListView(
+            child: ListView.builder(
+              itemCount: 15,
+              itemBuilder: (context, index) => MovieItemWidget(
+                onTap: () {
+                  Get.toNamed('/movie-detail');
+                  controller.isSerialOpenedDetail(false);
+                },
+                title: 'Forrest Gump',
+                isSerial: false,
+                year: '1994',
+                hasDubbed: true,
+                hasSubtitle: true,
+                imdbRate: '8.7',
+                image: 'assets/images/bg_forrest.jpg',
+              ),
               physics: BouncingScrollPhysics(),
               padding: EdgeInsets.symmetric(horizontal: 10),
               scrollDirection: Axis.horizontal,
-              children: [
-                MovieItemWidget(
-                  isSerial: true,
-                  year: '1920',
-                ),
-                MovieItemWidget(
-                  title: 'Forrest Gump',
-                  isSerial: false,
-                  year: '1994',
-                  hasDubbed: true,
-                  hasSubtitle: true,
-                  imdbRate: '8.7',
-                  image: 'assets/images/bg_forrest.jpg',
-                ),
-                MovieItemWidget(
-                  isSerial: false,
-                  year: '2010',
-                  hasDubbed: true,
-                  hasSubtitle: false,
-                  imdbRate: '5.7',
-                ),
-                MovieItemWidget(
-                  isSerial: false,
-                  year: '2010',
-                  hasDubbed: false,
-                  hasSubtitle: true,
-                  imdbRate: '6',
-                ),
-              ],
             ),
           ),
         ),

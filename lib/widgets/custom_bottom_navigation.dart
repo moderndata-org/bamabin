@@ -1,7 +1,6 @@
 import 'package:bamabin/controller/public_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 import '../constant/colors.dart';
 import 'bottomnav_item_widget.dart';
 
@@ -20,6 +19,7 @@ class CustomBottomNavigation extends GetView<PublicController> {
             return BottomNavButtonWidget(
               onTap: () {
                 controller.bottomIndex(0);
+                controller.appBarCenterText('فیلم');
                 controller.runBottomNavAnimation();
               },
               iconActive: 'assets/svg/film_s.svg',
@@ -32,6 +32,7 @@ class CustomBottomNavigation extends GetView<PublicController> {
             return BottomNavButtonWidget(
               onTap: () {
                 controller.bottomIndex(1);
+                controller.appBarCenterText('سریال');
                 controller.runBottomNavAnimation();
               },
               iconActive: 'assets/svg/serial_s.svg',
@@ -56,6 +57,7 @@ class CustomBottomNavigation extends GetView<PublicController> {
             return BottomNavButtonWidget(
               onTap: () {
                 controller.bottomIndex(3);
+                controller.appBarCenterText('انیمیشن');
                 controller.runBottomNavAnimation();
               },
               iconActive: 'assets/svg/animation_s.svg',
@@ -68,6 +70,7 @@ class CustomBottomNavigation extends GetView<PublicController> {
             return BottomNavButtonWidget(
               onTap: () {
                 controller.bottomIndex(4);
+                controller.appBarCenterText('انیمه');
                 controller.runBottomNavAnimation();
               },
               iconActive: 'assets/svg/anime_s.svg',

@@ -18,6 +18,7 @@ class GenreScreen extends StatelessWidget {
           ),
           Expanded(
               child: GridView.builder(
+            physics: BouncingScrollPhysics(),
             padding: EdgeInsets.symmetric(horizontal: 10),
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2, // Number of columns
