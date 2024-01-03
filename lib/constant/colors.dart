@@ -31,7 +31,7 @@ Color cHint = const Color.fromARGB(255, 124, 124, 124);
 Color cDrawerGrey = const Color.fromARGB(255, 217, 217, 217);
 Color cSuccessColor = const Color.fromARGB(255, 29, 248, 13);
 Color cWarningColor = Colors.amber;
-
+Color cCommentColor = const Color.fromARGB(255, 148, 148, 148);
 //--------------------Shadows-------------------------------
 BoxShadow bs010 = BoxShadow(
     blurRadius: 35,

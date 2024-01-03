@@ -8,6 +8,7 @@ import 'package:bamabin/widgets/MyCircularProgress.dart';
 import 'package:bamabin/widgets/MyText.dart';
 import 'package:bamabin/widgets/MyTextButton.dart';
 import 'package:bamabin/widgets/collections_section.dart';
+import 'package:bamabin/widgets/comments_section.dart';
 import 'package:bamabin/widgets/movie_item_widget.dart';
 import 'package:bamabin/widgets/scores_section.dart';
 import 'package:bamabin/widgets/user_list_section.dart';
@@ -650,7 +651,11 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
           SizedBox(
             height: 15,
           ),
-          UserListSection()
+          UserListSection(),
+          SizedBox(
+            height: 15,
+          ),
+          CommentsSection()
         ],
       ),
     );

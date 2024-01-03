@@ -1,12 +1,11 @@
+import 'package:bamabin/constant/colors.dart';
 import 'package:bamabin/widgets/MyText.dart';
-import 'package:bamabin/widgets/collection_item.dart';
+import 'package:bamabin/widgets/comment_item.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../constant/colors.dart';
-
-class UserListSection extends StatelessWidget {
-  const UserListSection({super.key});
+class CommentsSection extends StatelessWidget {
+  const CommentsSection({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -23,14 +22,14 @@ class UserListSection extends StatelessWidget {
                 width: 15,
               ),
               Icon(
-                Icons.fact_check,
+                Icons.question_answer,
                 color: cW,
               ),
               SizedBox(
                 width: 10,
               ),
               MyText(
-                text: 'لیست مرتبط کاربران',
+                text: 'نظرات',
                 size: 15,
               ),
             ],
@@ -38,19 +37,12 @@ class UserListSection extends StatelessWidget {
           SizedBox(
             height: 10,
           ),
-          SizedBox(
-            width: Get.width,
-            height: 250,
-            child: Directionality(
-                textDirection: TextDirection.rtl,
-                child: ListView.builder(
-                  padding: EdgeInsets.symmetric(horizontal: 15),
-                  physics: BouncingScrollPhysics(),
-                  itemCount: 10,
-                  scrollDirection: Axis.horizontal,
-                  itemBuilder: (context, index) => CollectionItem(),
-                )),
-          )
+          CommentItem(
+            isReply: false,
+          ),
+          CommentItem(
+            isReply: true,
+          ),
         ],
       ),
     );

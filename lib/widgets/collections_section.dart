@@ -49,7 +49,14 @@ class CollectionsSection extends StatelessWidget {
                   physics: BouncingScrollPhysics(),
                   itemCount: 10,
                   scrollDirection: Axis.horizontal,
-                  itemBuilder: (context, index) => CollectionItem(),
+                  itemBuilder: (context, index) => MovieItemWidget(
+                    title: 'Monarch',
+                    hasSubtitle: true,
+                    hasDubbed: true,
+                    imdbRate: '5',
+                    isSerial: true,
+                    year: '2020',
+                  ),
                 )),
           )
         ],
