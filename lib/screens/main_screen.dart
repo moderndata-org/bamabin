@@ -26,13 +26,12 @@ class MainScreen extends GetView<PublicController> {
             width: Get.width,
             height: Get.height,
             child: Obx(() {
-              print(controller.bottomIndex.value);
               return IndexedStack(
                 index: controller.bottomIndex.value,
                 children: [
-                  PartScreen(),
-                  PartScreen(),
                   HomeScreen(),
+                  PartScreen(),
+                  PartScreen(),
                   PartScreen(),
                   PartScreen(),
                   GenreScreen()

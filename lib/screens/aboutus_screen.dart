@@ -39,7 +39,7 @@ class AboutusScreen extends GetView<PublicController> {
               ),
               width: Get.width * .9,
               decoration: BoxDecoration(
-                  color: cPrimaryDark, borderRadius: BorderRadius.circular(20)),
+                  color: cPrimaryDark, borderRadius: BorderRadius.circular(5)),
             ),
             Spacer(),
             Row(
@@ -51,15 +51,17 @@ class AboutusScreen extends GetView<PublicController> {
                     child: SvgPicture.asset('assets/svg/ic_twitter.svg')),
                 SizedBox.square(
                     dimension: 50,
-                    child: SvgPicture.asset(
-                        'assets/svg/ic_telegram_aboutus.svg')),
+                    child:
+                        SvgPicture.asset('assets/svg/ic_telegram_aboutus.svg')),
                 SizedBox.square(
                     dimension: 50,
                     child: SvgPicture.asset(
                         'assets/svg/ic_instagram_aboutus.svg')),
               ],
             ),
-            SizedBox(height: 20,),
+            SizedBox(
+              height: 20,
+            ),
           ],
         ),
       ),

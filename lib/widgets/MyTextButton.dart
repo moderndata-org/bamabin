@@ -34,7 +34,7 @@ class MyTextButton extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
           boxShadow: boxShadow == null ? [] : [boxShadow!],
-          borderRadius: BorderRadius.circular(borderRadius ?? 10)),
+          borderRadius: BorderRadius.circular(borderRadius ?? 5)),
       child: TextButton(
           style: TextButton.styleFrom(
             elevation: elevation,
@@ -45,7 +45,7 @@ class MyTextButton extends StatelessWidget {
             backgroundColor: bgColor ?? cPrimaryDark,
             shape: RoundedRectangleBorder(
               side: BorderSide(color: strokeColor ?? Colors.transparent),
-              borderRadius: BorderRadius.circular(borderRadius ?? 10),
+              borderRadius: BorderRadius.circular(borderRadius ?? 5),
             ),
           ),
           onPressed: onTap,

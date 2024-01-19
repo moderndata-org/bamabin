@@ -1,6 +1,7 @@
 import 'package:bamabin/constant/colors.dart';
 import 'package:bamabin/widgets/MyText.dart';
 import 'package:bamabin/widgets/MyTextButton.dart';
+import 'package:bamabin/widgets/back_button_custom.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -15,11 +16,12 @@ class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
     return Container(
       color: cAppBar,
       height: 60,
-      padding: EdgeInsets.symmetric(horizontal: 20),
+      padding: EdgeInsets.symmetric(horizontal: 5),
       child: Row(
         textDirection: TextDirection.rtl,
         children: [
           MyTextButton(
+              bgColor: Colors.transparent,
               onTap: null,
               size: Size(40, 40),
               child: Stack(
@@ -29,26 +31,15 @@ class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
           Spacer(),
           MyText(
             text: '$title',
-            color: cY,
-            size: 15,
+            color: cW,
+            size: 17,
+            fontWeight: FontWeight.w700,
+            shadows: [bsText],
           ),
           Spacer(),
-          MyTextButton(
-              onTap: () => Navigator.pop(context),
-              size: Size(40, 40),
-              child: Stack(
-                clipBehavior: Clip.none,
-                children: [
-                  Positioned(
-                    top: 0,
-                    left: -4,
-                    child: Icon(
-                      Icons.arrow_back_ios_new_rounded,
-                      color: cGrey,
-                    ),
-                  ),
-                ],
-              )),
+          BackButtonCustom(
+            hasPaddin: false,
+          ),
         ],
       ),
     );

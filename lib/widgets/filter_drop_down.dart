@@ -7,7 +7,8 @@ import '../constant/colors.dart';
 import 'MyText.dart';
 
 class FilterDropDown extends StatelessWidget {
-  const FilterDropDown({this.title,this.width,this.height,Key? key}) : super(key: key);
+  const FilterDropDown({this.title, this.width, this.height, Key? key})
+      : super(key: key);
   final double? width;
   final double? height;
   final String? title;
@@ -24,16 +25,22 @@ class FilterDropDown extends StatelessWidget {
             alignedDropdown: true,
             child: DropdownButton(
               // isDense: true,
-              icon: Icon(Icons.keyboard_arrow_down,color: Colors.black,),
+              icon: Icon(
+                Icons.keyboard_arrow_down,
+                color: Colors.black,
+              ),
               alignment: Alignment.center,
-              borderRadius: BorderRadius.circular(15),
+              borderRadius: BorderRadius.circular(5),
               dropdownColor: cPrimary,
-              hint: MyText(text: '$title',color: Colors.black,textAlign: TextAlign.center,fontWeight: FontWeight.bold),
+              hint: MyText(
+                  text: '$title',
+                  color: Colors.black,
+                  textAlign: TextAlign.center,
+                  fontWeight: FontWeight.bold),
               // isExpanded: true,
               items: [
                 DropdownMenuItem(
                     value: 1,
-
                     alignment: Alignment.centerRight,
                     child: SizedBox(width: 40, child: MyText(text: '1'))),
                 DropdownMenuItem(
@@ -53,7 +60,7 @@ class FilterDropDown extends StatelessWidget {
       decoration: BoxDecoration(
           color: cAccent,
           border: Border.all(color: cStrokeGrey),
-          borderRadius: BorderRadius.circular(15)),
+          borderRadius: BorderRadius.circular(5)),
     );
   }
 }

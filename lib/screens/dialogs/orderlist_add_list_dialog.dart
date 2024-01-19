@@ -40,7 +40,7 @@ class _OrderlistAddListDialogState extends State<OrderlistAddListDialog> {
       surfaceTintColor: cB,
       elevation: 20,
       backgroundColor: cPrimary,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
       child: SizedBox(
         width: Get.width,
         child: Column(
@@ -70,8 +70,8 @@ class _OrderlistAddListDialogState extends State<OrderlistAddListDialog> {
                       decoration: BoxDecoration(
                           color: cY,
                           borderRadius: BorderRadius.only(
-                            bottomRight: Radius.circular(10),
-                            bottomLeft: Radius.circular(10),
+                            bottomRight: Radius.circular(5),
+                            bottomLeft: Radius.circular(5),
                           )),
                       child: MyText(
                         text: 'افزودن لیست',
@@ -111,7 +111,7 @@ class _OrderlistAddListDialogState extends State<OrderlistAddListDialog> {
                     alignedDropdown: true,
                     child: DropdownButton(
                       // isDense: true,
-                      borderRadius: BorderRadius.circular(15),
+                      borderRadius: BorderRadius.circular(5),
                       dropdownColor: cPrimary,
                       hint: MyText(text: '1'),
                       // isExpanded: true,
@@ -140,7 +140,7 @@ class _OrderlistAddListDialogState extends State<OrderlistAddListDialog> {
               decoration: BoxDecoration(
                   color: cBgTextfield,
                   border: Border.all(color: cStrokeGrey),
-                  borderRadius: BorderRadius.circular(15)),
+                  borderRadius: BorderRadius.circular(5)),
             ),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),

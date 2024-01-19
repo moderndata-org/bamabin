@@ -8,7 +8,7 @@ class CollectionItem extends StatelessWidget {
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 5),
       child: ClipRRect(
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(5),
         child: Container(
           width: 170,
           height: 100,

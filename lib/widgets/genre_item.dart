@@ -1,44 +1,48 @@
 import 'package:bamabin/constant/colors.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'dart:ui' as ui;
 
 class GenreItem extends StatelessWidget {
-  const GenreItem({Key? key}) : super(key: key);
+  const GenreItem(
+      {this.height, this.width, this.margin, this.boxShadow, Key? key})
+      : super(key: key);
+  final double? width;
+  final double? height;
+  final EdgeInsetsGeometry? margin;
+  final BoxShadow? boxShadow;
 
   @override
   Widget build(BuildContext context) {
     return Container(
+      width: width,
+      height: height,
+      margin: margin,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(8.0),
-        image: DecorationImage(
-          image: AssetImage('assets/images/genre_img.png'),
-          fit: BoxFit.cover,
-        ),
-        boxShadow: [bs010]
-      ),
+          borderRadius: BorderRadius.circular(5),
+          image: DecorationImage(
+            image: AssetImage('assets/images/genre_img.png'),
+            fit: BoxFit.cover,
+          ),
+          boxShadow: boxShadow == null ? [bs010] : [boxShadow!]),
       child: ClipRRect(
-        borderRadius: BorderRadius.circular(8.0),
+        borderRadius: BorderRadius.circular(5),
         child: BackdropFilter(
           filter: ui.ImageFilter.blur(sigmaX: 3.2, sigmaY: 3.2),
           child: Container(
             padding: EdgeInsets.only(top: 10.0),
-            color: Colors.black.withOpacity(0.3),
+            color: Colors.black.withOpacity(0.1),
             child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Icon(
                   Icons.emoji_emotions_outlined,
                   color: Colors.white,
                   size: 25,
                 ),
-                SizedBox(height: 10.0),
-
                 Text(
                   'کمدی',
                   style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 12.0,
-                  ),
+                      color: Colors.white, fontSize: 13, shadows: [bs010]),
                 ),
               ],
             ),

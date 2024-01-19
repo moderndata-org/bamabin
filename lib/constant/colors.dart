@@ -4,8 +4,16 @@ Color cB = Colors.black;
 Color cW = Colors.white;
 Color cR = Colors.red;
 Color cY = Colors.amber;
+
+//!-- main colors
+Color cPrimary = const Color(0xff1f3440);
+Color cPrimaryDark = const Color(0xff1A2B35);
+Color cSecondary = const Color(0xff2C6566);
+Color cSecondaryLight = const Color(0xff149d86);
+Color cAccent = const Color(0xffedc043);
+
+//!-- main colors
 Color cBgDialogColor = Colors.black.withOpacity(.8);
-Color cPrimary = const Color.fromARGB(255, 40, 40, 40);
 Color c4K = const Color.fromARGB(255, 10, 61, 98);
 Color cFHD = const Color.fromARGB(255, 229, 80, 57);
 Color cHD = const Color.fromARGB(255, 56, 173, 169);
@@ -15,11 +23,8 @@ Color cSubtitle = cAccent;
 Color cNone = const Color.fromARGB(255, 161, 161, 161);
 Color cBgBtnMovieDetail = const Color.fromARGB(255, 49, 49, 49);
 Color cHardSubSoftSub = const Color.fromARGB(255, 255, 43, 43);
-Color cAppBar = const Color.fromARGB(255, 35, 35, 35);
+Color cAppBar = cSecondaryLight;
 Color cPink = const Color.fromARGB(255, 244, 80, 80);
-Color cPrimaryBG = const Color.fromARGB(255, 40, 40, 40);
-Color cPrimaryDark = Color.fromARGB(255, 27, 27, 27);
-Color cAccent = const Color.fromARGB(255, 251, 177, 0);
 Color cGrey = const Color.fromARGB(255, 178, 178, 178);
 Color cBgTextfield = Color.fromARGB(255, 52, 52, 52);
 Color cBgOrderItem = Color.fromARGB(255, 52, 52, 52);
@@ -35,16 +40,24 @@ Color cCommentColor = const Color.fromARGB(255, 148, 148, 148);
 //--------------------Shadows-------------------------------
 BoxShadow bs010 = BoxShadow(
     blurRadius: 35,
-    offset: const Offset(0, 10),
-    color: Colors.black.withOpacity(.02));
+    offset: const Offset(0, 2),
+    color: Colors.black.withOpacity(.2));
 BoxShadow bs010o5 = BoxShadow(
     blurRadius: 35,
-    offset: const Offset(0, 10),
-    color: Colors.black.withOpacity(.05));
+    offset: const Offset(0, 2),
+    color: Colors.black.withOpacity(.5));
+BoxShadow bs010o7 = BoxShadow(
+    blurRadius: 35,
+    offset: const Offset(0, 2),
+    color: Colors.black.withOpacity(.7));
 BoxShadow bs010of = BoxShadow(
     blurRadius: 35,
     offset: const Offset(0, 10),
     color: Colors.black.withOpacity(.8));
+BoxShadow bsText = BoxShadow(
+    blurRadius: 10,
+    offset: const Offset(0, 3),
+    color: Colors.black.withOpacity(.4));
 
 //----------------LinearGradiends-----------------------
 

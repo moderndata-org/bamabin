@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:bamabin/widgets/MyTextField.dart';
+import 'package:bamabin/widgets/back_button_custom.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
@@ -35,93 +36,93 @@ class _SignInQrCodeScreenState extends State<SignInQrCodeScreen> {
     return SafeArea(
         child: Scaffold(
       body: Container(
-        child: Stack(children: [
-          Container(width: Get.width,height: Get.height,child: QRView(
-            key: qrKey,
-            onQRViewCreated: _onQRViewCreated,
-          ),),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          width: Get.width,
+          height: Get.height,
+          child: Stack(
             children: [
-              Row(
-                children: [
-                  Container(
-                    margin: EdgeInsets.only(top: 10, left: 10),
-                    child: MyTextButton(
-                        size: const Size(40, 40),
-                        onTap: () {},
-                        fgColor: cGrey,
-                        bgColor: cPrimaryDark,
-                        child: Icon(
-                          Icons.arrow_back_ios_new_rounded,
-                          color: cGrey,
-                        )),
-                  )
-                ],
-              ),
-              Container(),
               Container(
-                margin: EdgeInsets.only(bottom: 10),
+                width: Get.width,
+                height: Get.height,
+                child: QRView(
+                  key: qrKey,
+                  onQRViewCreated: _onQRViewCreated,
+                ),
+              ),
+              SizedBox(
+                width: Get.width,
+                height: Get.height,
                 child: Column(
                   children: [
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: BackButtonCustom(
+                        bgColor: cPrimary,
+                      ),
+                    ),
+                    Spacer(),
                     Container(
-                      padding: EdgeInsets.symmetric(vertical: 7),
-                      decoration: BoxDecoration(
-                          color: cPrimaryDark.withOpacity(0.7),
-                          borderRadius: BorderRadius.circular(8)),
-                      width: Get.width * 0.8,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
+                      margin: EdgeInsets.only(bottom: 10),
+                      child: Column(
                         children: [
-                          Text(
-                            "اسکن کنید یا کد را وارد کنید",
-                            style: TextStyle(color: Colors.white),
+                          Container(
+                            padding: EdgeInsets.symmetric(vertical: 7),
+                            decoration: BoxDecoration(
+                                color: cPrimaryDark.withOpacity(0.7),
+                                borderRadius: BorderRadius.circular(5)),
+                            width: Get.width * 0.8,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  "اسکن کنید یا کد را وارد کنید",
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                                SizedBox(
+                                  width: 5,
+                                ),
+                                Icon(
+                                  Icons.error,
+                                  color: cIconGrey,
+                                  size: 30,
+                                )
+                              ],
+                            ),
                           ),
                           SizedBox(
-                            width: 5,
+                            height: 10,
                           ),
-                          Icon(
-                            Icons.error,
-                            color: cIconGrey,
-                            size: 30,
+                          MyTextField(
+                            hint: "QRCode کد ",
+                            textStyle: TextStyle(color: Colors.white),
+                            controller: new TextEditingController(),
+                            width: Get.width * .8,
+                            textAlign: TextAlign.center,
+                            textDirection: TextDirection.rtl,
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          MyTextButton(
+                            bgColor: cAccent,
+                            child: Text(
+                              "ورود",
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                            onTap: () {},
                           )
                         ],
                       ),
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    MyTextField(
-                      hint: "QRCode کد ",
-                      textStyle: TextStyle(color: Colors.white),
-                      controller: new TextEditingController(),
-                      width: Get.width * .8,
-                      textAlign: TextAlign.center,
-                      textDirection: TextDirection.rtl,
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    MyTextButton(
-                      bgColor: cAccent,
-                      child: Text(
-                        "ورود",
-                        style: TextStyle(
-                            color: Colors.black, fontWeight: FontWeight.bold),
-                      ),
-                      onTap: () {},
                     )
                   ],
                 ),
-              )
+              ),
             ],
-          ),
-
-
-        ],)
-
-
-      ),
+          )),
     ));
   }
 

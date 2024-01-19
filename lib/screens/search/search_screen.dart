@@ -56,7 +56,7 @@ class SearchScreen extends StatelessWidget {
                       decoration: BoxDecoration(
                           color: cBgGener,
                           border: Border.all(color: cStrokeGrey, width: 3),
-                          borderRadius: BorderRadius.circular(10)),
+                          borderRadius: BorderRadius.circular(5)),
                       child: Row(
                         children: [
                           Expanded(
@@ -100,10 +100,12 @@ class SearchScreen extends StatelessWidget {
                   Expanded(
                     child: MyTextButton(
                         onTap: () {
-                          showDialog(context: context, builder: (context) {
-                            return SearchAdvancedDialog();
-                          },);
-
+                          showDialog(
+                            context: context,
+                            builder: (context) {
+                              return SearchAdvancedDialog();
+                            },
+                          );
                         },
                         size: Size(10, 30),
                         fgColor: Colors.black,
@@ -130,7 +132,6 @@ class SearchScreen extends StatelessWidget {
                   20,
                   (index) => MovieItemWidget(
                         title: 'Monarch',
-                        isSerial: index % 2 == 0,
                         hasDubbed: true,
                         hasSubtitle: true,
                         imdbRate: '5.5',

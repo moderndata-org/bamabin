@@ -16,7 +16,7 @@ class CustomDrawerMenu extends GetView<PublicController> {
       height: Get.height * .93,
       margin: EdgeInsets.only(right: 10),
       decoration: BoxDecoration(
-          color: cPrimary, borderRadius: BorderRadius.circular(20)),
+          color: cPrimary, borderRadius: BorderRadius.circular(5)),
       child: ListView(
           padding: EdgeInsets.symmetric(vertical: 20, horizontal: 10),
           physics: BouncingScrollPhysics(),
@@ -400,7 +400,7 @@ class CustomDrawerMenu extends GetView<PublicController> {
               width: Get.width,
               height: 45,
               decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
+                  borderRadius: BorderRadius.circular(5),
                   gradient: LinearGradient(colors: [
                     Color.fromARGB(255, 238, 42, 123),
                     Color.fromARGB(255, 98, 40, 215)
@@ -413,7 +413,7 @@ class CustomDrawerMenu extends GetView<PublicController> {
                       shadowColor: Colors.transparent,
                       backgroundColor: Colors.transparent,
                       shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10))),
+                          borderRadius: BorderRadius.circular(5))),
                   onPressed: () {},
                   child: Row(
                     textDirection: TextDirection.rtl,

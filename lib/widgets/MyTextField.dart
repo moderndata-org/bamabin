@@ -22,7 +22,7 @@ class MyTextField extends StatelessWidget {
     this.width,
     this.height,
     this.prefixIcon,
-    this.hasBorder,
+    this.hasBorder = false,
     this.paddingHorizontal,
     this.paddingVertical,
     this.textStyle,
@@ -76,7 +76,7 @@ class MyTextField extends StatelessWidget {
         textAlign: textAlign ?? TextAlign.right,
         inputFormatters: addlist(length, inputType),
         decoration: InputDecoration(
-          fillColor: cBgTextfield,
+          fillColor: cSecondary,
           prefixIcon: prefixIcon,
           suffixIcon: suffixIcon,
           filled: true,
@@ -86,18 +86,26 @@ class MyTextField extends StatelessWidget {
               vertical: paddingVertical ?? 15),
           hintText: hint,
           hintStyle: TextStyle(
-              height: 1,
-              color: hintColor ?? cHint,
-              fontSize: hintFontSize ?? 13),
-          enabledBorder: hasBorder == true
-              ? InputBorder.none
+              height: 1, color: hintColor ?? cW, fontSize: hintFontSize ?? 13),
+          enabledBorder: hasBorder == false
+              ? OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(
+                    borderRadius ?? 5,
+                  ),
+                  borderSide: BorderSide(color: Colors.transparent, width: 0))
               : OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(borderRadius ?? 15),
+                  borderRadius: BorderRadius.circular(
+                    borderRadius ?? 5,
+                  ),
                   borderSide: BorderSide(color: cStrokeGrey, width: 1)),
-          focusedBorder: hasBorder == true
-              ? InputBorder.none
+          focusedBorder: hasBorder == false
+              ? OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(
+                    borderRadius ?? 5,
+                  ),
+                  borderSide: BorderSide(color: Colors.transparent, width: 0))
               : OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(borderRadius ?? 15),
+                  borderRadius: BorderRadius.circular(borderRadius ?? 5),
                   borderSide: BorderSide(color: cStrokeGrey, width: 1)),
           disabledBorder: InputBorder.none,
         ),

@@ -95,7 +95,7 @@ class OrderItemWidget extends StatelessWidget {
     return Container(
       margin: EdgeInsets.only(top: 5, bottom: 5),
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(15), color: cBgOrderItem),
+          borderRadius: BorderRadius.circular(5), color: cBgOrderItem),
       width: Get.width,
       padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       child: Column(children: [

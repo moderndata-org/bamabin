@@ -38,7 +38,7 @@ class _OrderlistAddMovieWithSearchDialogState
       surfaceTintColor: cB,
       elevation: 20,
       backgroundColor: cPrimary,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
       child: SizedBox(
         width: Get.width,
         height: Get.height,
@@ -98,7 +98,6 @@ class _OrderlistAddMovieWithSearchDialogState
                   20,
                   (index) => MovieItemWidget(
                         title: 'Monarch',
-                        isSerial: index % 2 == 0,
                         isAddItem: true,
                       )),
             )),

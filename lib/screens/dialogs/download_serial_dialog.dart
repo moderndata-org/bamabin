@@ -52,8 +52,8 @@ class DownloadSerialDialog extends GetView<PublicController> {
                           decoration: BoxDecoration(
                               color: cY,
                               borderRadius: BorderRadius.only(
-                                bottomRight: Radius.circular(10),
-                                bottomLeft: Radius.circular(10),
+                                bottomRight: Radius.circular(5),
+                                bottomLeft: Radius.circular(5),
                               )),
                           child: Wrap(
                               textDirection: TextDirection.rtl,
@@ -110,8 +110,8 @@ class DownloadSerialDialog extends GetView<PublicController> {
                     headerBackgroundColorOpened: Colors.transparent,
                     contentBackgroundColor: cPrimary,
                     contentBorderColor: Colors.transparent,
-                    contentBorderRadius: 15,
-                    headerBorderRadius: 15,
+                    contentBorderRadius: 5,
+                    headerBorderRadius: 5,
                     headerBackgroundColor: cPrimary,
                     contentHorizontalPadding: 0,
                     contentBorderWidth: 0,
@@ -129,7 +129,6 @@ class DownloadSerialDialog extends GetView<PublicController> {
                           width: 0,
                         ),
                         header: MovieItemDialogWidget(
-                          isSerial: true,
                           actionMethod: actionMethod,
                           encoder: 'YIFY',
                           movieSize: '5GB',
@@ -146,7 +145,7 @@ class DownloadSerialDialog extends GetView<PublicController> {
                           decoration: BoxDecoration(
                             border: Border.all(color: cStrokeGrey),
                             color: cB,
-                            borderRadius: BorderRadius.circular(15),
+                            borderRadius: BorderRadius.circular(5),
                           ),
                           child: Wrap(
                               spacing: 10,

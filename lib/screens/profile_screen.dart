@@ -94,7 +94,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       width: Get.width * .9,
                       decoration: BoxDecoration(
                           color: cPrimaryDark,
-                          borderRadius: BorderRadius.circular(20)),
+                          borderRadius: BorderRadius.circular(5)),
                       child: Column(
                         children: [
                           MyTextField(

@@ -1,4 +1,5 @@
 import 'package:bamabin/constant/colors.dart';
+import 'package:bamabin/widgets/MyText.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -7,7 +8,7 @@ class SubscribeItem extends StatelessWidget {
   String? price;
   String? price_of;
 
-  SubscribeItem({this.is_selected,this.price, this.price_of, super.key});
+  SubscribeItem({this.is_selected, this.price, this.price_of, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -20,23 +21,22 @@ class SubscribeItem extends StatelessWidget {
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
             border: Border.all(
-              color:(is_selected==true) ?cAccent
-              :
-              cStrokeGrey,
+              color: (is_selected == true) ? cAccent : cStrokeGrey,
               width: 1,
             ),
             color: cPrimary),
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          textDirection: TextDirection.ltr,
           children: [
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Row(
                   children: [
-                    Text(
-                      "تومان",
-                      style: TextStyle(color: cPink, fontSize: 10),
+                    MyText(
+                      text: "تومان",
+                      color: cPink,
+                      size: 10,
                     ),
                     SizedBox(
                       width: 4,
@@ -47,6 +47,7 @@ class SubscribeItem extends StatelessWidget {
                           decoration: TextDecoration.lineThrough,
                           decorationColor: cPink, // red line
                           color: cPink,
+                          fontFamily: 'vazir',
                           fontSize: 13),
                     ),
                   ],
@@ -55,34 +56,38 @@ class SubscribeItem extends StatelessWidget {
                   children: [
                     Text(
                       "تومان",
-                      style: TextStyle(color: cW, fontSize: 10),
+                      style: TextStyle(
+                          color: cW, fontSize: 10, fontFamily: 'vazir'),
                     ),
                     SizedBox(
                       width: 4,
                     ),
                     Text(
                       "$price_of",
-                      style: TextStyle(color: cAccent, fontSize: 16),
+                      style: TextStyle(
+                          color: cAccent, fontSize: 16, fontFamily: 'vazir'),
                       textAlign: TextAlign.right,
                     ),
                   ],
                 ),
               ],
             ),
+            Spacer(),
             Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Text(
-                  "اشتراک 1 ماهه",
-                  style: TextStyle(color: cW, fontSize: 14),
+                MyText(
+                  text: "اشتراک 1 ماهه",
+                  size: 15,
                 ),
                 SizedBox(
                   width: 15,
                 ),
-                Image.asset(
-                  "assets/images/ic_star.png",
-                  width: 35,
-                  height: 35,
-                )
+                SizedBox(
+                    width: 35,
+                    height: 35,
+                    child:
+                        MyText(padding: EdgeInsets.only(top: 7), text: 'icon'))
               ],
             )
           ],

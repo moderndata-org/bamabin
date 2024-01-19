@@ -1,12 +1,11 @@
 import 'package:bamabin/controller/public_controller.dart';
+import 'package:bamabin/widgets/genre_item.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 import '../constant/colors.dart';
 import '../widgets/MyText.dart';
-import '../widgets/gener_item_main_widget.dart';
 import '../widgets/main_title_widget.dart';
 import '../widgets/movie_item_widget.dart';
 
@@ -76,18 +75,18 @@ class HomeScreen extends GetView<PublicController> {
               dotsCount: 2,
               position: controller.homeBannerIndex.value,
               decorator: DotsDecorator(
-                activeColor: cR,
+                activeColor: cSecondaryLight,
                 color: cGrey,
                 spacing: EdgeInsets.symmetric(vertical: 5, horizontal: 2),
-                size: const Size.square(7),
-                activeSize: const Size(20.0, 7),
+                size: const Size.square(6),
+                activeSize: const Size(20.0, 6),
                 activeShape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(5.0)),
               ),
             )),
         MainTitleWidget(title: 'سریال های جدید'),
         SizedBox(
-          height: 205,
+          height: 200,
           width: Get.width,
           child: Directionality(
             textDirection: TextDirection.rtl,
@@ -101,7 +100,6 @@ class HomeScreen extends GetView<PublicController> {
                   Get.toNamed('/movie-detail');
                   controller.isSerialOpenedDetail(true);
                 },
-                isSerial: true,
                 title: 'Monarch',
                 year: '1920',
                 imdbRate: '9',
@@ -117,58 +115,26 @@ class HomeScreen extends GetView<PublicController> {
           },
         ),
         SizedBox(
-          height: 45,
+          height: 60,
           width: Get.width,
           child: Directionality(
               textDirection: TextDirection.rtl,
-              child: ListView(
+              child: ListView.builder(
+                itemCount: 10,
                 physics: BouncingScrollPhysics(),
                 padding: EdgeInsets.symmetric(horizontal: 10),
                 scrollDirection: Axis.horizontal,
-                children: [
-                  GenerItemMainWidget(
-                    title: 'کمدی',
-                    onTap: () {
-                      controller.bottomIndex(5);
-                    },
+                itemBuilder: (context, index) => Center(
+                  child: GenreItem(
+                    width: 100,
+                    height: 55,
+                    margin: EdgeInsets.only(right: 5),
+                    boxShadow: BoxShadow(
+                        blurRadius: 2,
+                        offset: Offset(0, 1),
+                        color: Colors.black.withOpacity(.2)),
                   ),
-                  GenerItemMainWidget(
-                    title: 'علمی تخیلی',
-                    onTap: () {
-                      controller.bottomIndex(5);
-                    },
-                  ),
-                  GenerItemMainWidget(
-                    title: 'کمدی',
-                    onTap: () {
-                      controller.bottomIndex(5);
-                    },
-                  ),
-                  GenerItemMainWidget(
-                    title: 'علمی تخیلی',
-                    onTap: () {
-                      controller.bottomIndex(5);
-                    },
-                  ),
-                  GenerItemMainWidget(
-                    title: 'کمدی',
-                    onTap: () {
-                      controller.bottomIndex(5);
-                    },
-                  ),
-                  GenerItemMainWidget(
-                    title: 'علمی تخیلی',
-                    onTap: () {},
-                  ),
-                  GenerItemMainWidget(
-                    title: 'کمدی',
-                    onTap: () {},
-                  ),
-                  GenerItemMainWidget(
-                    title: 'علمی تخیلی',
-                    onTap: () {},
-                  ),
-                ],
+                ),
               )),
         ),
         MainTitleWidget(title: 'فیلم های جدید'),
@@ -185,7 +151,6 @@ class HomeScreen extends GetView<PublicController> {
                   controller.isSerialOpenedDetail(false);
                 },
                 title: 'Forrest Gump',
-                isSerial: false,
                 year: '1994',
                 hasDubbed: true,
                 hasSubtitle: true,
@@ -210,12 +175,10 @@ class HomeScreen extends GetView<PublicController> {
               scrollDirection: Axis.horizontal,
               children: [
                 MovieItemWidget(
-                  isSerial: true,
                   year: '1920',
                 ),
                 MovieItemWidget(
                   title: 'Forrest Gump',
-                  isSerial: false,
                   year: '1994',
                   hasDubbed: true,
                   hasSubtitle: true,
@@ -223,14 +186,12 @@ class HomeScreen extends GetView<PublicController> {
                   image: 'assets/images/bg_forrest.jpg',
                 ),
                 MovieItemWidget(
-                  isSerial: false,
                   year: '2010',
                   hasDubbed: true,
                   hasSubtitle: false,
                   imdbRate: '5.7',
                 ),
                 MovieItemWidget(
-                  isSerial: false,
                   year: '2010',
                   hasDubbed: false,
                   hasSubtitle: true,

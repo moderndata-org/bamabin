@@ -23,30 +23,45 @@ class MainTitleWidget extends StatelessWidget {
         SizedBox(
           width: 15,
         ),
+        Icon(
+          Icons.movie,
+          color: cSecondaryLight,
+          size: 20,
+        ),
+        SizedBox(
+          width: 5,
+        ),
         MyText(
           text: title ?? '',
-          padding: EdgeInsets.only(top: 5),
         ),
-        Spacer(),
+        SizedBox(
+          width: 10,
+        ),
+        Expanded(
+            child: Container(
+          height: 1,
+          color: cSecondaryLight,
+        )),
         MyTextButton(
-          size: Size(75, 45),
+          size: Size(80, 45),
           onTap: onTapMore ?? () {},
-          bgColor: cPrimary,
+          bgColor: Colors.transparent,
           child: Row(
             textDirection: TextDirection.rtl,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              Spacer(),
               MyText(
                 text: 'بیشتر',
-                color: cAccent,
+                color: cW,
               ),
               SizedBox(
-                width: 5,
+                width: 2,
               ),
               Icon(
                 Icons.arrow_back_ios_new_rounded,
-                color: cAccent,
-                size: 15,
+                color: cW,
+                size: 13,
               )
             ],
           ),

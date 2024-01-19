@@ -54,7 +54,6 @@ class CollectionsSection extends StatelessWidget {
                     hasSubtitle: true,
                     hasDubbed: true,
                     imdbRate: '5',
-                    isSerial: true,
                     year: '2020',
                   ),
                 )),

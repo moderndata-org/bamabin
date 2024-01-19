@@ -90,7 +90,7 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                     child: Container(
                       decoration: BoxDecoration(boxShadow: [bs010o5]),
                       child: ClipRRect(
-                        borderRadius: BorderRadius.circular(10),
+                        borderRadius: BorderRadius.circular(5),
                         child: Container(
                           width: 130,
                           height: 190,
@@ -418,7 +418,7 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                   width: Get.width,
                   padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
+                    borderRadius: BorderRadius.circular(5),
                     color: cPrimaryDark,
                   ),
                   child: Column(
@@ -632,7 +632,6 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                           hasSubtitle: true,
                           hasDubbed: true,
                           imdbRate: '5',
-                          isSerial: true,
                           year: '2020',
                         ),
                       )),

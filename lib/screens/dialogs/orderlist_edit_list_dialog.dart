@@ -41,7 +41,7 @@ class _OrderlistEditListDialogState extends State<OrderlistEditListDialog> {
       surfaceTintColor: cB,
       elevation: 20,
       backgroundColor: cPrimary,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
       child: SizedBox(
         width: Get.width,
         child: Column(
@@ -71,8 +71,8 @@ class _OrderlistEditListDialogState extends State<OrderlistEditListDialog> {
                       decoration: BoxDecoration(
                           color: cY,
                           borderRadius: BorderRadius.only(
-                            bottomRight: Radius.circular(10),
-                            bottomLeft: Radius.circular(10),
+                            bottomRight: Radius.circular(5),
+                            bottomLeft: Radius.circular(5),
                           )),
                       child: MyText(
                         text: 'ویرایش',

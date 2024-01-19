@@ -31,7 +31,7 @@ class Main extends StatelessWidget {
       scrollBehavior: MyBehavior(),
       getPages: Routes.page,
       initialRoute: '/splash',
-      theme: ThemeData(fontFamily: "iransans"),
+      theme: ThemeData(fontFamily: "vazir"),
       debugShowCheckedModeBanner: false,
     );
   }

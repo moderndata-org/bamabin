@@ -54,8 +54,8 @@ class DownloadMovieDialog extends GetView<PublicController> {
                           decoration: BoxDecoration(
                               color: cY,
                               borderRadius: BorderRadius.only(
-                                bottomRight: Radius.circular(10),
-                                bottomLeft: Radius.circular(10),
+                                bottomRight: Radius.circular(5),
+                                bottomLeft: Radius.circular(5),
                               )),
                           child: Wrap(
                               textDirection: TextDirection.rtl,

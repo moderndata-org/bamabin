@@ -19,38 +19,38 @@ class CustomBottomNavigation extends GetView<PublicController> {
             return BottomNavButtonWidget(
               onTap: () {
                 controller.bottomIndex(0);
-                controller.appBarCenterText('فیلم');
                 controller.runBottomNavAnimation();
               },
-              iconActive: 'assets/svg/film_s.svg',
-              iconDeactive: 'assets/svg/film_d.svg',
+              iconActive: 'assets/svg/home_s.svg',
+              iconDeactive: 'assets/svg/home_d.svg',
               isActive: controller.bottomIndex.value == 0,
-              title: 'فیلم',
+              title: 'خانه',
             );
           }),
           Obx(() {
             return BottomNavButtonWidget(
               onTap: () {
                 controller.bottomIndex(1);
-                controller.appBarCenterText('سریال');
+                controller.appBarCenterText('فیلم');
                 controller.runBottomNavAnimation();
               },
-              iconActive: 'assets/svg/serial_s.svg',
-              iconDeactive: 'assets/svg/serial_d.svg',
+              iconActive: 'assets/svg/film_s.svg',
+              iconDeactive: 'assets/svg/film_d.svg',
               isActive: controller.bottomIndex.value == 1,
-              title: 'سریال',
+              title: 'فیلم',
             );
           }),
           Obx(() {
             return BottomNavButtonWidget(
               onTap: () {
                 controller.bottomIndex(2);
+                controller.appBarCenterText('سریال');
                 controller.runBottomNavAnimation();
               },
-              iconActive: 'assets/svg/home_s.svg',
-              iconDeactive: 'assets/svg/home_d.svg',
+              iconActive: 'assets/svg/serial_s.svg',
+              iconDeactive: 'assets/svg/serial_d.svg',
               isActive: controller.bottomIndex.value == 2,
-              title: 'خانه',
+              title: 'سریال',
             );
           }),
           Obx(() {

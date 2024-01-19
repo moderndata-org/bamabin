@@ -60,7 +60,6 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
                   20,
                   (index) => MovieItemWidget(
                         title: 'monarch',
-                        isSerial: index % 2 == 0,
                         hasDubbed: true,
                         hasSubtitle: true,
                         imdbRate: '5.5',

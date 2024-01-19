@@ -43,12 +43,13 @@ class MyText extends StatelessWidget {
         textAlign: textAlign ?? TextAlign.center,
         style: TextStyle(
             height: lineHeight,
-            fontWeight: fontWeight,
+            fontWeight: fontWeight ?? FontWeight.w100,
             color: color ?? cW,
-            fontSize: size ?? 13,
+            fontSize: size ?? 14,
             shadows: shadows,
             decoration: textDecoration,
-            fontFamily: 'iransans'),
+            decorationColor: color ?? cW,
+            fontFamily: 'vazir'),
       ),
     );
   }

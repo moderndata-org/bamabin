@@ -26,8 +26,8 @@ class CommentItem extends StatelessWidget {
             width: (isReply == true) ? Get.width - 100 : Get.width - 70,
             padding: EdgeInsets.symmetric(horizontal: 8, vertical: 5),
             decoration: BoxDecoration(
-              color: cPrimaryBG,
-              borderRadius: BorderRadius.circular(10),
+              color: cPrimary,
+              borderRadius: BorderRadius.circular(5),
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.end,

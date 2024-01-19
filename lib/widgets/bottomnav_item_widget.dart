@@ -45,7 +45,8 @@ class BottomNavButtonWidget extends GetView<PublicController> {
               child: SvgPicture.asset(
                   isActive == true ? iconActive! : iconDeactive!,
                   colorFilter: ColorFilter.mode(
-                      isActive == true ? cY : cW, BlendMode.srcIn)),
+                      isActive == true ? cSecondaryLight : cW,
+                      BlendMode.srcIn)),
             ),
             SizedBox(
               height: isActive == true ? 10 : 5,
@@ -57,7 +58,9 @@ class BottomNavButtonWidget extends GetView<PublicController> {
                       width: controller.bottomSelectedContainerWidth.value,
                       height: 5,
                       decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(50), color: cY),
+                          boxShadow: [bs010o5],
+                          borderRadius: BorderRadius.circular(50),
+                          color: cSecondaryLight),
                     );
                   })
                 : MyText(

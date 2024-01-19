@@ -6,11 +6,10 @@ import 'MyText.dart';
 class MovieItemWidget extends StatelessWidget {
   const MovieItemWidget(
       {this.title,
-      this.isSerial = false,
       this.hasSubtitle = false,
       this.hasDubbed = false,
       this.width = 115,
-      this.radius = 10,
+      this.radius = 5,
       this.year,
       this.imdbRate,
       this.image,
@@ -18,7 +17,6 @@ class MovieItemWidget extends StatelessWidget {
       this.isAddItem,
       this.isDeleteItem,
       super.key});
-  final bool? isSerial;
   final bool? hasSubtitle;
   final bool? hasDubbed;
   final String? year;
@@ -37,7 +35,6 @@ class MovieItemWidget extends StatelessWidget {
       onTap: onTap,
       child: Container(
         width: width,
-        height: 100,
         margin: EdgeInsetsDirectional.symmetric(horizontal: 3),
         child: Stack(
           alignment: Alignment.center,
@@ -60,55 +57,6 @@ class MovieItemWidget extends StatelessWidget {
                       textOverflow: TextOverflow.ellipsis,
                       textDirection: TextDirection.ltr),
                 )),
-            //! Top Picture
-            isSerial == true
-                ? Positioned(
-                    bottom: 30,
-                    child: Opacity(
-                      opacity: .2,
-                      child: Container(
-                        width: width! - 20,
-                        height: 175,
-                        child: ClipRRect(
-                            borderRadius: BorderRadius.circular(radius!),
-                            child: Stack(
-                              children: [
-                                SizedBox(
-                                  height: 175,
-                                  child: Image.asset(
-                                      image ?? 'assets/images/monarch.jpg',
-                                      fit: BoxFit.fill),
-                                ),
-                              ],
-                            )),
-                      ),
-                    ))
-                : SizedBox(),
-
-            //! Middle Picture
-            isSerial == true
-                ? Positioned(
-                    bottom: 25,
-                    child: Opacity(
-                      opacity: .5,
-                      child: Container(
-                        height: 175,
-                        width: width! - 10,
-                        child: ClipRRect(
-                            borderRadius: BorderRadius.circular(radius!),
-                            child: Stack(
-                              children: [
-                                SizedBox(
-                                  height: 175,
-                                  child: Image.asset(
-                                      image ?? 'assets/images/monarch.jpg',
-                                      fit: BoxFit.fill),
-                                ),
-                              ],
-                            )),
-                      ),
-                    ))
-                : SizedBox(),
             //! Main Picture
             Positioned(
                 bottom: 20,
@@ -133,7 +81,7 @@ class MovieItemWidget extends StatelessWidget {
                                   bottom: 0,
                                   child: Container(
                                     padding: EdgeInsets.only(
-                                        left: 3, top: 2, right: 2),
+                                        left: 3, top: 4, right: 2),
                                     decoration: BoxDecoration(
                                         color: cB.withOpacity(.5),
                                         borderRadius: BorderRadius.only(
@@ -185,24 +133,22 @@ class MovieItemWidget extends StatelessWidget {
                                   top: 0,
                                   left: 0,
                                   child: Container(
-                                    padding:
-                                        EdgeInsets.symmetric(horizontal: 5),
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal: 5, vertical: 2),
                                     decoration: BoxDecoration(
                                         color: cB.withOpacity(.5),
                                         borderRadius: BorderRadius.only(
-                                            bottomRight:
-                                                Radius.circular(radius! / 2))),
+                                            bottomRight: Radius.circular(5))),
                                     child: MyText(
                                       text: year!,
                                       size: 10,
-                                      padding: EdgeInsets.only(top: 3),
                                     ),
                                   )),
 
                           //! Mic and Subtitle
                           Positioned(
                               top: 0,
-                              left: 0,
+                              left: -2,
                               bottom: 0,
                               child: Column(
                                 children: [
@@ -210,17 +156,17 @@ class MovieItemWidget extends StatelessWidget {
                                   hasSubtitle == true
                                       ? Container(
                                           padding: EdgeInsets.only(
-                                              right: 3,
+                                              right: 1,
                                               top: 2,
                                               bottom: 2,
                                               left: 2),
                                           decoration: BoxDecoration(
-                                              color: cB.withOpacity(.5),
+                                              color: cB.withOpacity(.7),
                                               borderRadius: BorderRadius.only(
-                                                topRight: Radius.circular(
-                                                    radius! / 2),
-                                                bottomRight: Radius.circular(
-                                                    radius! / 2),
+                                                topRight:
+                                                    Radius.circular(radius!),
+                                                bottomRight:
+                                                    Radius.circular(radius!),
                                               )),
                                           child: Icon(
                                             Icons.closed_caption_off_rounded,
@@ -237,17 +183,17 @@ class MovieItemWidget extends StatelessWidget {
                                   hasDubbed == true
                                       ? Container(
                                           padding: EdgeInsets.only(
-                                              right: 3,
+                                              right: 1,
                                               top: 2,
                                               bottom: 2,
                                               left: 2),
                                           decoration: BoxDecoration(
-                                              color: cB.withOpacity(.5),
+                                              color: cB.withOpacity(.7),
                                               borderRadius: BorderRadius.only(
-                                                topRight: Radius.circular(
-                                                    radius! / 2),
-                                                bottomRight: Radius.circular(
-                                                    radius! / 2),
+                                                topRight:
+                                                    Radius.circular(radius!),
+                                                bottomRight:
+                                                    Radius.circular(radius!),
                                               )),
                                           child: Icon(
                                             Icons.mic,

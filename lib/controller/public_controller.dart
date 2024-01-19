@@ -6,7 +6,7 @@ import 'package:video_player/video_player.dart';
 
 class PublicController extends GetxController {
   RxInt homeBannerIndex = 0.obs;
-  RxInt bottomIndex = 2.obs;
+  RxInt bottomIndex = 0.obs;
   RxDouble bottomSelectedContainerWidth = 10.0.obs;
   ScrollController mainScrollController = ScrollController();
   ScrollController favoriteScrollController = ScrollController();
@@ -29,7 +29,7 @@ class PublicController extends GetxController {
   @override
   void onInit() {
     mainScrollController.addListener(() {
-      if (mainScrollController.offset > 5) {
+      if (mainScrollController.offset > 10) {
         isVisibleAppbar(false);
       } else {
         isVisibleAppbar(true);

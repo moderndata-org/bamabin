@@ -53,7 +53,6 @@ class PartScreen extends StatelessWidget {
                   20,
                   (index) => MovieItemWidget(
                         title: 'Monarch',
-                        isSerial: index % 2 == 0,
                         hasDubbed: true,
                         hasSubtitle: true,
                         imdbRate: '5.5',

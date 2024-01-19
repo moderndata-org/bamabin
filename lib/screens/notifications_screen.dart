@@ -15,9 +15,10 @@ class NotificationScreen extends StatelessWidget {
           title: 'اعلانات',
           icon: Icon(
             Icons.notifications,
-            color: cY,
+            color: cW,
+            shadows: [bsText],
           )),
-      backgroundColor: cPrimaryBG,
+      backgroundColor: cPrimary,
       body: Container(
         width: Get.width,
         height: Get.height,
