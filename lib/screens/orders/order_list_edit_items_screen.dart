@@ -16,7 +16,7 @@ class OrderlistEditItemsScreen extends StatelessWidget {
             floatingActionButton: FloatingActionButton(
               shape: CircleBorder(),
               elevation: 10,
-              backgroundColor: cY,
+              backgroundColor: cSecondaryLight,
               onPressed: () {
                 showDialog(
                   barrierColor: cBgDialogColor,
@@ -27,7 +27,7 @@ class OrderlistEditItemsScreen extends StatelessWidget {
               },
               child: Icon(
                 Icons.add_rounded,
-                color: cB,
+                color: cW,
               ),
             ),
             backgroundColor: cPrimary,
@@ -35,7 +35,8 @@ class OrderlistEditItemsScreen extends StatelessWidget {
                 title: 'ویرایش آیتم ها',
                 icon: Icon(
                   Icons.folder_special_rounded,
-                  color: cY,
+                  color: cW,
+                  shadows: [bsTextLowOpacity],
                 )),
             body: SizedBox(
                 width: Get.width,
@@ -46,7 +47,7 @@ class OrderlistEditItemsScreen extends StatelessWidget {
                     physics: BouncingScrollPhysics(),
                     padding: EdgeInsets.only(
                         left: 10, right: 10, top: 10, bottom: 50),
-                    childAspectRatio: .58,
+                    childAspectRatio: .65,
                     crossAxisCount: 3,
                     children: List.generate(
                         20,

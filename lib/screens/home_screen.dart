@@ -76,7 +76,7 @@ class HomeScreen extends GetView<PublicController> {
               position: controller.homeBannerIndex.value,
               decorator: DotsDecorator(
                 activeColor: cSecondaryLight,
-                color: cGrey,
+                color: cW.withOpacity(.6),
                 spacing: EdgeInsets.symmetric(vertical: 5, horizontal: 2),
                 size: const Size.square(6),
                 activeSize: const Size(20.0, 6),

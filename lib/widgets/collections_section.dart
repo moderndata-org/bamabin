@@ -1,5 +1,4 @@
 import 'package:bamabin/widgets/MyText.dart';
-import 'package:bamabin/widgets/collection_item.dart';
 import 'package:bamabin/widgets/movie_item_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -41,7 +40,7 @@ class CollectionsSection extends StatelessWidget {
           ),
           SizedBox(
             width: Get.width,
-            height: 250,
+            height: 200,
             child: Directionality(
                 textDirection: TextDirection.rtl,
                 child: ListView.builder(

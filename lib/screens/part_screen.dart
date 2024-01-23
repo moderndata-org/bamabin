@@ -1,5 +1,5 @@
 import 'package:bamabin/constant/colors.dart';
-import 'package:bamabin/widgets/filter_drop_down.dart';
+import 'package:bamabin/widgets/custom_dropdown.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -20,24 +20,58 @@ class PartScreen extends StatelessWidget {
         child: Column(
           children: [
             // Filter Row
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              textDirection: TextDirection.rtl,
-              children: [
-                Expanded(
-                    child: FilterDropDown(
-                  title: "نوع",
-                )),
-                Expanded(
-                  child: FilterDropDown(
-                    title: "مرتب سازی",
+            SizedBox(
+              width: Get.width - 2,
+              height: 40,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                textDirection: TextDirection.rtl,
+                children: [
+                  // Expanded(
+                  //     child: FilterDropDown(
+                  //   title: "نوع",
+                  // )),
+                  // Expanded(
+                  //   child: FilterDropDown(
+                  //     title: "مرتب سازی",
+                  //   ),
+                  // ),
+                  // Expanded(
+                  //     child: FilterDropDown(
+                  //   title: "امتیاز IMDB",
+                  // )),
+                  SizedBox(
+                    width: 2,
                   ),
-                ),
-                Expanded(
-                    child: FilterDropDown(
-                  title: "امتیاز IMDB",
-                )),
-              ],
+                  Expanded(
+                      child: CustomDropDown(
+                    alignment: Alignment.centerRight,
+                    title: 'ژانر',
+                    list: ['کمدی', 'عاشقانه', 'علمی', 'تخیلی', 'درام', 'اکشن'],
+                  )),
+                  SizedBox(
+                    width: 1,
+                  ),
+                  Expanded(
+                      child: CustomDropDown(
+                    alignment: Alignment.centerRight,
+                    title: "مرتب سازی",
+                    list: ['1', '2', '3'],
+                  )),
+                  SizedBox(
+                    width: 1,
+                  ),
+                  Expanded(
+                      child: CustomDropDown(
+                    alignment: Alignment.centerRight,
+                    title: "امتیاز IMDB",
+                    list: ['1', '2', '3'],
+                  )),
+                  SizedBox(
+                    width: 2,
+                  ),
+                ],
+              ),
             ),
             SizedBox(
               height: 10,
@@ -47,7 +81,7 @@ class PartScreen extends StatelessWidget {
                 child: GridView.count(
               physics: BouncingScrollPhysics(),
               padding: EdgeInsets.symmetric(horizontal: 10),
-              childAspectRatio: .58,
+              childAspectRatio: .65,
               crossAxisCount: 3,
               children: List.generate(
                   20,

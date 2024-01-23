@@ -1,5 +1,4 @@
 import 'package:bamabin/constant/colors.dart';
-import 'package:bamabin/controller/public_controller.dart';
 import 'package:bamabin/widgets/custom_appbar.dart';
 import 'package:bamabin/widgets/movie_item_widget.dart';
 import 'package:flutter/material.dart';
@@ -13,7 +12,7 @@ class FavoriteScreen extends StatefulWidget {
 }
 
 class _FavoriteScreenState extends State<FavoriteScreen> {
-  PublicController? _controller = Get.find<PublicController>();
+  // PublicController? _controller = Get.find<PublicController>();
   ScrollController? _scrollController;
 
   @override
@@ -43,7 +42,8 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
           title: 'علاقه مندی ها',
           icon: Icon(
             Icons.favorite,
-            color: cY,
+            color: cW,
+            shadows: [bsTextLowOpacity],
           )),
       body: SizedBox(
           width: Get.width,
@@ -53,8 +53,8 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
             child: GridView.count(
               controller: _scrollController,
               physics: BouncingScrollPhysics(),
-              padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-              childAspectRatio: .58,
+              padding: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+              childAspectRatio: .65,
               crossAxisCount: 3,
               children: List.generate(
                   20,

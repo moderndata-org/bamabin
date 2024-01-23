@@ -1,4 +1,5 @@
 import 'package:bamabin/constant/colors.dart';
+import 'package:bamabin/widgets/MyText.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -11,35 +12,35 @@ class ScoreItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-      constraints: BoxConstraints(maxHeight: 70, minHeight: 30),
       width: Get.width,
+      height: 50,
       decoration: BoxDecoration(
-          color: cBgBtnMovieDetail, borderRadius: BorderRadius.circular(10)),
+          color: cSecondary, borderRadius: BorderRadius.circular(5)),
       child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           textDirection: TextDirection.rtl,
           children: [
             Expanded(
-              child: Container(
-                padding: EdgeInsets.symmetric(horizontal: 15),
-                constraints: BoxConstraints(maxHeight: 70, minHeight: 30),
-                decoration: BoxDecoration(
-                    color: cAccent,
-                    borderRadius: BorderRadius.only(
-                        topRight: Radius.circular(10),
-                        bottomRight: Radius.circular(10),
-                        bottomLeft: Radius.circular(10))),
-                child: Center(
-                    child: Text(
-                  "$title",
-                  style: TextStyle(fontSize: 13),
-                )),
-              ),
               flex: 1,
+              child: Container(
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                    color: cSecondaryLight,
+                    borderRadius: BorderRadius.only(
+                      topRight: Radius.circular(5),
+                      bottomRight: Radius.circular(5),
+                    )),
+                child: Center(
+                    child: MyText(
+                        text: '$title',
+                        shadows: [bsText],
+                        fontWeight: FontWeight.w500)),
+              ),
             ),
             Expanded(
+              flex: 4,
               child: Container(
-                margin: EdgeInsets.only(top: 10, bottom: 5, left: 5, right: 5),
+                padding: EdgeInsets.symmetric(horizontal: 5, vertical: 3),
                 child: Text(
                   "$descirption",
                   style: TextStyle(color: Colors.white),
@@ -47,7 +48,6 @@ class ScoreItem extends StatelessWidget {
                   textDirection: TextDirection.rtl,
                 ),
               ),
-              flex: 4,
             )
           ]),
     );

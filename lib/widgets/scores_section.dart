@@ -39,7 +39,7 @@ class ScoreSection extends StatelessWidget {
             height: 10,
           ),
           ScoreItem(
-              title: "افتخارات",
+              title: "جوایز",
               descirption:
                   "نامزد دریافت 7 اسکار 21 بار برنده جایزه و 43 بار نامزد دریافت جایزه"),
           ScoreItem(

@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:bamabin/constant/colors.dart';
 import 'package:bamabin/widgets/MyText.dart';
 import 'package:bamabin/widgets/MyTextButton.dart';
@@ -9,13 +11,13 @@ class CommentItem extends StatelessWidget {
   bool? isReply;
   @override
   Widget build(BuildContext context) {
-    print(isReply);
     return Container(
-      margin: EdgeInsets.only(top: 10),
+      margin: EdgeInsets.only(top: 10, right: 10, left: 10),
       width: Get.width - 20,
       child: Row(
         textDirection: TextDirection.rtl,
         children: [
+          isReply == true ? Spacer() : SizedBox(),
           CircleAvatar(
             child: Image.asset("assets/images/ic_logo.png"),
           ),
@@ -26,7 +28,7 @@ class CommentItem extends StatelessWidget {
             width: (isReply == true) ? Get.width - 100 : Get.width - 70,
             padding: EdgeInsets.symmetric(horizontal: 8, vertical: 5),
             decoration: BoxDecoration(
-              color: cPrimary,
+              color: cSecondary,
               borderRadius: BorderRadius.circular(5),
             ),
             child: Column(
@@ -38,14 +40,14 @@ class CommentItem extends StatelessWidget {
                   children: [
                     Text(
                       "M.Mohammadi",
-                      style: TextStyle(color: cCommentColor, fontSize: 12),
+                      style: TextStyle(color: cW, fontSize: 12),
                     ),
                     Row(
                       textDirection: TextDirection.rtl,
                       children: [
                         Icon(
                           Icons.watch_later,
-                          color: cCommentColor,
+                          color: cW,
                           size: 18,
                         ),
                         SizedBox(
@@ -54,7 +56,7 @@ class CommentItem extends StatelessWidget {
                         Text(
                           " 2 ماه قبل",
                           textDirection: TextDirection.rtl,
-                          style: TextStyle(color: cCommentColor),
+                          style: TextStyle(color: cW),
                         ),
                         SizedBox(
                           width: 5,
@@ -70,6 +72,7 @@ class CommentItem extends StatelessWidget {
                                 child: MyText(
                                   text: 'پاسخ',
                                   color: cB,
+                                  size: 11,
                                 ),
                               )
                       ],
@@ -83,7 +86,10 @@ class CommentItem extends StatelessWidget {
                   "لورم ایپسوم متنی ساختگی در صنعت چاپ است",
                   textAlign: TextAlign.right,
                   style: TextStyle(color: Colors.white),
-                )
+                ),
+                SizedBox(
+                  height: 5,
+                ),
               ],
             ),
           )

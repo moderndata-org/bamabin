@@ -27,6 +27,7 @@ class MyTextField extends StatelessWidget {
     this.paddingVertical,
     this.textStyle,
     this.suffixIcon,
+    this.cursorColor,
     super.key,
   });
   final String hint;
@@ -50,6 +51,7 @@ class MyTextField extends StatelessWidget {
   final bool? isEnabled;
   final bool? hasBorder;
   final Color? hintColor;
+  final Color? cursorColor;
   final Widget? prefixIcon;
   final Widget? suffixIcon;
 
@@ -73,6 +75,7 @@ class MyTextField extends StatelessWidget {
         keyboardType: inputType,
         controller: controller,
         onChanged: onchangedAction,
+        cursorColor: cursorColor ?? cW,
         textAlign: textAlign ?? TextAlign.right,
         inputFormatters: addlist(length, inputType),
         decoration: InputDecoration(

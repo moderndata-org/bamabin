@@ -1,11 +1,13 @@
 import 'package:bamabin/constant/colors.dart';
 import 'package:bamabin/controller/public_controller.dart';
+import 'package:bamabin/screens/dialogs/search_advanced_dialog.dart';
 import 'package:bamabin/widgets/MyText.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../widgets/MyTextButton.dart';
 import '../../widgets/MyTextField.dart';
+import '../../widgets/custom_dropdown.dart';
 
 class OrderlistAddListDialog extends StatefulWidget {
   const OrderlistAddListDialog({super.key});
@@ -63,23 +65,14 @@ class _OrderlistAddListDialogState extends State<OrderlistAddListDialog> {
                             color: cR,
                           ))),
                   Positioned(
-                    top: 0,
-                    child: Container(
-                      padding: EdgeInsets.only(
-                          top: 5, right: 10, left: 10, bottom: 5),
-                      decoration: BoxDecoration(
-                          color: cY,
-                          borderRadius: BorderRadius.only(
-                            bottomRight: Radius.circular(5),
-                            bottomLeft: Radius.circular(5),
-                          )),
-                      child: MyText(
-                        text: 'افزودن لیست',
-                        color: cB,
-                        size: 15,
-                      ),
+                    top: 15,
+                    child: MyText(
+                      text: 'افزودن لیست',
+                      color: cW,
+                      size: 15,
+                      fontWeight: FontWeight.w500,
                     ),
-                  )
+                  ),
                 ],
               ),
             ),
@@ -96,51 +89,22 @@ class _OrderlistAddListDialogState extends State<OrderlistAddListDialog> {
                 suffixIcon: Icon(
                   Icons.article_rounded,
                   size: 25,
-                  color: cGrey,
+                  color: cW,
                 ),
               ),
             ),
-            Container(
-              margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-              width: Get.width,
-              height: 45,
-              child: Directionality(
-                textDirection: TextDirection.rtl,
-                child: DropdownButtonHideUnderline(
-                  child: ButtonTheme(
-                    alignedDropdown: true,
-                    child: DropdownButton(
-                      // isDense: true,
-                      borderRadius: BorderRadius.circular(5),
-                      dropdownColor: cPrimary,
-                      hint: MyText(text: '1'),
-                      // isExpanded: true,
-                      items: [
-                        DropdownMenuItem(
-                            value: 1,
-                            alignment: Alignment.centerRight,
-                            child:
-                                SizedBox(width: 40, child: MyText(text: '1'))),
-                        DropdownMenuItem(
-                            value: 2,
-                            alignment: Alignment.centerRight,
-                            child:
-                                SizedBox(width: 40, child: MyText(text: '2'))),
-                        DropdownMenuItem(
-                            value: 3,
-                            alignment: Alignment.centerRight,
-                            child:
-                                SizedBox(width: 40, child: MyText(text: '3'))),
-                      ],
-                      onChanged: (value) {},
-                    ),
-                  ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10),
+              child: SizedBox(
+                width: Get.width,
+                child: CustomDropDown(
+                  borderRadius: 5,
+                  title: 'نوع لیست',
+                  list: ['1', '1', '1'],
+                  buttonColor: cSecondary,
+                  alignment: Alignment.centerRight,
                 ),
               ),
-              decoration: BoxDecoration(
-                  color: cBgTextfield,
-                  border: Border.all(color: cStrokeGrey),
-                  borderRadius: BorderRadius.circular(5)),
             ),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
@@ -152,22 +116,27 @@ class _OrderlistAddListDialogState extends State<OrderlistAddListDialog> {
                 suffixIcon: Icon(
                   Icons.description,
                   size: 25,
-                  color: cGrey,
+                  color: cW,
                 ),
               ),
             ),
             SizedBox(
               height: 20,
             ),
-            MyTextButton(
-                onTap: () {},
-                size: Size(Get.width * .6, 35),
-                bgColor: cY,
-                child: MyText(
-                  text: 'ثبت لیست',
-                  size: 14,
-                  color: cB,
-                )),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10),
+              child: SizedBox(
+                width: Get.width,
+                child: MyTextButton(
+                    onTap: () {},
+                    bgColor: cY,
+                    child: MyText(
+                      text: 'ثبت لیست',
+                      size: 14,
+                      color: cB,
+                    )),
+              ),
+            ),
             SizedBox(
               height: 20,
             ),

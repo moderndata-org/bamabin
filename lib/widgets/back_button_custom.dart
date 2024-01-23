@@ -24,22 +24,19 @@ class BackButtonCustom extends StatelessWidget {
               color: cB.withOpacity(.05), offset: Offset(0, 3), blurRadius: 3)
         ], borderRadius: BorderRadius.circular(5)),
         child: MyTextButton(
+            padding: EdgeInsets.zero,
             bgColor: bgColor ?? cSecondaryLight,
             strokeColor: cW,
             borderRadius: 5,
             onTap: () => Navigator.pop(context),
-            size: Size(35, 35),
+            size: Size(30, 30),
             child: Stack(
               clipBehavior: Clip.none,
               children: [
-                Positioned(
-                  bottom: -2,
-                  left: -7,
-                  child: Icon(
-                    Icons.arrow_back_ios_new_rounded,
-                    color: cW,
-                    shadows: [bsText],
-                  ),
+                Icon(
+                  Icons.arrow_back_ios_new_rounded,
+                  color: cW,
+                  shadows: [bsText],
                 ),
               ],
             )),

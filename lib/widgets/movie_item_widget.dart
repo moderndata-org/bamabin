@@ -54,6 +54,8 @@ class MovieItemWidget extends StatelessWidget {
                       text: title ?? 'Monarch',
                       size: 11,
                       maxLines: 1,
+                      padding: EdgeInsets.only(bottom: 1),
+                      fontWeight: FontWeight.w500,
                       textOverflow: TextOverflow.ellipsis,
                       textDirection: TextDirection.ltr),
                 )),
@@ -113,7 +115,10 @@ class MovieItemWidget extends StatelessWidget {
                                     height: 30,
                                     color: cY,
                                     alignment: Alignment.center,
-                                    child: Icon(Icons.add_circle_rounded),
+                                    child: Icon(
+                                      Icons.add_circle_rounded,
+                                      color: cB,
+                                    ),
                                   )),
                           //! delete Item
                           isDeleteItem != true
@@ -125,8 +130,12 @@ class MovieItemWidget extends StatelessWidget {
                                     height: 30,
                                     color: cPink,
                                     alignment: Alignment.center,
-                                    child: Icon(Icons.delete_sweep_rounded),
-                                  )), //! Year
+                                    child: Icon(
+                                      Icons.delete_sweep_rounded,
+                                      color: cW,
+                                    ),
+                                  )),
+                          //! Year
                           year == null || year == ''
                               ? SizedBox()
                               : Positioned(
@@ -144,7 +153,6 @@ class MovieItemWidget extends StatelessWidget {
                                       size: 10,
                                     ),
                                   )),
-
                           //! Mic and Subtitle
                           Positioned(
                               top: 0,

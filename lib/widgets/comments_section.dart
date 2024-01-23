@@ -1,10 +1,13 @@
 import 'package:bamabin/constant/colors.dart';
+import 'package:bamabin/controller/public_controller.dart';
 import 'package:bamabin/widgets/MyText.dart';
+import 'package:bamabin/widgets/MyTextButton.dart';
+import 'package:bamabin/widgets/MyTextField.dart';
 import 'package:bamabin/widgets/comment_item.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class CommentsSection extends StatelessWidget {
+class CommentsSection extends GetView<PublicController> {
   const CommentsSection({super.key});
 
   @override
@@ -19,7 +22,7 @@ class CommentsSection extends StatelessWidget {
             textDirection: TextDirection.rtl,
             children: [
               SizedBox(
-                width: 15,
+                width: 10,
               ),
               Icon(
                 Icons.question_answer,
@@ -43,6 +46,36 @@ class CommentsSection extends StatelessWidget {
           CommentItem(
             isReply: true,
           ),
+          SizedBox(
+            height: 10,
+          ),
+          Row(
+            textDirection: TextDirection.rtl,
+            children: [
+              SizedBox(
+                width: 15,
+              ),
+              Expanded(
+                  child: MyTextField(
+                      height: 40,
+                      hint: 'نظر خود را بنویسید',
+                      controller: controller.txtComment!)),
+              SizedBox(
+                width: 10,
+              ),
+              MyTextButton(
+                size: null,
+                child: MyText(
+                  text: 'ثبت نظر',
+                  color: cB,
+                ),
+                bgColor: cY,
+              ),
+              SizedBox(
+                width: 10,
+              ),
+            ],
+          )
         ],
       ),
     );

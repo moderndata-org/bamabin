@@ -1,4 +1,5 @@
 import 'package:bamabin/screens/authentication/forget_password_screen.dart';
+import 'package:bamabin/screens/download_manager_screen.dart';
 import 'package:bamabin/screens/favorite_screen.dart';
 import 'package:bamabin/screens/movie_details_screen.dart';
 import 'package:bamabin/screens/notifications_screen.dart';
@@ -19,7 +20,7 @@ import '../screens/authentication/signup_screen.dart';
 import '../screens/main_screen.dart';
 import '../screens/orders/order_list_edit_items_screen.dart';
 import '../screens/orders/order_list_screen.dart';
-import '../screens/requests/request_list_screen.dart';
+import '../screens/movie_requests/movie_request_list_screen.dart';
 import '../screens/splash_screen.dart';
 
 class Routes {
@@ -42,11 +43,14 @@ class Routes {
         GetPage(name: '/aboutus', page: () => const AboutusScreen()),
         GetPage(name: '/profile', page: () => const ProfileScreen()),
         GetPage(name: '/subscribe', page: () => const SubscribeScreen()),
-        GetPage(name: '/request', page: () => const RequestListScreen()),
+        GetPage(name: '/request', page: () => const MovieRequestListScreen()),
         GetPage(name: '/tickets', page: () => const TicketsScreen()),
         GetPage(name: '/part', page: () => const PartScreen()),
         GetPage(name: '/recent-views', page: () => const RecentViewsScreen()),
         GetPage(name: '/search', page: () => const SearchScreen()),
+        GetPage(
+            name: '/download-manager',
+            page: () => const DownloadManagerScreen()),
         GetPage(name: '/movie-detail', page: () => const MovieDetailsScreen()),
       ];
 }

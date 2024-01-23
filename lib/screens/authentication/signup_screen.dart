@@ -51,7 +51,7 @@ class SignupScreen extends GetView<AuthController> {
                     prefixIcon: Icon(
                       Icons.account_circle_rounded,
                       size: 30,
-                      color: cGrey,
+                      color: cW,
                     ),
                   ),
                   SizedBox(
@@ -63,7 +63,7 @@ class SignupScreen extends GetView<AuthController> {
                     prefixIcon: Icon(
                       Icons.lock,
                       size: 25,
-                      color: cGrey,
+                      color: cW,
                     ),
                   ),
                   SizedBox(
@@ -75,7 +75,7 @@ class SignupScreen extends GetView<AuthController> {
                     prefixIcon: Icon(
                       Icons.lock,
                       size: 25,
-                      color: cGrey,
+                      color: cW,
                     ),
                   ),
                   SizedBox(

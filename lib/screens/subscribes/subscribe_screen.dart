@@ -1,7 +1,7 @@
 import 'package:bamabin/constant/colors.dart';
+import 'package:bamabin/widgets/MyText.dart';
 import 'package:bamabin/widgets/MyTextField.dart';
 import 'package:bamabin/widgets/custom_appbar.dart';
-import 'package:bamabin/widgets/details_app_bar.dart';
 import 'package:bamabin/widgets/subscribe_item.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -51,19 +51,16 @@ class SubscribeScreen extends StatelessWidget {
               child: Column(
                 children: [
                   Row(textDirection: TextDirection.ltr, children: [
-                    Expanded(
-                      child: MyTextButton(
-                        size: Size.fromHeight(35),
-                        onTap: () {},
-                        child: Text(
-                          "اعمال کد تخفیف",
-                          style: TextStyle(
-                            color: Colors.black,
-                          ),
+                    MyTextButton(
+                      size: Size(120, 35),
+                      onTap: () {},
+                      child: Center(
+                        child: MyText(
+                          text: "اعمال کد تخفیف",
+                          color: cB,
                         ),
-                        bgColor: cAccent,
                       ),
-                      flex: 3,
+                      bgColor: cAccent,
                     ),
                     SizedBox(
                       width: 10,
@@ -76,7 +73,6 @@ class SubscribeScreen extends StatelessWidget {
                           controller: TextEditingController(),
                         ),
                       ),
-                      flex: 5,
                     ),
                   ]),
                   SizedBox(
@@ -140,7 +136,7 @@ class SubscribeScreen extends StatelessWidget {
                           ],
                         ),
                         MyTextButton(
-                          size: Size.fromHeight(35),
+                          size: Size(120, 35),
                           onTap: () {},
                           child: Text(
                             "پرداخت",

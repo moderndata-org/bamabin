@@ -19,21 +19,58 @@ class NotificationScreen extends StatelessWidget {
             shadows: [bsText],
           )),
       backgroundColor: cPrimary,
-      body: Container(
+      body: SizedBox(
         width: Get.width,
         height: Get.height,
         child: Column(
           children: [
             Expanded(
-                child: ListView.builder(
-              itemCount: 10,
-              itemBuilder: (context, index) {
-                return NotificationItem(
-                  text:
-                      "لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است",
-                );
-              },
-            ))
+              child: ListView.builder(
+                padding: EdgeInsets.symmetric(vertical: 10),
+                physics: BouncingScrollPhysics(),
+                itemCount: 10,
+                itemBuilder: (context, index) {
+                  return NotificationItem(
+                    text:
+                        "لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است",
+                  );
+                },
+              ),
+            ),
+            SizedBox(
+              height: 50,
+              width: Get.width,
+              child: InkWell(
+                onTap: () {},
+                child: Container(
+                  alignment: Alignment.center,
+                  padding: EdgeInsets.symmetric(vertical: 13),
+                  decoration: BoxDecoration(color: Colors.redAccent),
+                  child: Center(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          "حذف اعلانات",
+                          style: TextStyle(
+                              color: cW,
+                              fontWeight: FontWeight.w500,
+                              fontSize: 16),
+                        ),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Icon(
+                          Icons.delete_sweep,
+                          color: cW,
+                          size: 30,
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            )
           ],
         ),
       ),

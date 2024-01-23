@@ -53,23 +53,26 @@ class _OrderlistAddMovieWithSearchDialogState
                 Expanded(
                   child: Padding(
                     padding: const EdgeInsets.only(left: 5, right: 20),
-                    child: MyTextField(
-                      controller: txtSearch!,
-                      height: 45,
-                      textDirection: TextDirection.rtl,
-                      hint: '...جستجو',
-                      maxLines: 1,
-                      suffixIcon: Icon(
-                        Icons.article_rounded,
-                        size: 25,
-                        color: cGrey,
+                    child: SizedBox(
+                      height: 40,
+                      child: MyTextField(
+                        controller: txtSearch!,
+                        height: 45,
+                        textDirection: TextDirection.rtl,
+                        hint: '...جستجو',
+                        maxLines: 1,
+                        suffixIcon: Icon(
+                          Icons.article_rounded,
+                          size: 25,
+                          color: cW,
+                        ),
                       ),
                     ),
                   ),
                 ),
                 MyTextButton(
                     onTap: () {},
-                    bgColor: cY,
+                    bgColor: cSecondaryLight,
                     size: Size(40, 40),
                     child: Stack(
                       clipBehavior: Clip.none,
@@ -78,8 +81,8 @@ class _OrderlistAddMovieWithSearchDialogState
                             top: 0,
                             left: -4,
                             child: Icon(
-                              Icons.manage_search,
-                              color: cB,
+                              Icons.search,
+                              color: cW,
                             )),
                       ],
                     )),
@@ -101,33 +104,41 @@ class _OrderlistAddMovieWithSearchDialogState
                         isAddItem: true,
                       )),
             )),
-            MyTextButton(
-                size: Size(Get.width * .7, 35),
-                onTap: () => Navigator.pop(context),
-                bgColor: cY,
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  textDirection: TextDirection.rtl,
-                  children: [
-                    MyText(
-                      text: 'برگشت',
-                      padding: EdgeInsets.only(top: 3),
-                      color: cB,
-                    ),
-                    SizedBox(
-                      width: 5,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 3),
-                      child: Icon(
-                        Icons.arrow_back_ios_new_rounded,
-                        color: cB,
-                        size: 20,
-                      ),
-                    )
-                  ],
-                ))
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10),
+              child: SizedBox(
+                width: Get.width,
+                child: MyTextButton(
+                    onTap: () => Navigator.pop(context),
+                    bgColor: cY,
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      textDirection: TextDirection.rtl,
+                      children: [
+                        MyText(
+                          text: 'برگشت',
+                          padding: EdgeInsets.only(top: 3),
+                          color: cB,
+                        ),
+                        SizedBox(
+                          width: 5,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 3),
+                          child: Icon(
+                            Icons.arrow_back_ios_new_rounded,
+                            color: cB,
+                            size: 20,
+                          ),
+                        )
+                      ],
+                    )),
+              ),
+            ),
+            SizedBox(
+              height: 10,
+            )
           ],
         ),
       ),

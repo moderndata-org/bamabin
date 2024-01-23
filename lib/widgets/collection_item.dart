@@ -1,3 +1,4 @@
+import 'package:bamabin/constant/colors.dart';
 import 'package:flutter/material.dart';
 
 class CollectionItem extends StatelessWidget {
@@ -11,12 +12,15 @@ class CollectionItem extends StatelessWidget {
         borderRadius: BorderRadius.circular(5),
         child: Container(
           width: 170,
-          height: 100,
-          color: Colors.black,
+          color: cSecondary,
           child: Column(
             children: [
-              Expanded(
+              SizedBox(
+                width: 170,
+                height: 170,
                 child: GridView.builder(
+                    padding: EdgeInsets.zero,
+                    physics: NeverScrollableScrollPhysics(),
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 2),
                     itemCount: 4,
@@ -29,7 +33,9 @@ class CollectionItem extends StatelessWidget {
                               fit: BoxFit.cover,
                             ),
                             Container(
-                              color: Colors.black.withOpacity(0.8),
+                              width: 85,
+                              height: 85,
+                              color: cSecondaryLight.withOpacity(.7),
                               child: Center(
                                   child: Text(
                                 "+4",
@@ -44,6 +50,7 @@ class CollectionItem extends StatelessWidget {
                       } else {
                         return SizedBox(
                           width: 85,
+                          height: 85,
                           child: Image.asset(
                             "assets/images/monarch.jpg",
                             fit: BoxFit.cover,
@@ -51,49 +58,44 @@ class CollectionItem extends StatelessWidget {
                         );
                       }
                     }),
-                flex: 5,
               ),
-              Expanded(
-                child: Container(
-                  margin:
-                      EdgeInsets.only(top: 5, right: 10, left: 5, bottom: 5),
-                  child: Column(children: [
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Icon(
-                          Icons.account_circle,
-                          color: Colors.white,
-                          size: 18,
-                        ),
-                        SizedBox(
-                          width: 5,
-                        ),
-                        Text(
-                          "M.Mohamadi",
-                          style: TextStyle(color: Colors.white, fontSize: 11),
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Icon(Icons.event, color: Colors.white, size: 18),
-                        SizedBox(
-                          width: 5,
-                        ),
-                        Text(
-                          "1402/10/10",
-                          style: TextStyle(color: Colors.white),
-                        ),
-                      ],
-                    )
-                  ]),
-                ),
-                flex: 2,
+              Container(
+                margin: EdgeInsets.only(top: 5, right: 10, left: 5),
+                child: Column(children: [
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.account_circle,
+                        color: Colors.white,
+                        size: 18,
+                      ),
+                      SizedBox(
+                        width: 5,
+                      ),
+                      Text(
+                        "M.Mohamadi",
+                        style: TextStyle(color: Colors.white, fontSize: 11),
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Icon(Icons.event, color: Colors.white, size: 18),
+                      SizedBox(
+                        width: 5,
+                      ),
+                      Text(
+                        "1402/10/10",
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    ],
+                  ),
+                ]),
               )
             ],
           ),

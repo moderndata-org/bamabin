@@ -20,7 +20,8 @@ class AboutusScreen extends GetView<PublicController> {
           title: 'درباره ما',
           icon: Icon(
             Icons.info,
-            color: cY,
+            color: cW,
+            shadows: [bsTextLowOpacity],
           )),
       body: SizedBox(
         width: Get.width,
@@ -34,6 +35,7 @@ class AboutusScreen extends GetView<PublicController> {
                 text: strAboutUs,
                 color: cW,
                 lineHeight: 2,
+                fontWeight: FontWeight.w500,
                 textAlign: TextAlign.justify,
                 textDirection: TextDirection.rtl,
               ),

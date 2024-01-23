@@ -1,8 +1,6 @@
 import 'package:bamabin/controller/player_controller.dart';
-import 'package:bamabin/widgets/MyTextButton.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:video_player/video_player.dart';
 
 class PlayerScreen extends StatefulWidget {
@@ -51,11 +49,11 @@ class _PlayerScreenState extends State<PlayerScreen> {
                 width: Get.width,
                 height: Get.height,
                 child: controller.video_controller.value.isInitialized
-                    ?  AspectRatio(
-                            aspectRatio:
-                                controller.video_controller.value.aspectRatio,
-                            child: VideoPlayer(controller.video_controller),
-                          )
+                    ? AspectRatio(
+                        aspectRatio:
+                            controller.video_controller.value.aspectRatio,
+                        child: VideoPlayer(controller.video_controller),
+                      )
                     : Container(),
               ), // Player,
               Column(
@@ -144,13 +142,15 @@ class _PlayerScreenState extends State<PlayerScreen> {
                                   // Left
                                   Row(
                                     children: [
-                                      IconButton(onPressed: (){
-                                        controller.fullScreen();
-                                      }, icon: Icon(
-                                        Icons.fullscreen,
-                                        color: Colors.white,
-                                        size: 20,
-                                      )),
+                                      IconButton(
+                                          onPressed: () {
+                                            controller.fullScreen();
+                                          },
+                                          icon: Icon(
+                                            Icons.fullscreen,
+                                            color: Colors.white,
+                                            size: 20,
+                                          )),
                                       SizedBox(
                                         width: 10,
                                       ),

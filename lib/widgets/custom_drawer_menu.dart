@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 
+import '../screens/dialogs/tokenBot_dialog.dart';
+
 class CustomDrawerMenu extends GetView<PublicController> {
   const CustomDrawerMenu({super.key});
 
@@ -13,383 +15,504 @@ class CustomDrawerMenu extends GetView<PublicController> {
   Widget build(BuildContext context) {
     return Container(
       width: 250,
-      height: Get.height * .93,
-      margin: EdgeInsets.only(right: 10),
-      decoration: BoxDecoration(
-          color: cPrimary, borderRadius: BorderRadius.circular(5)),
-      child: ListView(
-          padding: EdgeInsets.symmetric(vertical: 20, horizontal: 10),
-          physics: BouncingScrollPhysics(),
+      height: Get.height,
+      margin: EdgeInsets.only(right: 10, top: 10, bottom: 10),
+      child: Container(
+        child: Column(
           children: [
-            Row(
-              textDirection: TextDirection.rtl,
-              children: [
-                Container(
-                  width: 70,
-                  height: 70,
-                  decoration: BoxDecoration(
-                    color: cDrawerGrey,
-                    boxShadow: [bs010of],
-                    shape: BoxShape.circle,
-                    // image: DecorationImage(
-                    //   image: AssetImage('assets/images/bg_crausel.jpg'),
-                    //   fit: BoxFit.cover,
-                  ),
-                  child: Icon(
-                    Icons.account_circle_outlined,
-                    color: cPrimary,
-                    size: 60,
-                  ),
-                ),
-
-                // child:
-                // CircleAvatar(
-                //   backgroundColor: cGrey,
-                //   backgroundImage: AssetImage(''),
-                // ),
-
-                SizedBox(
-                  width: 10,
-                ),
-                Expanded(
-                    child: SizedBox(
-                  height: 100,
-                  child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Align(
-                            alignment: Alignment.centerRight,
-                            child: MyText(text: 'کاربر مهمان')),
-                        Obx(() {
-                          return controller.hasSubscribe.isFalse
-                              ? SizedBox()
-                              : Align(
-                                  alignment: Alignment.centerRight,
-                                  child: Row(
-                                    textDirection: TextDirection.rtl,
-                                    children: [
-                                      MyText(
-                                        text: '50',
-                                        color: cY,
-                                        size: 10,
-                                      ),
-                                      SizedBox(
-                                        width: 3,
-                                      ),
-                                      MyText(
-                                        text: 'روز از اشتراک شما باقی مانده',
-                                        size: 10,
-                                      ),
-                                    ],
-                                  ));
-                        }),
-                        Align(
-                          alignment: Alignment.centerRight,
-                          child: GestureDetector(
-                            onTap: () {
-                              Get.toNamed('/profile');
-                              controller.scaffolState.currentState!
-                                  .closeEndDrawer();
-                            },
-                            child: Container(
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(50),
-                                color: cY,
-                              ),
-                              padding:
-                                  EdgeInsets.only(right: 10, left: 10, top: 5),
-                              child: MyText(
-                                text: 'ویرایش پروفایل',
-                                color: cB,
-                                size: 13,
-                              ),
+            Expanded(
+              child: Container(
+                decoration: BoxDecoration(
+                    color: cBgDrawer, borderRadius: BorderRadius.circular(5)),
+                child: ListView(
+                    padding: EdgeInsets.symmetric(vertical: 20, horizontal: 10),
+                    physics: BouncingScrollPhysics(),
+                    children: [
+                      Row(
+                        textDirection: TextDirection.rtl,
+                        children: [
+                          Container(
+                            width: 70,
+                            height: 70,
+                            decoration: BoxDecoration(
+                              color: cDrawerGrey,
+                              boxShadow: [bsTextLowOpacity],
+                              shape: BoxShape.circle,
+                              // image: DecorationImage(
+                              //   image: AssetImage('assets/images/bg_crausel.jpg'),
+                              //   fit: BoxFit.cover,
+                            ),
+                            child: Icon(
+                              shadows: [bsTextLowOpacity],
+                              Icons.account_circle_outlined,
+                              color: cPrimary,
+                              size: 60,
                             ),
                           ),
-                        )
-                      ]),
-                ))
-              ],
-            ),
-            //! Start Buttons
-            SizedBox(
-              height: 10,
-            ),
-            Obx(() {
-              return MyTextButton(
-                  bgColor: cY,
-                  onTap: () {
-                    if (controller.hasSubscribe.value)
-                      controller.hasSubscribe(!controller.hasSubscribe.value);
 
-                    Get.toNamed('/subscribe');
-                    controller.scaffolState.currentState!.closeEndDrawer();
-                  },
-                  child: Row(
-                    textDirection: TextDirection.rtl,
-                    children: [
-                      Icon(
-                        Icons.subscriptions_rounded,
-                        color: cB,
+                          // child:
+                          // CircleAvatar(
+                          //   backgroundColor: cGrey,
+                          //   backgroundImage: AssetImage(''),
+                          // ),
+
+                          SizedBox(
+                            width: 10,
+                          ),
+                          Expanded(
+                              child: SizedBox(
+                            height: 100,
+                            child: Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  Align(
+                                      alignment: Alignment.centerRight,
+                                      child: MyText(text: 'کاربر مهمان')),
+                                  Obx(() {
+                                    return controller.hasSubscribe.isFalse
+                                        ? SizedBox()
+                                        : Align(
+                                            alignment: Alignment.centerRight,
+                                            child: Row(
+                                              textDirection: TextDirection.rtl,
+                                              children: [
+                                                MyText(
+                                                  text: '50',
+                                                  color: cY,
+                                                  size: 10,
+                                                ),
+                                                SizedBox(
+                                                  width: 3,
+                                                ),
+                                                MyText(
+                                                  text:
+                                                      'روز از اشتراک شما باقی مانده',
+                                                  size: 10,
+                                                ),
+                                              ],
+                                            ));
+                                  }),
+                                  Align(
+                                    alignment: Alignment.centerRight,
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        Get.toNamed('/profile');
+                                        controller.scaffolState.currentState!
+                                            .closeEndDrawer();
+                                      },
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                          boxShadow: [bsTextLowOpacity],
+                                          borderRadius:
+                                              BorderRadius.circular(50),
+                                          color: cBgDrawerItem,
+                                        ),
+                                        padding: EdgeInsets.only(
+                                            right: 10,
+                                            left: 10,
+                                            top: 5,
+                                            bottom: 5),
+                                        child: MyText(
+                                          text: 'ویرایش پروفایل',
+                                          color: cW,
+                                          size: 13,
+                                        ),
+                                      ),
+                                    ),
+                                  )
+                                ]),
+                          ))
+                        ],
                       ),
+                      //! Start Buttons
                       SizedBox(
-                        width: 10,
+                        height: 10,
                       ),
-                      MyText(
-                        text: controller.hasSubscribe.value
-                            ? 'تمدید اشتراک'
-                            : 'خرید اشتراک',
-                        color: cB,
-                        size: 14,
-                      )
-                    ],
-                  ));
-            }),
+                      Obx(() {
+                        return MyTextButton(
+                            size: Size.fromHeight(45),
+                            boxShadow: bsTextLowOpacity,
+                            bgColor: cBgDrawerItem,
+                            onTap: () {
+                              controller
+                                  .hasSubscribe(!controller.hasSubscribe.value);
+                              if (controller.hasSubscribe.value) {
+                                Get.toNamed('/subscribe');
+                                controller.scaffolState.currentState!
+                                    .closeEndDrawer();
+                              }
+                            },
+                            child: Row(
+                              textDirection: TextDirection.rtl,
+                              children: [
+                                Icon(
+                                  shadows: [bsTextLowOpacity],
+                                  Icons.subscriptions_rounded,
+                                  color: cW,
+                                ),
+                                SizedBox(
+                                  width: 10,
+                                ),
+                                MyText(
+                                  text: controller.hasSubscribe.value
+                                      ? 'تمدید اشتراک'
+                                      : 'خرید اشتراک',
+                                  color: cW,
+                                  size: 14,
+                                  shadows: [bsText],
+                                  fontWeight: FontWeight.w500,
+                                )
+                              ],
+                            ));
+                      }),
+                      SizedBox(
+                        height: 5,
+                      ),
+                      MyTextButton(
+                          size: Size.fromHeight(45),
+                          boxShadow: bsTextLowOpacity,
+                          bgColor: cBgDrawerItem,
+                          onTap: () {
+                            Get.toNamed('/notifications');
+                            controller.scaffolState.currentState!
+                                .closeEndDrawer();
+                          },
+                          child: Row(
+                            textDirection: TextDirection.rtl,
+                            children: [
+                              Icon(
+                                shadows: [bsTextLowOpacity],
+                                Icons.notifications,
+                                color: cW,
+                              ),
+                              SizedBox(
+                                width: 10,
+                              ),
+                              MyText(
+                                text: 'اعلانات',
+                                color: cW,
+                                size: 14,
+                                shadows: [bsText],
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ],
+                          )),
+                      SizedBox(
+                        height: 5,
+                      ),
+                      MyTextButton(
+                          size: Size.fromHeight(45),
+                          boxShadow: bsTextLowOpacity,
+                          bgColor: cBgDrawerItem,
+                          onTap: () {
+                            Get.toNamed('/recent-views');
+                            controller.scaffolState.currentState!
+                                .closeEndDrawer();
+                          },
+                          child: Row(
+                            textDirection: TextDirection.rtl,
+                            children: [
+                              Icon(
+                                shadows: [bsTextLowOpacity],
+                                Icons.access_time_filled_rounded,
+                                color: cW,
+                              ),
+                              SizedBox(
+                                width: 10,
+                              ),
+                              MyText(
+                                text: 'لیست مشاهده‌ی اخیر',
+                                color: cW,
+                                size: 14,
+                                shadows: [bsText],
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ],
+                          )),
+                      SizedBox(
+                        height: 5,
+                      ),
+                      MyTextButton(
+                          size: Size.fromHeight(45),
+                          boxShadow: bsTextLowOpacity,
+                          bgColor: cBgDrawerItem,
+                          onTap: () {
+                            Get.toNamed('/favorite');
+                            controller.scaffolState.currentState!
+                                .closeEndDrawer();
+                          },
+                          child: Row(
+                            textDirection: TextDirection.rtl,
+                            children: [
+                              Icon(
+                                shadows: [bsTextLowOpacity],
+                                Icons.favorite,
+                                color: cW,
+                              ),
+                              SizedBox(
+                                width: 10,
+                              ),
+                              MyText(
+                                text: 'علاقه‌مندی ‌ها',
+                                color: cW,
+                                size: 14,
+                                shadows: [bsText],
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ],
+                          )),
+                      SizedBox(
+                        height: 5,
+                      ),
+                      MyTextButton(
+                          size: Size.fromHeight(45),
+                          boxShadow: bsTextLowOpacity,
+                          bgColor: cBgDrawerItem,
+                          onTap: () {
+                            Get.toNamed('/download-manager');
+                            controller.scaffolState.currentState!
+                                .closeEndDrawer();
+                          },
+                          child: Row(
+                            textDirection: TextDirection.rtl,
+                            children: [
+                              Icon(
+                                shadows: [bsTextLowOpacity],
+                                Icons.download_rounded,
+                                color: cW,
+                              ),
+                              SizedBox(
+                                width: 10,
+                              ),
+                              MyText(
+                                text: 'دانلود‌ها',
+                                color: cW,
+                                size: 14,
+                                shadows: [bsText],
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ],
+                          )),
+                      SizedBox(
+                        height: 5,
+                      ),
+                      MyTextButton(
+                          size: Size.fromHeight(45),
+                          boxShadow: bsTextLowOpacity,
+                          bgColor: cBgDrawerItem,
+                          onTap: () {
+                            Get.toNamed('/order');
+                            controller.scaffolState.currentState!
+                                .closeEndDrawer();
+                          },
+                          child: Row(
+                            textDirection: TextDirection.rtl,
+                            children: [
+                              Icon(
+                                shadows: [bsTextLowOpacity],
+                                Icons.folder_special_rounded,
+                                color: cW,
+                              ),
+                              SizedBox(
+                                width: 10,
+                              ),
+                              MyText(
+                                text: 'لیست سفارشی',
+                                color: cW,
+                                size: 14,
+                                shadows: [bsText],
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ],
+                          )),
+                      SizedBox(
+                        height: 5,
+                      ),
+                      MyTextButton(
+                          size: Size.fromHeight(45),
+                          boxShadow: bsTextLowOpacity,
+                          bgColor: cBgDrawerItem,
+                          onTap: () {
+                            Get.toNamed('/tickets');
+                            controller.scaffolState.currentState!
+                                .closeEndDrawer();
+                          },
+                          child: Row(
+                            textDirection: TextDirection.rtl,
+                            children: [
+                              Icon(
+                                shadows: [bsTextLowOpacity],
+                                Icons.confirmation_num_rounded,
+                                color: cW,
+                              ),
+                              SizedBox(
+                                width: 10,
+                              ),
+                              MyText(
+                                text: 'تیکت',
+                                color: cW,
+                                size: 14,
+                                shadows: [bsText],
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ],
+                          )),
+                      SizedBox(
+                        height: 5,
+                      ),
+                      MyTextButton(
+                          size: Size.fromHeight(45),
+                          boxShadow: bsTextLowOpacity,
+                          bgColor: cBgDrawerItem,
+                          onTap: () {
+                            Get.toNamed('/request');
+                            controller.scaffolState.currentState!
+                                .closeEndDrawer();
+                          },
+                          child: Row(
+                            textDirection: TextDirection.rtl,
+                            children: [
+                              Icon(
+                                shadows: [bsTextLowOpacity],
+                                Icons.video_call_rounded,
+                                color: cW,
+                              ),
+                              SizedBox(
+                                width: 10,
+                              ),
+                              MyText(
+                                text: 'درخواست فیلم و سریال',
+                                color: cW,
+                                size: 14,
+                                shadows: [bsText],
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ],
+                          )),
+                      SizedBox(
+                        height: 5,
+                      ),
+                      MyTextButton(
+                          size: Size.fromHeight(45),
+                          boxShadow: bsTextLowOpacity,
+                          bgColor: cBgDrawerItem,
+                          onTap: () {
+                            showDialog(
+                              barrierColor: cBgDialogColor,
+                              context: context,
+                              builder: (context) {
+                                return TokenBotDialog();
+                              },
+                            );
+                          },
+                          child: Row(
+                            textDirection: TextDirection.rtl,
+                            children: [
+                              Icon(
+                                shadows: [bsTextLowOpacity],
+                                Icons.smart_toy_rounded,
+                                color: cW,
+                              ),
+                              SizedBox(
+                                width: 10,
+                              ),
+                              MyText(
+                                text: 'توکن ربات و انتقال اشتراک',
+                                color: cW,
+                                size: 14,
+                                shadows: [bsText],
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ],
+                          )),
+                      SizedBox(
+                        height: 5,
+                      ),
+                      MyTextButton(
+                          size: Size.fromHeight(45),
+                          boxShadow: bsTextLowOpacity,
+                          bgColor: cBgDrawerItem,
+                          onTap: () {
+                            Navigator.pop(context);
+                            Get.toNamed('/aboutus');
+                          },
+                          child: Row(
+                            textDirection: TextDirection.rtl,
+                            children: [
+                              Icon(
+                                shadows: [bsTextLowOpacity],
+                                Icons.info_rounded,
+                                color: cW,
+                              ),
+                              SizedBox(
+                                width: 10,
+                              ),
+                              MyText(
+                                text: 'درباره ما',
+                                color: cW,
+                                size: 14,
+                                shadows: [bsText],
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ],
+                          )),
+                      SizedBox(
+                        height: 5,
+                      ),
+                      MyTextButton(
+                          size: Size.fromHeight(45),
+                          boxShadow: bsTextLowOpacity,
+                          bgColor: cBgDrawerItem,
+                          onTap: () {},
+                          child: Row(
+                            textDirection: TextDirection.rtl,
+                            children: [
+                              Icon(
+                                shadows: [bsTextLowOpacity],
+                                Icons.cancel,
+                                color: cR,
+                              ),
+                              SizedBox(
+                                width: 10,
+                              ),
+                              MyText(
+                                text: 'خروج',
+                                color: cW,
+                                size: 14,
+                                shadows: [bsText],
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ],
+                          )),
+
+                      //! End Buttons
+                    ]),
+              ),
+            ),
             SizedBox(
               height: 5,
             ),
             MyTextButton(
-                onTap: () {
-                  Get.toNamed('/notifications');
-                  controller.scaffolState.currentState!.closeEndDrawer();
-                },
-                child: Row(
-                  textDirection: TextDirection.rtl,
-                  children: [
-                    Icon(
-                      Icons.notifications,
-                      color: cDrawerGrey,
-                    ),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    MyText(
-                      text: 'اعلانات',
-                      color: cDrawerGrey,
-                      size: 14,
-                      fontWeight: FontWeight.w400,
-                    ),
-                  ],
-                )),
-            SizedBox(
-              height: 5,
-            ),
-            MyTextButton(
-                onTap: () {
-                  Get.toNamed('/recent-views');
-                  controller.scaffolState.currentState!.closeEndDrawer();
-                },
-                child: Row(
-                  textDirection: TextDirection.rtl,
-                  children: [
-                    Icon(
-                      Icons.access_time_filled_rounded,
-                      color: cDrawerGrey,
-                    ),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    MyText(
-                      text: 'لیست مشاهده‌ی اخیر',
-                      color: cDrawerGrey,
-                      size: 14,
-                      fontWeight: FontWeight.w400,
-                    ),
-                  ],
-                )),
-            SizedBox(
-              height: 5,
-            ),
-            MyTextButton(
-                onTap: () {
-                  Get.toNamed('/favorite');
-                  controller.scaffolState.currentState!.closeEndDrawer();
-                },
-                child: Row(
-                  textDirection: TextDirection.rtl,
-                  children: [
-                    Icon(
-                      Icons.favorite,
-                      color: cDrawerGrey,
-                    ),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    MyText(
-                      text: 'علاقه‌مندی ‌ها',
-                      color: cDrawerGrey,
-                      size: 14,
-                      fontWeight: FontWeight.w400,
-                    ),
-                  ],
-                )),
-            SizedBox(
-              height: 5,
-            ),
-            MyTextButton(
-                onTap: () {},
-                child: Row(
-                  textDirection: TextDirection.rtl,
-                  children: [
-                    Icon(
-                      Icons.download_rounded,
-                      color: cDrawerGrey,
-                    ),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    MyText(
-                      text: 'دانلود‌ها',
-                      color: cDrawerGrey,
-                      size: 14,
-                      fontWeight: FontWeight.w400,
-                    ),
-                  ],
-                )),
-            SizedBox(
-              height: 5,
-            ),
-            MyTextButton(
-                onTap: () {
-                  Get.toNamed('/order');
-                  controller.scaffolState.currentState!.closeEndDrawer();
-                },
-                child: Row(
-                  textDirection: TextDirection.rtl,
-                  children: [
-                    Icon(
-                      Icons.folder_special_rounded,
-                      color: cDrawerGrey,
-                    ),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    MyText(
-                      text: 'لیست سفارشی',
-                      color: cDrawerGrey,
-                      size: 14,
-                      fontWeight: FontWeight.w400,
-                    ),
-                  ],
-                )),
-            SizedBox(
-              height: 5,
-            ),
-            MyTextButton(
-                onTap: () {
-                  Get.toNamed('/tickets');
-                  controller.scaffolState.currentState!.closeEndDrawer();
-                },
-                child: Row(
-                  textDirection: TextDirection.rtl,
-                  children: [
-                    Icon(
-                      Icons.support,
-                      color: cDrawerGrey,
-                    ),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    MyText(
-                      text: 'تیکت',
-                      color: cDrawerGrey,
-                      size: 14,
-                      fontWeight: FontWeight.w400,
-                    ),
-                  ],
-                )),
-            SizedBox(
-              height: 5,
-            ),
-            MyTextButton(
-                onTap: () {
-                  Get.toNamed('/request');
-                  controller.scaffolState.currentState!.closeEndDrawer();
-                },
-                child: Row(
-                  textDirection: TextDirection.rtl,
-                  children: [
-                    Icon(
-                      Icons.video_call_rounded,
-                      color: cDrawerGrey,
-                    ),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    MyText(
-                      text: 'درخواست فیلم و سریال',
-                      color: cDrawerGrey,
-                      size: 14,
-                      fontWeight: FontWeight.w400,
-                    ),
-                  ],
-                )),
-            SizedBox(
-              height: 5,
-            ),
-            MyTextButton(
-                onTap: () {},
-                child: Row(
-                  textDirection: TextDirection.rtl,
-                  children: [
-                    Icon(
-                      Icons.smart_toy_rounded,
-                      color: cDrawerGrey,
-                    ),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    MyText(
-                      text: 'توکن ربات و انتقال اشتراک',
-                      color: cDrawerGrey,
-                      size: 14,
-                      fontWeight: FontWeight.w400,
-                    ),
-                  ],
-                )),
-            SizedBox(
-              height: 5,
-            ),
-            MyTextButton(
-                onTap: () {
-                  Navigator.pop(context);
-                  Get.toNamed('/aboutus');
-                },
-                child: Row(
-                  textDirection: TextDirection.rtl,
-                  children: [
-                    Icon(
-                      Icons.info_rounded,
-                      color: cDrawerGrey,
-                    ),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    MyText(
-                      text: 'درباره ما',
-                      color: cDrawerGrey,
-                      size: 14,
-                      fontWeight: FontWeight.w400,
-                    ),
-                  ],
-                )),
-            SizedBox(
-              height: 5,
-            ),
-            MyTextButton(
+                size: Size.fromHeight(45),
+                boxShadow: bsTextLowOpacity,
                 bgColor: Color.fromARGB(255, 34, 158, 217),
                 onTap: () {},
                 child: Row(
                   textDirection: TextDirection.rtl,
                   children: [
-                    SvgPicture.asset('assets/svg/ic_telegram.svg'),
+                    SvgPicture.asset(
+                      'assets/svg/ic_telegram.svg',
+                    ),
                     SizedBox(
                       width: 10,
                     ),
                     MyText(
                       text: 'تلگرام',
-                      color: cDrawerGrey,
+                      color: cW,
                       size: 14,
-                      fontWeight: FontWeight.w400,
+                      shadows: [bsText],
+                      fontWeight: FontWeight.w500,
                     ),
                   ],
                 )),
@@ -424,40 +547,17 @@ class CustomDrawerMenu extends GetView<PublicController> {
                       ),
                       MyText(
                         text: 'اینستاگرام',
-                        color: cDrawerGrey,
+                        color: cW,
                         size: 14,
-                        fontWeight: FontWeight.w400,
+                        shadows: [bsText],
+                        fontWeight: FontWeight.w500,
                       ),
                     ],
                   )),
             ),
-            SizedBox(
-              height: 5,
-            ),
-            MyTextButton(
-                onTap: () {},
-                bgColor: cR.withOpacity(.1),
-                child: Row(
-                  textDirection: TextDirection.rtl,
-                  children: [
-                    Icon(
-                      Icons.cancel,
-                      color: cR,
-                    ),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    MyText(
-                      text: 'خروج',
-                      color: cR,
-                      size: 14,
-                      fontWeight: FontWeight.w400,
-                    ),
-                  ],
-                )),
-
-            //! End Buttons
-          ]),
+          ],
+        ),
+      ),
     );
   }
 }

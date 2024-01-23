@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../constant/colors.dart';
-import '../widgets/MyTextButton.dart';
-import '../widgets/details_app_bar.dart';
+import '../widgets/custom_appbar.dart';
 import '../widgets/movie_item_widget.dart';
 
 class RecentViewsScreen extends StatelessWidget {
@@ -13,44 +12,25 @@ class RecentViewsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
         child: Scaffold(
+      appBar: CustomAppbar(
+          title: "لیست مشاهده های اخیر",
+          icon: Icon(
+            Icons.watch_later_rounded,
+            color: cW,
+            size: 25,
+            shadows: [bsText],
+          )),
       backgroundColor: cPrimary,
       body: Container(
         width: Get.width,
         height: Get.height,
         child: Column(
           children: [
-            DetailsAppBar(
-                leftWidget: MyTextButton(
-                    size: const Size(40, 40),
-                    onTap: () {
-                      Get.back();
-                    },
-                    fgColor: cGrey,
-                    bgColor: cPrimaryDark,
-                    child: Icon(
-                      Icons.arrow_back_ios,
-                      color: cGrey,
-                    )),
-                rightWidget: MyTextButton(
-                    size: const Size(40, 40),
-                    onTap: () {
-                      Get.back();
-                    },
-                    fgColor: cGrey,
-                    bgColor: cPrimaryDark,
-                    child: Icon(
-                      Icons.watch_later,
-                      color: cAccent,
-                    )),
-                title: "لیست مشاهده های اخیر"),
-            SizedBox(
-              height: 10,
-            ),
             Expanded(
                 child: GridView.count(
               physics: BouncingScrollPhysics(),
               padding: EdgeInsets.symmetric(horizontal: 10),
-              childAspectRatio: .58,
+              childAspectRatio: .65,
               crossAxisCount: 3,
               children: List.generate(
                   20,
@@ -63,34 +43,36 @@ class RecentViewsScreen extends StatelessWidget {
                       )),
             )),
             SizedBox(
-              height: 10,
-            ),
-            InkWell(
-              onTap: () {},
-              child: Container(
-                alignment: Alignment.center,
-                padding: EdgeInsets.symmetric(vertical: 13),
-                decoration: BoxDecoration(color: Colors.redAccent),
-                child: Center(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        "حذف تاریخچه",
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16),
-                      ),
-                      SizedBox(
-                        width: 10,
-                      ),
-                      Icon(
-                        Icons.delete_sweep,
-                        color: Colors.black,
-                        size: 30,
-                      ),
-                    ],
+              height: 50,
+              width: Get.width,
+              child: InkWell(
+                onTap: () {},
+                child: Container(
+                  height: 50,
+                  alignment: Alignment.center,
+                  padding: EdgeInsets.symmetric(vertical: 13),
+                  decoration: BoxDecoration(color: Colors.redAccent),
+                  child: Center(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          "حذف تاریخچه",
+                          style: TextStyle(
+                              color: cW,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16),
+                        ),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Icon(
+                          Icons.delete_sweep,
+                          color: cW,
+                          size: 30,
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),

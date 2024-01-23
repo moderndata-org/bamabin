@@ -64,23 +64,14 @@ class _OrderlistEditListDialogState extends State<OrderlistEditListDialog> {
                             color: cR,
                           ))),
                   Positioned(
-                    top: 0,
-                    child: Container(
-                      padding: EdgeInsets.only(
-                          top: 5, right: 10, left: 10, bottom: 5),
-                      decoration: BoxDecoration(
-                          color: cY,
-                          borderRadius: BorderRadius.only(
-                            bottomRight: Radius.circular(5),
-                            bottomLeft: Radius.circular(5),
-                          )),
-                      child: MyText(
-                        text: 'ویرایش',
-                        color: cB,
-                        size: 15,
-                      ),
+                    top: 15,
+                    child: MyText(
+                      text: 'ویرایش',
+                      color: cW,
+                      size: 15,
+                      fontWeight: FontWeight.w500,
                     ),
-                  )
+                  ),
                 ],
               ),
             ),
@@ -97,7 +88,7 @@ class _OrderlistEditListDialogState extends State<OrderlistEditListDialog> {
                 suffixIcon: Icon(
                   Icons.article_rounded,
                   size: 25,
-                  color: cGrey,
+                  color: cW,
                 ),
               ),
             ),
@@ -111,7 +102,7 @@ class _OrderlistEditListDialogState extends State<OrderlistEditListDialog> {
                 suffixIcon: Icon(
                   Icons.description,
                   size: 25,
-                  color: cGrey,
+                  color: cW,
                 ),
               ),
             ),

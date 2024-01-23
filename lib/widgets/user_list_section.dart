@@ -40,7 +40,7 @@ class UserListSection extends StatelessWidget {
           ),
           SizedBox(
             width: Get.width,
-            height: 250,
+            height: 230,
             child: Directionality(
                 textDirection: TextDirection.rtl,
                 child: ListView.builder(

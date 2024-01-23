@@ -52,7 +52,7 @@ class DownloadMovieDialog extends GetView<PublicController> {
                           padding: EdgeInsets.only(
                               top: 5, right: 10, left: 10, bottom: 5),
                           decoration: BoxDecoration(
-                              color: cY,
+                              color: cSecondaryLight,
                               borderRadius: BorderRadius.only(
                                 bottomRight: Radius.circular(5),
                                 bottomLeft: Radius.circular(5),
@@ -66,7 +66,8 @@ class DownloadMovieDialog extends GetView<PublicController> {
                                   actionMethod == ActionMethod.Play
                                       ? Icons.play_arrow_rounded
                                       : Icons.download_rounded,
-                                  color: cB,
+                                  color: cW,
+                                  shadows: [bsText],
                                 ),
                                 MyText(
                                   textDirection: TextDirection.rtl,
@@ -81,7 +82,8 @@ class DownloadMovieDialog extends GetView<PublicController> {
                                           isSerial == true
                                               ? 'پخش سریال $title'
                                               : 'پخش فیلم $title',
-                                  color: cB,
+                                  color: cW,
+                                  shadows: [bsText],
                                   size: 15,
                                 ),
                               ]),
@@ -93,29 +95,68 @@ class DownloadMovieDialog extends GetView<PublicController> {
               ),
               Expanded(
                   child: ListView(
+                physics: BouncingScrollPhysics(),
                 padding: EdgeInsets.symmetric(horizontal: 10, vertical: 30),
                 children: [
-                  MovieItemDialogWidget(
-                    onTap: () => Get.toNamed('/player'),
-                    quality: Quality.FourK,
-                    movieType: MovieType.Dubbed,
-                    margin: EdgeInsets.symmetric(vertical: 5),
-                    encoder: 'e',
-                    movieSize: '4 Gb',
-                    actionMethod: actionMethod,
-                    partsCount: '8',
-                    isSerial: controller.isSerialOpenedDetail.value,
+                  Row(
+                    textDirection: TextDirection.rtl,
+                    children: [
+                      Icon(
+                        Icons.closed_caption,
+                        color: cSecondaryLight,
+                      ),
+                      SizedBox(
+                        width: 5,
+                      ),
+                      MyText(
+                        text: 'نسخه زیرنویس چسبیده',
+                        shadows: [bsText],
+                        fontWeight: FontWeight.w500,
+                        size: 15,
+                      ),
+                      SizedBox(
+                        width: 5,
+                      ),
+                      Expanded(
+                          child: Container(
+                        height: 1,
+                        color: cSecondaryLight,
+                      ))
+                    ],
                   ),
                   MovieItemDialogWidget(
                     quality: Quality.FHD,
                     movieType: MovieType.Subtitle,
                     subtitleType: SubtitleType.HardSub,
                     margin: EdgeInsets.symmetric(vertical: 5),
-                    actionMethod: actionMethod,
                     encoder: 'e',
                     movieSize: '4 Gb',
-                    partsCount: '8',
-                    isSerial: controller.isSerialOpenedDetail.value,
+                  ),
+                  Row(
+                    textDirection: TextDirection.rtl,
+                    children: [
+                      Icon(
+                        Icons.local_movies_rounded,
+                        color: cY,
+                      ),
+                      SizedBox(
+                        width: 5,
+                      ),
+                      MyText(
+                        text: 'نسخه خام',
+                        shadows: [bsText],
+                        fontWeight: FontWeight.w500,
+                        size: 15,
+                      ),
+                      SizedBox(
+                        width: 5,
+                      ),
+                      Expanded(
+                          child: Container(
+                        height: 1,
+                        color: cY,
+                      ))
+                    ],
                   ),
                   MovieItemDialogWidget(
                     quality: Quality.HD,
@@ -123,19 +164,73 @@ class DownloadMovieDialog extends GetView<PublicController> {
                     margin: EdgeInsets.symmetric(vertical: 5),
                     encoder: 'e',
                     movieSize: '4 Gb',
-                    actionMethod: actionMethod,
-                    partsCount: '8',
-                    isSerial: controller.isSerialOpenedDetail.value,
+                  ),
+                  Row(
+                    textDirection: TextDirection.rtl,
+                    children: [
+                      Icon(
+                        Icons.mic,
+                        color: cR,
+                      ),
+                      SizedBox(
+                        width: 5,
+                      ),
+                      MyText(
+                        text: 'نسخه دوبله فارسی',
+                        shadows: [bsText],
+                        fontWeight: FontWeight.w500,
+                        size: 15,
+                      ),
+                      SizedBox(
+                        width: 5,
+                      ),
+                      Expanded(
+                          child: Container(
+                        height: 1,
+                        color: cR,
+                      ))
+                    ],
                   ),
                   MovieItemDialogWidget(
-                    quality: Quality.SD,
-                    movieType: MovieType.None,
+                    onTap: () => Get.toNamed('/player'),
+                    quality: Quality.FourK,
+                    movieType: MovieType.Dubbed,
                     margin: EdgeInsets.symmetric(vertical: 5),
                     encoder: 'e',
                     movieSize: '4 Gb',
-                    actionMethod: actionMethod,
-                    partsCount: '8',
-                    isSerial: controller.isSerialOpenedDetail.value,
+                  ),
+                  Row(
+                    textDirection: TextDirection.rtl,
+                    children: [
+                      Icon(
+                        Icons.movie_creation_rounded,
+                        color: cGreyLight,
+                      ),
+                      SizedBox(
+                        width: 5,
+                      ),
+                      MyText(
+                        text: 'نسخه روی پرده',
+                        shadows: [bsText],
+                        fontWeight: FontWeight.w500,
+                        size: 15,
+                      ),
+                      SizedBox(
+                        width: 5,
+                      ),
+                      Expanded(
+                          child: Container(
+                        height: 1,
+                        color: cGreyLight,
+                      ))
+                    ],
+                  ),
+                  MovieItemDialogWidget(
+                    quality: Quality.Cam,
+                    movieType: MovieType.Cam,
+                    margin: EdgeInsets.symmetric(vertical: 5),
+                    encoder: 'e',
+                    movieSize: '4 Gb',
                   ),
                 ],
               ))

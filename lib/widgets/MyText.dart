@@ -43,7 +43,7 @@ class MyText extends StatelessWidget {
         textAlign: textAlign ?? TextAlign.center,
         style: TextStyle(
             height: lineHeight,
-            fontWeight: fontWeight ?? FontWeight.w100,
+            fontWeight: fontWeight,
             color: color ?? cW,
             fontSize: size ?? 14,
             shadows: shadows,

@@ -61,7 +61,9 @@ class CustomMainAppBar extends GetView<PublicController> {
                     center = MyText(
                       text: '${controller.appBarCenterText}',
                       size: 17,
-                      color: cY,
+                      color: cW,
+                      fontWeight: FontWeight.w500,
+                      shadows: [bsText],
                     );
                   } else {
                     center = SizedBox(

@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-
 import '../../constant/colors.dart';
 
 class MyTextButton extends StatelessWidget {
@@ -38,11 +36,11 @@ class MyTextButton extends StatelessWidget {
       child: TextButton(
           style: TextButton.styleFrom(
             elevation: elevation,
-            foregroundColor: fgColor ?? cW.withOpacity(.5),
-            minimumSize: size ?? Size(Get.width * .8, 45),
-            fixedSize: size ?? Size(Get.width * .8, 45),
+            foregroundColor: fgColor ?? cW,
+            minimumSize: size,
+            fixedSize: size,
             padding: padding,
-            backgroundColor: bgColor ?? cPrimaryDark,
+            backgroundColor: bgColor ?? cSecondary,
             shape: RoundedRectangleBorder(
               side: BorderSide(color: strokeColor ?? Colors.transparent),
               borderRadius: BorderRadius.circular(borderRadius ?? 5),

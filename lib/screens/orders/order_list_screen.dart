@@ -23,7 +23,7 @@ class _OrderlistScreenState extends State<OrderlistScreen> {
       floatingActionButton: FloatingActionButton(
         shape: CircleBorder(),
         elevation: 10,
-        backgroundColor: cY,
+        backgroundColor: cSecondaryLight,
         onPressed: () {
           showDialog(
             barrierColor: cBgDialogColor,
@@ -34,7 +34,7 @@ class _OrderlistScreenState extends State<OrderlistScreen> {
         },
         child: Icon(
           Icons.add_rounded,
-          color: cB,
+          color: cW,
         ),
       ),
       backgroundColor: cPrimary,
@@ -42,7 +42,8 @@ class _OrderlistScreenState extends State<OrderlistScreen> {
           title: 'لیست سفارشی',
           icon: Icon(
             Icons.folder_special_rounded,
-            color: cY,
+            color: cW,
+            shadows: [bsTextLowOpacity],
           )),
       body: SizedBox(
           width: Get.width,
@@ -53,7 +54,7 @@ class _OrderlistScreenState extends State<OrderlistScreen> {
               itemCount: 10,
               physics: BouncingScrollPhysics(),
               padding:
-                  EdgeInsets.only(top: 10, left: 20, right: 20, bottom: 60),
+                  EdgeInsets.only(top: 10, left: 10, right: 10, bottom: 60),
               itemBuilder: (context, index) => OrderItemWidget(
                 title: 'لیست جدید من',
                 itemCount: '2',
@@ -95,7 +96,7 @@ class OrderItemWidget extends StatelessWidget {
     return Container(
       margin: EdgeInsets.only(top: 5, bottom: 5),
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(5), color: cBgOrderItem),
+          borderRadius: BorderRadius.circular(5), color: cSecondary),
       width: Get.width,
       padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       child: Column(children: [
@@ -125,11 +126,11 @@ class OrderItemWidget extends StatelessWidget {
                 child: MyTextButton(
                     onTap: show,
                     size: Size.fromHeight(35),
-                    bgColor: cY,
+                    bgColor: cSecondaryLight,
                     child: MyText(
                       text: 'مشاهده',
                       size: 14,
-                      color: cB,
+                      color: cW,
                     ))),
             SizedBox(
               width: 20,
@@ -138,11 +139,11 @@ class OrderItemWidget extends StatelessWidget {
                 child: MyTextButton(
                     onTap: edit,
                     size: Size.fromHeight(35),
-                    bgColor: cY,
+                    bgColor: cSecondaryLight,
                     child: MyText(
                       text: 'ویرایش',
                       size: 14,
-                      color: cB,
+                      color: cW,
                     ))),
             SizedBox(
               width: 20,
@@ -155,7 +156,7 @@ class OrderItemWidget extends StatelessWidget {
                     child: MyText(
                       text: 'حذف',
                       size: 14,
-                      color: cB,
+                      color: cW,
                     ))),
           ],
         )
@@ -181,7 +182,10 @@ class OrderlistSmallItemWidget extends StatelessWidget {
       child: Row(
         textDirection: TextDirection.rtl,
         children: [
-          MyText(text: '$title :'),
+          MyText(
+            text: '$title :',
+            fontWeight: FontWeight.w500,
+          ),
           SizedBox(
             width: 5,
           ),

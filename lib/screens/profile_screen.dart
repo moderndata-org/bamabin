@@ -1,6 +1,7 @@
 import 'package:bamabin/constant/colors.dart';
 import 'package:bamabin/controller/public_controller.dart';
 import 'package:bamabin/screens/dialogs/profile_changepassword_dialog.dart';
+import 'package:bamabin/widgets/back_button_custom.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -103,7 +104,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             prefixIcon: Icon(
                               Icons.account_circle_rounded,
                               size: 30,
-                              color: cGrey,
+                              color: cW,
                             ),
                           ),
                           SizedBox(
@@ -115,7 +116,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             prefixIcon: Icon(
                               Icons.account_circle_rounded,
                               size: 30,
-                              color: cGrey,
+                              color: cW,
                             ),
                           ),
                           SizedBox(
@@ -127,7 +128,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             prefixIcon: Icon(
                               Icons.mail,
                               size: 30,
-                              color: cGrey,
+                              color: cW,
                             ),
                           ),
                           SizedBox(
@@ -139,7 +140,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             prefixIcon: Icon(
                               Icons.assignment_ind,
                               size: 30,
-                              color: cGrey,
+                              color: cW,
                             ),
                           ),
                           SizedBox(
@@ -151,7 +152,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             prefixIcon: Icon(
                               Icons.apartment_rounded,
                               size: 30,
-                              color: cGrey,
+                              color: cW,
                             ),
                           ),
                           SizedBox(
@@ -163,7 +164,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             prefixIcon: Icon(
                               Icons.phone_enabled_rounded,
                               size: 30,
-                              color: cGrey,
+                              color: cW,
                             ),
                           ),
                           SizedBox(
@@ -176,7 +177,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             prefixIcon: Icon(
                               Icons.info,
                               size: 30,
-                              color: cGrey,
+                              color: cW,
                             ),
                           ),
                           SizedBox(
@@ -193,12 +194,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                         ProfileChangePasswordDialog(),
                                   );
                                 },
-                                size: Size(110, 35),
-                                bgColor: cY,
+                                size: Size(110, 40),
+                                bgColor: cGrey,
                                 child: MyText(
                                   text: 'تغییر رمز ورود',
                                   size: 14,
-                                  color: cB,
+                                  color: cW,
                                 )),
                           ),
                           SizedBox(
@@ -209,8 +210,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               bgColor: cY,
                               child: MyText(
                                 text: 'ذخیره تغییرات',
-                                size: 14,
+                                size: 15,
                                 color: cB,
+                                fontWeight: FontWeight.w500,
                               )),
                         ],
                       ),
@@ -220,25 +222,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ),
             ),
             Positioned(
-              top: 10,
-              left: 10,
-              child: MyTextButton(
-                  onTap: () => Navigator.pop(context),
-                  size: Size(40, 40),
-                  child: Stack(
-                    clipBehavior: Clip.none,
-                    children: [
-                      Positioned(
-                        top: 0,
-                        left: -4,
-                        child: Icon(
-                          Icons.arrow_back_ios_new_rounded,
-                          color: cGrey,
-                        ),
-                      ),
-                    ],
-                  )),
-            ),
+                top: 10,
+                left: 20,
+                child: BackButtonCustom(
+                  bgColor: cPrimary,
+                  hasPaddin: false,
+                )),
           ],
         ),
       ),
