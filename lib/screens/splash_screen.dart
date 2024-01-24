@@ -4,6 +4,7 @@ import 'package:bamabin/constant/colors.dart';
 import 'package:bamabin/widgets/MyCircularProgress.dart';
 import 'package:bamabin/widgets/MyText.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 class SplashScreen extends StatelessWidget {
@@ -14,6 +15,11 @@ class SplashScreen extends StatelessWidget {
     Timer(Duration(seconds: 2), () {
       Get.offNamed('/signin');
     });
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+    ]);
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
+        overlays: [SystemUiOverlay.top]);
     return SafeArea(
         child: Scaffold(
       backgroundColor: cPrimary,

@@ -11,7 +11,10 @@ import 'routes/route.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await GetStorage.init('bamabin');
-  runApp(const Main());
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
+      .then((_) {
+    runApp(const Main());
+  });
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
       systemNavigationBarColor: cPrimaryDark, // navigation bar color
       statusBarColor: cPrimaryDark,

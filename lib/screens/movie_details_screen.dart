@@ -614,6 +614,7 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                           controller.isPlayingTrailer(false);
                         } else {
                           controller.trailerController.play();
+
                           controller.isPlayingTrailer(true);
                         }
                       }
@@ -944,25 +945,27 @@ class ButtonSectionMovieDetailWidget extends GetView<PublicController> {
           SizedBox(
             width: 5,
           ),
+          //! Play Button
           Expanded(
               child: MyTextButton(
                   borderRadius: 5,
                   padding: EdgeInsets.zero,
                   fgColor: cB,
                   onTap: () {
-                    showDialog(
-                      context: context,
-                      builder: (context) =>
-                          controller.isSerialOpenedDetail.value
-                              ? DownloadSerialDialog(
-                                  actionMethod: ActionMethod.Play,
-                                  title: 'Monarch',
-                                )
-                              : DownloadMovieDialog(
-                                  actionMethod: ActionMethod.Play,
-                                  title: 'Forrest',
-                                ),
-                    );
+                    Get.toNamed('/player');
+                    // showDialog(
+                    //   context: context,
+                    //   builder: (context) =>
+                    //       controller.isSerialOpenedDetail.value
+                    //           ? DownloadSerialDialog(
+                    //               actionMethod: ActionMethod.Play,
+                    //               title: 'Monarch',
+                    //             )
+                    //           : DownloadMovieDialog(
+                    //               actionMethod: ActionMethod.Play,
+                    //               title: 'Forrest',
+                    //             ),
+                    // );
                   },
                   bgColor: cY,
                   boxShadow: bsBtnMovieDetail,

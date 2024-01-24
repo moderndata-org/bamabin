@@ -17,7 +17,7 @@ class CustomBottomNavigation extends GetView<PublicController> {
         children: [
           Obx(() {
             return BottomNavButtonWidget(
-              onTap: () {
+              onTap: () async {
                 controller.bottomIndex(0);
                 controller.runBottomNavAnimation();
               },

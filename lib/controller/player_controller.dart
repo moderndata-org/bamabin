@@ -14,6 +14,11 @@ class PlayerController extends GetxController {
   Timer? timer;
   late VideoPlayerController video_controller;
 
+  //! new
+  RxBool isInit = false.obs;
+
+  //! new
+
   PlayerController() {
     // timer = Timer(Duration(seconds: 1), () {
     //   if(current_progress.value == max_progress.value){
@@ -36,25 +41,21 @@ class PlayerController extends GetxController {
     //
     // });
   }
-  void fullScreen(){
-    if(fullscreen_status.isTrue){
+  void fullScreen() {
+    if (fullscreen_status.isTrue) {
       SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
       fullscreen_status(false);
-    }else{
+    } else {
       SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
       fullscreen_status(true);
     }
-
-
   }
 
-
-  void playPauseClicked(){
-    if(playing_status.isTrue){
+  void playPauseClicked() {
+    if (playing_status.isTrue) {
       video_controller.pause();
       playing_status(false);
-    }else{
-
+    } else {
       video_controller.play();
       playing_status(true);
     }
@@ -67,6 +68,7 @@ class PlayerController extends GetxController {
       ..initialize().then((value) {
         video_controller.play();
         playing_status(true);
+        isInit(true);
         max_progress(video_controller.value.duration.inMilliseconds);
       });
 

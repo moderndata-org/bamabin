@@ -143,19 +143,27 @@ class DownloadSerialDialog extends GetView<PublicController> {
                                     Row(
                                       textDirection: TextDirection.rtl,
                                       children: [
-                                        SizedBox(
-                                          width: 10,
+                                        Icon(
+                                          Icons.closed_caption,
+                                          color: cSecondaryLight,
                                         ),
-                                        MyText(text: 'فصل یک'),
+                                        SizedBox(
+                                          width: 5,
+                                        ),
+                                        MyText(
+                                          text: 'نسخه زیرنویس چسبیده',
+                                          shadows: [bsText],
+                                          fontWeight: FontWeight.w500,
+                                          size: 15,
+                                        ),
+                                        SizedBox(
+                                          width: 5,
+                                        ),
                                         Expanded(
                                             child: Container(
-                                          margin: EdgeInsets.only(right: 10),
                                           height: 1,
-                                          color: cStrokeGrey,
-                                        )),
-                                        SizedBox(
-                                          width: 10,
-                                        ),
+                                          color: cSecondaryLight,
+                                        ))
                                       ],
                                     ),
                                     Accordion(
@@ -177,7 +185,7 @@ class DownloadSerialDialog extends GetView<PublicController> {
                                         headerPadding: EdgeInsets.zero,
                                         disableScrolling: true,
                                         children: List.generate(
-                                          5,
+                                          1,
                                           (index) => AccordionSection(
                                             headerBackgroundColor: cGrey,
                                             isOpen: false,

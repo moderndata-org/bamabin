@@ -1,10 +1,8 @@
 import 'package:bamabin/constant/colors.dart';
 import 'package:bamabin/controller/public_controller.dart';
-import 'package:bamabin/screens/dialogs/search_advanced_dialog.dart';
 import 'package:bamabin/widgets/MyText.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 import '../../widgets/MyTextButton.dart';
 import '../../widgets/MyTextField.dart';
 import '../../widgets/custom_dropdown.dart';
