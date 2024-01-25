@@ -130,8 +130,8 @@ class SearchScreen extends StatelessWidget {
             Expanded(
                 child: GridView.count(
               physics: BouncingScrollPhysics(),
-              padding: EdgeInsets.symmetric(horizontal: 10),
-              childAspectRatio: .65,
+              padding: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+              childAspectRatio: .62,
               crossAxisCount: 3,
               children: List.generate(
                   20,

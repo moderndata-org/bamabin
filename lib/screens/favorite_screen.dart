@@ -54,7 +54,7 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
               controller: _scrollController,
               physics: BouncingScrollPhysics(),
               padding: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
-              childAspectRatio: .65,
+              childAspectRatio: .62,
               crossAxisCount: 3,
               children: List.generate(
                   20,

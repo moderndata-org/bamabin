@@ -1,5 +1,7 @@
 import 'package:bamabin/constant/colors.dart';
 import 'package:bamabin/controller/player_controller.dart';
+import 'package:bamabin/screens/dialogs/player_dialogs/player_season_dialog.dart';
+import 'package:bamabin/screens/dialogs/player_dialogs/player_subtitle_dialog.dart';
 import 'package:bamabin/widgets/MyCircularProgress.dart';
 import 'package:bamabin/widgets/MyText.dart';
 import 'package:flutter/material.dart';
@@ -84,10 +86,12 @@ class _PlayerScreenState extends State<PlayerScreen> {
                     AnimatedOpacity(
                       duration: Duration(milliseconds: 300),
                       opacity: controller.hide_bars.isFalse ? 1 : 0,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: (controller.hide_bars.isFalse)
-                            ? [
+                      child: controller.hide_bars.isTrue
+                          ? SizedBox()
+                          : Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                //! Top Bar
                                 Container(
                                   decoration: BoxDecoration(
                                       gradient: fadeGradient(
@@ -108,13 +112,22 @@ class _PlayerScreenState extends State<PlayerScreen> {
                                             size: 25,
                                           )),
                                       Spacer(),
-                                      Text(
-                                        "Monarch",
-                                        style: TextStyle(color: Colors.white),
+                                      MyText(
+                                        text: "Monarch",
+                                        fontWeight: FontWeight.w500,
+                                        size: 15,
                                       ),
                                       Spacer(),
+                                      //! Serial List
                                       IconButton(
-                                          onPressed: () {},
+                                          onPressed: () {
+                                            controller.video_controller.pause();
+                                            showDialog(
+                                              context: context,
+                                              builder: (context) =>
+                                                  PlayerSeasonDialog(),
+                                            );
+                                          },
                                           icon: Icon(
                                             Icons.playlist_play,
                                             color: Colors.white,
@@ -125,6 +138,7 @@ class _PlayerScreenState extends State<PlayerScreen> {
                                         MainAxisAlignment.spaceBetween,
                                   ),
                                 ),
+                                //! Bottom Bar
                                 Container(
                                   height: 130,
                                   decoration: BoxDecoration(
@@ -192,7 +206,7 @@ class _PlayerScreenState extends State<PlayerScreen> {
                                         ),
                                       ),
                                       Positioned(
-                                        bottom: 0,
+                                        bottom: -10,
                                         right: 0,
                                         left: 0,
                                         child: Stack(
@@ -233,13 +247,13 @@ class _PlayerScreenState extends State<PlayerScreen> {
                                                   size: 40,
                                                 ),
                                                 SizedBox(
-                                                  width: 15,
+                                                  width: 20,
                                                 ),
                                                 Icon(Icons.replay_10_rounded,
                                                     color: Colors.white,
-                                                    size: 35),
+                                                    size: 30),
                                                 SizedBox(
-                                                  width: 15,
+                                                  width: 20,
                                                 ),
                                                 (controller
                                                         .playing_status.isTrue)
@@ -251,7 +265,7 @@ class _PlayerScreenState extends State<PlayerScreen> {
                                                         icon: Icon(
                                                             Icons.pause_rounded,
                                                             color: Colors.white,
-                                                            size: 50))
+                                                            size: 60))
                                                     : IconButton(
                                                         onPressed: () {
                                                           controller
@@ -261,15 +275,15 @@ class _PlayerScreenState extends State<PlayerScreen> {
                                                             Icons
                                                                 .play_arrow_rounded,
                                                             color: Colors.white,
-                                                            size: 50)),
+                                                            size: 60)),
                                                 SizedBox(
-                                                  width: 15,
+                                                  width: 20,
                                                 ),
                                                 Icon(Icons.forward_10_rounded,
                                                     color: Colors.white,
-                                                    size: 35),
+                                                    size: 30),
                                                 SizedBox(
-                                                  width: 15,
+                                                  width: 20,
                                                 ),
                                                 Icon(Icons.skip_next_rounded,
                                                     color: Colors.white,
@@ -283,27 +297,67 @@ class _PlayerScreenState extends State<PlayerScreen> {
                                                 textDirection:
                                                     TextDirection.rtl,
                                                 children: [
-                                                  Icon(
-                                                    Icons.mic,
-                                                    color: Colors.white,
-                                                    size: 30,
+                                                  IconButton(
+                                                    onPressed: () {},
+                                                    icon: Icon(
+                                                      Icons.mic,
+                                                      color: Colors.white,
+                                                      size: 30,
+                                                    ),
                                                   ),
-                                                  SizedBox(
-                                                    width: 10,
+                                                  IconButton(
+                                                    onPressed: () {
+                                                      controller
+                                                          .video_controller
+                                                          .pause();
+                                                      showDialog(
+                                                        context: context,
+                                                        builder: (context) =>
+                                                            PlayerSubtitleDialog(),
+                                                      );
+                                                    },
+                                                    icon: Icon(
+                                                      Icons.closed_caption,
+                                                      color: Colors.white,
+                                                      size: 30,
+                                                    ),
                                                   ),
-                                                  Icon(
-                                                    Icons.closed_caption,
-                                                    color: Colors.white,
-                                                    size: 30,
-                                                  ),
-                                                  SizedBox(
-                                                    width: 10,
-                                                  ),
-                                                  Icon(
-                                                    Icons
-                                                        .display_settings_rounded,
-                                                    color: Colors.white,
-                                                    size: 30,
+                                                  IconButton(
+                                                    onPressed: () {},
+                                                    icon: SizedBox(
+                                                      width: 30,
+                                                      height: 30,
+                                                      child: Stack(
+                                                        clipBehavior: Clip.none,
+                                                        children: [
+                                                          Icon(
+                                                            Icons
+                                                                .display_settings_rounded,
+                                                            color: Colors.white,
+                                                            size: 30,
+                                                          ),
+                                                          Positioned(
+                                                              top: -10,
+                                                              left: -5,
+                                                              child: Container(
+                                                                padding: EdgeInsets
+                                                                    .symmetric(
+                                                                        horizontal:
+                                                                            2),
+                                                                decoration: BoxDecoration(
+                                                                    color: cR,
+                                                                    borderRadius:
+                                                                        BorderRadius.circular(
+                                                                            3)),
+                                                                child: MyText(
+                                                                  text: '1080p',
+                                                                  color: cW,
+                                                                  size: 7,
+                                                                ),
+                                                              ))
+                                                        ],
+                                                      ),
+                                                    ),
                                                   ),
                                                 ],
                                               ),
@@ -314,9 +368,8 @@ class _PlayerScreenState extends State<PlayerScreen> {
                                     ],
                                   ),
                                 )
-                              ]
-                            : [],
-                      ),
+                              ],
+                            ),
                     ))
               ],
             );
