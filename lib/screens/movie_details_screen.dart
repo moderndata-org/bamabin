@@ -96,7 +96,18 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                             fit: BoxFit.cover,
                             image: AssetImage('assets/images/bg_crausel.jpg'))),
                   ),
-                  //! Gradient
+                  //! TopGradient
+                  Positioned(
+                      top: 0,
+                      child: Container(
+                        height: 45,
+                        width: Get.width,
+                        decoration: BoxDecoration(
+                            gradient: fadeGradient(
+                                toColor: cPrimary,
+                                fromColor: Colors.transparent)),
+                      )),
+                  //! BottomGradient
                   Positioned(
                       bottom: 40,
                       left: 0,
@@ -241,11 +252,10 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                       )),
                   //! Back Btn
                   Positioned(
-                      top: 10,
-                      left: 10,
+                      left: 0,
                       child: BackButtonCustom(
                         hasPaddin: false,
-                        bgColor: cPrimary,
+                        bgColor: Colors.transparent,
                       )),
 
                   //! Report Problem Button

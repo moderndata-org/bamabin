@@ -105,9 +105,12 @@ flutter:
     - family: vazir
       fonts:
         - asset: assets/fonts/vazir.ttf
-          weight: 100
+        - asset: assets/fonts/vazir500.ttf
+          weight: 500
         - asset: assets/fonts/vazir700.ttf
           weight: 700
+        - asset: assets/fonts/vazir800.ttf
+          weight: 800
         - asset: assets/fonts/vazir900.ttf
           weight: 900
   #       - asset: fonts/Schyler-Italic.ttf
