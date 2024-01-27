@@ -84,7 +84,7 @@ class PartScreen extends StatelessWidget {
               childAspectRatio: .62,
               crossAxisCount: 3,
               children: List.generate(
-                  20,
+                  4,
                   (index) => MovieItemWidget(
                         title: 'Monarch',
                         hasDubbed: true,

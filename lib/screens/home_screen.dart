@@ -97,7 +97,7 @@ class HomeScreen extends GetView<PublicController> {
           child: Directionality(
             textDirection: TextDirection.rtl,
             child: ListView.builder(
-              itemCount: 10,
+              itemCount: 2,
               physics: BouncingScrollPhysics(),
               padding: EdgeInsets.symmetric(horizontal: 10),
               scrollDirection: Axis.horizontal,
@@ -126,7 +126,7 @@ class HomeScreen extends GetView<PublicController> {
           child: Directionality(
               textDirection: TextDirection.rtl,
               child: ListView.builder(
-                itemCount: 10,
+                itemCount: 2,
                 physics: BouncingScrollPhysics(),
                 padding: EdgeInsets.symmetric(horizontal: 10),
                 scrollDirection: Axis.horizontal,
@@ -150,7 +150,7 @@ class HomeScreen extends GetView<PublicController> {
           child: Directionality(
             textDirection: TextDirection.rtl,
             child: ListView.builder(
-              itemCount: 15,
+              itemCount: 2,
               itemBuilder: (context, index) => MovieItemWidget(
                 onTap: () {
                   Get.toNamed('/movie-detail');
@@ -166,44 +166,6 @@ class HomeScreen extends GetView<PublicController> {
               physics: BouncingScrollPhysics(),
               padding: EdgeInsets.symmetric(horizontal: 10),
               scrollDirection: Axis.horizontal,
-            ),
-          ),
-        ),
-        MainTitleWidget(title: 'سریال های جدید'),
-        SizedBox(
-          height: 205,
-          width: Get.width,
-          child: Directionality(
-            textDirection: TextDirection.rtl,
-            child: ListView(
-              physics: BouncingScrollPhysics(),
-              padding: EdgeInsets.symmetric(horizontal: 10),
-              scrollDirection: Axis.horizontal,
-              children: [
-                MovieItemWidget(
-                  year: '1920',
-                ),
-                MovieItemWidget(
-                  title: 'Forrest Gump',
-                  year: '1994',
-                  hasDubbed: true,
-                  hasSubtitle: true,
-                  imdbRate: '8.7',
-                  image: 'assets/images/bg_forrest.jpg',
-                ),
-                MovieItemWidget(
-                  year: '2010',
-                  hasDubbed: true,
-                  hasSubtitle: false,
-                  imdbRate: '5.7',
-                ),
-                MovieItemWidget(
-                  year: '2010',
-                  hasDubbed: false,
-                  hasSubtitle: true,
-                  imdbRate: '6',
-                ),
-              ],
             ),
           ),
         ),
