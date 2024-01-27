@@ -16,7 +16,7 @@ class OrderlistEditItemsScreen extends StatelessWidget {
             floatingActionButton: FloatingActionButton(
               shape: CircleBorder(),
               elevation: 10,
-              backgroundColor: cSecondaryLight,
+              backgroundColor: cY,
               onPressed: () {
                 showDialog(
                   barrierColor: cBgDialogColor,
@@ -27,7 +27,7 @@ class OrderlistEditItemsScreen extends StatelessWidget {
               },
               child: Icon(
                 Icons.add_rounded,
-                color: cW,
+                color: cB,
               ),
             ),
             backgroundColor: cPrimary,
@@ -47,7 +47,7 @@ class OrderlistEditItemsScreen extends StatelessWidget {
                     physics: BouncingScrollPhysics(),
                     padding: EdgeInsets.only(
                         left: 10, right: 10, top: 10, bottom: 50),
-                    childAspectRatio: .65,
+                    childAspectRatio: .62,
                     crossAxisCount: 3,
                     children: List.generate(
                         20,

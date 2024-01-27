@@ -79,6 +79,7 @@ class DownloadManagerItemWidget extends StatelessWidget {
                     textDirection: TextDirection.ltr,
                     text: '1 mbps',
                     size: 11,
+                    color: cY,
                   ),
                   MyText(
                       textDirection: TextDirection.ltr, text: '35%', size: 11),
@@ -87,7 +88,13 @@ class DownloadManagerItemWidget extends StatelessWidget {
               SizedBox(
                 width: 5,
               ),
-              MyTextButton(size: Size(70, 35), child: MyText(text: 'ادامه')),
+              MyTextButton(
+                  bgColor: cSecondaryLight,
+                  size: Size(70, 35),
+                  child: MyText(
+                    text: 'ادامه',
+                    shadows: [bsTextLowOpacity],
+                  )),
               SizedBox(
                 width: 15,
               ),
@@ -98,7 +105,7 @@ class DownloadManagerItemWidget extends StatelessWidget {
             width: Get.width,
             child: SliderTheme(
                 data: SliderThemeData(
-                    disabledActiveTrackColor: cSecondaryLight,
+                    disabledActiveTrackColor: cW,
                     disabledInactiveTrackColor: cW.withOpacity(.4),
                     trackHeight: 2,
                     thumbShape: RoundSliderThumbShape(enabledThumbRadius: 0)),

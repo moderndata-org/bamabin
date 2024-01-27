@@ -10,7 +10,7 @@ class MyText extends StatelessWidget {
     this.textAlign = TextAlign.right,
     this.textDirection = TextDirection.rtl,
     this.textOverflow,
-    this.fontWeight,
+    this.fontWeight = FontWeight.w100,
     this.padding,
     this.maxLines,
     this.lineHeight,

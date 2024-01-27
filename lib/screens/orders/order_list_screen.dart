@@ -23,7 +23,7 @@ class _OrderlistScreenState extends State<OrderlistScreen> {
       floatingActionButton: FloatingActionButton(
         shape: CircleBorder(),
         elevation: 10,
-        backgroundColor: cSecondaryLight,
+        backgroundColor: cY,
         onPressed: () {
           showDialog(
             barrierColor: cBgDialogColor,
@@ -34,7 +34,7 @@ class _OrderlistScreenState extends State<OrderlistScreen> {
         },
         child: Icon(
           Icons.add_rounded,
-          color: cW,
+          color: cB,
         ),
       ),
       backgroundColor: cPrimary,
@@ -131,6 +131,7 @@ class OrderItemWidget extends StatelessWidget {
                       text: 'مشاهده',
                       size: 14,
                       color: cW,
+                      shadows: [bsText],
                     ))),
             SizedBox(
               width: 20,
@@ -144,6 +145,7 @@ class OrderItemWidget extends StatelessWidget {
                       text: 'ویرایش',
                       size: 14,
                       color: cW,
+                      shadows: [bsText],
                     ))),
             SizedBox(
               width: 20,
@@ -157,6 +159,7 @@ class OrderItemWidget extends StatelessWidget {
                       text: 'حذف',
                       size: 14,
                       color: cW,
+                      shadows: [bsText],
                     ))),
           ],
         )

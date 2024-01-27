@@ -105,6 +105,7 @@ flutter:
     - family: vazir
       fonts:
         - asset: assets/fonts/vazir.ttf
+          weight: 100
         - asset: assets/fonts/vazir500.ttf
           weight: 500
         - asset: assets/fonts/vazir700.ttf

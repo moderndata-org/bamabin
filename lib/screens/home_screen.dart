@@ -1,13 +1,17 @@
+import 'package:bamabin/constant/promote_custom_paint.dart';
 import 'package:bamabin/controller/public_controller.dart';
+import 'package:bamabin/widgets/MyTextButton.dart';
 import 'package:bamabin/widgets/genre_item.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import '../constant/colors.dart';
 import '../widgets/MyText.dart';
 import '../widgets/main_title_widget.dart';
 import '../widgets/movie_item_widget.dart';
+import '../widgets/promote_widget.dart';
 
 class HomeScreen extends GetView<PublicController> {
   const HomeScreen({super.key});
@@ -84,6 +88,8 @@ class HomeScreen extends GetView<PublicController> {
                     borderRadius: BorderRadius.circular(5.0)),
               ),
             )),
+        PromoteWidget(
+            title: 'Borat: Cultural Learnings of America for Make Benefit'),
         MainTitleWidget(title: 'سریال های جدید'),
         SizedBox(
           height: 200,

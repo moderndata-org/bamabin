@@ -30,7 +30,7 @@ class RecentViewsScreen extends StatelessWidget {
                 child: GridView.count(
               physics: BouncingScrollPhysics(),
               padding: EdgeInsets.symmetric(horizontal: 10),
-              childAspectRatio: .65,
+              childAspectRatio: .62,
               crossAxisCount: 3,
               children: List.generate(
                   20,

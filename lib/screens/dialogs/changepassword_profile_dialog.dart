@@ -68,23 +68,14 @@ class _ProfileChangePasswordDialogState
                             color: cR,
                           ))),
                   Positioned(
-                    top: 0,
-                    child: Container(
-                      padding: EdgeInsets.only(
-                          top: 5, right: 10, left: 10, bottom: 5),
-                      decoration: BoxDecoration(
-                          color: cY,
-                          borderRadius: BorderRadius.only(
-                            bottomRight: Radius.circular(5),
-                            bottomLeft: Radius.circular(5),
-                          )),
-                      child: MyText(
-                        text: 'تغییر رمز ورود',
-                        color: cB,
-                        size: 15,
-                      ),
+                    top: 15,
+                    child: MyText(
+                      text: 'تغییر رمز ورود',
+                      color: cW,
+                      size: 15,
+                      fontWeight: FontWeight.w500,
                     ),
-                  )
+                  ),
                 ],
               ),
             ),
@@ -101,7 +92,7 @@ class _ProfileChangePasswordDialogState
                 prefixIcon: Icon(
                   Icons.lock,
                   size: 25,
-                  color: cGrey,
+                  color: cW,
                 ),
               ),
             ),
@@ -115,7 +106,7 @@ class _ProfileChangePasswordDialogState
                 prefixIcon: Icon(
                   Icons.lock,
                   size: 25,
-                  color: cGrey,
+                  color: cW,
                 ),
               ),
             ),
@@ -129,7 +120,7 @@ class _ProfileChangePasswordDialogState
                 prefixIcon: Icon(
                   Icons.lock,
                   size: 25,
-                  color: cGrey,
+                  color: cW,
                 ),
               ),
             ),

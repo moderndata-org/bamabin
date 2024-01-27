@@ -1,6 +1,6 @@
 import 'package:bamabin/constant/colors.dart';
 import 'package:bamabin/controller/public_controller.dart';
-import 'package:bamabin/screens/dialogs/profile_changepassword_dialog.dart';
+import 'package:bamabin/screens/dialogs/changepassword_profile_dialog.dart';
 import 'package:bamabin/widgets/back_button_custom.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -205,15 +205,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           SizedBox(
                             height: 10,
                           ),
-                          MyTextButton(
-                              onTap: () {},
-                              bgColor: cY,
-                              child: MyText(
-                                text: 'ذخیره تغییرات',
-                                size: 15,
-                                color: cB,
-                                fontWeight: FontWeight.w500,
-                              )),
+                          SizedBox(
+                            width: Get.width,
+                            height: 45,
+                            child: MyTextButton(
+                                onTap: () {},
+                                bgColor: cY,
+                                child: MyText(
+                                  text: 'ذخیره تغییرات',
+                                  size: 15,
+                                  color: cB,
+                                  fontWeight: FontWeight.w500,
+                                )),
+                          ),
                         ],
                       ),
                     ),
