@@ -32,7 +32,7 @@ class MovieItemDialogWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double borderRadius = 5;
-    Color cEntryText = Color.fromARGB(255, 233, 233, 233);
+    Color cEntryText = Color.fromARGB(255, 233, 233, 233).withOpacity(.8);
     return Container(
         margin:
             isSerial! ? EdgeInsets.zero : EdgeInsets.symmetric(vertical: 10),
@@ -44,178 +44,166 @@ class MovieItemDialogWidget extends StatelessWidget {
         ),
         child: Column(
           children: [
+            //! keifiat
             Row(
               textDirection: TextDirection.rtl,
               children: [
-                //! Right Side Texts
+                MyText(
+                  text: 'کیفیت :',
+                  fontWeight: FontWeight.w500,
+                  size: 15,
+                  shadows: [bsText],
+                ),
+                SizedBox(
+                  width: 5,
+                ),
                 Expanded(
-                  child: Column(
+                    child: MyText(
+                  text: switch (quality) {
+                    Quality.FourK => '4K',
+                    Quality.FHD => 'FHD',
+                    Quality.HD => 'HD',
+                    Quality.SD => 'SD',
+                    Quality.Cam => 'Cam',
+                    null => '',
+                  },
+                  textDirection: TextDirection.ltr,
+                  color: cEntryText,
+                  size: 14,
+                ))
+              ],
+            ),
+            //! noskhe hajm
+            Row(
+              textDirection: TextDirection.rtl,
+              children: [
+                Container(
+                  width: Get.width * .3 - 10,
+                  child: Row(
+                    textDirection: TextDirection.rtl,
                     children: [
-                      Row(
-                        textDirection: TextDirection.rtl,
-                        children: [
-                          MyText(
-                            text: 'کیفیت :',
-                            fontWeight: FontWeight.w500,
-                            size: 15,
-                            shadows: [bsText],
-                          ),
-                          SizedBox(
-                            width: 5,
-                          ),
-                          Expanded(
-                              child: MyText(
-                            text: switch (quality) {
-                              Quality.FourK => '4K',
-                              Quality.FHD => 'FHD',
-                              Quality.HD => 'HD',
-                              Quality.SD => 'SD',
-                              Quality.Cam => 'Cam',
-                              null => '',
-                            },
-                            textDirection: TextDirection.ltr,
-                            color: cEntryText,
-                            size: 14,
-                          ))
-                        ],
+                      MyText(
+                        text: 'نسخه : ',
+                        fontWeight: FontWeight.w500,
+                        size: 15,
+                        shadows: [bsText],
                       ),
                       SizedBox(
-                        height: 5,
+                        width: 5,
                       ),
-                      Row(
-                        textDirection: TextDirection.rtl,
-                        children: [
-                          MyText(
-                            text: 'نسخه : ',
-                            fontWeight: FontWeight.w500,
-                            size: 15,
-                            shadows: [bsText],
-                          ),
-                          SizedBox(
-                            width: 5,
-                          ),
-                          Expanded(
-                              child: MyText(
+                      Container(
+                          width: 50,
+                          child: MyText(
                             text: 'اصلی',
                             color: cEntryText,
                             size: 14,
-                          ))
-                        ],
+                          )),
+                    ],
+                  ),
+                ),
+                SizedBox(
+                  width: 5,
+                ),
+                MyText(
+                  text: 'حجم : ',
+                  fontWeight: FontWeight.w500,
+                  size: 15,
+                  shadows: [bsText],
+                ),
+                SizedBox(
+                  width: 5,
+                ),
+                Expanded(
+                    child: MyText(
+                  textDirection: TextDirection.ltr,
+                  color: cEntryText,
+                  text: '$movieSize',
+                  size: 14,
+                ))
+              ],
+            ),
+            //! encoder - tedad qesmat
+            Row(
+              textDirection: TextDirection.rtl,
+              children: [
+                Container(
+                  width: isSerial == true ? Get.width * .3 - 10 : null,
+                  child: Row(
+                    textDirection: TextDirection.rtl,
+                    children: [
+                      MyText(
+                        text: 'انکدر : ',
+                        fontWeight: FontWeight.w500,
+                        size: 15,
+                        shadows: [bsText],
                       ),
                       SizedBox(
-                        height: 5,
+                        width: 5,
                       ),
-                      Row(
-                        textDirection: TextDirection.rtl,
-                        children: [
-                          MyText(
-                            text: 'انکدر : ',
-                            fontWeight: FontWeight.w500,
-                            size: 15,
-                            shadows: [bsText],
-                          ),
-                          SizedBox(
-                            width: 5,
-                          ),
-                          Expanded(
-                              child: MyText(
-                            text: '$encoder',
-                            color: cEntryText,
-                            size: 14,
-                          ))
-                        ],
+                      MyText(
+                        text: '$encoder',
+                        color: cEntryText,
+                        size: 14,
                       ),
                     ],
                   ),
                 ),
-                //! Left Side Texts
-                Expanded(
-                  child: Column(
-                    children: [
-                      isSerial == true
-                          ? Row(
-                              textDirection: TextDirection.rtl,
-                              children: [
-                                MyText(
-                                  text: 'تعداد قسمت ها: ',
-                                  fontWeight: FontWeight.w500,
-                                  size: 15,
-                                  shadows: [bsText],
-                                ),
-                                SizedBox(
-                                  width: 5,
-                                ),
-                                Expanded(
-                                    child: FittedBox(
-                                  fit: BoxFit.scaleDown,
-                                  child: MyText(
-                                    textDirection: TextDirection.rtl,
-                                    text: '8 قسمت',
-                                    color: cEntryText,
-                                    size: 14,
-                                  ),
-                                ))
-                              ],
-                            )
-                          : SizedBox(),
-                      SizedBox(
-                        height: isSerial == true ? 5 : 20,
+                SizedBox(
+                  width: 5,
+                ),
+                isSerial == false
+                    ? SizedBox()
+                    : MyText(
+                        text: 'تعداد قسمت ها: ',
+                        fontWeight: FontWeight.w500,
+                        size: 15,
+                        shadows: [bsText],
                       ),
-                      movieType == MovieType.Subtitle
-                          ? Row(
-                              textDirection: TextDirection.rtl,
-                              children: [
-                                MyText(
-                                  text: 'نوع زیرنویس : ',
-                                  fontWeight: FontWeight.w500,
-                                  size: 15,
-                                  shadows: [bsText],
-                                ),
-                                SizedBox(
-                                  width: 5,
-                                ),
-                                Expanded(
-                                    child: MyText(
-                                  textDirection: TextDirection.ltr,
-                                  text: switch (subtitleType) {
-                                    SubtitleType.HardSub => 'HardSub',
-                                    SubtitleType.SoftSub => 'SoftSub',
-                                    null => '',
-                                  },
-                                  color: cEntryText,
-                                  size: 14,
-                                ))
-                              ],
-                            )
-                          : SizedBox(),
-                      SizedBox(
-                        height: movieType == MovieType.Subtitle ? 5 : 0,
+                isSerial == false
+                    ? SizedBox()
+                    : SizedBox(
+                        width: 5,
                       ),
-                      Row(
+                isSerial == false
+                    ? SizedBox()
+                    : Expanded(
+                        child: MyText(
                         textDirection: TextDirection.rtl,
-                        children: [
-                          MyText(
-                            text: 'حجم : ',
-                            fontWeight: FontWeight.w500,
-                            size: 15,
-                            shadows: [bsText],
-                          ),
-                          SizedBox(
-                            width: 5,
-                          ),
-                          Expanded(
-                              child: MyText(
-                            textDirection: TextDirection.ltr,
-                            color: cEntryText,
-                            text: '$movieSize',
-                            size: 14,
-                          ))
-                        ],
-                      ),
-                    ],
-                  ),
-                )
+                        text: '8 قسمت',
+                        color: cEntryText,
+                        size: 14,
+                      ))
               ],
+            ),
+            movieType == MovieType.Subtitle
+                ? Row(
+                    textDirection: TextDirection.rtl,
+                    children: [
+                      MyText(
+                        text: 'نوع زیرنویس : ',
+                        fontWeight: FontWeight.w500,
+                        size: 15,
+                        shadows: [bsText],
+                      ),
+                      SizedBox(
+                        width: 5,
+                      ),
+                      Expanded(
+                          child: MyText(
+                        textDirection: TextDirection.ltr,
+                        text: switch (subtitleType) {
+                          SubtitleType.HardSub => 'HardSub',
+                          SubtitleType.SoftSub => 'SoftSub',
+                          null => '',
+                        },
+                        color: cEntryText,
+                        size: 14,
+                      ))
+                    ],
+                  )
+                : SizedBox(),
+            SizedBox(
+              height: movieType == MovieType.Subtitle ? 5 : 0,
             ),
             SizedBox(
               height: 10,
