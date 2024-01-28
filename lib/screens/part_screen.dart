@@ -45,7 +45,7 @@ class PartScreen extends StatelessWidget {
                   ),
                   Expanded(
                       child: CustomDropDown(
-                    alignment: Alignment.centerRight,
+                    alignment: Alignment.center,
                     title: 'ژانر',
                     list: ['کمدی', 'عاشقانه', 'علمی', 'تخیلی', 'درام', 'اکشن'],
                   )),
@@ -54,7 +54,7 @@ class PartScreen extends StatelessWidget {
                   ),
                   Expanded(
                       child: CustomDropDown(
-                    alignment: Alignment.centerRight,
+                    alignment: Alignment.center,
                     title: "مرتب سازی",
                     list: ['1', '2', '3'],
                   )),
@@ -63,7 +63,7 @@ class PartScreen extends StatelessWidget {
                   ),
                   Expanded(
                       child: CustomDropDown(
-                    alignment: Alignment.centerRight,
+                    alignment: Alignment.center,
                     title: "امتیاز IMDB",
                     list: ['1', '2', '3'],
                   )),

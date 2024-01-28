@@ -24,7 +24,11 @@ class ForgetPasswordScreen extends GetView<AuthController> {
             const SizedBox(
               height: 20,
             ),
-            Align(alignment: Alignment.centerLeft, child: BackButtonCustom()),
+            Align(
+                alignment: Alignment.centerLeft,
+                child: BackButtonCustom(
+                  bgColor: cPrimary,
+                )),
             SizedBox(
               height: 20,
             ),
@@ -51,12 +55,12 @@ class ForgetPasswordScreen extends GetView<AuthController> {
                     height: 20,
                   ),
                   MyTextField(
-                    hint: 'نام کاربری',
+                    hint: 'ایمیل',
                     controller: controller.txtUsername,
                     prefixIcon: Icon(
                       Icons.account_circle_rounded,
                       size: 30,
-                      color: cGrey,
+                      color: cW,
                     ),
                   ),
                   SizedBox(

@@ -72,8 +72,7 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                 ),
                 onPressed: () {
                   controller.movieDetailScrollController.animateTo(0,
-                      duration: Duration(milliseconds: 500),
-                      curve: Curves.easeIn);
+                      duration: Duration(seconds: 1), curve: Curves.easeIn);
                 },
               )
             : SizedBox()),
@@ -220,8 +219,8 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                                   decoration: BoxDecoration(
                                       color: controller.movieLikeStatus.value ==
                                               LikeStatus.like
-                                          ? cLike
-                                          : cLike.withOpacity(.5),
+                                          ? cSecondaryLight
+                                          : cSecondaryLight.withOpacity(.5),
                                       borderRadius: BorderRadius.only(
                                         topRight: Radius.circular(5),
                                         bottomRight: Radius.circular(5),
@@ -372,9 +371,9 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                       controller.movieDetailScrollController.animateTo(
                           controller.movieDetailScrollController.position
                                   .maxScrollExtent +
-                              300,
-                          duration: Duration(milliseconds: 500),
-                          curve: Curves.bounceOut);
+                              500,
+                          duration: Duration(seconds: 1),
+                          curve: Curves.easeIn);
                     },
                     bgColor: cPrimary,
                     fgColor: cY,
@@ -414,13 +413,10 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                   ),
                   Expanded(
                       child: MovieItemSmallDetailWidget(
-                    icon: Padding(
-                      padding: const EdgeInsets.only(bottom: 2),
-                      child: Icon(
-                        Icons.today_rounded,
-                        color: cW,
-                        size: 19,
-                      ),
+                    icon: Icon(
+                      Icons.today_rounded,
+                      color: cW,
+                      size: 19,
                     ),
                     title: 'دوشنبه',
                   )),
@@ -885,7 +881,9 @@ class ButtonSectionMovieDetailWidget extends GetView<PublicController> {
                   borderRadius: 5,
                   padding: EdgeInsets.zero,
                   fgColor: cW,
-                  onTap: () {},
+                  onTap: () {
+                    controller.isFavorite(!controller.isFavorite.value);
+                  },
                   bgColor: cGrey,
                   boxShadow: bsBtnMovieDetail,
                   size: Size.fromHeight(60),
@@ -893,11 +891,13 @@ class ButtonSectionMovieDetailWidget extends GetView<PublicController> {
                     children: [
                       Expanded(
                         child: Center(
-                          child: Icon(
-                            Icons.bookmark,
-                            size: 25,
-                            color: cW,
-                          ),
+                          child: Obx(() => Icon(
+                                controller.isFavorite.value
+                                    ? Icons.bookmark
+                                    : Icons.bookmark_border_rounded,
+                                size: 25,
+                                color: cW,
+                              )),
                         ),
                       ),
                       MyText(
@@ -1034,7 +1034,6 @@ class MovieItemSmallDetailWidget extends StatelessWidget {
           icon ?? SizedBox(),
           Expanded(
             child: MyText(
-              padding: EdgeInsets.only(top: 4),
               textAlign: TextAlign.center,
               textDirection: textDirection,
               text: '$title',

@@ -58,6 +58,7 @@ class MovieItemDialogWidget extends StatelessWidget {
                             text: 'کیفیت :',
                             fontWeight: FontWeight.w500,
                             size: 15,
+                            shadows: [bsText],
                           ),
                           SizedBox(
                             width: 5,
@@ -88,6 +89,7 @@ class MovieItemDialogWidget extends StatelessWidget {
                             text: 'نسخه : ',
                             fontWeight: FontWeight.w500,
                             size: 15,
+                            shadows: [bsText],
                           ),
                           SizedBox(
                             width: 5,
@@ -110,6 +112,7 @@ class MovieItemDialogWidget extends StatelessWidget {
                             text: 'انکدر : ',
                             fontWeight: FontWeight.w500,
                             size: 15,
+                            shadows: [bsText],
                           ),
                           SizedBox(
                             width: 5,
@@ -129,6 +132,35 @@ class MovieItemDialogWidget extends StatelessWidget {
                 Expanded(
                   child: Column(
                     children: [
+                      isSerial == true
+                          ? Row(
+                              textDirection: TextDirection.rtl,
+                              children: [
+                                MyText(
+                                  text: 'تعداد قسمت ها: ',
+                                  fontWeight: FontWeight.w500,
+                                  size: 15,
+                                  shadows: [bsText],
+                                ),
+                                SizedBox(
+                                  width: 5,
+                                ),
+                                Expanded(
+                                    child: FittedBox(
+                                  fit: BoxFit.scaleDown,
+                                  child: MyText(
+                                    textDirection: TextDirection.rtl,
+                                    text: '8 قسمت',
+                                    color: cEntryText,
+                                    size: 14,
+                                  ),
+                                ))
+                              ],
+                            )
+                          : SizedBox(),
+                      SizedBox(
+                        height: isSerial == true ? 5 : 20,
+                      ),
                       movieType == MovieType.Subtitle
                           ? Row(
                               textDirection: TextDirection.rtl,
@@ -137,6 +169,7 @@ class MovieItemDialogWidget extends StatelessWidget {
                                   text: 'نوع زیرنویس : ',
                                   fontWeight: FontWeight.w500,
                                   size: 15,
+                                  shadows: [bsText],
                                 ),
                                 SizedBox(
                                   width: 5,
@@ -165,6 +198,7 @@ class MovieItemDialogWidget extends StatelessWidget {
                             text: 'حجم : ',
                             fontWeight: FontWeight.w500,
                             size: 15,
+                            shadows: [bsText],
                           ),
                           SizedBox(
                             width: 5,
@@ -206,11 +240,11 @@ class MovieItemDialogWidget extends StatelessWidget {
                             },
                             borderRadius: BorderRadius.circular(5)),
                         child: MyText(
-                          text: 'لینک ها',
+                          text: 'لینک‌ها',
                           color: cW,
                           size: 15,
                           fontWeight: FontWeight.w500,
-                          shadows: [bsTextLowOpacity],
+                          shadows: [bsText],
                         ),
                       ),
                       SizedBox(

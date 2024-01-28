@@ -73,7 +73,7 @@ class DownloadSerialDialog extends GetView<PublicController> {
                                       ? 'لینک دانلود سریال $title'
                                       : 'پخش سریال $title',
                                   color: cW,
-                                  fontWeight: FontWeight.w500,
+                                  fontWeight: FontWeight.w900,
                                   size: 15,
                                 ),
                               ]),
@@ -121,11 +121,12 @@ class DownloadSerialDialog extends GetView<PublicController> {
                               header: Container(
                                   padding: EdgeInsets.only(right: 10),
                                   alignment: Alignment.centerRight,
-                                  height: 45,
+                                  height: 50,
                                   child: MyText(
                                     text: 'فصل ${index + 1}',
                                     size: 15,
                                     shadows: [bsText],
+                                    fontWeight: FontWeight.w700,
                                   )),
                               headerBackgroundColorOpened: cSecondary,
                               content: Container(
@@ -133,7 +134,8 @@ class DownloadSerialDialog extends GetView<PublicController> {
                                     vertical: 10, horizontal: 10),
                                 width: Get.width,
                                 decoration: BoxDecoration(
-                                  border: Border.all(color: cGrey, width: 2),
+                                  border:
+                                      Border.all(color: cSecondary, width: 2),
                                   borderRadius: BorderRadius.only(
                                       bottomLeft: Radius.circular(5),
                                       bottomRight: Radius.circular(5)),

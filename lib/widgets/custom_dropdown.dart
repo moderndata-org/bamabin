@@ -59,7 +59,7 @@ class CustomDropDown extends StatelessWidget {
                 alignment: alignment!,
                 child: MyText(
                   text: title!,
-                  size: 12,
+                  size: 14,
                   shadows: [bsText],
                 ),
               ),

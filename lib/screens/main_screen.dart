@@ -34,7 +34,6 @@ class MainScreen extends GetView<PublicController> {
                   PartScreen(),
                   PartScreen(),
                   PartScreen(),
-                  GenreScreen()
                 ],
               );
             }),

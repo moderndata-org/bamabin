@@ -60,9 +60,9 @@ class CustomMainAppBar extends GetView<PublicController> {
                   if (controller.bottomIndex != 0) {
                     center = MyText(
                       text: '${controller.appBarCenterText}',
-                      size: 17,
+                      size: 19,
                       color: cW,
-                      fontWeight: FontWeight.w500,
+                      fontWeight: FontWeight.w900,
                       shadows: [bsText],
                     );
                   } else {

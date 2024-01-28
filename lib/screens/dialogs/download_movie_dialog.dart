@@ -85,6 +85,7 @@ class DownloadMovieDialog extends GetView<PublicController> {
                                   color: cW,
                                   shadows: [bsText],
                                   size: 15,
+                                  fontWeight: FontWeight.w900,
                                 ),
                               ]),
                         ),

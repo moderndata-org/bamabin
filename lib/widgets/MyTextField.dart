@@ -65,7 +65,7 @@ class MyTextField extends StatelessWidget {
         obscureText: isPassword == true ? true : false,
         focusNode: focusNode,
         textInputAction: action,
-        maxLines: maxLines ?? 1,
+        maxLines: maxLines,
         style: textStyle ??
             TextStyle(
               color: cW,

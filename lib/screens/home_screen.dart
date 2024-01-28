@@ -116,8 +116,7 @@ class HomeScreen extends GetView<PublicController> {
         MainTitleWidget(
           title: 'ژانر ‌ها',
           onTapMore: () {
-            controller.bottomIndex(5);
-            controller.appBarCenterText('ژانر ها');
+            Get.toNamed('geners');
           },
         ),
         SizedBox(

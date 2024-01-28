@@ -1,6 +1,7 @@
 import 'package:bamabin/screens/authentication/forget_password_screen.dart';
 import 'package:bamabin/screens/download_manager_screen.dart';
 import 'package:bamabin/screens/favorite_screen.dart';
+import 'package:bamabin/screens/genre_screen.dart';
 import 'package:bamabin/screens/movie_details_screen.dart';
 import 'package:bamabin/screens/notifications_screen.dart';
 import 'package:bamabin/screens/authentication/signin_screen.dart';
@@ -52,5 +53,6 @@ class Routes {
             name: '/download-manager',
             page: () => const DownloadManagerScreen()),
         GetPage(name: '/movie-detail', page: () => const MovieDetailsScreen()),
+        GetPage(name: '/geners', page: () => const GenreScreen()),
       ];
 }

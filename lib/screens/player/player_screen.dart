@@ -226,14 +226,29 @@ class _PlayerScreenState extends State<PlayerScreen> {
                                                         color: Colors.white,
                                                         size: 25,
                                                       )),
-                                                  SizedBox(
-                                                    width: 10,
-                                                  ),
-                                                  Icon(
-                                                    Icons.lock,
-                                                    color: Colors.white,
-                                                    size: 25,
-                                                  ),
+                                                  IconButton(
+                                                      onPressed: () {},
+                                                      icon: Icon(
+                                                        Icons.lock,
+                                                        color: Colors.white,
+                                                        size: 25,
+                                                      )),
+                                                  IconButton(
+                                                      onPressed: () {
+                                                        controller
+                                                            .video_controller
+                                                            .pause();
+                                                        showDialog(
+                                                          context: context,
+                                                          builder: (context) =>
+                                                              PlayerSubtitleDialog(),
+                                                        );
+                                                      },
+                                                      icon: Icon(
+                                                        Icons.tune,
+                                                        color: Colors.white,
+                                                        size: 25,
+                                                      )),
                                                 ],
                                               ),
                                             ),
@@ -306,16 +321,7 @@ class _PlayerScreenState extends State<PlayerScreen> {
                                                     ),
                                                   ),
                                                   IconButton(
-                                                    onPressed: () {
-                                                      controller
-                                                          .video_controller
-                                                          .pause();
-                                                      showDialog(
-                                                        context: context,
-                                                        builder: (context) =>
-                                                            PlayerSubtitleDialog(),
-                                                      );
-                                                    },
+                                                    onPressed: () {},
                                                     icon: Icon(
                                                       Icons.closed_caption,
                                                       color: Colors.white,

@@ -81,13 +81,21 @@ class TicketsAddDialog extends StatelessWidget {
               padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
               child: MyTextField(
                 borderRadius: 5,
+                maxLines: 3,
                 height: 90,
                 hint: "توضیحات",
                 controller: new TextEditingController(),
-                suffixIcon: Icon(
-                  Icons.description,
-                  size: 25,
-                  color: cW,
+                suffixIcon: Column(
+                  children: [
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Icon(
+                      Icons.description,
+                      size: 25,
+                      color: cW,
+                    ),
+                  ],
                 ),
               ),
             ),

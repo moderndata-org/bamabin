@@ -25,6 +25,7 @@ class PublicController extends GetxController {
   RxDouble trailerPosition = 0.0.obs;
   TextEditingController? txtComment;
   RxBool showGoToTop = false.obs;
+  RxBool isFavorite = false.obs;
 
   late VideoPlayerController trailerController;
 
@@ -43,6 +44,17 @@ class PublicController extends GetxController {
         showGoToTop(true);
       } else {
         showGoToTop(false);
+      }
+    });
+    bottomIndex.listen((p0) {
+      if (p0 != 0) {
+        isVisibleAppbar(true);
+      } else if (p0 == 0) {
+        if (mainScrollController.offset > 10) {
+          isVisibleAppbar(false);
+        } else {
+          isVisibleAppbar(true);
+        }
       }
     });
     super.onInit();

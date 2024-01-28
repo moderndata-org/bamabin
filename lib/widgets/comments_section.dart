@@ -57,19 +57,22 @@ class CommentsSection extends GetView<PublicController> {
               ),
               Expanded(
                   child: MyTextField(
-                      height: 40,
+                      maxLines: null,
                       hint: 'نظر خود را بنویسید',
                       controller: controller.txtComment!)),
               SizedBox(
                 width: 10,
               ),
-              MyTextButton(
-                size: null,
-                child: MyText(
-                  text: 'ثبت نظر',
-                  color: cB,
+              SizedBox(
+                height: 50,
+                child: MyTextButton(
+                  size: null,
+                  child: MyText(
+                    text: 'ثبت نظر',
+                    color: cB,
+                  ),
+                  bgColor: cY,
                 ),
-                bgColor: cY,
               ),
               SizedBox(
                 width: 10,
