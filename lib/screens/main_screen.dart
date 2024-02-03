@@ -1,22 +1,23 @@
 import 'package:bamabin/constant/colors.dart';
 import 'package:bamabin/controller/public_controller.dart';
-import 'package:bamabin/screens/genre_screen.dart';
 import 'package:bamabin/screens/home_screen.dart';
 import 'package:bamabin/screens/part_screen.dart';
 import 'package:bamabin/widgets/custom_bottom_navigation.dart';
 import 'package:bamabin/widgets/custom_drawer_menu.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../controller/main_controller.dart';
 import '../widgets/custom_main_appbar.dart';
 
 class MainScreen extends GetView<PublicController> {
-  const MainScreen({super.key});
+  MainScreen({super.key});
+  final mainController = Get.find<MainController>();
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
         child: Scaffold(
-      key: controller.scaffolState,
+      key: mainController.scaffolState,
       endDrawer: CustomDrawerMenu(),
       bottomNavigationBar: CustomBottomNavigation(),
       backgroundColor: cPrimary,
@@ -27,7 +28,7 @@ class MainScreen extends GetView<PublicController> {
             height: Get.height,
             child: Obx(() {
               return IndexedStack(
-                index: controller.bottomIndex.value,
+                index: mainController.bottomIndex.value,
                 children: [
                   HomeScreen(),
                   PartScreen(),

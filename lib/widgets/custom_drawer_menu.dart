@@ -1,4 +1,5 @@
 import 'package:bamabin/constant/colors.dart';
+import 'package:bamabin/controller/main_controller.dart';
 import 'package:bamabin/controller/public_controller.dart';
 import 'package:bamabin/widgets/MyText.dart';
 import 'package:bamabin/widgets/MyTextButton.dart';
@@ -8,8 +9,9 @@ import 'package:get/get.dart';
 
 import '../screens/dialogs/tokenBot_dialog.dart';
 
-class CustomDrawerMenu extends GetView<PublicController> {
-  const CustomDrawerMenu({super.key});
+class CustomDrawerMenu extends GetView<MainController> {
+  CustomDrawerMenu({super.key});
+  final publicController = Get.find<PublicController>();
 
   @override
   Widget build(BuildContext context) {
@@ -70,7 +72,7 @@ class CustomDrawerMenu extends GetView<PublicController> {
                                       alignment: Alignment.centerRight,
                                       child: MyText(text: 'کاربر مهمان')),
                                   Obx(() {
-                                    return controller.hasSubscribe.isFalse
+                                    return publicController.hasSubscribe.isFalse
                                         ? SizedBox()
                                         : Align(
                                             alignment: Alignment.centerRight,
@@ -135,9 +137,9 @@ class CustomDrawerMenu extends GetView<PublicController> {
                             boxShadow: bsTextLowOpacity,
                             bgColor: cBgDrawerItem,
                             onTap: () {
-                              controller
-                                  .hasSubscribe(!controller.hasSubscribe.value);
-                              if (controller.hasSubscribe.value) {
+                              publicController.hasSubscribe(
+                                  !publicController.hasSubscribe.value);
+                              if (publicController.hasSubscribe.value) {
                                 Get.toNamed('/subscribe');
                                 controller.scaffolState.currentState!
                                     .closeEndDrawer();
@@ -155,7 +157,7 @@ class CustomDrawerMenu extends GetView<PublicController> {
                                   width: 10,
                                 ),
                                 MyText(
-                                  text: controller.hasSubscribe.value
+                                  text: publicController.hasSubscribe.value
                                       ? 'تمدید اشتراک'
                                       : 'خرید اشتراک',
                                   color: cW,

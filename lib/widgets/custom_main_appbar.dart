@@ -1,12 +1,11 @@
+import 'package:bamabin/controller/main_controller.dart';
 import 'package:bamabin/widgets/MyText.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 import '../constant/colors.dart';
-import '../controller/public_controller.dart';
 import 'MyTextButton.dart';
 
-class CustomMainAppBar extends GetView<PublicController> {
+class CustomMainAppBar extends GetView<MainController> {
   const CustomMainAppBar({
     super.key,
   });

@@ -1,10 +1,10 @@
-import 'package:bamabin/controller/public_controller.dart';
+import 'package:bamabin/controller/main_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../constant/colors.dart';
 import 'bottomnav_item_widget.dart';
 
-class CustomBottomNavigation extends GetView<PublicController> {
+class CustomBottomNavigation extends GetView<MainController> {
   const CustomBottomNavigation({super.key});
 
   @override

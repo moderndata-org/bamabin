@@ -1,4 +1,4 @@
-import 'package:bamabin/controller/public_controller.dart';
+import 'package:bamabin/controller/main_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -6,7 +6,7 @@ import 'package:get/get.dart';
 import '../constant/colors.dart';
 import 'MyText.dart';
 
-class BottomNavButtonWidget extends GetView<PublicController> {
+class BottomNavButtonWidget extends GetView<MainController> {
   const BottomNavButtonWidget({
     super.key,
     this.onTap,

@@ -1,11 +1,9 @@
-import 'package:bamabin/constant/promote_custom_paint.dart';
+import 'package:bamabin/controller/main_controller.dart';
 import 'package:bamabin/controller/public_controller.dart';
-import 'package:bamabin/widgets/MyTextButton.dart';
 import 'package:bamabin/widgets/genre_item.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import '../constant/colors.dart';
 import '../widgets/MyText.dart';
@@ -14,13 +12,14 @@ import '../widgets/movie_item_widget.dart';
 import '../widgets/promote_widget.dart';
 
 class HomeScreen extends GetView<PublicController> {
-  const HomeScreen({super.key});
+  HomeScreen({super.key});
+  final mainController = Get.find<MainController>();
 
   @override
   Widget build(BuildContext context) {
     return ListView(
       padding: EdgeInsets.only(top: 60, bottom: 20),
-      controller: controller.mainScrollController,
+      controller: mainController.mainScrollController,
       physics: BouncingScrollPhysics(),
       children: [
         SizedBox(

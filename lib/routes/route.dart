@@ -35,7 +35,7 @@ class Routes {
         GetPage(
             name: '/forgetpassword', page: () => const ForgetPasswordScreen()),
         GetPage(name: '/signup', page: () => const SignupScreen()),
-        GetPage(name: '/main', page: () => const MainScreen()),
+        GetPage(name: '/main', page: () => MainScreen()),
         GetPage(name: '/favorite', page: () => const FavoriteScreen()),
         GetPage(name: '/order', page: () => const OrderlistScreen()),
         GetPage(
