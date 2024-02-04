@@ -11,21 +11,24 @@ class CustomDropDown extends StatelessWidget {
     this.list,
     this.buttonColor,
     this.dropdownColor,
+    this.onTap,
     this.alignment = Alignment.center,
     super.key,
   });
   final double? borderRadius;
   final String? title;
-  final List<String>? list;
+  final List<DropdownMenuItem>? list;
   final Color? buttonColor;
   final Color? dropdownColor;
   final Alignment? alignment;
+  final Function()? onTap;
   @override
   Widget build(BuildContext context) {
     return Directionality(
       textDirection: TextDirection.rtl,
       child: DropdownButtonHideUnderline(
           child: DropdownButton2(
+              value: null,
               buttonStyleData: ButtonStyleData(
                   padding: EdgeInsets.symmetric(horizontal: 10),
                   width: Get.width,
@@ -64,20 +67,7 @@ class CustomDropDown extends StatelessWidget {
                 ),
               ),
               onChanged: (value) {},
-              items: list == null
-                  ? []
-                  : List.generate(
-                      list!.length,
-                      (index) => DropdownMenuItem(
-                          value: index,
-                          child: Align(
-                            alignment: alignment!,
-                            child: MyText(
-                              text: list![index],
-                              size: 13,
-                              shadows: [bsText],
-                            ),
-                          ))))),
+              items: list)),
     );
   }
 }

@@ -67,7 +67,7 @@ class SearchAdvancedDialog extends StatelessWidget {
                     child: CustomDropDown(
                   title: 'نوع',
                   borderRadius: 5,
-                  list: ['1', '2', '3'],
+                  list: [],
                 )),
                 SizedBox(
                   width: 5,
@@ -76,7 +76,7 @@ class SearchAdvancedDialog extends StatelessWidget {
                     child: CustomDropDown(
                   title: 'رده سنی',
                   borderRadius: 5,
-                  list: ['1', '2', '3'],
+                  list: [],
                 )),
                 SizedBox(
                   width: 20,
@@ -97,7 +97,7 @@ class SearchAdvancedDialog extends StatelessWidget {
                     child: CustomDropDown(
                   title: 'کشور',
                   borderRadius: 5,
-                  list: ['1', '2', '3'],
+                  list: [],
                 )),
                 SizedBox(
                   width: 5,
@@ -106,7 +106,7 @@ class SearchAdvancedDialog extends StatelessWidget {
                     child: CustomDropDown(
                   title: 'ژانر',
                   borderRadius: 5,
-                  list: ['1', '2', '3'],
+                  list: [],
                 )),
                 SizedBox(
                   width: 20,

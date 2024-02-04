@@ -23,7 +23,7 @@ class ApiProvider extends GetConnect {
       {required BottomNavType type,
       String? page,
       String? genreId,
-      OrderBy? orderBy}) async {
+      required OrderBy orderBy}) async {
     Map<String, String> m = {
       'type': switch (type) {
         BottomNavType.home => 'movies',
@@ -37,16 +37,14 @@ class ApiProvider extends GetConnect {
     m.addIf(page != null, 'page', '$page');
 
     m.addIf(
-        orderBy != null,
+        orderBy != OrderBy.none,
         'order_by',
         '${switch (orderBy) {
+          OrderBy.none => null,
           OrderBy.date => 'date',
           OrderBy.imdb => 'imdb',
           OrderBy.modified => 'modified',
-          null => null,
         }}');
-    print(m);
-
     Response res = await get(
       '${base_url}archive/post_type',
       query: m,

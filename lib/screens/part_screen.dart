@@ -1,5 +1,7 @@
+import 'package:bamabin/constant/classes.dart';
 import 'package:bamabin/constant/colors.dart';
 import 'package:bamabin/controller/main_controller.dart';
+import 'package:bamabin/widgets/MyText.dart';
 import 'package:bamabin/widgets/custom_dropdown.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
@@ -38,17 +40,55 @@ class PartScreen extends GetView<MainController> {
                       child: CustomDropDown(
                     alignment: Alignment.center,
                     title: 'ژانر',
-                    list: ['کمدی', 'عاشقانه', 'علمی', 'تخیلی', 'درام', 'اکشن'],
+                    list: [
+                      DropdownMenuItem(
+                          value: 0,
+                          onTap: () {},
+                          child: Center(
+                            child: MyText(
+                              text: 'ژانر',
+                              textAlign: TextAlign.center,
+                            ),
+                          ))
+                    ],
                   )),
                   SizedBox(
                     width: 1,
                   ),
                   Expanded(
-                      child: CustomDropDown(
-                    alignment: Alignment.center,
-                    title: "مرتب سازی",
-                    list: ['1', '2', '3'],
-                  )),
+                      child: Obx(() => CustomDropDown(
+                            onTap: () {},
+                            alignment: Alignment.center,
+                            title: switch (controller.selectedOrder.value) {
+                              OrderBy.none => "مرتب سازی",
+                              OrderBy.date => 'زمان انتشار',
+                              OrderBy.imdb => 'براساس imdb',
+                              OrderBy.modified => 'به‌روزرسانی',
+                            },
+                            list: [
+                              DropdownMenuItem(
+                                  value: 0,
+                                  onTap: () => controller.changeOrder(
+                                      orderBy: OrderBy.date),
+                                  child: Center(
+                                      child: MyText(text: 'زمان انتشار'))),
+                              DropdownMenuItem(
+                                  value: 1,
+                                  onTap: () => controller.changeOrder(
+                                      orderBy: OrderBy.modified),
+                                  child: Center(
+                                      child: MyText(text: 'به‌روزرسانی'))),
+                              DropdownMenuItem(
+                                  value: 2,
+                                  onTap: () => controller.changeOrder(
+                                      orderBy: OrderBy.imdb),
+                                  child: Center(
+                                      child: MyText(
+                                    text: 'براساس امتیاز imdb',
+                                    textAlign: TextAlign.center,
+                                  ))),
+                            ],
+                          ))),
                   SizedBox(
                     width: 1,
                   ),
@@ -56,7 +96,16 @@ class PartScreen extends GetView<MainController> {
                       child: CustomDropDown(
                     alignment: Alignment.center,
                     title: "امتیاز IMDB",
-                    list: ['1', '2', '3'],
+                    list: [
+                      DropdownMenuItem(
+                          value: 0,
+                          onTap: () {},
+                          child: Center(
+                            child: MyText(
+                                text: "امتیاز IMDB",
+                                textAlign: TextAlign.center),
+                          ))
+                    ],
                   )),
                   SizedBox(
                     width: 2,
@@ -69,7 +118,7 @@ class PartScreen extends GetView<MainController> {
             ),
 
             Expanded(
-                child: Obx(() => controller.isLoadingItems.value
+                child: Obx(() => controller.isShowShimmer.value
                     ? ListView(
                         padding: EdgeInsets.symmetric(horizontal: 5),
                         physics: BouncingScrollPhysics(),
@@ -130,69 +179,112 @@ class PartScreen extends GetView<MainController> {
                     : Directionality(
                         textDirection: TextDirection.rtl,
                         child: AlignedGridView.count(
-                          // physics: BouncingScrollPhysics(),
+                          physics: BouncingScrollPhysics(),
                           crossAxisCount: 3,
                           mainAxisSpacing: 4,
                           crossAxisSpacing: 4,
                           itemCount: controller.selectedList.length,
                           itemBuilder: (context, index) {
-                            print(index);
+                            // print(index);
                             FilmModel fm = controller.selectedList[index];
+                            // print('${fm.release?.first.name}');
+                            if (index == controller.selectedList.length - 1) {
+                              controller.getArchive(isFirstPage: false);
+                            }
                             return MovieItemWidget(
                               title: '${fm.titleMovie}',
                               hasDubbed: fm.hasDubbed != '',
                               hasSubtitle: fm.hasSubtitle == 'on',
-                              imdbRate: '5.5',
-                              year: '20${index.toString().padLeft(2, '0')}',
+                              imdbRate: '${fm.imdbRate}',
+                              year: fm.release!.length > 0
+                                  ? '${fm.release?.first.name}'
+                                  : '',
                               image: fm.thumbnail,
                             );
                           },
                         )
                         //!
-                        // ListView(
+                        //     ListView(
                         //   children: List.generate(
                         //       controller.selectedList.length % 3 != 0
                         //           ? (controller.selectedList.length ~/ 3) + 1
                         //           : controller.selectedList.length ~/ 3,
                         //       (index) {
-                        //     FilmModel fm = controller.selectedList[index];
+                        //     print(controller.selectedList.length % 3 != 0);
+                        //     print((controller.selectedList.length ~/ 3) + 1);
+                        //     print((controller.selectedList.length ~/ 3));
                         //     List<Widget> listWidgets = [];
-                        //     if (index)
-                        //       return Row(
-                        //         children: index % 3 == 0 ? listWidgets : [],
-                        //       );
+                        //     FilmModel fm = controller.selectedList[index];
+                        //     listWidgets.add(MovieItemWidget(
+                        //       title: '${fm.titleMovie}',
+                        //       hasDubbed: fm.hasDubbed != '',
+                        //       hasSubtitle: fm.hasSubtitle == 'on',
+                        //       imdbRate: '${fm.imdbRate}',
+                        //       year: fm.release != null
+                        //           ? '${fm.release?[0].name}'
+                        //           : '',
+                        //       image: fm.thumbnail,
+                        //     ));
+                        //     if (index + 1 <=
+                        //         controller.selectedList.length - 1) {
+                        //       fm = controller.selectedList[index + 1];
+                        //       index + 1 <= controller.selectedList.length - 1
+                        //           ? listWidgets.add(MovieItemWidget(
+                        //               title: '${fm.titleMovie}',
+                        //               hasDubbed: fm.hasDubbed != '',
+                        //               hasSubtitle: fm.hasSubtitle == 'on',
+                        //               imdbRate: '${fm.imdbRate}',
+                        //               year: fm.release != null
+                        //                   ? '${fm.release?[0].name}'
+                        //                   : '',
+                        //               image: fm.thumbnail,
+                        //             ))
+                        //           : SizedBox();
+                        //     }
+                        //     if (index + 2 <=
+                        //         controller.selectedList.length - 1) {
+                        //       fm = controller.selectedList[index + 2];
+                        //       index + 2 <= controller.selectedList.length - 1
+                        //           ? listWidgets.add(MovieItemWidget(
+                        //               title: '${fm.titleMovie}',
+                        //               hasDubbed: fm.hasDubbed != '',
+                        //               hasSubtitle: fm.hasSubtitle == 'on',
+                        //               imdbRate: '${fm.imdbRate}',
+                        //               year: fm.release != null
+                        //                   ? '${fm.release?[0].name}'
+                        //                   : '',
+                        //               image: fm.thumbnail,
+                        //             ))
+                        //           : SizedBox();
+                        //     }
+
+                        //     return Row(
+                        //       children: listWidgets,
+                        //     );
                         //   }),
                         // )
-                        //!
-                        //     NotificationListener<ScrollNotification>(
-                        //   onNotification: (scrollNotification) {
-                        //     // print(scrollNotification.metrics.pixels);
-                        //     // print(scrollNotification.metrics.maxScrollExtent);
-                        //     if (scrollNotification.metrics.pixels ==
-                        //         scrollNotification.metrics.maxScrollExtent) {
-                        //       print('YES');
+                        // !
+                        //     GridView.count(
+                        //   physics: BouncingScrollPhysics(),
+                        //   padding: EdgeInsets.symmetric(horizontal: 5),
+                        //   childAspectRatio: .63,
+                        //   crossAxisCount: 3,
+                        //   children: List.generate(
+                        //       controller.selectedList.length, (index) {
+                        //     FilmModel fm = controller.selectedList[index];
+                        //     print(index);
+                        //     if (index == controller.selectedList.length - 1) {
                         //       controller.getArchive(isFirstPage: false);
                         //     }
-                        //     return true;
-                        //   },
-                        //   child: GridView.count(
-                        //     physics: BouncingScrollPhysics(),
-                        //     padding: EdgeInsets.symmetric(horizontal: 5),
-                        //     childAspectRatio: .63,
-                        //     crossAxisCount: 3,
-                        //     children: List.generate(
-                        //         controller.selectedList.length, (index) {
-                        //       FilmModel fm = controller.selectedList[index];
-                        //       return MovieItemWidget(
-                        //         title: '${fm.titleMovie}',
-                        //         hasDubbed: fm.hasDubbed != '',
-                        //         hasSubtitle: fm.hasSubtitle == 'on',
-                        //         imdbRate: '5.5',
-                        //         year: '20${index.toString().padLeft(2, '0')}',
-                        //         image: fm.thumbnail,
-                        //       );
-                        //     }),
-                        //   ),
+                        //     return MovieItemWidget(
+                        //       title: '${fm.titleMovie}',
+                        //       hasDubbed: fm.hasDubbed != '',
+                        //       hasSubtitle: fm.hasSubtitle == 'on',
+                        //       imdbRate: '5.5',
+                        //       year: '20${index.toString().padLeft(2, '0')}',
+                        //       image: fm.thumbnail,
+                        //     );
+                        //   }),
                         // ),
                         )))
           ],

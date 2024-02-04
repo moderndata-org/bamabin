@@ -98,7 +98,7 @@ class _OrderlistAddListDialogState extends State<OrderlistAddListDialog> {
                 child: CustomDropDown(
                   borderRadius: 5,
                   title: 'نوع لیست',
-                  list: ['1', '1', '1'],
+                  list: [],
                   buttonColor: cSecondary,
                   alignment: Alignment.centerRight,
                 ),

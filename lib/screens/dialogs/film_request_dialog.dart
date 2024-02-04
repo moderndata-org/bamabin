@@ -66,7 +66,7 @@ class FilmRequestDialog extends StatelessWidget {
                   borderRadius: 5,
                   buttonColor: cSecondary,
                   title: 'نوع',
-                  list: ['1', '1', '1'],
+                  list: [],
                 )),
                 SizedBox(
                   width: 5,
@@ -77,7 +77,7 @@ class FilmRequestDialog extends StatelessWidget {
                   alignment: Alignment.centerRight,
                   borderRadius: 5,
                   title: 'سال',
-                  list: ['1', '1', '1'],
+                  list: [],
                 )),
                 SizedBox(
                   width: 10,
