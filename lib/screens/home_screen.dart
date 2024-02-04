@@ -1,10 +1,12 @@
 import 'package:bamabin/controller/main_controller.dart';
 import 'package:bamabin/controller/public_controller.dart';
 import 'package:bamabin/widgets/genre_item.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shimmer/shimmer.dart';
 import '../constant/colors.dart';
 import '../widgets/MyText.dart';
 import '../widgets/main_title_widget.dart';
@@ -25,7 +27,23 @@ class HomeScreen extends GetView<PublicController> {
         Obx(() => SizedBox(
           height: 200,
           width: Get.width,
-          child: (mainController.isLoadingBanners.isTrue) ? Center(child: CircularProgressIndicator(color: cAccent,),) : CarouselSlider(
+          child: (mainController.isLoadingBanners.isTrue) ? Shimmer(
+            child: Container(
+              height: 200,
+              width: Get.width,
+              decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(5)),
+            ),
+            gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: [
+                  Color.fromARGB(255, 52, 52, 52),
+                  Color.fromARGB(255, 93, 93, 93),
+                  Color.fromARGB(255, 52, 52, 52),
+                ]),
+          ) : CarouselSlider(
               options: CarouselOptions(
                 disableCenter: true,
                 aspectRatio: 16 / 9,
@@ -53,7 +71,30 @@ class HomeScreen extends GetView<PublicController> {
                       SizedBox(
                         width: Get.width,
                         height: 200,
-                        child: ,
+                        child: CachedNetworkImage(
+                          imageUrl: '${slider.bgThumbnail}',
+                          fit: BoxFit.cover,
+                          placeholder: (context, url) => Center(
+                              child: Shimmer(
+                                child: Container(
+                                  height: 200,
+                                  width: Get.width,
+                                  decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(5)),
+                                ),
+                                gradient: LinearGradient(
+                                    begin: Alignment.topLeft,
+                                    end: Alignment.bottomRight,
+                                    colors: [
+                                      Color.fromARGB(255, 52, 52, 52),
+                                      Color.fromARGB(255, 93, 93, 93),
+                                      Color.fromARGB(255, 52, 52, 52),
+                                    ]),
+                              )),
+                          errorWidget: (context, url, error) =>
+                              Icon(Icons.error),
+                        ),
                       ),
                       Positioned(
                           bottom: 0,
@@ -65,7 +106,7 @@ class HomeScreen extends GetView<PublicController> {
                             child: Align(
                               alignment: Alignment.bottomCenter,
                               child: MyText(
-                                text: 'Star Trek 2009',
+                                text: '${slider.title}',
                                 padding: EdgeInsets.only(bottom: 5),
                                 size: 15,
                               ),
