@@ -4,6 +4,7 @@ import 'package:bamabin/api/api_handler.dart';
 import 'package:bamabin/models/film_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 
 import '../constant/classes.dart';
 
@@ -15,7 +16,9 @@ class MainController extends GetxController {
   GlobalKey<ScaffoldState> scaffolState = GlobalKey();
   RxString appBarCenterText = ''.obs;
   RxList<FilmModel> selectedList = <FilmModel>[].obs;
+  RxList<FilmModel> sliderList = <FilmModel>[].obs;
   RxBool isLoadingItems = false.obs;
+  RxBool isLoadingBanners = false.obs;
   RxBool hasContinue = false.obs;
   Rx<BottomNavType> selectedBottomNav = BottomNavType.home.obs;
 
@@ -31,6 +34,8 @@ class MainController extends GetxController {
     selectedBottomNav.listen((p0) {
       if (selectedBottomNav.value != BottomNavType.home) {
         getArchive(isFirstPage: true);
+      }else{
+        getSliders();
       }
     });
     // bottomIndex.listen((p0) {
@@ -115,7 +120,22 @@ class MainController extends GetxController {
       });
     }
   }
+  void getSliders(){
+    isLoadingBanners(true);
+    ApiProvider().getSliders().then((value){
+      sliderList.clear();
+      if(value.isOk){
+        if(value.body["status"] == true){
+          (value.body["result"] as List).forEach((element) {
+            sliderList.add(FilmModel.fromJson(element));
+          });
+        }
+        isLoadingBanners(false);
 
+      }
+    });
+
+  }
   void runBottomNavAnimation() {
     bottomSelectedContainerWidth(0);
     Timer(Duration(milliseconds: 100), () {

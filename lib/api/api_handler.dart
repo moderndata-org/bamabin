@@ -53,4 +53,14 @@ class ApiProvider extends GetConnect {
     );
     return res;
   }
+
+  Future<Response> getSliders() async{
+    Response res = await get('${base_url}home/slider');
+    return res;
+  }
+
+  Future<Response> getMainSections() async{
+    Response res = await get('${base_url}home/sections');
+    return res;
+  }
 }

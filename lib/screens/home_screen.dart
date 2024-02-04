@@ -22,10 +22,10 @@ class HomeScreen extends GetView<PublicController> {
       controller: mainController.mainScrollController,
       physics: BouncingScrollPhysics(),
       children: [
-        SizedBox(
+        Obx(() => SizedBox(
           height: 200,
           width: Get.width,
-          child: CarouselSlider(
+          child: (mainController.isLoadingBanners.isTrue) ? Center(child: CircularProgressIndicator(color: cAccent,),) : CarouselSlider(
               options: CarouselOptions(
                 disableCenter: true,
                 aspectRatio: 16 / 9,
@@ -45,37 +45,39 @@ class HomeScreen extends GetView<PublicController> {
                 scrollDirection: Axis.horizontal,
               ),
               items: List.generate(
-                2,
-                (index) => Stack(
-                  children: [
-                    SizedBox(
-                      width: Get.width,
-                      height: 200,
-                      child: Image.asset('assets/images/bg_crausel.jpg',
-                          fit: BoxFit.fill),
-                    ),
-                    Positioned(
-                        bottom: 0,
-                        right: 0,
-                        left: 0,
-                        child: Container(
-                          height: 50,
-                          decoration: BoxDecoration(gradient: fadeGradient()),
-                          child: Align(
-                            alignment: Alignment.bottomCenter,
-                            child: MyText(
-                              text: 'Star Trek 2009',
-                              padding: EdgeInsets.only(bottom: 5),
-                              size: 15,
+                mainController.sliderList.length,
+                    (index){
+                  var slider = mainController.sliderList[index];
+                  return Stack(
+                    children: [
+                      SizedBox(
+                        width: Get.width,
+                        height: 200,
+                        child: ,
+                      ),
+                      Positioned(
+                          bottom: 0,
+                          right: 0,
+                          left: 0,
+                          child: Container(
+                            height: 50,
+                            decoration: BoxDecoration(gradient: fadeGradient()),
+                            child: Align(
+                              alignment: Alignment.bottomCenter,
+                              child: MyText(
+                                text: 'Star Trek 2009',
+                                padding: EdgeInsets.only(bottom: 5),
+                                size: 15,
+                              ),
                             ),
-                          ),
-                        ))
-                  ],
-                ),
+                          ))
+                    ],
+                  );
+                    },
               )),
-        ),
+        )),
         Obx(() => DotsIndicator(
-              dotsCount: 2,
+              dotsCount: mainController.sliderList.length,
               position: controller.homeBannerIndex.value,
               decorator: DotsDecorator(
                 activeColor: cSecondaryLight,
