@@ -34,6 +34,9 @@ class MainController extends GetxController {
     selectedBottomNav.listen((p0) {
       if (selectedBottomNav.value != BottomNavType.home) {
         getArchive(isFirstPage: true);
+        selectedOrder(OrderBy.none);
+      } else {
+        //! mohamad => HOME
       }
     });
     // bottomIndex.listen((p0) {
