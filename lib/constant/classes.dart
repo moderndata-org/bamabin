@@ -8,6 +8,6 @@ enum ActionMethod { Play, Download }
 
 enum LikeStatus { like, dislike, notSelected }
 
-enum OrderBy { date, modified, imdb }
+enum OrderBy { none, date, modified, imdb }
 
 enum BottomNavType { home, movies, series, animations, anime }

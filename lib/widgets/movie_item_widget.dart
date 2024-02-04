@@ -1,6 +1,7 @@
 import 'package:bamabin/widgets/MyCircularProgress.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:shimmer/shimmer.dart';
 
 import '../constant/colors.dart';
 import 'MyText.dart';
@@ -76,10 +77,24 @@ class MovieItemWidget extends StatelessWidget {
                             height: 175,
                             child: CachedNetworkImage(
                               imageUrl: '$image',
-                              fit: BoxFit.fill,
+                              fit: BoxFit.cover,
                               placeholder: (context, url) => Center(
-                                  child: MyCircularProgress(
-                                color: cPrimary,
+                                  child: Shimmer(
+                                child: Container(
+                                  height: 175,
+                                  width: width,
+                                  decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(5)),
+                                ),
+                                gradient: LinearGradient(
+                                    begin: Alignment.topLeft,
+                                    end: Alignment.bottomRight,
+                                    colors: [
+                                      Color.fromARGB(255, 52, 52, 52),
+                                      Color.fromARGB(255, 93, 93, 93),
+                                      Color.fromARGB(255, 52, 52, 52),
+                                    ]),
                               )),
                               errorWidget: (context, url, error) =>
                                   Icon(Icons.error),

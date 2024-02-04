@@ -9,15 +9,18 @@ import '../constant/classes.dart';
 
 class MainController extends GetxController {
   int? pageNumber;
+  int? lastPageNumber;
   RxDouble bottomSelectedContainerWidth = 10.0.obs;
   ScrollController mainScrollController = ScrollController();
   RxBool isVisibleAppbar = true.obs;
   GlobalKey<ScaffoldState> scaffolState = GlobalKey();
   RxString appBarCenterText = ''.obs;
   RxList<FilmModel> selectedList = <FilmModel>[].obs;
-  RxBool isLoadingItems = false.obs;
+  RxBool isShowShimmer = false.obs;
+  RxBool isLoadingData = false.obs;
   RxBool hasContinue = false.obs;
   Rx<BottomNavType> selectedBottomNav = BottomNavType.home.obs;
+  Rx<OrderBy> selectedOrder = OrderBy.none.obs;
 
   @override
   void onInit() {
@@ -64,28 +67,39 @@ class MainController extends GetxController {
     super.onInit();
   }
 
+  void changeOrder({required OrderBy orderBy}) {
+    selectedOrder(orderBy);
+    getArchive(isFirstPage: true);
+  }
+
   void getArchive({required bool isFirstPage}) {
-    if (isLoadingItems.isFalse) {
+    if (isLoadingData.isFalse &&
+        ((pageNumber != null && pageNumber! < lastPageNumber!) ||
+            pageNumber == null)) {
+      isLoadingData(true);
       if (isFirstPage) {
         pageNumber = null;
-        isLoadingItems(true);
+        isShowShimmer(true);
         hasContinue(true);
       } else {
-        pageNumber == null ? pageNumber = 1 : pageNumber = pageNumber! + 1;
+        pageNumber == null ? pageNumber = 2 : pageNumber = pageNumber! + 1;
       }
       ApiProvider()
           .archive(
               type: selectedBottomNav.value,
-              page: pageNumber == null ? null : pageNumber.toString())
+              page: pageNumber == null ? null : pageNumber.toString(),
+              orderBy: selectedOrder.value)
           .then((res) {
         if (res.body != null && res.body['status'] == true) {
+          lastPageNumber = res.body['info']['last_page_num'];
+          print('ssssss $pageNumber');
+          isLoadingData(false);
           if (isFirstPage) {
             selectedList.clear();
-            isLoadingItems(false);
+            isShowShimmer(false);
           }
 
           List tmp = res.body['results'];
-          print(res.body);
           for (var element in tmp) {
             selectedList.add(FilmModel.fromJson(element));
           }

@@ -75,7 +75,10 @@ class TicketsAddDialog extends StatelessWidget {
                   title: 'دپارتمان',
                   borderRadius: 5,
                   buttonColor: cSecondary,
-                  list: ['1', '2', '3', '4'],
+                  list: [
+                    DropdownMenuItem(
+                        onTap: () {}, child: MyText(text: 'زمان انتشار'))
+                  ],
                 )),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
