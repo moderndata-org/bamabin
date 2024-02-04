@@ -1,12 +1,12 @@
 import 'package:bamabin/constant/colors.dart';
 import 'package:bamabin/controller/main_controller.dart';
-import 'package:bamabin/models/film_model.dart';
 import 'package:bamabin/widgets/custom_dropdown.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_pagewise/flutter_pagewise.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:get/get.dart';
 import 'package:shimmer/shimmer.dart';
 
+import '../models/film_model.dart';
 import '../widgets/movie_item_widget.dart';
 
 class PartScreen extends GetView<MainController> {
@@ -107,9 +107,6 @@ class PartScreen extends GetView<MainController> {
                                                           BorderRadius.circular(
                                                               5)),
                                                 ),
-                                                // SizedBox(
-                                                //   height: 2,
-                                                // ),
                                                 Align(
                                                   alignment:
                                                       Alignment.centerLeft,
@@ -131,21 +128,26 @@ class PartScreen extends GetView<MainController> {
                                 )),
                       )
                     : Directionality(
-                        textDirection: TextDirection.rtl, child: SizedBox()
-                        //  PagewiseGridView.count(
-                        //   pageSize: 10,
-                        //   crossAxisCount: 2,
-                        //   mainAxisSpacing: 8.0,
-                        //   crossAxisSpacing: 8.0,
-                        //   childAspectRatio: 0.555,
-                        //   padding: EdgeInsets.all(15.0),
-                        //   itemBuilder: (context, entry, index) {
-                        //     // return a widget that displays the entry's data
-                        //   },
-                        //   pageFuture: (pageIndex) {
-                        //     // return a Future that resolves to a list containing the page's data
-                        //   },
-                        // )
+                        textDirection: TextDirection.rtl,
+                        child: AlignedGridView.count(
+                          // physics: BouncingScrollPhysics(),
+                          crossAxisCount: 3,
+                          mainAxisSpacing: 4,
+                          crossAxisSpacing: 4,
+                          itemCount: controller.selectedList.length,
+                          itemBuilder: (context, index) {
+                            print(index);
+                            FilmModel fm = controller.selectedList[index];
+                            return MovieItemWidget(
+                              title: '${fm.titleMovie}',
+                              hasDubbed: fm.hasDubbed != '',
+                              hasSubtitle: fm.hasSubtitle == 'on',
+                              imdbRate: '5.5',
+                              year: '20${index.toString().padLeft(2, '0')}',
+                              image: fm.thumbnail,
+                            );
+                          },
+                        )
                         //!
                         // ListView(
                         //   children: List.generate(
