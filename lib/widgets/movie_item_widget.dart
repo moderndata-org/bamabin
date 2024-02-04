@@ -1,3 +1,5 @@
+import 'package:bamabin/widgets/MyCircularProgress.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 import '../constant/colors.dart';
@@ -71,9 +73,16 @@ class MovieItemWidget extends StatelessWidget {
                         children: [
                           SizedBox(
                             height: 175,
-                            child: Image.asset(
-                                image ?? 'assets/images/monarch.jpg',
-                                fit: BoxFit.fill),
+                            child: CachedNetworkImage(
+                              imageUrl: '$image',
+                              fit: BoxFit.fill,
+                              placeholder: (context, url) => Center(
+                                  child: MyCircularProgress(
+                                color: cPrimary,
+                              )),
+                              errorWidget: (context, url, error) =>
+                                  Icon(Icons.error),
+                            ),
                           ),
                           //! IMDB Box
                           imdbRate == null || imdbRate == ''

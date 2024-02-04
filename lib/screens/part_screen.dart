@@ -1,11 +1,15 @@
 import 'package:bamabin/constant/colors.dart';
+import 'package:bamabin/controller/main_controller.dart';
+import 'package:bamabin/models/film_model.dart';
 import 'package:bamabin/widgets/custom_dropdown.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_pagewise/flutter_pagewise.dart';
 import 'package:get/get.dart';
+import 'package:shimmer/shimmer.dart';
 
 import '../widgets/movie_item_widget.dart';
 
-class PartScreen extends StatelessWidget {
+class PartScreen extends GetView<MainController> {
   const PartScreen({Key? key}) : super(key: key);
 
   @override
@@ -27,19 +31,6 @@ class PartScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 textDirection: TextDirection.rtl,
                 children: [
-                  // Expanded(
-                  //     child: FilterDropDown(
-                  //   title: "نوع",
-                  // )),
-                  // Expanded(
-                  //   child: FilterDropDown(
-                  //     title: "مرتب سازی",
-                  //   ),
-                  // ),
-                  // Expanded(
-                  //     child: FilterDropDown(
-                  //   title: "امتیاز IMDB",
-                  // )),
                   SizedBox(
                     width: 2,
                   ),
@@ -78,21 +69,130 @@ class PartScreen extends StatelessWidget {
             ),
 
             Expanded(
-                child: GridView.count(
-              physics: BouncingScrollPhysics(),
-              padding: EdgeInsets.symmetric(horizontal: 10),
-              childAspectRatio: .62,
-              crossAxisCount: 3,
-              children: List.generate(
-                  4,
-                  (index) => MovieItemWidget(
-                        title: 'Monarch',
-                        hasDubbed: true,
-                        hasSubtitle: true,
-                        imdbRate: '5.5',
-                        year: '20${index.toString().padLeft(2, '0')}',
-                      )),
-            ))
+                child: Obx(() => controller.isLoadingItems.value
+                    ? ListView(
+                        padding: EdgeInsets.symmetric(horizontal: 5),
+                        physics: BouncingScrollPhysics(),
+                        children: List.generate(
+                            5,
+                            (index) => Row(
+                                  children: List.generate(
+                                      3,
+                                      (index) => Expanded(
+                                              child: Shimmer(
+                                            direction: ShimmerDirection.ltr,
+                                            period: Duration(seconds: 3),
+                                            enabled: true,
+                                            gradient: LinearGradient(
+                                                begin: Alignment.topLeft,
+                                                end: Alignment.bottomRight,
+                                                colors: [
+                                                  Color.fromARGB(
+                                                      255, 52, 52, 52),
+                                                  Color.fromARGB(
+                                                      255, 93, 93, 93),
+                                                  Color.fromARGB(
+                                                      255, 52, 52, 52),
+                                                ]),
+                                            child: Column(
+                                              children: [
+                                                Container(
+                                                  margin: EdgeInsets.symmetric(
+                                                      horizontal: 5,
+                                                      vertical: 5),
+                                                  height: 200,
+                                                  decoration: BoxDecoration(
+                                                      color: Colors.white,
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              5)),
+                                                ),
+                                                // SizedBox(
+                                                //   height: 2,
+                                                // ),
+                                                Align(
+                                                  alignment:
+                                                      Alignment.centerLeft,
+                                                  child: Container(
+                                                    margin: EdgeInsets.only(
+                                                        left: 5),
+                                                    width: 70,
+                                                    height: 10,
+                                                    decoration: BoxDecoration(
+                                                        color: Colors.white,
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(5)),
+                                                  ),
+                                                )
+                                              ],
+                                            ),
+                                          ))),
+                                )),
+                      )
+                    : Directionality(
+                        textDirection: TextDirection.rtl, child: SizedBox()
+                        //  PagewiseGridView.count(
+                        //   pageSize: 10,
+                        //   crossAxisCount: 2,
+                        //   mainAxisSpacing: 8.0,
+                        //   crossAxisSpacing: 8.0,
+                        //   childAspectRatio: 0.555,
+                        //   padding: EdgeInsets.all(15.0),
+                        //   itemBuilder: (context, entry, index) {
+                        //     // return a widget that displays the entry's data
+                        //   },
+                        //   pageFuture: (pageIndex) {
+                        //     // return a Future that resolves to a list containing the page's data
+                        //   },
+                        // )
+                        //!
+                        // ListView(
+                        //   children: List.generate(
+                        //       controller.selectedList.length % 3 != 0
+                        //           ? (controller.selectedList.length ~/ 3) + 1
+                        //           : controller.selectedList.length ~/ 3,
+                        //       (index) {
+                        //     FilmModel fm = controller.selectedList[index];
+                        //     List<Widget> listWidgets = [];
+                        //     if (index)
+                        //       return Row(
+                        //         children: index % 3 == 0 ? listWidgets : [],
+                        //       );
+                        //   }),
+                        // )
+                        //!
+                        //     NotificationListener<ScrollNotification>(
+                        //   onNotification: (scrollNotification) {
+                        //     // print(scrollNotification.metrics.pixels);
+                        //     // print(scrollNotification.metrics.maxScrollExtent);
+                        //     if (scrollNotification.metrics.pixels ==
+                        //         scrollNotification.metrics.maxScrollExtent) {
+                        //       print('YES');
+                        //       controller.getArchive(isFirstPage: false);
+                        //     }
+                        //     return true;
+                        //   },
+                        //   child: GridView.count(
+                        //     physics: BouncingScrollPhysics(),
+                        //     padding: EdgeInsets.symmetric(horizontal: 5),
+                        //     childAspectRatio: .63,
+                        //     crossAxisCount: 3,
+                        //     children: List.generate(
+                        //         controller.selectedList.length, (index) {
+                        //       FilmModel fm = controller.selectedList[index];
+                        //       return MovieItemWidget(
+                        //         title: '${fm.titleMovie}',
+                        //         hasDubbed: fm.hasDubbed != '',
+                        //         hasSubtitle: fm.hasSubtitle == 'on',
+                        //         imdbRate: '5.5',
+                        //         year: '20${index.toString().padLeft(2, '0')}',
+                        //         image: fm.thumbnail,
+                        //       );
+                        //     }),
+                        //   ),
+                        // ),
+                        )))
           ],
         ),
       ),

@@ -10,4 +10,4 @@ enum LikeStatus { like, dislike, notSelected }
 
 enum OrderBy { date, modified, imdb }
 
-enum BottomNavType { movies, series, animations, anime }
+enum BottomNavType { home, movies, series, animations, anime }

@@ -26,6 +26,7 @@ class ApiProvider extends GetConnect {
       OrderBy? orderBy}) async {
     Map<String, String> m = {
       'type': switch (type) {
+        BottomNavType.home => 'movies',
         BottomNavType.animations => 'animations',
         BottomNavType.anime => 'anime',
         BottomNavType.movies => 'movies',

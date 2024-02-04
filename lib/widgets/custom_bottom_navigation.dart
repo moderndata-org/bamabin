@@ -1,3 +1,4 @@
+import 'package:bamabin/constant/classes.dart';
 import 'package:bamabin/controller/main_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -18,64 +19,69 @@ class CustomBottomNavigation extends GetView<MainController> {
           Obx(() {
             return BottomNavButtonWidget(
               onTap: () async {
-                controller.bottomIndex(0);
+                controller.selectedBottomNav(BottomNavType.home);
                 controller.runBottomNavAnimation();
               },
               iconActive: 'assets/svg/home_s.svg',
               iconDeactive: 'assets/svg/home_d.svg',
-              isActive: controller.bottomIndex.value == 0,
+              isActive:
+                  controller.selectedBottomNav.value == BottomNavType.home,
               title: 'خانه',
             );
           }),
           Obx(() {
             return BottomNavButtonWidget(
               onTap: () {
-                controller.bottomIndex(1);
+                controller.selectedBottomNav(BottomNavType.movies);
                 controller.appBarCenterText('فیلم');
                 controller.runBottomNavAnimation();
               },
               iconActive: 'assets/svg/film_s.svg',
               iconDeactive: 'assets/svg/film_d.svg',
-              isActive: controller.bottomIndex.value == 1,
+              isActive:
+                  controller.selectedBottomNav.value == BottomNavType.movies,
               title: 'فیلم',
             );
           }),
           Obx(() {
             return BottomNavButtonWidget(
               onTap: () {
-                controller.bottomIndex(2);
+                controller.selectedBottomNav(BottomNavType.series);
                 controller.appBarCenterText('سریال');
                 controller.runBottomNavAnimation();
               },
               iconActive: 'assets/svg/serial_s.svg',
               iconDeactive: 'assets/svg/serial_d.svg',
-              isActive: controller.bottomIndex.value == 2,
+              isActive:
+                  controller.selectedBottomNav.value == BottomNavType.series,
               title: 'سریال',
             );
           }),
           Obx(() {
             return BottomNavButtonWidget(
               onTap: () {
-                controller.bottomIndex(3);
+                controller.selectedBottomNav(BottomNavType.animations);
                 controller.appBarCenterText('انیمیشن');
                 controller.runBottomNavAnimation();
               },
               iconActive: 'assets/svg/animation_s.svg',
               iconDeactive: 'assets/svg/animation_d.svg',
-              isActive: controller.bottomIndex.value == 3,
+              isActive: controller.selectedBottomNav.value ==
+                  BottomNavType.animations,
               title: 'انیمیشن',
             );
           }),
           Obx(() {
             return BottomNavButtonWidget(
               onTap: () {
-                controller.bottomIndex(4);
+                controller.selectedBottomNav(BottomNavType.anime);
                 controller.appBarCenterText('انیمه');
                 controller.runBottomNavAnimation();
               },
               iconActive: 'assets/svg/anime_s.svg',
               iconDeactive: 'assets/svg/anime_d.svg',
-              isActive: controller.bottomIndex.value == 4,
+              isActive:
+                  controller.selectedBottomNav.value == BottomNavType.anime,
               title: 'انیمه',
             );
           }),

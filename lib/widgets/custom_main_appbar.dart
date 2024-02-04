@@ -1,3 +1,4 @@
+import 'package:bamabin/constant/classes.dart';
 import 'package:bamabin/controller/main_controller.dart';
 import 'package:bamabin/widgets/MyText.dart';
 import 'package:flutter/material.dart';
@@ -22,7 +23,7 @@ class CustomMainAppBar extends GetView<MainController> {
           decoration: BoxDecoration(
               gradient: controller.isVisibleAppbar.value
                   ? null
-                  : controller.bottomIndex.value != 0
+                  : controller.selectedBottomNav.value != BottomNavType.home
                       ? null
                       : LinearGradient(
                           colors: [cPrimaryDark, Colors.transparent],
@@ -56,7 +57,8 @@ class CustomMainAppBar extends GetView<MainController> {
               Obx(() {
                 Widget center = SizedBox();
                 if (controller.isVisibleAppbar.value) {
-                  if (controller.bottomIndex != 0) {
+                  if (controller.selectedBottomNav.value !=
+                      BottomNavType.home) {
                     center = MyText(
                       text: '${controller.appBarCenterText}',
                       size: 19,
@@ -69,7 +71,8 @@ class CustomMainAppBar extends GetView<MainController> {
                         height: 50,
                         child: Image.asset('assets/images/ic_logotype.png'));
                   }
-                } else if (controller.bottomIndex != 0) {
+                } else if (controller.selectedBottomNav.value !=
+                    BottomNavType.home) {
                   center = MyText(
                     text: '${controller.appBarCenterText}',
                     size: 17,

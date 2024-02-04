@@ -1,3 +1,4 @@
+import 'package:bamabin/constant/classes.dart';
 import 'package:bamabin/constant/colors.dart';
 import 'package:bamabin/controller/public_controller.dart';
 import 'package:bamabin/screens/home_screen.dart';
@@ -28,7 +29,13 @@ class MainScreen extends GetView<PublicController> {
             height: Get.height,
             child: Obx(() {
               return IndexedStack(
-                index: mainController.bottomIndex.value,
+                index: switch (mainController.selectedBottomNav.value) {
+                  BottomNavType.home => 0,
+                  BottomNavType.movies => 1,
+                  BottomNavType.series => 2,
+                  BottomNavType.animations => 3,
+                  BottomNavType.anime => 4,
+                },
                 children: [
                   HomeScreen(),
                   PartScreen(),
