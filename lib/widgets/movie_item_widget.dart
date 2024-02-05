@@ -1,10 +1,11 @@
-import 'package:bamabin/widgets/MyCircularProgress.dart';
+import 'package:bamabin/controller/detail_controller.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:shimmer/shimmer.dart';
+import 'package:get/get.dart';
 
 import '../constant/colors.dart';
 import 'MyText.dart';
+import 'custom_shimmer.dart';
 
 class MovieItemWidget extends StatelessWidget {
   const MovieItemWidget(
@@ -12,6 +13,7 @@ class MovieItemWidget extends StatelessWidget {
       this.hasSubtitle = false,
       this.hasDubbed = false,
       this.width = 115,
+      this.height = 195,
       this.radius = 5,
       this.year,
       this.imdbRate,
@@ -27,6 +29,7 @@ class MovieItemWidget extends StatelessWidget {
   final String? image;
   final String? title;
   final double? width;
+  final double? height;
   final double? radius;
   final bool? isAddItem;
   final bool? isDeleteItem;
@@ -38,7 +41,7 @@ class MovieItemWidget extends StatelessWidget {
       onTap: onTap,
       child: Container(
         width: width,
-        height: 195,
+        height: height,
         margin: EdgeInsetsDirectional.symmetric(horizontal: 3),
         child: Stack(
           alignment: Alignment.center,
@@ -68,33 +71,21 @@ class MovieItemWidget extends StatelessWidget {
                 bottom: 20,
                 child: Container(
                   width: width,
-                  height: 175,
+                  height: height! - 20,
                   child: ClipRRect(
                       borderRadius: BorderRadius.circular(radius!),
                       child: Stack(
                         children: [
                           SizedBox(
-                            height: 175,
+                            height: height! - 20,
+                            width: width,
                             child: CachedNetworkImage(
                               imageUrl: '$image',
                               fit: BoxFit.cover,
                               placeholder: (context, url) => Center(
-                                  child: Shimmer(
-                                child: Container(
-                                  height: 175,
-                                  width: width,
-                                  decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      borderRadius: BorderRadius.circular(5)),
-                                ),
-                                gradient: LinearGradient(
-                                    begin: Alignment.topLeft,
-                                    end: Alignment.bottomRight,
-                                    colors: [
-                                      Color.fromARGB(255, 52, 52, 52),
-                                      Color.fromARGB(255, 93, 93, 93),
-                                      Color.fromARGB(255, 52, 52, 52),
-                                    ]),
+                                  child: CustomShimmerWidget(
+                                width: width!,
+                                height: height! - 20,
                               )),
                               errorWidget: (context, url, error) =>
                                   Icon(Icons.error),

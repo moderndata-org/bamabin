@@ -1,5 +1,6 @@
 import 'package:bamabin/controller/main_controller.dart';
 import 'package:bamabin/controller/public_controller.dart';
+import 'package:bamabin/widgets/custom_shimmer.dart';
 import 'package:bamabin/widgets/genre_item.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
@@ -25,111 +26,117 @@ class HomeScreen extends GetView<PublicController> {
       physics: BouncingScrollPhysics(),
       children: [
         Obx(() => SizedBox(
-          height: 200,
-          width: Get.width,
-          child: (mainController.isLoadingBanners.isTrue) ? Shimmer(
-            child: Container(
               height: 200,
               width: Get.width,
-              decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(5)),
-            ),
-            gradient: LinearGradient(
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-                colors: [
-                  Color.fromARGB(255, 52, 52, 52),
-                  Color.fromARGB(255, 93, 93, 93),
-                  Color.fromARGB(255, 52, 52, 52),
-                ]),
-          ) : CarouselSlider(
-              options: CarouselOptions(
-                disableCenter: true,
-                aspectRatio: 16 / 9,
-                viewportFraction: 1,
-                initialPage: 0,
-                enableInfiniteScroll: true,
-                reverse: false,
-                autoPlay: true,
-                autoPlayInterval: const Duration(seconds: 5),
-                autoPlayAnimationDuration: const Duration(seconds: 2),
-                autoPlayCurve: Curves.fastOutSlowIn,
-                enlargeCenterPage: true,
-                enlargeFactor: 0,
-                onPageChanged: (index, reason) {
-                  controller.homeBannerIndex(index);
-                },
-                scrollDirection: Axis.horizontal,
-              ),
-              items: List.generate(
-                mainController.sliderList.length,
-                    (index){
-                  var slider = mainController.sliderList[index];
-                  return Stack(
-                    children: [
-                      SizedBox(
-                        width: Get.width,
+              child: (mainController.isLoadingBanners.isTrue)
+                  ? Shimmer(
+                      child: Container(
                         height: 200,
-                        child: CachedNetworkImage(
-                          imageUrl: '${slider.bgThumbnail}',
-                          fit: BoxFit.cover,
-                          placeholder: (context, url) => Center(
-                              child: Shimmer(
-                                child: Container(
-                                  height: 200,
-                                  width: Get.width,
-                                  decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      borderRadius: BorderRadius.circular(5)),
-                                ),
-                                gradient: LinearGradient(
-                                    begin: Alignment.topLeft,
-                                    end: Alignment.bottomRight,
-                                    colors: [
-                                      Color.fromARGB(255, 52, 52, 52),
-                                      Color.fromARGB(255, 93, 93, 93),
-                                      Color.fromARGB(255, 52, 52, 52),
-                                    ]),
-                              )),
-                          errorWidget: (context, url, error) =>
-                              Icon(Icons.error),
-                        ),
+                        width: Get.width,
+                        decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(5)),
                       ),
-                      Positioned(
-                          bottom: 0,
-                          right: 0,
-                          left: 0,
-                          child: Container(
-                            height: 50,
-                            decoration: BoxDecoration(gradient: fadeGradient()),
-                            child: Align(
-                              alignment: Alignment.bottomCenter,
-                              child: MyText(
-                                text: '${slider.title}',
-                                padding: EdgeInsets.only(bottom: 5),
-                                size: 15,
+                      gradient: LinearGradient(
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                          colors: [
+                            Color.fromARGB(255, 52, 52, 52),
+                            Color.fromARGB(255, 93, 93, 93),
+                            Color.fromARGB(255, 52, 52, 52),
+                          ]),
+                    )
+                  : CarouselSlider(
+                      options: CarouselOptions(
+                        disableCenter: true,
+                        aspectRatio: 16 / 9,
+                        viewportFraction: 1,
+                        initialPage: 0,
+                        enableInfiniteScroll: true,
+                        reverse: false,
+                        autoPlay: true,
+                        autoPlayInterval: const Duration(seconds: 5),
+                        autoPlayAnimationDuration: const Duration(seconds: 2),
+                        autoPlayCurve: Curves.fastOutSlowIn,
+                        enlargeCenterPage: true,
+                        enlargeFactor: 0,
+                        onPageChanged: (index, reason) {
+                          controller.homeBannerIndex(index);
+                        },
+                        scrollDirection: Axis.horizontal,
+                      ),
+                      items: List.generate(
+                        mainController.sliderList.length,
+                        (index) {
+                          var slider = mainController.sliderList[index];
+                          return Stack(
+                            children: [
+                              SizedBox(
+                                width: Get.width,
+                                height: 200,
+                                child: CachedNetworkImage(
+                                  imageUrl: '${slider.bgThumbnail}',
+                                  fit: BoxFit.cover,
+                                  placeholder: (context, url) => Center(
+                                      child: Shimmer(
+                                    child: Container(
+                                      height: 200,
+                                      width: Get.width,
+                                      decoration: BoxDecoration(
+                                          color: Colors.white,
+                                          borderRadius:
+                                              BorderRadius.circular(5)),
+                                    ),
+                                    gradient: LinearGradient(
+                                        begin: Alignment.topLeft,
+                                        end: Alignment.bottomRight,
+                                        colors: [
+                                          Color.fromARGB(255, 52, 52, 52),
+                                          Color.fromARGB(255, 93, 93, 93),
+                                          Color.fromARGB(255, 52, 52, 52),
+                                        ]),
+                                  )),
+                                  errorWidget: (context, url, error) =>
+                                      Icon(Icons.error),
+                                ),
                               ),
-                            ),
-                          ))
-                    ],
-                  );
-                    },
-              )),
-        )),
-        Obx(() => DotsIndicator(
-              dotsCount: mainController.sliderList.length,
-              position: controller.homeBannerIndex.value,
-              decorator: DotsDecorator(
-                activeColor: cSecondaryLight,
-                color: cW.withOpacity(.6),
-                spacing: EdgeInsets.symmetric(vertical: 5, horizontal: 2),
-                size: const Size.square(6),
-                activeSize: const Size(20.0, 6),
-                activeShape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(5.0)),
-              ),
+                              Positioned(
+                                  bottom: 0,
+                                  right: 0,
+                                  left: 0,
+                                  child: Container(
+                                    height: 50,
+                                    decoration:
+                                        BoxDecoration(gradient: fadeGradient()),
+                                    child: Align(
+                                      alignment: Alignment.bottomCenter,
+                                      child: MyText(
+                                        text: '${slider.title}',
+                                        padding: EdgeInsets.only(bottom: 5),
+                                        size: 15,
+                                      ),
+                                    ),
+                                  ))
+                            ],
+                          );
+                        },
+                      )),
             )),
+        Obx(() => mainController.isLoadingBanners.value
+            ? SizedBox()
+            : DotsIndicator(
+                dotsCount: mainController.sliderList.length,
+                position: controller.homeBannerIndex.value,
+                decorator: DotsDecorator(
+                  activeColor: cSecondaryLight,
+                  color: cW.withOpacity(.6),
+                  spacing: EdgeInsets.symmetric(vertical: 5, horizontal: 2),
+                  size: const Size.square(6),
+                  activeSize: const Size(20.0, 6),
+                  activeShape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(5.0)),
+                ),
+              )),
         PromoteWidget(
             title: 'Borat: Cultural Learnings of America for Make Benefit'),
         MainTitleWidget(title: 'سریال های جدید'),

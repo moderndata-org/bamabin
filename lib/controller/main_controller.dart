@@ -28,6 +28,9 @@ class MainController extends GetxController {
 
   @override
   void onInit() {
+    //! on open screen
+    getSliders();
+    //!
     mainScrollController.addListener(() {
       if (mainScrollController.offset > 10) {
         isVisibleAppbar(false);
@@ -37,40 +40,13 @@ class MainController extends GetxController {
     });
     selectedBottomNav.listen((p0) {
       if (selectedBottomNav.value != BottomNavType.home) {
+        print('yes0');
         getArchive(isFirstPage: true);
         selectedOrder(OrderBy.none);
-      }else{
+      } else {
         getSliders();
       }
     });
-    // bottomIndex.listen((p0) {
-    //   if (p0 != 0) {
-    //     isVisibleAppbar(true);
-    //   }
-    //   switch (p0) {
-    //     case 0:
-    //       {
-    //         if (mainScrollController.offset > 10) {
-    //           isVisibleAppbar(false);
-    //         } else {
-    //           isVisibleAppbar(true);
-    //         }
-    //         break;
-    //       }
-    //     case 1:
-    //       getArchive(type: BottomNavType.movies);
-    //       break;
-    //     case 2:
-    //       getArchive(type: BottomNavType.series);
-    //       break;
-    //     case 3:
-    //       getArchive(type: BottomNavType.animations);
-    //       break;
-    //     case 4:
-    //       getArchive(type: BottomNavType.anime);
-    //       break;
-    //   }
-    // });
     super.onInit();
   }
 
@@ -97,62 +73,41 @@ class MainController extends GetxController {
               page: pageNumber == null ? null : pageNumber.toString(),
               orderBy: selectedOrder.value)
           .then((res) {
+        print(res.body);
+        isLoadingData(false);
+        if (isFirstPage) {
+          selectedList.clear();
+          isShowShimmer(false);
+        }
         if (res.body != null && res.body['status'] == true) {
           lastPageNumber = res.body['info']['last_page_num'];
           print('ssssss $pageNumber');
-          isLoadingData(false);
-          if (isFirstPage) {
-            selectedList.clear();
-            isShowShimmer(false);
-          }
 
           List tmp = res.body['results'];
           print(res.body);
           for (var element in tmp) {
             selectedList.add(FilmModel.fromJson(element));
           }
-          // switch (type) {
-          //   case BottomNavType.movies:
-          //     {
-          //       break;
-          //     }
-          //   case BottomNavType.series:
-          //     {
-          //       break;
-          //     }
-          //   case BottomNavType.animations:
-          //     {
-          //       break;
-          //     }
-          //   case BottomNavType.anime:
-          //     {
-          //       break;
-          //     }
-          // }
-          // print('res.statusText');
-          // print(res.statusText);
-          // print(res.statusCode);
-          // print(res.body);
         }
       });
     }
   }
-  void getSliders(){
+
+  void getSliders() {
     isLoadingBanners(true);
-    ApiProvider().getSliders().then((value){
+    ApiProvider().getSliders().then((value) {
       sliderList.clear();
-      if(value.isOk){
-        if(value.body["status"] == true){
+      if (value.isOk) {
+        if (value.body["status"] == true) {
           (value.body["result"] as List).forEach((element) {
             sliderList.add(FilmModel.fromJson(element));
           });
         }
         isLoadingBanners(false);
-
       }
     });
-
   }
+
   void runBottomNavAnimation() {
     bottomSelectedContainerWidth(0);
     Timer(Duration(milliseconds: 100), () {

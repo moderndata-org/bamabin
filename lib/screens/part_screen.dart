@@ -1,5 +1,6 @@
 import 'package:bamabin/constant/classes.dart';
 import 'package:bamabin/constant/colors.dart';
+import 'package:bamabin/controller/detail_controller.dart';
 import 'package:bamabin/controller/main_controller.dart';
 import 'package:bamabin/widgets/MyText.dart';
 import 'package:bamabin/widgets/custom_dropdown.dart';
@@ -182,7 +183,7 @@ class PartScreen extends GetView<MainController> {
                           physics: BouncingScrollPhysics(),
                           crossAxisCount: 3,
                           mainAxisSpacing: 4,
-                          crossAxisSpacing: 4,
+                          crossAxisSpacing: 0,
                           itemCount: controller.selectedList.length,
                           itemBuilder: (context, index) {
                             // print(index);
@@ -191,15 +192,28 @@ class PartScreen extends GetView<MainController> {
                             if (index == controller.selectedList.length - 1) {
                               controller.getArchive(isFirstPage: false);
                             }
-                            return MovieItemWidget(
-                              title: '${fm.titleMovie}',
-                              hasDubbed: fm.hasDubbed != '',
-                              hasSubtitle: fm.hasSubtitle == 'on',
-                              imdbRate: '${fm.imdbRate}',
-                              year: fm.release!.length > 0
-                                  ? '${fm.release?.first.name}'
-                                  : '',
-                              image: fm.thumbnail,
+                            return LayoutBuilder(
+                              builder: (context, constraints) {
+                                var width = constraints.maxWidth - 5;
+                                var height = constraints.maxWidth + 100;
+                                return MovieItemWidget(
+                                  width: width,
+                                  height: height,
+                                  title: '${fm.titleMovie}',
+                                  hasDubbed: fm.hasDubbed != '',
+                                  hasSubtitle: fm.hasSubtitle == 'on',
+                                  imdbRate: '${fm.imdbRate}',
+                                  year: fm.release!.length > 0
+                                      ? '${fm.release?.first.name}'
+                                      : '',
+                                  image: fm.thumbnail,
+                                  onTap: () {
+                                    var detail = Get.put(DetailController());
+                                    detail.selectedFilm(fm);
+                                    Get.toNamed('/movie-detail');
+                                  },
+                                );
+                              },
                             );
                           },
                         )
