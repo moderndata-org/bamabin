@@ -203,9 +203,7 @@ class PartScreen extends GetView<MainController> {
                                   hasDubbed: fm.hasDubbed != '',
                                   hasSubtitle: fm.hasSubtitle == 'on',
                                   imdbRate: '${fm.imdbRate}',
-                                  year: fm.release!.length > 0
-                                      ? '${fm.release?.first.name}'
-                                      : '',
+                                  year: '${fm.releaseMovie}',
                                   image: fm.thumbnail,
                                   onTap: () {
                                     var detail = Get.put(DetailController());

@@ -3,6 +3,7 @@ import 'package:bamabin/constant/colors.dart';
 import 'package:bamabin/constant/strings.dart';
 import 'package:bamabin/controller/detail_controller.dart';
 import 'package:bamabin/controller/public_controller.dart';
+import 'package:bamabin/models/genre_model.dart';
 import 'package:bamabin/screens/dialogs/download_movie_dialog.dart';
 import 'package:bamabin/screens/dialogs/download_serial_dialog.dart';
 import 'package:bamabin/widgets/MyCircularProgress.dart';
@@ -31,7 +32,6 @@ class MovieDetailsScreen extends StatefulWidget {
 }
 
 class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
-  final publicController = Get.find<PublicController>();
   final controller = Get.find<DetailController>();
   @override
   void initState() {
@@ -142,22 +142,28 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                           child: ListView.builder(
                             padding: EdgeInsets.symmetric(horizontal: padding),
                             physics: BouncingScrollPhysics(),
-                            itemCount: 4,
+                            itemCount:
+                                controller.selectedFilm.value.genres?.length,
                             scrollDirection: Axis.horizontal,
-                            itemBuilder: (context, index) => Container(
-                                decoration: BoxDecoration(
-                                    color: cbgGenerMovieDetail.withOpacity(.6),
-                                    border: Border.all(
-                                      color: cW.withOpacity(.2),
-                                    ),
-                                    borderRadius: BorderRadius.circular(5)),
-                                margin: EdgeInsets.symmetric(horizontal: 1),
-                                padding: EdgeInsets.only(
-                                    left: 10, right: 10, top: 4, bottom: 4),
-                                child: MyText(
-                                  text: 'علمی تخیلی',
-                                  size: 11,
-                                )),
+                            itemBuilder: (context, index) {
+                              Genre genre =
+                                  controller.selectedFilm.value.genres![index];
+                              return Container(
+                                  decoration: BoxDecoration(
+                                      color:
+                                          cbgGenerMovieDetail.withOpacity(.6),
+                                      border: Border.all(
+                                        color: cW.withOpacity(.2),
+                                      ),
+                                      borderRadius: BorderRadius.circular(5)),
+                                  margin: EdgeInsets.symmetric(horizontal: 1),
+                                  padding: EdgeInsets.only(
+                                      left: 10, right: 10, top: 4, bottom: 4),
+                                  child: MyText(
+                                    text: '${genre.name}',
+                                    size: 11,
+                                  ));
+                            },
                           ),
                         ),
                       )),
@@ -166,15 +172,21 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                       right: padding,
                       bottom: 10,
                       child: Container(
+                        width: 130,
+                        height: 190,
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(5),
-                          child: Container(
-                            width: 130,
-                            height: 190,
-                            child: Image.asset(
-                              'assets/images/monarch.jpg',
-                              fit: BoxFit.fill,
-                            ),
+                          child: CachedNetworkImage(
+                            imageUrl:
+                                '${controller.selectedFilm.value.thumbnail}',
+                            fit: BoxFit.cover,
+                            placeholder: (context, url) => Center(
+                                child: CustomShimmerWidget(
+                              width: 130,
+                              height: 190,
+                            )),
+                            errorWidget: (context, url, error) =>
+                                Icon(Icons.error),
                           ),
                         ),
                       )),

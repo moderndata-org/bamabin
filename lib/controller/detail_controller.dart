@@ -2,7 +2,6 @@ import 'package:bamabin/models/film_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:video_player/video_player.dart';
-
 import '../constant/classes.dart';
 
 class DetailController extends GetxController {
