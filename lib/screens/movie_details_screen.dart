@@ -1,6 +1,7 @@
 import 'package:bamabin/constant/classes.dart';
 import 'package:bamabin/constant/colors.dart';
 import 'package:bamabin/constant/strings.dart';
+import 'package:bamabin/controller/detail_controller.dart';
 import 'package:bamabin/controller/public_controller.dart';
 import 'package:bamabin/screens/dialogs/download_movie_dialog.dart';
 import 'package:bamabin/screens/dialogs/download_serial_dialog.dart';
@@ -27,7 +28,8 @@ class MovieDetailsScreen extends StatefulWidget {
 }
 
 class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
-  final controller = Get.find<PublicController>();
+  final publicController = Get.find<PublicController>();
+  final controller = Get.find<DetailController>();
   @override
   void initState() {
     controller.isTextExpandedMovieDetail(false);
@@ -831,7 +833,7 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
   }
 }
 
-class ButtonSectionMovieDetailWidget extends GetView<PublicController> {
+class ButtonSectionMovieDetailWidget extends GetView<DetailController> {
   const ButtonSectionMovieDetailWidget({
     super.key,
   });
@@ -919,15 +921,14 @@ class ButtonSectionMovieDetailWidget extends GetView<PublicController> {
                   onTap: () {
                     showDialog(
                       context: context,
-                      builder: (context) => controller
-                              .isSerialOpenedDetail.value
+                      builder: (context) => controller.isSerial.value
                           ? DownloadSerialDialog(
                               actionMethod: ActionMethod.Download,
                               title: 'Monarch',
                             )
                           : DownloadMovieDialog(
                               actionMethod: ActionMethod.Download,
-                              isSerial: controller.isSerialOpenedDetail.value,
+                              isSerial: controller.isSerial.value,
                               title: 'Forrest',
                             ),
                     );

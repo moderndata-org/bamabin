@@ -151,10 +151,7 @@ class HomeScreen extends GetView<PublicController> {
               padding: EdgeInsets.symmetric(horizontal: 10),
               scrollDirection: Axis.horizontal,
               itemBuilder: (context, index) => MovieItemWidget(
-                onTap: () {
-                  Get.toNamed('/movie-detail');
-                  controller.isSerialOpenedDetail(true);
-                },
+                onTap: () {},
                 title: 'Monarch',
                 year: '1920',
                 imdbRate: '9',
@@ -200,10 +197,7 @@ class HomeScreen extends GetView<PublicController> {
             child: ListView.builder(
               itemCount: 2,
               itemBuilder: (context, index) => MovieItemWidget(
-                onTap: () {
-                  Get.toNamed('/movie-detail');
-                  controller.isSerialOpenedDetail(false);
-                },
+                onTap: () {},
                 title: 'Forrest Gump',
                 year: '1994',
                 hasDubbed: true,

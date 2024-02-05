@@ -1,5 +1,5 @@
 import 'package:bamabin/constant/colors.dart';
-import 'package:bamabin/controller/public_controller.dart';
+import 'package:bamabin/controller/detail_controller.dart';
 import 'package:bamabin/widgets/MyText.dart';
 import 'package:bamabin/widgets/MyTextButton.dart';
 import 'package:bamabin/widgets/MyTextField.dart';
@@ -7,7 +7,7 @@ import 'package:bamabin/widgets/comment_item.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class CommentsSection extends GetView<PublicController> {
+class CommentsSection extends GetView<DetailController> {
   const CommentsSection({super.key});
 
   @override
