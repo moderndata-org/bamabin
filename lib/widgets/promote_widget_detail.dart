@@ -6,8 +6,15 @@ import 'MyText.dart';
 
 class PromoteDetailWidget extends StatelessWidget {
   const PromoteDetailWidget({
+    this.icon,
+    this.title,
+    this.description,
     super.key,
   });
+
+  final Widget? icon;
+  final String? title;
+  final String? description;
 
   @override
   Widget build(BuildContext context) {
@@ -46,18 +53,19 @@ class PromoteDetailWidget extends StatelessWidget {
                               ),
                             ),
                             Center(
-                              child: Icon(
-                                Icons.info_outline_rounded,
-                                color: cW,
-                                shadows: [bsTextLowOpacity],
-                              ),
+                              child: icon ??
+                                  Icon(
+                                    Icons.info_outline_rounded,
+                                    color: cW,
+                                    shadows: [bsTextLowOpacity],
+                                  ),
                             )
                           ],
                         )),
                     Expanded(
                         child: Center(
                       child: MyText(
-                        text: 'وضعیت',
+                        text: '$title',
                         fontWeight: FontWeight.w500,
                         shadows: [bsText],
                         size: 16,
@@ -73,7 +81,7 @@ class PromoteDetailWidget extends StatelessWidget {
           ),
           Expanded(
             child: MyText(
-              text: 'درحال پخش',
+              text: '$description',
               shadows: [bsText],
               size: 14,
               textOverflow: TextOverflow.ellipsis,

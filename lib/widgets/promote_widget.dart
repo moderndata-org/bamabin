@@ -9,9 +9,11 @@ import 'promote_widget_detail.dart';
 class PromoteWidget extends StatelessWidget {
   const PromoteWidget({
     this.title,
+    this.listPromoteDetails,
     super.key,
   });
   final String? title;
+  final List<PromoteDetailWidget>? listPromoteDetails;
 
   @override
   Widget build(BuildContext context) {
@@ -136,10 +138,12 @@ class PromoteWidget extends StatelessWidget {
                             height: 10,
                           ),
                           //! Details
-                          PromoteDetailWidget(),
-                          PromoteDetailWidget(),
-                          PromoteDetailWidget(),
-                          PromoteDetailWidget(),
+                          Column(
+                            children: List.generate(
+                                listPromoteDetails?.length ?? 0,
+                                (index) =>
+                                    listPromoteDetails?[index] ?? SizedBox()),
+                          )
                         ],
                       ),
                     ),

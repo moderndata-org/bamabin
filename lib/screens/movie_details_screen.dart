@@ -14,9 +14,12 @@ import 'package:bamabin/widgets/comments_section.dart';
 import 'package:bamabin/widgets/movie_item_widget.dart';
 import 'package:bamabin/widgets/scores_section.dart';
 import 'package:bamabin/widgets/user_list_section.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:video_player/video_player.dart';
+
+import '../widgets/custom_shimmer.dart';
 
 late double padding = 10;
 
@@ -90,12 +93,19 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                 clipBehavior: Clip.none,
                 children: [
                   //! Background Cover
-                  Container(
+                  SizedBox(
                     height: 220,
-                    decoration: BoxDecoration(
-                        image: DecorationImage(
-                            fit: BoxFit.cover,
-                            image: AssetImage('assets/images/bg_crausel.jpg'))),
+                    width: Get.width,
+                    child: CachedNetworkImage(
+                      imageUrl: '${controller.selectedFilm.value.bgThumbnail}',
+                      fit: BoxFit.cover,
+                      placeholder: (context, url) => Center(
+                          child: CustomShimmerWidget(
+                        width: Get.width,
+                        height: 220 - 20,
+                      )),
+                      errorWidget: (context, url, error) => Icon(Icons.error),
+                    ),
                   ),
                   //! TopGradient
                   Positioned(
