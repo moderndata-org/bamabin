@@ -187,8 +187,6 @@ class HomeScreen extends GetView<PublicController> {
                           )
                         ],
                       );
-
-                      break;
                     case "last_data":
                       return Column(
                         children: [
@@ -226,7 +224,6 @@ class HomeScreen extends GetView<PublicController> {
                           ),
                         ],
                       );
-                      break;
                     case "single":
                       if (section.post == null) return Container();
                       return PromoteWidget(
@@ -238,7 +235,6 @@ class HomeScreen extends GetView<PublicController> {
                           Get.toNamed('/movie-detail');
                         },
                       );
-                      break;
                   }
 
                   return Text("data");
