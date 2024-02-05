@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shimmer/shimmer.dart';
 import '../constant/colors.dart';
+import '../controller/detail_controller.dart';
 import '../widgets/MyText.dart';
 import '../widgets/main_title_widget.dart';
 import '../widgets/movie_item_widget.dart';
@@ -16,6 +17,7 @@ import '../widgets/promote_widget.dart';
 
 class HomeScreen extends GetView<PublicController> {
   HomeScreen({super.key});
+
   final mainController = Get.find<MainController>();
 
   @override
@@ -137,80 +139,111 @@ class HomeScreen extends GetView<PublicController> {
                       borderRadius: BorderRadius.circular(5.0)),
                 ),
               )),
-        PromoteWidget(
-            title: 'Borat: Cultural Learnings of America for Make Benefit'),
-        MainTitleWidget(title: 'سریال های جدید'),
-        SizedBox(
-          height: 200,
-          width: Get.width,
-          child: Directionality(
-            textDirection: TextDirection.rtl,
-            child: ListView.builder(
-              itemCount: 2,
-              physics: BouncingScrollPhysics(),
-              padding: EdgeInsets.symmetric(horizontal: 10),
-              scrollDirection: Axis.horizontal,
-              itemBuilder: (context, index) => MovieItemWidget(
-                onTap: () {},
-                title: 'Monarch',
-                year: '1920',
-                imdbRate: '9',
-              ),
-            ),
-          ),
-        ),
-        MainTitleWidget(
-          title: 'ژانر ‌ها',
-          onTapMore: () {
-            Get.toNamed('geners');
-          },
-        ),
-        SizedBox(
-          height: 60,
-          width: Get.width,
-          child: Directionality(
-              textDirection: TextDirection.rtl,
-              child: ListView.builder(
-                itemCount: 2,
-                physics: BouncingScrollPhysics(),
-                padding: EdgeInsets.symmetric(horizontal: 10),
-                scrollDirection: Axis.horizontal,
-                itemBuilder: (context, index) => Center(
-                  child: GenreItem(
-                    width: 100,
-                    height: 55,
-                    margin: EdgeInsets.only(right: 5),
-                    boxShadow: BoxShadow(
-                        blurRadius: 2,
-                        offset: Offset(0, 1),
-                        color: Colors.black.withOpacity(.2)),
+        Obx(() => (mainController.isLoadingMain.isTrue)
+            ? Center(
+                child: Padding(
+                  padding: EdgeInsets.only(top: 10),
+                  child: CircularProgressIndicator(
+                    color: cAccent,
                   ),
                 ),
-              )),
-        ),
-        MainTitleWidget(title: 'فیلم های جدید'),
-        SizedBox(
-          height: 205,
-          width: Get.width,
-          child: Directionality(
-            textDirection: TextDirection.rtl,
-            child: ListView.builder(
-              itemCount: 2,
-              itemBuilder: (context, index) => MovieItemWidget(
-                onTap: () {},
-                title: 'Forrest Gump',
-                year: '1994',
-                hasDubbed: true,
-                hasSubtitle: true,
-                imdbRate: '8.7',
-                image: 'assets/images/bg_forrest.jpg',
-              ),
-              physics: BouncingScrollPhysics(),
-              padding: EdgeInsets.symmetric(horizontal: 10),
-              scrollDirection: Axis.horizontal,
-            ),
-          ),
-        ),
+              )
+            : Column(
+                children:
+                    List.generate(mainController.sectionsList.length, (index) {
+                  var section = mainController.sectionsList[index];
+                  switch (section.type) {
+                    case "genres":
+                      return Column(
+                        children: [
+                          MainTitleWidget(
+                            title: 'ژانر ‌ها',
+                            onTapMore: () {
+                              Get.toNamed('geners');
+                            },
+                          ),
+                          SizedBox(
+                            height: 60,
+                            width: Get.width,
+                            child: Directionality(
+                                textDirection: TextDirection.rtl,
+                                child: ListView.builder(
+                                  itemCount: 2,
+                                  physics: BouncingScrollPhysics(),
+                                  padding: EdgeInsets.symmetric(horizontal: 10),
+                                  scrollDirection: Axis.horizontal,
+                                  itemBuilder: (context, index) => Center(
+                                    child: GenreItem(
+                                      width: 100,
+                                      height: 55,
+                                      margin: EdgeInsets.only(right: 5),
+                                      boxShadow: BoxShadow(
+                                          blurRadius: 2,
+                                          offset: Offset(0, 1),
+                                          color: Colors.black.withOpacity(.2)),
+                                    ),
+                                  ),
+                                )),
+                          )
+                        ],
+                      );
+
+                      break;
+                    case "last_data":
+                      return Column(
+                        children: [
+                          MainTitleWidget(title: '${section.name}'),
+                          SizedBox(
+                            height: 200,
+                            width: Get.width,
+                            child: Directionality(
+                              textDirection: TextDirection.rtl,
+                              child: ListView.builder(
+                                itemCount: section.posts!.length,
+                                physics: BouncingScrollPhysics(),
+                                padding: EdgeInsets.symmetric(horizontal: 10),
+                                scrollDirection: Axis.horizontal,
+                                itemBuilder: (context, index) {
+                                  var film = section.posts![index];
+                                  return MovieItemWidget(
+                                    title: '${film.titleMovie}',
+                                    hasDubbed: film.hasDubbed != '',
+                                    hasSubtitle: film.hasSubtitle == 'on',
+                                    imdbRate: '${film.imdbRate}',
+                                    year: film.release!.length > 0
+                                        ? '${film.release?.first.name}'
+                                        : '',
+                                    image: film.thumbnail,
+                                    onTap: () {
+                                      var detail = Get.put(DetailController());
+                                      detail.selectedFilm(film);
+                                      Get.toNamed('/movie-detail');
+                                    },
+                                  );
+                                },
+                              ),
+                            ),
+                          ),
+                        ],
+                      );
+                      break;
+                    case "single":
+                      if (section.post == null) return Container();
+                      return PromoteWidget(
+                        title: "${section.post?.enTitle}",
+                        imageUrl: section.post!.bgThumbnail,
+                        onDetail: (){
+                          var detail = Get.put(DetailController());
+                          detail.selectedFilm(section.post);
+                          Get.toNamed('/movie-detail');
+                        },
+                      );
+                      break;
+                  }
+
+                  return Text("data");
+                }),
+              ))
       ],
     );
   }

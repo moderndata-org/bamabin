@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:bamabin/api/api_handler.dart';
 import 'package:bamabin/models/film_model.dart';
+import 'package:bamabin/models/section_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -22,14 +23,18 @@ class MainController extends GetxController {
   RxBool isLoadingBanners = false.obs;
   RxBool isShowShimmer = false.obs;
   RxBool isLoadingData = false.obs;
+  RxBool isLoadingMain = false.obs;
   RxBool hasContinue = false.obs;
   Rx<BottomNavType> selectedBottomNav = BottomNavType.home.obs;
   Rx<OrderBy> selectedOrder = OrderBy.none.obs;
+
+  var sectionsList = <SectionModel>[].obs;
 
   @override
   void onInit() {
     //! on open screen
     getSliders();
+    getMainSections();
     //!
     mainScrollController.addListener(() {
       if (mainScrollController.offset > 10) {
@@ -45,6 +50,7 @@ class MainController extends GetxController {
         selectedOrder(OrderBy.none);
       } else {
         getSliders();
+        getMainSections();
       }
     });
     super.onInit();
@@ -73,7 +79,6 @@ class MainController extends GetxController {
               page: pageNumber == null ? null : pageNumber.toString(),
               orderBy: selectedOrder.value)
           .then((res) {
-        print(res.body);
         isLoadingData(false);
         if (isFirstPage) {
           selectedList.clear();
@@ -105,6 +110,20 @@ class MainController extends GetxController {
         }
         isLoadingBanners(false);
       }
+    });
+  }
+  void getMainSections() {
+    sectionsList.clear();
+    isLoadingMain(true);
+    ApiProvider().getMainSections().then((value) {
+      sectionsList.clear();
+
+      if(value.body["status"] == true){
+        (value.body["result"] as List).forEach((element) {
+          sectionsList.add(SectionModel.fromJson(element));
+        });
+      }
+      isLoadingMain(false);
     });
   }
 

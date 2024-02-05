@@ -7,7 +7,7 @@ class SectionModel {
   String? name;
   String? icon;
   String? link;
-  String? limit;
+  int? limit;
   List<FilmModel>? posts;
   List<Genre>? genres;
   FilmModel? post;
@@ -33,7 +33,7 @@ class SectionModel {
     limit = json['limit'];
     if (json['posts'] != null) {
       posts = <FilmModel>[];
-      json['comments'].forEach((v) {
+      json['posts'].forEach((v) {
         posts!.add(new FilmModel.fromJson(v));
       });
     }
