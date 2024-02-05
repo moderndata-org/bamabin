@@ -142,12 +142,12 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                           child: ListView.builder(
                             padding: EdgeInsets.symmetric(horizontal: padding),
                             physics: BouncingScrollPhysics(),
-                            itemCount:
-                                controller.selectedFilm.value.genres?.length,
+                            itemCount: controller
+                                .selectedFilm.value.genresListForDetail?.length,
                             scrollDirection: Axis.horizontal,
                             itemBuilder: (context, index) {
-                              Genre genre =
-                                  controller.selectedFilm.value.genres![index];
+                              String genre = controller.selectedFilm.value
+                                  .genresListForDetail![index];
                               return Container(
                                   decoration: BoxDecoration(
                                       color:
@@ -160,7 +160,7 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                                   padding: EdgeInsets.only(
                                       left: 10, right: 10, top: 4, bottom: 4),
                                   child: MyText(
-                                    text: '${genre.name}',
+                                    text: '$genre',
                                     size: 11,
                                   ));
                             },
@@ -328,7 +328,7 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                 Expanded(
                     child: MyText(
                   padding: EdgeInsets.only(top: 5),
-                  text: 'The Thing Called Love',
+                  text: '${controller.selectedFilm.value.enTitle}',
                   textAlign: TextAlign.right,
                   size: 15,
                   fontWeight: FontWeight.bold,
@@ -381,7 +381,7 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                 ),
                 Expanded(
                     child: MyText(
-                  text: 'چیزی به اسم عشق',
+                  text: '${controller.selectedFilm.value.faTitle}',
                   textAlign: TextAlign.right,
                   size: 15,
                   fontWeight: FontWeight.w500,
@@ -589,7 +589,7 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                     child: Column(
                       children: [
                         MyText(
-                          text: strLorem,
+                          text: '${controller.selectedFilm.value.faSummary}',
                           color: cW,
                           maxLines: controller.isTextExpandedMovieDetail.value
                               ? 50
@@ -976,53 +976,55 @@ class ButtonSectionMovieDetailWidget extends GetView<DetailController> {
                     ],
                   ))),
           SizedBox(
-            width: 5,
+            width: controller.selectedFilm.value.hasPlay != 'on' ? 0 : 5,
           ),
           //! Play Button
-          Expanded(
-              child: MyTextButton(
-                  borderRadius: 5,
-                  padding: EdgeInsets.zero,
-                  fgColor: cB,
-                  onTap: () {
-                    Get.toNamed('/player');
-                    // showDialog(
-                    //   context: context,
-                    //   builder: (context) =>
-                    //       controller.isSerialOpenedDetail.value
-                    //           ? DownloadSerialDialog(
-                    //               actionMethod: ActionMethod.Play,
-                    //               title: 'Monarch',
-                    //             )
-                    //           : DownloadMovieDialog(
-                    //               actionMethod: ActionMethod.Play,
-                    //               title: 'Forrest',
-                    //             ),
-                    // );
-                  },
-                  bgColor: cY,
-                  boxShadow: bsBtnMovieDetail,
-                  size: Size.fromHeight(60),
-                  child: Column(
-                    children: [
-                      Expanded(
-                        child: Center(
-                          child: Icon(
-                            Icons.play_arrow_rounded,
-                            size: 30,
+          controller.selectedFilm.value.hasPlay != 'on'
+              ? SizedBox()
+              : Expanded(
+                  child: MyTextButton(
+                      borderRadius: 5,
+                      padding: EdgeInsets.zero,
+                      fgColor: cB,
+                      onTap: () {
+                        Get.toNamed('/player');
+                        // showDialog(
+                        //   context: context,
+                        //   builder: (context) =>
+                        //       controller.isSerialOpenedDetail.value
+                        //           ? DownloadSerialDialog(
+                        //               actionMethod: ActionMethod.Play,
+                        //               title: 'Monarch',
+                        //             )
+                        //           : DownloadMovieDialog(
+                        //               actionMethod: ActionMethod.Play,
+                        //               title: 'Forrest',
+                        //             ),
+                        // );
+                      },
+                      bgColor: cY,
+                      boxShadow: bsBtnMovieDetail,
+                      size: Size.fromHeight(60),
+                      child: Column(
+                        children: [
+                          Expanded(
+                            child: Center(
+                              child: Icon(
+                                Icons.play_arrow_rounded,
+                                size: 30,
+                                color: cBgBtnMovieDetail,
+                              ),
+                            ),
+                          ),
+                          MyText(
+                            text: 'پخش',
                             color: cBgBtnMovieDetail,
                           ),
-                        ),
-                      ),
-                      MyText(
-                        text: 'پخش',
-                        color: cBgBtnMovieDetail,
-                      ),
-                      SizedBox(
-                        height: 5,
-                      )
-                    ],
-                  ))),
+                          SizedBox(
+                            height: 5,
+                          )
+                        ],
+                      ))),
           SizedBox(
             width: padding,
           ),
