@@ -1,5 +1,6 @@
 import 'package:bamabin/constant/classes.dart';
 import 'package:bamabin/controller/main_controller.dart';
+import 'package:bamabin/controller/public_controller.dart';
 import 'package:bamabin/widgets/MyText.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -80,7 +81,7 @@ class CustomMainAppBar extends GetView<MainController> {
               Spacer(),
               MyTextButton(
                   onTap: () {
-                    Get.toNamed('/search');
+                    Get.find<PublicController>().clearAndOpenSearch();
                   },
                   bgColor: Colors.transparent,
                   size: Size(40, 40),
