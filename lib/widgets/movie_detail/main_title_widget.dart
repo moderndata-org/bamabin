@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../constant/colors.dart';
-import 'MyText.dart';
-import 'MyTextButton.dart';
+import '../../constant/colors.dart';
+import '../MyText.dart';
+import '../MyTextButton.dart';
 
 class MainTitleWidget extends StatelessWidget {
   const MainTitleWidget({

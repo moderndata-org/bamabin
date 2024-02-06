@@ -11,7 +11,7 @@ import 'package:shimmer/shimmer.dart';
 import '../constant/colors.dart';
 import '../controller/detail_controller.dart';
 import '../widgets/MyText.dart';
-import '../widgets/main_title_widget.dart';
+import '../widgets/movie_detail/main_title_widget.dart';
 import '../widgets/movie_item_widget.dart';
 import '../widgets/promote_widget.dart';
 
@@ -229,7 +229,7 @@ class HomeScreen extends GetView<PublicController> {
                       return PromoteWidget(
                         title: "${section.post?.enTitle}",
                         imageUrl: section.post!.bgThumbnail,
-                        onDetail: (){
+                        onDetail: () {
                           var detail = Get.put(DetailController());
                           detail.selectedFilm(section.post);
                           Get.toNamed('/movie-detail');

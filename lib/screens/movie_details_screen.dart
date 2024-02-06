@@ -1,9 +1,6 @@
 import 'package:bamabin/constant/classes.dart';
 import 'package:bamabin/constant/colors.dart';
-import 'package:bamabin/constant/strings.dart';
 import 'package:bamabin/controller/detail_controller.dart';
-import 'package:bamabin/controller/public_controller.dart';
-import 'package:bamabin/models/genre_model.dart';
 import 'package:bamabin/screens/dialogs/download_movie_dialog.dart';
 import 'package:bamabin/screens/dialogs/download_serial_dialog.dart';
 import 'package:bamabin/widgets/MyCircularProgress.dart';
@@ -21,6 +18,7 @@ import 'package:get/get.dart';
 import 'package:video_player/video_player.dart';
 
 import '../widgets/custom_shimmer.dart';
+import '../widgets/movie_detail_small_item.dart';
 
 late double padding = 10;
 
@@ -435,39 +433,8 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                   SizedBox(
                     width: padding,
                   ),
-                  Expanded(
-                      child: MovieItemSmallDetailWidget(
-                    icon: Icon(
-                      Icons.today_rounded,
-                      color: cW,
-                      size: 19,
-                    ),
-                    title: 'دوشنبه',
-                  )),
-                  Expanded(
-                      child: MovieItemSmallDetailWidget(
-                    icon: Padding(
-                      padding: const EdgeInsets.only(bottom: 2),
-                      child: Icon(
-                        Icons.live_tv_rounded,
-                        color: cW,
-                        size: 19,
-                      ),
-                    ),
-                    title: 'NetFlix',
-                  )),
-                  Expanded(
-                      child: MovieItemSmallDetailWidget(
-                    icon: Padding(
-                      padding: const EdgeInsets.only(bottom: 2),
-                      child: Icon(
-                        Icons.timer,
-                        color: cW,
-                        size: 19,
-                      ),
-                    ),
-                    title: '106 دقیقه',
-                  )),
+
+                  //! Release year
                   Expanded(
                       child: MovieItemSmallDetailWidget(
                     icon: Padding(
@@ -478,7 +445,43 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                         size: 19,
                       ),
                     ),
-                    title: '1993',
+                    title: '${controller.selectedFilm.value.releaseMovie}',
+                  )),
+                  //! Country
+                  Expanded(
+                      child: MovieItemSmallDetailWidget(
+                    icon: Icon(
+                      Icons.public,
+                      color: cW,
+                      size: 19,
+                    ),
+                    title: '${controller.selectedFilm.value.countryMovie}',
+                  )),
+                  //! language
+                  Expanded(
+                      child: MovieItemSmallDetailWidget(
+                    icon: Padding(
+                      padding: const EdgeInsets.only(bottom: 2),
+                      child: Icon(
+                        Icons.language,
+                        color: cW,
+                        size: 19,
+                      ),
+                    ),
+                    title: '${controller.selectedFilm.value.languageMovie}',
+                  )),
+                  //! time
+                  Expanded(
+                      child: MovieItemSmallDetailWidget(
+                    icon: Padding(
+                      padding: const EdgeInsets.only(bottom: 2),
+                      child: Icon(
+                        Icons.timer,
+                        color: cW,
+                        size: 19,
+                      ),
+                    ),
+                    title: '${controller.selectedFilm.value.runtimeMovie}',
                   )),
                   SizedBox(
                     width: padding,
@@ -495,6 +498,71 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                   SizedBox(
                     width: padding,
                   ),
+                  Expanded(
+                      child: MovieItemSmallDetailWidget(
+                    icon: SizedBox(
+                        height: 20,
+                        width: 20,
+                        child: Image.asset('assets/images/ic_imdb.png')),
+                    title: '${controller.selectedFilm.value.imdbRate}',
+                  )),
+                  Expanded(
+                      child: MovieItemSmallDetailWidget(
+                    icon: SizedBox(
+                        height: 20,
+                        width: 20,
+                        child: Image.asset('assets/images/ic_rotten.png')),
+                    title: '${controller.selectedFilm.value.malRateMovie}',
+                  )),
+                  Expanded(
+                      child: MovieItemSmallDetailWidget(
+                    icon: SizedBox(
+                        height: 20,
+                        width: 20,
+                        child: Image.asset('assets/images/ic_metacritic.png')),
+                    title: '${controller.selectedFilm.value.metacriticRate}',
+                  )),
+                  Expanded(
+                      child: MovieItemSmallDetailWidget(
+                    icon: Padding(
+                      padding: const EdgeInsets.only(bottom: 2),
+                      child: Icon(
+                        Icons.monetization_on,
+                        color: cW,
+                        size: 19,
+                      ),
+                    ),
+                    title: '250 M \$',
+                    textDirection: TextDirection.ltr,
+                  )),
+                  SizedBox(
+                    width: padding,
+                  ),
+                ],
+              ),
+            ),
+            Container(
+              margin: EdgeInsets.only(top: 5),
+              width: Get.width,
+              child: Row(
+                textDirection: TextDirection.rtl,
+                children: [
+                  SizedBox(
+                    width: padding,
+                  ),
+                  Expanded(
+                      child: MovieItemSmallDetailWidget(
+                    icon: Padding(
+                      padding: const EdgeInsets.only(bottom: 2),
+                      child: Icon(
+                        Icons.diversity_3_rounded,
+                        color: cW,
+                        size: 19,
+                      ),
+                    ),
+                    title: '${controller.selectedFilm.value.ageRate}',
+                    textDirection: TextDirection.ltr,
+                  )),
                   Expanded(
                       child: MovieItemSmallDetailWidget(
                     icon: Padding(
@@ -513,56 +581,27 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                     icon: Padding(
                       padding: const EdgeInsets.only(bottom: 2),
                       child: Icon(
-                        Icons.monetization_on,
+                        Icons.request_quote_rounded,
                         color: cW,
                         size: 19,
                       ),
                     ),
-                    title: '250 M \$',
+                    title: '100 M \$',
                     textDirection: TextDirection.ltr,
                   )),
                   Expanded(
                       child: MovieItemSmallDetailWidget(
-                    icon: SizedBox(
-                        height: 20,
-                        width: 20,
-                        child: Image.asset('assets/images/ic_imdb.png')),
-                    title: '9.5',
+                    icon: Padding(
+                      padding: const EdgeInsets.only(bottom: 2),
+                      child: Icon(
+                        Icons.request_quote_rounded,
+                        color: cW,
+                        size: 19,
+                      ),
+                    ),
+                    title: '100 M \$',
+                    textDirection: TextDirection.ltr,
                   )),
-                  Expanded(
-                      child: MovieItemSmallDetailWidget(
-                    icon: SizedBox(
-                        height: 20,
-                        width: 20,
-                        child: Image.asset('assets/images/ic_metacritic.png')),
-                    title: '9.5',
-                  )),
-                  SizedBox(
-                    width: padding,
-                  ),
-                ],
-              ),
-            ),
-            Container(
-              margin: EdgeInsets.only(top: 5),
-              width: Get.width,
-              child: Row(
-                textDirection: TextDirection.rtl,
-                children: [
-                  SizedBox(
-                    width: padding,
-                  ),
-                  Expanded(
-                      child: MovieItemSmallDetailWidget(
-                    icon: SizedBox(
-                        height: 20,
-                        width: 20,
-                        child: Image.asset('assets/images/ic_rotten.png')),
-                    title: '9.5',
-                  )),
-                  Spacer(
-                    flex: 3,
-                  ),
                   SizedBox(
                     width: padding,
                   ),
@@ -1027,44 +1066,6 @@ class ButtonSectionMovieDetailWidget extends GetView<DetailController> {
                       ))),
           SizedBox(
             width: padding,
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class MovieItemSmallDetailWidget extends StatelessWidget {
-  const MovieItemSmallDetailWidget(
-      {this.icon,
-      this.textDirection = TextDirection.rtl,
-      this.title,
-      super.key});
-  final Widget? icon;
-  final String? title;
-  final TextDirection? textDirection;
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: 32,
-      margin: EdgeInsets.symmetric(horizontal: 2),
-      padding: EdgeInsets.symmetric(horizontal: 3),
-      decoration: BoxDecoration(
-          boxShadow: [bsTextLowOpacity],
-          color: cSecondary,
-          borderRadius: BorderRadius.circular(5)),
-      child: Row(
-        textDirection: TextDirection.rtl,
-        children: [
-          icon ?? SizedBox(),
-          Expanded(
-            child: MyText(
-              textAlign: TextAlign.center,
-              textDirection: textDirection,
-              text: '$title',
-              color: cW,
-              size: 12,
-            ),
           ),
         ],
       ),
