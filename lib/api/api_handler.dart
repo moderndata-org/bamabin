@@ -63,18 +63,50 @@ class ApiProvider extends GetConnect {
     return res;
   }
 
+  Future<Response> advancedSearch(
+      {required String text,
+      required int page,
+      int? genreId,
+      int? countryId,
+      String? ageRates,
+      String? fromYear,
+      String? toYear,
+      String? fromImdb,
+      String? toImdb,
+      bool? isDubbed,
+      bool? isSubtitle,
+      required AdvancedSearchType type}) async {
+    Map<String, dynamic> m = {
+      'page': '$page',
+      't[genre]': '$genreId',
+      't[country]': '$countryId',
+      'ageRates': '$ageRates',
+      't[year_from]': '$fromYear',
+      't[year_to]': '$toYear',
+      'm[imdb_from]': '$fromImdb',
+      'm[imdb_to]': '$toImdb',
+      'm[dubbed]': isDubbed == true ? 'on' : '',
+      'm[subtitle]': isSubtitle == true ? 'on' : '',
+    };
+    Response res = await get('${base_url}advanced_search/', query: m);
+    return res;
+  }
+
   Future<Response> getMainSections() async {
     Response res = await get('${base_url}home/sections');
     return res;
   }
+
   Future<Response> getCountries() async {
     Response res = await get('${base_url}filter/countries');
     return res;
   }
+
   Future<Response> getGenres() async {
     Response res = await get('${base_url}filter/genres');
     return res;
   }
+
   Future<Response> getAgeRates() async {
     Response res = await get('${base_url}filter/age_rates');
     return res;

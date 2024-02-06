@@ -1,3 +1,5 @@
+import 'package:bamabin/constant/classes.dart';
+import 'package:bamabin/controller/public_controller.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -9,9 +11,15 @@ import '../../widgets/MyTextButton.dart';
 import '../../widgets/MyTextField.dart';
 import '../../widgets/custom_dropdown.dart';
 
-class SearchAdvancedDialog extends StatelessWidget {
-  const SearchAdvancedDialog({super.key});
+class SearchAdvancedDialog extends StatefulWidget {
+  SearchAdvancedDialog({super.key});
+  final controller = Get.find<PublicController>();
 
+  @override
+  State<SearchAdvancedDialog> createState() => _SearchAdvancedDialogState();
+}
+
+class _SearchAdvancedDialogState extends State<SearchAdvancedDialog> {
   @override
   Widget build(BuildContext context) {
     return Dialog(
@@ -64,11 +72,29 @@ class SearchAdvancedDialog extends StatelessWidget {
                   width: 20,
                 ),
                 Expanded(
-                    child: CustomDropDown(
-                  title: 'نوع',
-                  borderRadius: 5,
-                  list: [],
-                )),
+                    child: Obx(() => CustomDropDown(
+                          title: switch (widget.controller.selectedType.value) {
+                            AdvancedSearchType.none => 'نوع',
+                            AdvancedSearchType.all => 'همه',
+                            AdvancedSearchType.animations => 'انیمیشن‌ها',
+                            AdvancedSearchType.anime => 'انیمه‌ها',
+                            AdvancedSearchType.movies => 'فیلم‌ها',
+                            AdvancedSearchType.series => 'سریال‌ها',
+                          },
+                          borderRadius: 5,
+                          list: [
+                            DropdownMenuItem(
+                                onTap: () => widget.controller
+                                    .selectedType(AdvancedSearchType.all),
+                                value: 0,
+                                child: MyText(text: 'همه')),
+                            DropdownMenuItem(
+                                onTap: () => widget.controller.selectedType(
+                                    AdvancedSearchType.animations),
+                                value: 0,
+                                child: MyText(text: 'انیمیشن‌ها')),
+                          ],
+                        ))),
                 SizedBox(
                   width: 5,
                 ),

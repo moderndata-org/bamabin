@@ -11,3 +11,5 @@ enum LikeStatus { like, dislike, notSelected }
 enum OrderBy { none, date, modified, imdb }
 
 enum BottomNavType { home, movies, series, animations, anime }
+
+enum AdvancedSearchType { all, movies, series, animations, anime, none }

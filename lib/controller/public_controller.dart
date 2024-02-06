@@ -1,4 +1,5 @@
 import 'package:bamabin/api/api_handler.dart';
+import 'package:bamabin/constant/classes.dart';
 import 'package:bamabin/models/film_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -10,13 +11,19 @@ class PublicController extends GetxController {
   //! Search Page
   RxBool isShowShimmerSearch = false.obs;
   RxBool isLoadingSearchResults = false.obs;
+  RxBool isAdvancedSearch = false.obs;
+  RxBool hasDubbed = false.obs;
+  RxBool hasSubtitle = false.obs;
   late TextEditingController txtSearch;
   int page = 1;
   String searchText = '';
   RxList<FilmModel> listSearch = <FilmModel>[].obs;
+  Rx<AdvancedSearchType> selectedType = AdvancedSearchType.none.obs;
   //! Search Page End
 
   void clearAndOpenSearch() {
+    selectedType(AdvancedSearchType.none);
+    isAdvancedSearch(false);
     isShowShimmerSearch(false);
     isLoadingSearchResults(false);
     txtSearch.clear();
@@ -25,8 +32,17 @@ class PublicController extends GetxController {
     Get.toNamed('/search');
   }
 
+  void advancedSearch({
+    required AdvancedSearchType type,
+    String? fromYear,
+    String? toYear,
+    String? fromImdb,
+    String? toImdb,
+  }) {}
+
   void search({required bool isFirstPage}) {
     if (isLoadingSearchResults.isFalse) {
+      isAdvancedSearch(false);
       isLoadingSearchResults(true);
       if (isFirstPage) {
         print('this');
