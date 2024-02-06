@@ -168,21 +168,26 @@ class HomeScreen extends GetView<PublicController> {
                             child: Directionality(
                                 textDirection: TextDirection.rtl,
                                 child: ListView.builder(
-                                  itemCount: 2,
+                                  itemCount: section.genres!.length,
                                   physics: BouncingScrollPhysics(),
                                   padding: EdgeInsets.symmetric(horizontal: 10),
                                   scrollDirection: Axis.horizontal,
-                                  itemBuilder: (context, index) => Center(
-                                    child: GenreItem(
-                                      width: 100,
-                                      height: 55,
-                                      margin: EdgeInsets.only(right: 5),
-                                      boxShadow: BoxShadow(
-                                          blurRadius: 2,
-                                          offset: Offset(0, 1),
-                                          color: Colors.black.withOpacity(.2)),
-                                    ),
-                                  ),
+                                  itemBuilder: (context, index){
+                                    var genre = section.genres![index];
+                                    return Center(
+                                      child: GenreItem(
+                                        width: 100,
+                                        height: 55,
+                                        title: genre.name,
+                                        imageUrl: genre.icon,
+                                        margin: EdgeInsets.only(right: 5),
+                                        boxShadow: BoxShadow(
+                                            blurRadius: 2,
+                                            offset: Offset(0, 1),
+                                            color: Colors.black.withOpacity(.2)),
+                                      ),
+                                    );
+                                  },
                                 )),
                           )
                         ],
