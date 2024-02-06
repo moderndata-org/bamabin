@@ -37,15 +37,16 @@ class MainController extends GetxController {
     getMainSections();
     //!
     mainScrollController.addListener(() {
-      if (mainScrollController.offset > 10) {
-        isVisibleAppbar(false);
-      } else {
-        isVisibleAppbar(true);
+      if (selectedBottomNav.value == BottomNavType.home) {
+        if (mainScrollController.offset > 10) {
+          isVisibleAppbar(false);
+        } else {
+          isVisibleAppbar(true);
+        }
       }
     });
     selectedBottomNav.listen((p0) {
       if (selectedBottomNav.value != BottomNavType.home) {
-        print('yes0');
         getArchive(isFirstPage: true);
         selectedOrder(OrderBy.none);
       } else {
@@ -112,13 +113,14 @@ class MainController extends GetxController {
       }
     });
   }
+
   void getMainSections() {
     sectionsList.clear();
     isLoadingMain(true);
     ApiProvider().getMainSections().then((value) {
       sectionsList.clear();
 
-      if(value.body["status"] == true){
+      if (value.body["status"] == true) {
         (value.body["result"] as List).forEach((element) {
           sectionsList.add(SectionModel.fromJson(element));
         });

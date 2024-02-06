@@ -88,7 +88,10 @@ class MovieItemWidget extends StatelessWidget {
                                 height: height! - 20,
                               )),
                               errorWidget: (context, url, error) =>
-                                  Icon(Icons.error),
+                                  CustomShimmerWidget(
+                                width: width!,
+                                height: height! - 20,
+                              ),
                             ),
                           ),
                           //! IMDB Box

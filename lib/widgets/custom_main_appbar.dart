@@ -13,6 +13,9 @@ class CustomMainAppBar extends GetView<MainController> {
 
   @override
   Widget build(BuildContext context) {
+    controller.isVisibleAppbar.listen((p0) {
+      print(p0);
+    });
     return Obx(() {
       return AnimatedContainer(
           duration: Duration(
@@ -54,38 +57,26 @@ class CustomMainAppBar extends GetView<MainController> {
                     ],
                   )),
               Spacer(),
-              Obx(() {
-                Widget center = SizedBox();
-                if (controller.isVisibleAppbar.value) {
-                  if (controller.selectedBottomNav.value !=
-                      BottomNavType.home) {
-                    center = MyText(
-                      text: '${controller.appBarCenterText}',
-                      size: 19,
-                      color: cW,
-                      fontWeight: FontWeight.w900,
-                      shadows: [bsText],
-                    );
-                  } else {
-                    center = SizedBox(
-                        height: 50,
-                        child: Image.asset('assets/images/ic_logotype.png'));
-                  }
-                } else if (controller.selectedBottomNav.value !=
-                    BottomNavType.home) {
-                  center = MyText(
-                    text: '${controller.appBarCenterText}',
-                    size: 17,
-                    color: cY,
-                  );
-                }
-                return AnimatedOpacity(
-                    duration: Duration(
-                      milliseconds: 500,
-                    ),
-                    opacity: controller.isVisibleAppbar.value ? 1 : 0,
-                    child: center);
-              }),
+              Obx(() => AnimatedOpacity(
+                  duration: Duration(
+                    milliseconds: 300,
+                  ),
+                  opacity: controller.isVisibleAppbar.value ? 1 : 0,
+                  child: controller.selectedBottomNav.value ==
+                          BottomNavType.home
+                      ? controller.isVisibleAppbar.value
+                          ? SizedBox(
+                              height: 50,
+                              child:
+                                  Image.asset('assets/images/ic_logotype.png'))
+                          : SizedBox()
+                      : MyText(
+                          text: '${controller.appBarCenterText}',
+                          size: 19,
+                          color: cW,
+                          fontWeight: FontWeight.w900,
+                          shadows: [bsText],
+                        ))),
               Spacer(),
               MyTextButton(
                   onTap: () {

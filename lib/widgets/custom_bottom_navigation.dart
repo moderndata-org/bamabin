@@ -19,6 +19,7 @@ class CustomBottomNavigation extends GetView<MainController> {
           Obx(() {
             return BottomNavButtonWidget(
               onTap: () async {
+                controller.isVisibleAppbar(true);
                 controller.selectedBottomNav(BottomNavType.home);
                 controller.runBottomNavAnimation();
               },
@@ -32,6 +33,7 @@ class CustomBottomNavigation extends GetView<MainController> {
           Obx(() {
             return BottomNavButtonWidget(
               onTap: () {
+                controller.isVisibleAppbar(true);
                 controller.selectedBottomNav(BottomNavType.movies);
                 controller.appBarCenterText('فیلم');
                 controller.runBottomNavAnimation();
@@ -46,6 +48,7 @@ class CustomBottomNavigation extends GetView<MainController> {
           Obx(() {
             return BottomNavButtonWidget(
               onTap: () {
+                controller.isVisibleAppbar(true);
                 controller.selectedBottomNav(BottomNavType.series);
                 controller.appBarCenterText('سریال');
                 controller.runBottomNavAnimation();
@@ -60,6 +63,7 @@ class CustomBottomNavigation extends GetView<MainController> {
           Obx(() {
             return BottomNavButtonWidget(
               onTap: () {
+                controller.isVisibleAppbar(true);
                 controller.selectedBottomNav(BottomNavType.animations);
                 controller.appBarCenterText('انیمیشن');
                 controller.runBottomNavAnimation();
@@ -74,6 +78,7 @@ class CustomBottomNavigation extends GetView<MainController> {
           Obx(() {
             return BottomNavButtonWidget(
               onTap: () {
+                controller.isVisibleAppbar(true);
                 controller.selectedBottomNav(BottomNavType.anime);
                 controller.appBarCenterText('انیمه');
                 controller.runBottomNavAnimation();

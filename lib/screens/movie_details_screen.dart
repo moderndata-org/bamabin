@@ -18,6 +18,7 @@ import 'package:get/get.dart';
 import 'package:video_player/video_player.dart';
 
 import '../widgets/custom_shimmer.dart';
+import '../widgets/movie_detail/actors_widget.dart';
 import '../widgets/movie_detail_small_item.dart';
 
 late double padding = 10;
@@ -184,7 +185,10 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                               height: 190,
                             )),
                             errorWidget: (context, url, error) =>
-                                Icon(Icons.error),
+                                CustomShimmerWidget(
+                              width: 130,
+                              height: 190,
+                            ),
                           ),
                         ),
                       )),
@@ -786,28 +790,11 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                           itemBuilder: (context, index) => Container(
                             width: 80,
                             margin: EdgeInsets.symmetric(horizontal: 7),
-                            child: Column(
-                              children: [
-                                SizedBox(
-                                  width: 80,
-                                  height: 80,
-                                  child: CircleAvatar(
-                                    backgroundColor: cY,
-                                    backgroundImage: AssetImage(
-                                        'assets/images/bg_forrest.jpg'),
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: 5,
-                                ),
-                                MyText(
-                                  text: 'jason statham Test name',
-                                  maxLines: 2,
-                                  textAlign: TextAlign.center,
-                                  size: 12,
-                                )
-                              ],
-                            ),
+                            child: ActorsWidget(
+                                imageUrl:
+                                    '${controller.selectedFilm.value.thumbnail}',
+                                name:
+                                    '${controller.selectedFilm.value.titleMovie}'),
                           ),
                         )),
                   )
