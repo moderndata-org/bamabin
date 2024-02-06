@@ -1,3 +1,5 @@
+import 'package:bamabin/models/actor.dart';
+import 'package:bamabin/models/director.dart';
 import 'package:bamabin/models/release_model.dart';
 
 import 'comment_model.dart';
@@ -41,6 +43,8 @@ class FilmModel {
   bool? isFinished;
   List<Country>? countries;
   List<Release>? release;
+  List<Actor>? actors;
+  List<Director>? directors;
   // List<Null>? networks;
   List<Language>? languages;
   List<Genre>? genres;
@@ -142,6 +146,8 @@ class FilmModel {
       this.isFinished,
       this.countries,
       this.release,
+      this.actors,
+      this.directors,
       // this.networks,
       this.languages,
       this.genres,
@@ -241,6 +247,18 @@ class FilmModel {
       comments = <Comment>[];
       json['comments'].forEach((v) {
         comments!.add(new Comment.fromJson(v));
+      });
+    }
+    if (json['actors'] != null) {
+      actors = <Actor>[];
+      json['actors'].forEach((v) {
+        actors!.add(new Actor.fromJson(v));
+      });
+    }
+    if (json['directors'] != null) {
+      directors = <Director>[];
+      json['directors'].forEach((v) {
+        directors!.add(new Director.fromJson(v));
       });
     }
     isFinished = json['is_finished'];
