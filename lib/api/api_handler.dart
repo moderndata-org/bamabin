@@ -57,7 +57,7 @@ class ApiProvider extends GetConnect {
     return res;
   }
 
-  Future<Response> serach({required String text, required int page}) async {
+  Future<Response> search({required String text, required int page}) async {
     Response res =
         await get('${base_url}search', query: {'s': text, 'page': '$page'});
     return res;
@@ -65,6 +65,18 @@ class ApiProvider extends GetConnect {
 
   Future<Response> getMainSections() async {
     Response res = await get('${base_url}home/sections');
+    return res;
+  }
+  Future<Response> getCountries() async {
+    Response res = await get('${base_url}filter/countries');
+    return res;
+  }
+  Future<Response> getGenres() async {
+    Response res = await get('${base_url}filter/genres');
+    return res;
+  }
+  Future<Response> getAgeRates() async {
+    Response res = await get('${base_url}filter/age_rates');
     return res;
   }
 }

@@ -37,7 +37,7 @@ class PublicController extends GetxController {
       } else {
         page += 1;
       }
-      ApiProvider().serach(text: searchText, page: page).then((res) {
+      ApiProvider().search(text: searchText, page: page).then((res) {
         if (res.body != null) {
           isLoadingSearchResults(false);
           isShowShimmerSearch(false);
