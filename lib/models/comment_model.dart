@@ -69,4 +69,10 @@ class Comment {
     data['user_id'] = this.userId;
     return data;
   }
+
+
+  void getCommentDate(){
+    var date = DateTime.parse(this.commentDate!);
+
+  }
 }

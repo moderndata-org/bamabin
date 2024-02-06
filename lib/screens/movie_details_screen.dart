@@ -785,17 +785,20 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                         child: ListView.builder(
                           padding: EdgeInsets.symmetric(horizontal: 15),
                           physics: BouncingScrollPhysics(),
-                          itemCount: 10,
+                          itemCount: controller.selectedFilm.value.actors!.length,
                           scrollDirection: Axis.horizontal,
-                          itemBuilder: (context, index) => Container(
-                            width: 80,
-                            margin: EdgeInsets.symmetric(horizontal: 7),
-                            child: ActorsWidget(
-                                imageUrl:
-                                    '${controller.selectedFilm.value.thumbnail}',
-                                name:
-                                    '${controller.selectedFilm.value.titleMovie}'),
-                          ),
+                          itemBuilder: (context, index){
+                            var actor = controller.selectedFilm.value.actors![index];
+                            return Container(
+                              width: 80,
+                              margin: EdgeInsets.symmetric(horizontal: 7),
+                              child: ActorsWidget(
+                                  imageUrl:
+                                  '${controller.selectedFilm.value.thumbnail}',
+                                  name:
+                                  '${actor.name}'),
+                            );
+                        },
                         )),
                   )
                 ],
@@ -858,7 +861,7 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
             SizedBox(
               height: 15,
             ),
-            ScoreSection(),
+            ScoreSection(award_summery: "${controller.selectedFilm.value.summaryAwards}",),
             SizedBox(
               height: 15,
             ),
@@ -870,7 +873,7 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
             SizedBox(
               height: 15,
             ),
-            CommentsSection(),
+            CommentsSection(comments:controller.selectedFilm.value.comments ,),
             SizedBox(
               height: 30,
             ),

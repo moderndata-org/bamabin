@@ -7,8 +7,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class CommentItem extends StatelessWidget {
-  CommentItem({required this.isReply, super.key});
+  CommentItem({required this.isReply, super.key,this.user,this.date,this.text});
   bool? isReply;
+  String? user;
+  String? date;
+  String? text;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -39,7 +42,7 @@ class CommentItem extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      "M.Mohammadi",
+                      "${user}",
                       style: TextStyle(color: cW, fontSize: 12),
                     ),
                     Row(
@@ -54,7 +57,7 @@ class CommentItem extends StatelessWidget {
                           width: 5,
                         ),
                         Text(
-                          " 2 ماه قبل",
+                          "${date}",
                           textDirection: TextDirection.rtl,
                           style: TextStyle(color: cW),
                         ),
@@ -83,7 +86,7 @@ class CommentItem extends StatelessWidget {
                   height: 10,
                 ),
                 Text(
-                  "لورم ایپسوم متنی ساختگی در صنعت چاپ است",
+                  "${text}",
                   textAlign: TextAlign.right,
                   style: TextStyle(color: Colors.white),
                 ),

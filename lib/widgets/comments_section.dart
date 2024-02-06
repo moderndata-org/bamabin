@@ -1,5 +1,6 @@
 import 'package:bamabin/constant/colors.dart';
 import 'package:bamabin/controller/detail_controller.dart';
+import 'package:bamabin/models/comment_model.dart';
 import 'package:bamabin/widgets/MyText.dart';
 import 'package:bamabin/widgets/MyTextButton.dart';
 import 'package:bamabin/widgets/MyTextField.dart';
@@ -8,8 +9,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class CommentsSection extends GetView<DetailController> {
-  const CommentsSection({super.key});
-
+  CommentsSection({super.key,this.comments});
+  List<Comment>? comments;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -40,12 +41,15 @@ class CommentsSection extends GetView<DetailController> {
           SizedBox(
             height: 10,
           ),
-          CommentItem(
-            isReply: false,
-          ),
-          CommentItem(
-            isReply: true,
-          ),
+          Column(children: List.generate(comments!.length, (index){
+            var comment = comments![index];
+            return CommentItem(
+              isReply: false,
+              user: comment.commentAuthor,
+              date: comment.commentDateGmt,
+              text: comment.commentContent,
+            );
+          }),),
           SizedBox(
             height: 10,
           ),
