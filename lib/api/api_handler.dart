@@ -52,12 +52,18 @@ class ApiProvider extends GetConnect {
     return res;
   }
 
-  Future<Response> getSliders() async{
+  Future<Response> getSliders() async {
     Response res = await get('${base_url}home/slider');
     return res;
   }
 
-  Future<Response> getMainSections() async{
+  Future<Response> serach({required String text, required int page}) async {
+    Response res =
+        await get('${base_url}search', query: {'s': text, 'page': '$page'});
+    return res;
+  }
+
+  Future<Response> getMainSections() async {
     Response res = await get('${base_url}home/sections');
     return res;
   }
