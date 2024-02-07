@@ -1,12 +1,9 @@
 import 'dart:async';
-
 import 'package:bamabin/api/api_handler.dart';
 import 'package:bamabin/models/film_model.dart';
 import 'package:bamabin/models/section_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
-
 import '../constant/classes.dart';
 
 class MainController extends GetxController {
@@ -119,11 +116,12 @@ class MainController extends GetxController {
     isLoadingMain(true);
     ApiProvider().getMainSections().then((value) {
       sectionsList.clear();
-
-      if (value.body["status"] == true) {
-        (value.body["result"] as List).forEach((element) {
-          sectionsList.add(SectionModel.fromJson(element));
-        });
+      if (value.body != null) {
+        if (value.body["status"] == true) {
+          (value.body["result"] as List).forEach((element) {
+            sectionsList.add(SectionModel.fromJson(element));
+          });
+        }
       }
       isLoadingMain(false);
     });

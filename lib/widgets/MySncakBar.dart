@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-SnackbarController MySnackBar(String mytext, Color snackcolor, Icon myicon) {
+SnackbarController MySnackBar(
+    String mytext, Color snackcolor, Icon myicon, Duration? duration) {
   return Get.snackbar('title', 'message',
       onTap: (snack) => Get.back(),
       messageText: Container(),
-      duration: Duration(milliseconds: 1700),
+      duration: duration ?? Duration(milliseconds: 1700),
       titleText: Container(),
       maxWidth: Get.width,
       snackPosition: SnackPosition.BOTTOM,

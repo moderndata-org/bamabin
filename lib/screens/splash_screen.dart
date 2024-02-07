@@ -13,18 +13,13 @@ class SplashScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Timer(Duration(seconds: 2), () {
-      Get.offNamed('/signin');
+      Get.offNamed('/main');
     });
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
     ]);
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
         overlays: [SystemUiOverlay.top]);
-    precacheImage(AssetImage('assets/images/bg_crausel.jpg'), context);
-    precacheImage(AssetImage('assets/images/bg_forrest.jpg'), context);
-    precacheImage(AssetImage('assets/images/genre_img.png'), context);
-    precacheImage(AssetImage('assets/images/rebelmoon.jpg'), context);
-    precacheImage(AssetImage('assets/images/monarch.jpg'), context);
     return SafeArea(
         child: Scaffold(
       backgroundColor: cPrimary,

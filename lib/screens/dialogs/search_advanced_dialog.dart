@@ -1,6 +1,8 @@
 import 'package:bamabin/constant/classes.dart';
 import 'package:bamabin/controller/public_controller.dart';
-import 'package:dropdown_button2/dropdown_button2.dart';
+import 'package:bamabin/models/age_model.dart';
+import 'package:bamabin/models/country_model.dart';
+import 'package:bamabin/models/genre_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -13,15 +15,26 @@ import '../../widgets/custom_dropdown.dart';
 
 class SearchAdvancedDialog extends StatefulWidget {
   SearchAdvancedDialog({super.key});
-  final controller = Get.find<PublicController>();
 
   @override
   State<SearchAdvancedDialog> createState() => _SearchAdvancedDialogState();
 }
 
 class _SearchAdvancedDialogState extends State<SearchAdvancedDialog> {
+  TextEditingController txtFromYear = TextEditingController();
+  TextEditingController txtToYear = TextEditingController();
+  TextEditingController txtFromImdb = TextEditingController();
+  TextEditingController txtToImdb = TextEditingController();
+  final controller = Get.find<PublicController>();
+
   @override
   Widget build(BuildContext context) {
+    controller.hasDubbed(false);
+    controller.hasSubtitle(false);
+    controller.selectedAge(AgeRate());
+    controller.selectedCountry(Country());
+    controller.selectedGenre(Genre());
+    controller.selectedType(AdvancedSearchType.none);
     return Dialog(
       shadowColor: cB,
       surfaceTintColor: cB,
@@ -73,7 +86,7 @@ class _SearchAdvancedDialogState extends State<SearchAdvancedDialog> {
                 ),
                 Expanded(
                     child: Obx(() => CustomDropDown(
-                          title: switch (widget.controller.selectedType.value) {
+                          title: switch (controller.selectedType.value) {
                             AdvancedSearchType.none => 'نوع',
                             AdvancedSearchType.all => 'همه',
                             AdvancedSearchType.animations => 'انیمیشن‌ها',
@@ -84,26 +97,51 @@ class _SearchAdvancedDialogState extends State<SearchAdvancedDialog> {
                           borderRadius: 5,
                           list: [
                             DropdownMenuItem(
-                                onTap: () => widget.controller
+                                onTap: () => controller
                                     .selectedType(AdvancedSearchType.all),
                                 value: 0,
-                                child: MyText(text: 'همه')),
+                                child:
+                                    Center(child: MyText(text: 'همه نوع‌ها'))),
                             DropdownMenuItem(
-                                onTap: () => widget.controller.selectedType(
+                                onTap: () => controller
+                                    .selectedType(AdvancedSearchType.movies),
+                                value: 0,
+                                child: Center(child: MyText(text: 'فیلم‌ها'))),
+                            DropdownMenuItem(
+                                onTap: () => controller
+                                    .selectedType(AdvancedSearchType.series),
+                                value: 0,
+                                child: Center(child: MyText(text: 'سریال‌ها'))),
+                            DropdownMenuItem(
+                                onTap: () => controller.selectedType(
                                     AdvancedSearchType.animations),
                                 value: 0,
-                                child: MyText(text: 'انیمیشن‌ها')),
+                                child:
+                                    Center(child: MyText(text: 'انیمیشن‌ها'))),
+                            DropdownMenuItem(
+                                onTap: () => controller
+                                    .selectedType(AdvancedSearchType.anime),
+                                value: 0,
+                                child: Center(child: MyText(text: 'انیمه‌ها'))),
                           ],
                         ))),
                 SizedBox(
                   width: 5,
                 ),
                 Expanded(
-                    child: CustomDropDown(
-                  title: 'رده سنی',
-                  borderRadius: 5,
-                  list: [],
-                )),
+                    child: Obx(() => CustomDropDown(
+                          title: controller.selectedAge.value.name ?? 'رده سنی',
+                          borderRadius: 5,
+                          list:
+                              List.generate(controller.listAge.length, (index) {
+                            AgeRate age = controller.listAge[index];
+                            return DropdownMenuItem(
+                                onTap: () => controller.selectedAge(age),
+                                value: index,
+                                child:
+                                    Center(child: MyText(text: '${age.name}')));
+                          }),
+                        ))),
                 SizedBox(
                   width: 20,
                 ),
@@ -120,108 +158,40 @@ class _SearchAdvancedDialogState extends State<SearchAdvancedDialog> {
                   width: 20,
                 ),
                 Expanded(
-                    child: CustomDropDown(
-                  title: 'کشور',
-                  borderRadius: 5,
-                  list: [],
-                )),
+                    child: Obx(() => CustomDropDown(
+                          title:
+                              controller.selectedCountry.value.name ?? 'کشور',
+                          borderRadius: 5,
+                          list: List.generate(controller.listCountry.length,
+                              (index) {
+                            Country coun = controller.listCountry[index];
+                            return DropdownMenuItem(
+                                onTap: () => controller.selectedCountry(coun),
+                                value: index,
+                                child: Center(
+                                    child: MyText(text: '${coun.name}')));
+                          }),
+                        ))),
                 SizedBox(
                   width: 5,
                 ),
                 Expanded(
-                    child: CustomDropDown(
-                  title: 'ژانر',
-                  borderRadius: 5,
-                  list: [],
-                )),
+                    child: Obx(() => CustomDropDown(
+                          title: controller.selectedGenre.value.name ?? 'ژانر',
+                          borderRadius: 5,
+                          list: List.generate(controller.listGenre.length,
+                              (index) {
+                            Genre gen = controller.listGenre[index];
+                            return DropdownMenuItem(
+                                onTap: () => controller.selectedGenre(gen),
+                                value: index,
+                                child:
+                                    Center(child: MyText(text: '${gen.name}')));
+                          }),
+                        ))),
                 SizedBox(
                   width: 20,
                 ),
-                // Container(
-                //   margin: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
-                //   width: Get.width / 3,
-                //   height: 45,
-                //   child: Directionality(
-                //     textDirection: TextDirection.rtl,
-                //     child: DropdownButtonHideUnderline(
-                //       child: ButtonTheme(
-                //         alignedDropdown: true,
-                //         child: DropdownButton(
-                //           // isDense: true,
-
-                //           dropdownColor: cPrimary,
-                //           borderRadius: BorderRadius.circular(10),
-                //           hint: MyText(text: 'کشور'),
-                //           // isExpanded: true,
-                //           items: [
-                //             DropdownMenuItem(
-                //                 value: 1,
-                //                 alignment: Alignment.centerRight,
-                //                 child: SizedBox(
-                //                     width: 40, child: MyText(text: '1'))),
-                //             DropdownMenuItem(
-                //                 value: 2,
-                //                 alignment: Alignment.centerRight,
-                //                 child: SizedBox(
-                //                     width: 40, child: MyText(text: '2'))),
-                //             DropdownMenuItem(
-                //                 value: 3,
-                //                 alignment: Alignment.centerRight,
-                //                 child: SizedBox(
-                //                     width: 40, child: MyText(text: '3'))),
-                //           ],
-                //           onChanged: (value) {},
-                //         ),
-                //       ),
-                //     ),
-                //   ),
-                //   decoration: BoxDecoration(
-                //       color: cBgTextfield,
-                //       border: Border.all(color: cStrokeGrey),
-                //       borderRadius: BorderRadius.circular(10)),
-                // ),
-                // Container(
-                //   margin: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
-                //   width: Get.width / 3,
-                //   height: 45,
-                //   child: Directionality(
-                //     textDirection: TextDirection.rtl,
-                //     child: DropdownButtonHideUnderline(
-                //       child: ButtonTheme(
-                //         alignedDropdown: true,
-                //         child: DropdownButton(
-                //           // isDense: true,
-                //           dropdownColor: cPrimary,
-                //           borderRadius: BorderRadius.circular(10),
-                //           hint: MyText(text: 'ژانر'),
-                //           // isExpanded: true,
-                //           items: [
-                //             DropdownMenuItem(
-                //                 value: 1,
-                //                 alignment: Alignment.centerRight,
-                //                 child: SizedBox(
-                //                     width: 40, child: MyText(text: '1'))),
-                //             DropdownMenuItem(
-                //                 value: 2,
-                //                 alignment: Alignment.centerRight,
-                //                 child: SizedBox(
-                //                     width: 40, child: MyText(text: '2'))),
-                //             DropdownMenuItem(
-                //                 value: 3,
-                //                 alignment: Alignment.centerRight,
-                //                 child: SizedBox(
-                //                     width: 40, child: MyText(text: '3'))),
-                //           ],
-                //           onChanged: (value) {},
-                //         ),
-                //       ),
-                //     ),
-                //   ),
-                //   decoration: BoxDecoration(
-                //       color: cBgTextfield,
-                //       border: Border.all(color: cStrokeGrey),
-                //       borderRadius: BorderRadius.circular(10)),
-                // ),
               ],
             ),
             Container(
@@ -238,10 +208,12 @@ class _SearchAdvancedDialogState extends State<SearchAdvancedDialog> {
                   Spacer(),
                   Transform.scale(
                     scale: .8,
-                    child: CupertinoSwitch(
-                      value: true,
-                      onChanged: (value) {},
-                    ),
+                    child: Obx(() => CupertinoSwitch(
+                          value: controller.hasDubbed.value,
+                          onChanged: (value) {
+                            controller.hasDubbed(value);
+                          },
+                        )),
                   )
                 ],
               ),
@@ -260,10 +232,12 @@ class _SearchAdvancedDialogState extends State<SearchAdvancedDialog> {
                   Spacer(),
                   Transform.scale(
                     scale: .8,
-                    child: CupertinoSwitch(
-                      value: false,
-                      onChanged: (value) {},
-                    ),
+                    child: Obx(() => CupertinoSwitch(
+                          value: controller.hasSubtitle.value,
+                          onChanged: (value) {
+                            controller.hasSubtitle(value);
+                          },
+                        )),
                   )
                 ],
               ),
@@ -278,7 +252,9 @@ class _SearchAdvancedDialogState extends State<SearchAdvancedDialog> {
                       child: MyTextField(
                         borderRadius: 5,
                         hint: "از سال",
-                        controller: new TextEditingController(),
+                        controller: txtFromYear,
+                        inputType: TextInputType.number,
+                        length: 4,
                       ),
                     ),
                     SizedBox(
@@ -288,7 +264,9 @@ class _SearchAdvancedDialogState extends State<SearchAdvancedDialog> {
                       child: MyTextField(
                         borderRadius: 5,
                         hint: "تا سال",
-                        controller: new TextEditingController(),
+                        controller: txtToYear,
+                        inputType: TextInputType.number,
+                        length: 4,
                       ),
                     ),
                   ],
@@ -302,7 +280,16 @@ class _SearchAdvancedDialogState extends State<SearchAdvancedDialog> {
                       child: MyTextField(
                         borderRadius: 5,
                         hint: "امتیاز از",
-                        controller: new TextEditingController(),
+                        inputType: TextInputType.number,
+                        controller: txtFromImdb,
+                        length: 2,
+                        onchangedAction: (text) {
+                          if (text.length == 2) {
+                            if (int.tryParse(text)! > 10) {
+                              txtFromImdb.clear();
+                            }
+                          }
+                        },
                       ),
                     ),
                     SizedBox(
@@ -312,7 +299,16 @@ class _SearchAdvancedDialogState extends State<SearchAdvancedDialog> {
                       child: MyTextField(
                         borderRadius: 5,
                         hint: "امتیاز تا",
-                        controller: new TextEditingController(),
+                        inputType: TextInputType.number,
+                        controller: txtToImdb,
+                        length: 2,
+                        onchangedAction: (text) {
+                          if (text.length == 2) {
+                            if (int.tryParse(text)! > 10) {
+                              txtToImdb.clear();
+                            }
+                          }
+                        },
                       ),
                     ),
                   ],
@@ -320,15 +316,28 @@ class _SearchAdvancedDialogState extends State<SearchAdvancedDialog> {
             SizedBox(
               height: 20,
             ),
-            MyTextButton(
-                onTap: () {},
-                size: Size(Get.width / 1.4, 35),
-                bgColor: cY,
-                child: MyText(
-                  text: "جستجو",
-                  size: 14,
-                  color: cB,
-                )),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10),
+              child: MyTextButton(
+                  onTap: () {
+                    controller.checkAndSendAdvancedSearch(
+                      FromImdb:
+                          txtFromImdb.text == '' ? null : txtFromImdb.text,
+                      ToImdb: txtToImdb.text == '' ? null : txtToImdb.text,
+                      FromYear:
+                          txtFromYear.text == '' ? null : txtFromYear.text,
+                      ToYear: txtToYear.text == '' ? null : txtToYear.text,
+                    );
+                  },
+                  size: Size(Get.width, 40),
+                  bgColor: cY,
+                  child: MyText(
+                    text: "جستجو",
+                    size: 15,
+                    color: cB,
+                    fontWeight: FontWeight.w600,
+                  )),
+            ),
             SizedBox(
               height: 20,
             ),

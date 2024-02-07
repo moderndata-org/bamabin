@@ -64,30 +64,38 @@ class ApiProvider extends GetConnect {
   }
 
   Future<Response> advancedSearch(
-      {required String text,
-      required int page,
-      int? genreId,
-      int? countryId,
+      {required int page,
+      String? genreId,
+      String? countryId,
       String? ageRates,
       String? fromYear,
       String? toYear,
       String? fromImdb,
       String? toImdb,
-      bool? isDubbed,
-      bool? isSubtitle,
+      String? isDubbed,
+      String? isSubtitle,
       required AdvancedSearchType type}) async {
     Map<String, dynamic> m = {
+      'type': switch (type) {
+        AdvancedSearchType.all => 'all',
+        AdvancedSearchType.animations => 'animations',
+        AdvancedSearchType.anime => 'anime',
+        AdvancedSearchType.movies => 'movies',
+        AdvancedSearchType.series => 'series',
+        AdvancedSearchType.none => 'all',
+      },
       'page': '$page',
-      't[genre]': '$genreId',
-      't[country]': '$countryId',
-      'ageRates': '$ageRates',
-      't[year_from]': '$fromYear',
-      't[year_to]': '$toYear',
-      'm[imdb_from]': '$fromImdb',
-      'm[imdb_to]': '$toImdb',
-      'm[dubbed]': isDubbed == true ? 'on' : '',
-      'm[subtitle]': isSubtitle == true ? 'on' : '',
+      't[genre]': genreId,
+      't[country]': countryId,
+      'ageRates': ageRates,
+      't[year_from]': fromYear,
+      't[year_to]': toYear,
+      'm[imdb_from]': fromImdb,
+      'm[imdb_to]': toImdb,
+      'm[dubbed]': isDubbed,
+      'm[subtitle]': isSubtitle,
     };
+    print(m);
     Response res = await get('${base_url}advanced_search/', query: m);
     return res;
   }
