@@ -53,6 +53,6 @@ class Routes {
             name: '/download-manager',
             page: () => const DownloadManagerScreen()),
         GetPage(name: '/movie-detail', page: () => const MovieDetailsScreen()),
-        GetPage(name: '/geners', page: () => const GenreScreen()),
+        GetPage(name: '/geners', page: () => GenreScreen()),
       ];
 }
