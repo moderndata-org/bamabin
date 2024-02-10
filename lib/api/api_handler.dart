@@ -60,9 +60,13 @@ class ApiProvider extends GetConnect {
     return res;
   }
 
-  Future<Response> getTaxonomy(String taxonomy,String id) async {
+  Future<Response> getTaxonomy(String taxonomy,String id,String? page,
+      ) async {
+    Map<String, String> m = {};
+
+    m.addIf(page != null, 'page', '$page');
     print('${base_url}archive/taxonomy/${taxonomy}/${id}');
-    Response res = await get('${base_url}archive/taxonomy/${taxonomy}/${id}');
+    Response res = await get('${base_url}archive/taxonomy/${taxonomy}/${id}',query: m);
     return res;
   }
 

@@ -27,7 +27,7 @@ class MainController extends GetxController {
   Rx<OrderBy> selectedOrder = OrderBy.none.obs;
   Rx<Genre> selectedGenre = Genre().obs;
   RxInt selectedImdbRate = 0.obs;
-
+  var taxonomypageNumber = 1;
   var sectionsList = <SectionModel>[].obs;
   var moreFilmList = <FilmModel>[].obs;
 
@@ -158,9 +158,12 @@ class MainController extends GetxController {
   }
 
   void getTaxonomy(String taxonomy,String id) {
-    moreFilmList.clear();
-    ApiProvider().getTaxonomy(taxonomy, id).then((value) {
+    if(taxonomypageNumber == 1){
       moreFilmList.clear();
+    }
+    print(taxonomypageNumber);
+    ApiProvider().getTaxonomy(taxonomy, id,taxonomypageNumber.toString()).then((value) {
+
       if (value.body != null) {
         if (value.body["status"] == true) {
           (value.body["results"] as List).forEach((element) {

@@ -26,6 +26,7 @@ class MoreScreen extends StatelessWidget {
 
   void init(){
     if(filter_key != "type"){
+      mainController.taxonomypageNumber = 1;
       mainController.getTaxonomy(filter_key, filter_value.toString());
     }
 
@@ -120,12 +121,18 @@ class MoreScreen extends StatelessWidget {
                         crossAxisSpacing: 0,
                         itemCount: mainController.moreFilmList.length,
                         itemBuilder: (context, index) {
-                          FilmModel fm = mainController.selectedList[index];
-
+                          FilmModel fm = mainController.moreFilmList[index];
                           return LayoutBuilder(
                             builder: (context, constraints) {
                               var width = constraints.maxWidth - 5;
                               var height = constraints.maxWidth + 100;
+                              if (index == mainController.moreFilmList.length - 1) {
+                                if(filter_key != "type"){
+                                  mainController.taxonomypageNumber += 1;
+                                  mainController.getTaxonomy(filter_key,filter_value.toString());
+                                }
+
+                              }
                               return MovieItemWidget(
                                 width: width,
                                 height: height,
