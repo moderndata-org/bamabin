@@ -13,6 +13,12 @@ class ApiProvider extends GetConnect {
     // head = {"Authorization": "Token $token"};
   }
 
+  Future<Response> getMovieDetail({required String id}) async {
+    String url = '${base_url}home/post/show/$id';
+    Response res = await get(url);
+    return res;
+  }
+
   Future<Response> sendCode({required String phoneNumber}) async {
     Map map = {'phone_number': phoneNumber};
     Response res = await post('${base_url}send-code', map);

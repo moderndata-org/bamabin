@@ -34,23 +34,28 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
   final controller = Get.find<DetailController>();
   @override
   void initState() {
+    controller.getNewData();
     controller.isTextExpandedMovieDetail(false);
-    controller.isPlayingTrailer(false);
-    controller.isLoadingTrailer(true);
-    controller.trailerController = VideoPlayerController.networkUrl(
-        Uri.parse('${controller.selectedFilm.value.trailer_url}'))
-      ..initialize().then((value) {
-        controller.isLoadingTrailer(false);
-        controller.trailerController.addListener(() {
-          controller.trailerPosition(
-              controller.trailerController.value.position.inSeconds.toDouble());
-          if (controller.trailerController.value.position ==
-              controller.trailerController.value.duration) {
-            controller.isPlayingTrailer(false);
-            controller.trailerController.seekTo(Duration.zero);
-          }
+    if (controller.selectedFilm.value.trailer_url != '' &&
+        controller.selectedFilm.value.trailer_url != null) {
+      controller.isPlayingTrailer(false);
+      controller.isLoadingTrailer(true);
+      controller.trailerController = VideoPlayerController.networkUrl(
+          Uri.parse('${controller.selectedFilm.value.trailer_url}'))
+        ..initialize().then((value) {
+          controller.isLoadingTrailer(false);
+          controller.trailerController.addListener(() {
+            controller.trailerPosition(controller
+                .trailerController.value.position.inSeconds
+                .toDouble());
+            if (controller.trailerController.value.position ==
+                controller.trailerController.value.duration) {
+              controller.isPlayingTrailer(false);
+              controller.trailerController.seekTo(Duration.zero);
+            }
+          });
         });
-      });
+    }
     super.initState();
   }
 
