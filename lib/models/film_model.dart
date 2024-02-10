@@ -44,7 +44,7 @@ class FilmModel {
   List<Country>? countries;
   List<Release>? release;
   List<Actor>? actors;
-  List<Director>? directors;
+  List<Actor>? directors;
   // List<Null>? networks;
   List<Language>? languages;
   List<Genre>? genres;
@@ -256,9 +256,9 @@ class FilmModel {
       });
     }
     if (json['directors'] != null) {
-      directors = <Director>[];
+      directors = <Actor>[];
       json['directors'].forEach((v) {
-        directors!.add(new Director.fromJson(v));
+        directors!.add(new Actor.fromJson(v));
       });
     }
     isFinished = json['is_finished'];

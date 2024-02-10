@@ -785,16 +785,17 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                         child: ListView.builder(
                           padding: EdgeInsets.symmetric(horizontal: 15),
                           physics: BouncingScrollPhysics(),
-                          itemCount: controller.selectedFilm.value.actors!.length,
+                          itemCount: (controller.selectedFilm.value.actors! + controller.selectedFilm.value.directors!).length,
                           scrollDirection: Axis.horizontal,
                           itemBuilder: (context, index){
-                            var actor = controller.selectedFilm.value.actors![index];
+                            var actors_list = (controller.selectedFilm.value.actors! + controller.selectedFilm.value.directors!);
+                            var actor = actors_list[index];
                             return Container(
                               width: 80,
                               margin: EdgeInsets.symmetric(horizontal: 7),
                               child: ActorsWidget(
                                   imageUrl:
-                                  '${controller.selectedFilm.value.thumbnail}',
+                                  '${actor.avatar}',
                                   name:
                                   '${actor.name}'),
                             );
