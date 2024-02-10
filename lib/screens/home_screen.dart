@@ -180,6 +180,7 @@ class HomeScreen extends GetView<PublicController> {
                                         height: 55,
                                         title: genre.name,
                                         imageUrl: genre.icon,
+                                        backgroundUrl: genre.background_url,
                                         margin: EdgeInsets.only(right: 5),
                                         boxShadow: BoxShadow(
                                             blurRadius: 2,
@@ -195,7 +196,13 @@ class HomeScreen extends GetView<PublicController> {
                     case "last_data":
                       return Column(
                         children: [
-                          MainTitleWidget(title: '${section.name}'),
+                          MainTitleWidget(title: '${section.name}',onTapMore: (){
+                            Get.toNamed("/more",arguments: {
+                              "title":"${section.name}",
+                              "filter_key":(section.taxonomy != null) ? section.taxonomy : "type",
+                              "filter_value": (section.taxonomy != null) ? section.id : section.post_type![0]
+                            });
+                          },),
                           SizedBox(
                             height: 200,
                             width: Get.width,

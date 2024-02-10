@@ -7,9 +7,11 @@ class SectionModel {
   String? name;
   String? icon;
   String? link;
+  String? taxonomy;
   int? limit;
   List<FilmModel>? posts;
   List<Genre>? genres;
+  List<dynamic>? post_type;
   FilmModel? post;
 
 
@@ -21,7 +23,9 @@ class SectionModel {
         this.link,
         this.limit,
         this.posts,
+        this.taxonomy,
         this.genres,
+        this.post_type,
         this.post,});
 
   SectionModel.fromJson(Map<String, dynamic> json) {
@@ -31,6 +35,8 @@ class SectionModel {
     icon = json['icon'];
     link = json['link'];
     limit = json['limit'];
+    post_type = json['post_type'];
+    taxonomy = json['taxonomy'];
     if (json['posts'] != null) {
       posts = <FilmModel>[];
       json['posts'].forEach((v) {

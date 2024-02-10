@@ -5,7 +5,7 @@ import 'dart:ui' as ui;
 
 class GenreItem extends StatelessWidget {
   const GenreItem(
-      {this.height, this.width, this.margin, this.title, this.imageUrl,this.boxShadow, Key? key})
+      {this.height, this.width, this.margin, this.title, this.imageUrl,this.boxShadow,this.backgroundUrl, Key? key})
       : super(key: key);
   final double? width;
   final double? height;
@@ -13,6 +13,7 @@ class GenreItem extends StatelessWidget {
   final BoxShadow? boxShadow;
   final String? title;
   final String? imageUrl;
+  final String? backgroundUrl;
 
 
   @override
@@ -23,10 +24,11 @@ class GenreItem extends StatelessWidget {
       margin: margin,
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(5),
-          image: DecorationImage(
-            image: AssetImage('assets/images/genre_img.png'),
+
+          image: (backgroundUrl != null) ? DecorationImage(
+            image: NetworkImage(backgroundUrl!),
             fit: BoxFit.cover,
-          ),
+          ) : null,
           boxShadow: boxShadow == null ? [bs010] : [boxShadow!]),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(5),

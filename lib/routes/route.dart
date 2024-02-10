@@ -19,6 +19,7 @@ import '../screens/aboutus_screen.dart';
 import '../screens/authentication/signin_qrcode_screen.dart';
 import '../screens/authentication/signup_screen.dart';
 import '../screens/main_screen.dart';
+import '../screens/more_screen.dart';
 import '../screens/orders/order_list_edit_items_screen.dart';
 import '../screens/orders/order_list_screen.dart';
 import '../screens/movie_requests/movie_request_list_screen.dart';
@@ -54,5 +55,6 @@ class Routes {
             page: () => const DownloadManagerScreen()),
         GetPage(name: '/movie-detail', page: () => const MovieDetailsScreen()),
         GetPage(name: '/geners', page: () => GenreScreen()),
+        GetPage(name: '/more', page: () => MoreScreen()),
       ];
 }

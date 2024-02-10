@@ -9,17 +9,19 @@ import 'package:bamabin/controller/main_controller.dart';
 import '../widgets/custom_appbar.dart';
 import 'package:get/get.dart';
 
-class GenreScreen extends StatelessWidget {
-  GenreScreen({Key? key}) : super(key: key);
+class MoreScreen extends StatelessWidget {
+  MoreScreen({Key? key}) : super(key: key);
   final mainController = Get.find<MainController>();
   final publicController = Get.find<PublicController>();
+
+  var title = Get.arguments["title"];
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
         backgroundColor: cPrimary,
         appBar: CustomAppbar(
-            title: 'ژانر ها',
+            title: '${title}',
             icon: Icon(
               Icons.hotel_class_rounded,
               color: cW,
@@ -33,21 +35,7 @@ class GenreScreen extends StatelessWidget {
               SizedBox(
                 height: 15,
               ),
-              Expanded(
-                  child: GridView.builder(
-                physics: BouncingScrollPhysics(),
-                padding: EdgeInsets.symmetric(horizontal: 10),
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2, // Number of columns
-                    childAspectRatio: 8 / 3,
-                    crossAxisSpacing: 10,
-                    mainAxisSpacing: 8),
-                itemCount: publicController.listGenre.length, // Total number of items
-                itemBuilder: (BuildContext context, int index) {
-                  var genre = publicController.listGenre[index];
-                  return GenreItem(title: genre.name,imageUrl: genre.icon,backgroundUrl: genre.background_url, );
-                },
-              ))
+
             ],
           ),
         ),
