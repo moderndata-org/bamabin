@@ -109,6 +109,8 @@ class FilmModel {
   String? malRate;
   String? malVoteCount;
   List<String>? genresListForDetail;
+  List<FilmModel>? collection_posts;
+  List<FilmModel>? related_posts;
 
   FilmModel(
       {this.id,
@@ -134,6 +136,8 @@ class FilmModel {
       this.menuOrder,
       this.postType,
       this.type,
+      this.collection_posts,
+      this.related_posts,
       this.mimeType,
       this.commentCount,
       this.filter,
@@ -262,6 +266,18 @@ class FilmModel {
       directors = <Actor>[];
       json['directors'].forEach((v) {
         directors!.add(new Actor.fromJson(v));
+      });
+    }
+    if (json['collection_posts'] != null) {
+      collection_posts = <FilmModel>[];
+      json['collection_posts'].forEach((v) {
+        collection_posts!.add(new FilmModel.fromJson(v));
+      });
+    }
+    if (json['related_posts'] != null) {
+      related_posts = <FilmModel>[];
+      json['related_posts'].forEach((v) {
+        related_posts!.add(new FilmModel.fromJson(v));
       });
     }
     isFinished = json['is_finished'];
