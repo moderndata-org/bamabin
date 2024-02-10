@@ -6,8 +6,9 @@ import 'package:get/get.dart';
 import '../constant/colors.dart';
 
 class ScoreSection extends StatelessWidget {
-  ScoreSection({super.key,this.award_summery});
+  ScoreSection({super.key,this.award_summery,this.rank});
   String? award_summery;
+  String? rank;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -44,7 +45,7 @@ class ScoreSection extends StatelessWidget {
                   "${award_summery}"),
           ScoreItem(
             title: "رتبه",
-            descirption: "رتبه اول",
+            descirption: "${rank}",
           )
         ],
       ),

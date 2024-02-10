@@ -862,7 +862,10 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
             SizedBox(
               height: 15,
             ),
-            ScoreSection(award_summery: "${controller.selectedFilm.value.summaryAwards}",),
+            ScoreSection(
+              award_summery: "${controller.selectedFilm.value.summaryAwards}",
+              rank: controller.selectedFilm.value.top250movie ?? "-",
+            ),
             SizedBox(
               height: 15,
             ),
