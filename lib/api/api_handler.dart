@@ -13,6 +13,12 @@ class ApiProvider extends GetConnect {
     // head = {"Authorization": "Token $token"};
   }
 
+  Future<Response> getMovieDetail({required String id}) async {
+    String url = '${base_url}home/post/show/$id';
+    Response res = await get(url);
+    return res;
+  }
+
   Future<Response> sendCode({required String phoneNumber}) async {
     Map map = {'phone_number': phoneNumber};
     Response res = await post('${base_url}send-code', map);
@@ -60,7 +66,7 @@ class ApiProvider extends GetConnect {
     return res;
   }
 
-  Future<Response> getTaxonomy(String taxonomy,String id) async {
+  Future<Response> getTaxonomy(String taxonomy, String id) async {
     print('${base_url}archive/taxonomy/${taxonomy}/${id}');
     Response res = await get('${base_url}archive/taxonomy/${taxonomy}/${id}');
     return res;

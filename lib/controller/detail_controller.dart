@@ -1,3 +1,4 @@
+import 'package:bamabin/api/api_handler.dart';
 import 'package:bamabin/models/film_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -17,6 +18,15 @@ class DetailController extends GetxController {
   RxBool showGoToTop = false.obs;
   RxBool isFavorite = false.obs;
   late VideoPlayerController trailerController;
+
+  void getNewData() {
+    print('${selectedFilm.value.id}');
+    ApiProvider().getMovieDetail(id: '${selectedFilm.value.id}').then((res) {
+      if (res.body != null) {
+        print(res.body);
+      }
+    });
+  }
 
   @override
   void onInit() {
