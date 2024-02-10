@@ -7,11 +7,13 @@ import '../MyTextButton.dart';
 class MainTitleWidget extends StatelessWidget {
   const MainTitleWidget({
     this.title,
+    this.icon,
     this.onTapMore,
     super.key,
   });
 
   final String? title;
+  final Widget? icon;
   final Function()? onTapMore;
 
   @override
@@ -23,11 +25,12 @@ class MainTitleWidget extends StatelessWidget {
         SizedBox(
           width: 15,
         ),
+        (icon == null) ?
         Icon(
           Icons.movie,
           color: cSecondaryLight,
           size: 20,
-        ),
+        ) : icon!,
         SizedBox(
           width: 5,
         ),

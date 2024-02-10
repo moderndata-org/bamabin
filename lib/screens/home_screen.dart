@@ -196,7 +196,11 @@ class HomeScreen extends GetView<PublicController> {
                     case "last_data":
                       return Column(
                         children: [
-                          MainTitleWidget(title: '${section.name}',onTapMore: (){
+                          MainTitleWidget(
+                            icon: (section.icon != null ) ? CachedNetworkImage(imageUrl: section.icon!) : null,
+                            title: '${section.name}',
+
+                            onTapMore: (){
                             Get.toNamed("/more",arguments: {
                               "title":"${section.name}",
                               "filter_key":(section.taxonomy != null) ? section.taxonomy : "type",
