@@ -57,6 +57,12 @@ class ApiProvider extends GetConnect {
     return res;
   }
 
+  Future<Response> getTaxonomy(String taxonomy,String id) async {
+    print('${base_url}archive/taxonomy/${taxonomy}/${id}');
+    Response res = await get('${base_url}archive/taxonomy/${taxonomy}/${id}');
+    return res;
+  }
+
   Future<Response> search({required String text, required int page}) async {
     Response res =
         await get('${base_url}search', query: {'s': text, 'page': '$page'});

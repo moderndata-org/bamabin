@@ -28,6 +28,7 @@ class MainController extends GetxController {
   Rx<Genre> selectedGenre = Genre().obs;
 
   var sectionsList = <SectionModel>[].obs;
+  var moreFilmList = <FilmModel>[].obs;
 
   @override
   void onInit() {
@@ -133,6 +134,21 @@ class MainController extends GetxController {
         }
       }
       isLoadingMain(false);
+    });
+  }
+
+  void getTaxonomy(String taxonomy,String id) {
+    moreFilmList.clear();
+    ApiProvider().getTaxonomy(taxonomy, id).then((value) {
+      moreFilmList.clear();
+      if (value.body != null) {
+        if (value.body["status"] == true) {
+          (value.body["results"] as List).forEach((element) {
+            moreFilmList.add(FilmModel.fromJson(element));
+          });
+
+        }
+      }
     });
   }
 
