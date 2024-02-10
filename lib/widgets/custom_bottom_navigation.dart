@@ -33,10 +33,12 @@ class CustomBottomNavigation extends GetView<MainController> {
           Obx(() {
             return BottomNavButtonWidget(
               onTap: () {
-                controller.isVisibleAppbar(true);
-                controller.selectedBottomNav(BottomNavType.movies);
-                controller.appBarCenterText('فیلم');
-                controller.runBottomNavAnimation();
+                if (controller.isLoadingData.isFalse) {
+                  controller.isVisibleAppbar(true);
+                  controller.selectedBottomNav(BottomNavType.movies);
+                  controller.appBarCenterText('فیلم');
+                  controller.runBottomNavAnimation();
+                }
               },
               iconActive: 'assets/svg/film_s.svg',
               iconDeactive: 'assets/svg/film_d.svg',
@@ -48,10 +50,12 @@ class CustomBottomNavigation extends GetView<MainController> {
           Obx(() {
             return BottomNavButtonWidget(
               onTap: () {
-                controller.isVisibleAppbar(true);
-                controller.selectedBottomNav(BottomNavType.series);
-                controller.appBarCenterText('سریال');
-                controller.runBottomNavAnimation();
+                if (controller.isLoadingData.isFalse) {
+                  controller.isVisibleAppbar(true);
+                  controller.selectedBottomNav(BottomNavType.series);
+                  controller.appBarCenterText('سریال');
+                  controller.runBottomNavAnimation();
+                }
               },
               iconActive: 'assets/svg/serial_s.svg',
               iconDeactive: 'assets/svg/serial_d.svg',
@@ -63,10 +67,12 @@ class CustomBottomNavigation extends GetView<MainController> {
           Obx(() {
             return BottomNavButtonWidget(
               onTap: () {
-                controller.isVisibleAppbar(true);
-                controller.selectedBottomNav(BottomNavType.animations);
-                controller.appBarCenterText('انیمیشن');
-                controller.runBottomNavAnimation();
+                if (controller.isLoadingData.isFalse) {
+                  controller.isVisibleAppbar(true);
+                  controller.selectedBottomNav(BottomNavType.animations);
+                  controller.appBarCenterText('انیمیشن');
+                  controller.runBottomNavAnimation();
+                }
               },
               iconActive: 'assets/svg/animation_s.svg',
               iconDeactive: 'assets/svg/animation_d.svg',
@@ -78,10 +84,12 @@ class CustomBottomNavigation extends GetView<MainController> {
           Obx(() {
             return BottomNavButtonWidget(
               onTap: () {
-                controller.isVisibleAppbar(true);
-                controller.selectedBottomNav(BottomNavType.anime);
-                controller.appBarCenterText('انیمه');
-                controller.runBottomNavAnimation();
+                if (controller.isLoadingData.isFalse) {
+                  controller.isVisibleAppbar(true);
+                  controller.selectedBottomNav(BottomNavType.anime);
+                  controller.appBarCenterText('انیمه');
+                  controller.runBottomNavAnimation();
+                }
               },
               iconActive: 'assets/svg/anime_s.svg',
               iconDeactive: 'assets/svg/anime_d.svg',
