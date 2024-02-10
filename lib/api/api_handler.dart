@@ -14,7 +14,7 @@ class ApiProvider extends GetConnect {
   }
 
   Future<Response> getMovieDetail({required String id}) async {
-    String url = '${base_url}home/post/show/$id';
+    String url = '${base_url}post/show/$id';
     Response res = await get(url);
     return res;
   }
@@ -66,13 +66,17 @@ class ApiProvider extends GetConnect {
     return res;
   }
 
-  Future<Response> getTaxonomy(String taxonomy,String id,String? page,
-      ) async {
+  Future<Response> getTaxonomy(
+    String taxonomy,
+    String id,
+    String? page,
+  ) async {
     Map<String, String> m = {};
 
     m.addIf(page != null, 'page', '$page');
     print('${base_url}archive/taxonomy/${taxonomy}/${id}');
-    Response res = await get('${base_url}archive/taxonomy/${taxonomy}/${id}',query: m);
+    Response res =
+        await get('${base_url}archive/taxonomy/${taxonomy}/${id}', query: m);
     return res;
   }
 

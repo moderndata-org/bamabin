@@ -23,7 +23,7 @@ class DetailController extends GetxController {
     print('${selectedFilm.value.id}');
     ApiProvider().getMovieDetail(id: '${selectedFilm.value.id}').then((res) {
       if (res.body != null) {
-        print(res.body);
+        selectedFilm(FilmModel.fromJson(res.body['result']));
       }
     });
   }
