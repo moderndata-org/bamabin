@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:bamabin/api/api_handler.dart';
 import 'package:bamabin/models/film_model.dart';
+import 'package:bamabin/models/genre_model.dart';
 import 'package:bamabin/models/section_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -24,6 +25,7 @@ class MainController extends GetxController {
   RxBool hasContinue = false.obs;
   Rx<BottomNavType> selectedBottomNav = BottomNavType.home.obs;
   Rx<OrderBy> selectedOrder = OrderBy.none.obs;
+  Rx<Genre> selectedGenre = Genre().obs;
 
   var sectionsList = <SectionModel>[].obs;
 
@@ -59,10 +61,16 @@ class MainController extends GetxController {
     getArchive(isFirstPage: true);
   }
 
+  void changeGenre({required Genre gener}) {
+    selectedGenre(gener);
+    getArchive(isFirstPage: true);
+  }
+
   void getArchive({required bool isFirstPage}) {
-    if (isLoadingData.isFalse &&
-        ((pageNumber != null && pageNumber! < lastPageNumber!) ||
-            pageNumber == null)) {
+    if (isLoadingData.isFalse) {
+      // &&
+      //   ((pageNumber != null && pageNumber! < lastPageNumber!) ||
+      //       pageNumber == null)
       isLoadingData(true);
       if (isFirstPage) {
         pageNumber = null;
@@ -75,7 +83,8 @@ class MainController extends GetxController {
           .archive(
               type: selectedBottomNav.value,
               page: pageNumber == null ? null : pageNumber.toString(),
-              orderBy: selectedOrder.value)
+              orderBy: selectedOrder.value,
+              genreId: '${selectedGenre.value.id ?? ''}')
           .then((res) {
         isLoadingData(false);
         if (isFirstPage) {

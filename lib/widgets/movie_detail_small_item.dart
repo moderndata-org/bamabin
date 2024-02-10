@@ -31,6 +31,8 @@ class MovieItemSmallDetailWidget extends StatelessWidget {
               textAlign: TextAlign.center,
               textDirection: textDirection,
               text: '$title',
+              maxLines: 1,
+              textOverflow: TextOverflow.ellipsis,
               color: cW,
               size: 12,
             ),

@@ -2,6 +2,8 @@ import 'package:bamabin/constant/classes.dart';
 import 'package:bamabin/constant/colors.dart';
 import 'package:bamabin/controller/detail_controller.dart';
 import 'package:bamabin/controller/main_controller.dart';
+import 'package:bamabin/controller/public_controller.dart';
+import 'package:bamabin/models/genre_model.dart';
 import 'package:bamabin/widgets/MyText.dart';
 import 'package:bamabin/widgets/custom_dropdown.dart';
 import 'package:flutter/material.dart';
@@ -13,7 +15,8 @@ import '../models/film_model.dart';
 import '../widgets/movie_item_widget.dart';
 
 class PartScreen extends GetView<MainController> {
-  const PartScreen({Key? key}) : super(key: key);
+  PartScreen({Key? key}) : super(key: key);
+  final publicController = Get.find<PublicController>();
 
   @override
   Widget build(BuildContext context) {
@@ -38,21 +41,26 @@ class PartScreen extends GetView<MainController> {
                     width: 2,
                   ),
                   Expanded(
-                      child: CustomDropDown(
-                    alignment: Alignment.center,
-                    title: 'ژانر',
-                    list: [
-                      DropdownMenuItem(
-                          value: 0,
-                          onTap: () {},
-                          child: Center(
-                            child: MyText(
-                              text: 'ژانر',
-                              textAlign: TextAlign.center,
-                            ),
-                          ))
-                    ],
-                  )),
+                      child: Obx(() => CustomDropDown(
+                            alignment: Alignment.center,
+                            title:
+                                '${controller.selectedGenre.value.name ?? 'ژانر'}',
+                            list: List.generate(
+                                publicController.listGenre.length, (index) {
+                              Genre gen = publicController.listGenre[index];
+                              return DropdownMenuItem(
+                                  value: index,
+                                  onTap: () {
+                                    controller.changeGenre(gener: gen);
+                                  },
+                                  child: Center(
+                                    child: MyText(
+                                      text: '${gen.name}',
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ));
+                            }),
+                          ))),
                   SizedBox(
                     width: 1,
                   ),

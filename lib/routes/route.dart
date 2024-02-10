@@ -47,7 +47,7 @@ class Routes {
         GetPage(name: '/subscribe', page: () => const SubscribeScreen()),
         GetPage(name: '/request', page: () => const MovieRequestListScreen()),
         GetPage(name: '/tickets', page: () => const TicketsScreen()),
-        GetPage(name: '/part', page: () => const PartScreen()),
+        GetPage(name: '/part', page: () => PartScreen()),
         GetPage(name: '/recent-views', page: () => const RecentViewsScreen()),
         GetPage(name: '/search', page: () => const SearchScreen()),
         GetPage(

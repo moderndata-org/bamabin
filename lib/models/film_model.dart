@@ -39,6 +39,7 @@ class FilmModel {
   String? authorName;
   String? authorEmail;
   String? authorAvatar;
+  String? trailer_url;
   List<Comment>? comments;
   bool? isFinished;
   List<Country>? countries;
@@ -145,6 +146,7 @@ class FilmModel {
       this.comments,
       this.isFinished,
       this.countries,
+      this.trailer_url,
       this.release,
       this.actors,
       this.directors,
@@ -223,6 +225,7 @@ class FilmModel {
     commentStatus = json['comment_status'];
     pingStatus = json['ping_status'];
     password = json['password'];
+    trailer_url = json['trailer_url'];
     name = json['name'];
     toPing = json['to_ping'];
     pinged = json['pinged'];

@@ -37,8 +37,8 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
     controller.isTextExpandedMovieDetail(false);
     controller.isPlayingTrailer(false);
     controller.isLoadingTrailer(true);
-    controller.trailerController = VideoPlayerController.networkUrl(Uri.parse(
-        'https://flutter.github.io/assets-for-api-docs/assets/videos/bee.mp4'))
+    controller.trailerController = VideoPlayerController.networkUrl(
+        Uri.parse('${controller.selectedFilm.value.trailer_url}'))
       ..initialize().then((value) {
         controller.isLoadingTrailer(false);
         controller.trailerController.addListener(() {
@@ -554,58 +554,61 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                   SizedBox(
                     width: padding,
                   ),
-                  Expanded(
-                      child: MovieItemSmallDetailWidget(
-                    icon: Padding(
-                      padding: const EdgeInsets.only(bottom: 2),
-                      child: Icon(
-                        Icons.diversity_3_rounded,
-                        color: cW,
-                        size: 19,
-                      ),
-                    ),
-                    title: '${controller.selectedFilm.value.ageRate}',
-                    textDirection: TextDirection.ltr,
-                  )),
-                  Expanded(
-                      child: MovieItemSmallDetailWidget(
-                    icon: Padding(
-                      padding: const EdgeInsets.only(bottom: 2),
-                      child: Icon(
-                        Icons.request_quote_rounded,
-                        color: cW,
-                        size: 19,
-                      ),
-                    ),
-                    title: '100 M \$',
-                    textDirection: TextDirection.ltr,
-                  )),
-                  Expanded(
-                      child: MovieItemSmallDetailWidget(
-                    icon: Padding(
-                      padding: const EdgeInsets.only(bottom: 2),
-                      child: Icon(
-                        Icons.request_quote_rounded,
-                        color: cW,
-                        size: 19,
-                      ),
-                    ),
-                    title: '100 M \$',
-                    textDirection: TextDirection.ltr,
-                  )),
-                  Expanded(
-                      child: MovieItemSmallDetailWidget(
-                    icon: Padding(
-                      padding: const EdgeInsets.only(bottom: 2),
-                      child: Icon(
-                        Icons.request_quote_rounded,
-                        color: cW,
-                        size: 19,
-                      ),
-                    ),
-                    title: '100 M \$',
-                    textDirection: TextDirection.ltr,
-                  )),
+                  controller.selectedFilm.value.ageRate == null ||
+                          controller.selectedFilm.value.ageRate == ''
+                      ? SizedBox()
+                      : Expanded(
+                          child: MovieItemSmallDetailWidget(
+                          icon: Padding(
+                            padding: const EdgeInsets.only(bottom: 2),
+                            child: Icon(
+                              Icons.diversity_3_rounded,
+                              color: cW,
+                              size: 19,
+                            ),
+                          ),
+                          title: '${controller.selectedFilm.value.ageRate}',
+                          textDirection: TextDirection.ltr,
+                        )),
+                  // Expanded(
+                  //     child: MovieItemSmallDetailWidget(
+                  //   icon: Padding(
+                  //     padding: const EdgeInsets.only(bottom: 2),
+                  //     child: Icon(
+                  //       Icons.request_quote_rounded,
+                  //       color: cW,
+                  //       size: 19,
+                  //     ),
+                  //   ),
+                  //   title: '100 M \$',
+                  //   textDirection: TextDirection.ltr,
+                  // )),
+                  // Expanded(
+                  //     child: MovieItemSmallDetailWidget(
+                  //   icon: Padding(
+                  //     padding: const EdgeInsets.only(bottom: 2),
+                  //     child: Icon(
+                  //       Icons.request_quote_rounded,
+                  //       color: cW,
+                  //       size: 19,
+                  //     ),
+                  //   ),
+                  //   title: '100 M \$',
+                  //   textDirection: TextDirection.ltr,
+                  // )),
+                  // Expanded(
+                  //     child: MovieItemSmallDetailWidget(
+                  //   icon: Padding(
+                  //     padding: const EdgeInsets.only(bottom: 2),
+                  //     child: Icon(
+                  //       Icons.request_quote_rounded,
+                  //       color: cW,
+                  //       size: 19,
+                  //     ),
+                  //   ),
+                  //   title: '100 M \$',
+                  //   textDirection: TextDirection.ltr,
+                  // )),
                   SizedBox(
                     width: padding,
                   ),
@@ -651,100 +654,113 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                 )),
 
             //! TrailerSection
-            Container(
-              width: Get.width,
-              color: cPrimaryDark,
-              padding: EdgeInsets.only(top: 15),
-              child: Column(
-                children: [
-                  Row(
-                    textDirection: TextDirection.rtl,
-                    children: [
-                      SizedBox(
-                        width: 15,
-                      ),
-                      Icon(
-                        Icons.theaters_rounded,
-                        color: cW,
-                      ),
-                      SizedBox(
-                        width: 10,
-                      ),
-                      MyText(
-                        text: 'تریلر',
-                        size: 15,
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      if (controller.isLoadingTrailer.isFalse) {
-                        if (controller.trailerController.value.isPlaying) {
-                          controller.trailerController.pause();
-                          controller.isPlayingTrailer(false);
-                        } else {
-                          controller.trailerController.play();
+            controller.selectedFilm.value.trailer_url == '' ||
+                    controller.selectedFilm.value.trailer_url == null
+                ? SizedBox()
+                : Container(
+                    width: Get.width,
+                    color: cPrimaryDark,
+                    padding: EdgeInsets.only(top: 15),
+                    child: Column(
+                      children: [
+                        Row(
+                          textDirection: TextDirection.rtl,
+                          children: [
+                            SizedBox(
+                              width: 15,
+                            ),
+                            Icon(
+                              Icons.theaters_rounded,
+                              color: cW,
+                            ),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            MyText(
+                              text: 'تریلر',
+                              size: 15,
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            if (controller.isLoadingTrailer.isFalse) {
+                              if (controller
+                                  .trailerController.value.isPlaying) {
+                                controller.trailerController.pause();
+                                controller.isPlayingTrailer(false);
+                              } else {
+                                controller.trailerController.play();
 
-                          controller.isPlayingTrailer(true);
-                        }
-                      }
-                    },
-                    child: SizedBox(
-                      height: 200,
-                      width: Get.width,
-                      child: Stack(
-                        children: [
-                          SizedBox(
-                              height: 200,
-                              width: Get.width,
-                              child: VideoPlayer(controller.trailerController)),
-                          Obx(() => controller.isPlayingTrailer.value
-                              ? Positioned(
-                                  bottom: 10,
-                                  right: 10,
-                                  left: 10,
-                                  child: Container(
-                                    child: Obx(() => Slider(
-                                          inactiveColor: cW.withOpacity(.7),
-                                          activeColor: cW,
-                                          value:
-                                              controller.trailerPosition.value,
-                                          min: 0,
-                                          max: controller.trailerController
-                                              .value.duration.inSeconds
-                                              .toDouble(),
-                                          onChanged: (value) {
-                                            controller.trailerPosition(value);
-                                            controller.trailerController.seekTo(
-                                                Duration(
-                                                    seconds: value.toInt()));
-                                          },
-                                        )),
-                                  ))
-                              : Container(
-                                  height: 200,
-                                  width: Get.width,
-                                  color: cB.withOpacity(.6),
-                                  child: Center(
-                                    child: controller.isLoadingTrailer.value
-                                        ? MyCircularProgress(color: cY)
-                                        : Icon(
-                                            Icons.play_circle_fill_rounded,
-                                            color: cW.withOpacity(.7),
-                                            size: 70,
-                                          ),
-                                  ),
-                                ))
-                        ],
-                      ),
+                                controller.isPlayingTrailer(true);
+                              }
+                            }
+                          },
+                          child: SizedBox(
+                            height: 200,
+                            width: Get.width,
+                            child: Stack(
+                              children: [
+                                SizedBox(
+                                    height: 200,
+                                    width: Get.width,
+                                    child: VideoPlayer(
+                                        controller.trailerController)),
+                                Obx(() => controller.isPlayingTrailer.value
+                                    ? Positioned(
+                                        bottom: 10,
+                                        right: 10,
+                                        left: 10,
+                                        child: Container(
+                                          child: Obx(() => Slider(
+                                                inactiveColor:
+                                                    cW.withOpacity(.7),
+                                                activeColor: cW,
+                                                value: controller
+                                                    .trailerPosition.value,
+                                                min: 0,
+                                                max: controller
+                                                    .trailerController
+                                                    .value
+                                                    .duration
+                                                    .inSeconds
+                                                    .toDouble(),
+                                                onChanged: (value) {
+                                                  controller
+                                                      .trailerPosition(value);
+                                                  controller.trailerController
+                                                      .seekTo(Duration(
+                                                          seconds:
+                                                              value.toInt()));
+                                                },
+                                              )),
+                                        ))
+                                    : Container(
+                                        height: 200,
+                                        width: Get.width,
+                                        color: cB.withOpacity(.6),
+                                        child: Center(
+                                          child: controller
+                                                  .isLoadingTrailer.value
+                                              ? MyCircularProgress(color: cY)
+                                              : Icon(
+                                                  Icons
+                                                      .play_circle_fill_rounded,
+                                                  color: cW.withOpacity(.7),
+                                                  size: 70,
+                                                ),
+                                        ),
+                                      ))
+                              ],
+                            ),
+                          ),
+                        )
+                      ],
                     ),
-                  )
-                ],
-              ),
-            ),
+                  ),
             SizedBox(
               height: 15,
             ),
@@ -785,21 +801,23 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                         child: ListView.builder(
                           padding: EdgeInsets.symmetric(horizontal: 15),
                           physics: BouncingScrollPhysics(),
-                          itemCount: (controller.selectedFilm.value.actors! + controller.selectedFilm.value.directors!).length,
+                          itemCount: (controller.selectedFilm.value.actors! +
+                                  controller.selectedFilm.value.directors!)
+                              .length,
                           scrollDirection: Axis.horizontal,
-                          itemBuilder: (context, index){
-                            var actors_list = (controller.selectedFilm.value.actors! + controller.selectedFilm.value.directors!);
+                          itemBuilder: (context, index) {
+                            var actors_list =
+                                (controller.selectedFilm.value.actors! +
+                                    controller.selectedFilm.value.directors!);
                             var actor = actors_list[index];
                             return Container(
                               width: 80,
                               margin: EdgeInsets.symmetric(horizontal: 7),
                               child: ActorsWidget(
-                                  imageUrl:
-                                  '${actor.avatar}',
-                                  name:
-                                  '${actor.name}'),
+                                  imageUrl: '${actor.avatar}',
+                                  name: '${actor.name}'),
                             );
-                        },
+                          },
                         )),
                   )
                 ],
@@ -877,7 +895,9 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
             SizedBox(
               height: 15,
             ),
-            CommentsSection(comments:controller.selectedFilm.value.comments ,),
+            CommentsSection(
+              comments: controller.selectedFilm.value.comments,
+            ),
             SizedBox(
               height: 30,
             ),
