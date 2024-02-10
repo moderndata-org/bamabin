@@ -23,6 +23,7 @@ class ApiProvider extends GetConnect {
       {required BottomNavType type,
       String? page,
       String? genreId,
+      String? imdb_min_rate,
       required OrderBy orderBy}) async {
     Map<String, String> m = {
       'type': switch (type) {
@@ -32,6 +33,7 @@ class ApiProvider extends GetConnect {
         BottomNavType.movies => 'movies',
         BottomNavType.series => 'series',
       },
+      'imdb_min_rate': '$imdb_min_rate'
     };
     m.addIf(genreId != null, 'genre_id', '$genreId');
     m.addIf(page != null, 'page', '$page');
@@ -49,6 +51,7 @@ class ApiProvider extends GetConnect {
       '${base_url}archive/post_type',
       query: m,
     );
+    print(m);
     return res;
   }
 

@@ -102,20 +102,22 @@ class PartScreen extends GetView<MainController> {
                     width: 1,
                   ),
                   Expanded(
-                      child: CustomDropDown(
-                    alignment: Alignment.center,
-                    title: "امتیاز IMDB",
-                    list: [
-                      DropdownMenuItem(
-                          value: 0,
-                          onTap: () {},
-                          child: Center(
-                            child: MyText(
-                                text: "امتیاز IMDB",
-                                textAlign: TextAlign.center),
-                          ))
-                    ],
-                  )),
+                      child: Obx(() => CustomDropDown(
+                            alignment: Alignment.center,
+                            title:
+                                '${controller.selectedImdbRate.value == 0 ? "امتیاز IMDB" : controller.selectedImdbRate.value}',
+                            list: List.generate(
+                                10,
+                                (index) => DropdownMenuItem(
+                                    value: index,
+                                    onTap: () => controller.changeImdbRate(
+                                        imdbRate: index + 1),
+                                    child: Center(
+                                      child: MyText(
+                                          text: '${index + 1}',
+                                          textAlign: TextAlign.center),
+                                    ))),
+                          ))),
                   SizedBox(
                     width: 2,
                   ),

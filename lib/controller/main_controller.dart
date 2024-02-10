@@ -26,6 +26,7 @@ class MainController extends GetxController {
   Rx<BottomNavType> selectedBottomNav = BottomNavType.home.obs;
   Rx<OrderBy> selectedOrder = OrderBy.none.obs;
   Rx<Genre> selectedGenre = Genre().obs;
+  RxInt selectedImdbRate = 0.obs;
 
   var sectionsList = <SectionModel>[].obs;
   var moreFilmList = <FilmModel>[].obs;
@@ -47,8 +48,8 @@ class MainController extends GetxController {
     });
     selectedBottomNav.listen((p0) {
       if (selectedBottomNav.value != BottomNavType.home) {
+        resetFilterMain();
         getArchive(isFirstPage: true);
-        selectedOrder(OrderBy.none);
       } else {
         getSliders();
         getMainSections();
@@ -57,14 +58,31 @@ class MainController extends GetxController {
     super.onInit();
   }
 
+  void resetFilterMain() {
+    selectedOrder(OrderBy.none);
+    selectedGenre(Genre());
+    selectedImdbRate(0);
+  }
+
   void changeOrder({required OrderBy orderBy}) {
-    selectedOrder(orderBy);
-    getArchive(isFirstPage: true);
+    if (isLoadingData.isFalse) {
+      selectedOrder(orderBy);
+      getArchive(isFirstPage: true);
+    }
   }
 
   void changeGenre({required Genre gener}) {
-    selectedGenre(gener);
-    getArchive(isFirstPage: true);
+    if (isLoadingData.isFalse) {
+      selectedGenre(gener);
+      getArchive(isFirstPage: true);
+    }
+  }
+
+  void changeImdbRate({required int imdbRate}) {
+    if (isLoadingData.isFalse) {
+      selectedImdbRate(imdbRate);
+      getArchive(isFirstPage: true);
+    }
   }
 
   void getArchive({required bool isFirstPage}) {
@@ -85,6 +103,8 @@ class MainController extends GetxController {
               type: selectedBottomNav.value,
               page: pageNumber == null ? null : pageNumber.toString(),
               orderBy: selectedOrder.value,
+              imdb_min_rate:
+                  '${selectedImdbRate.value == 0 ? '' : selectedImdbRate.value}',
               genreId: '${selectedGenre.value.id ?? ''}')
           .then((res) {
         isLoadingData(false);
