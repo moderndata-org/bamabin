@@ -863,21 +863,34 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                   SizedBox(
                     width: Get.width,
                     height: 210,
-                    child: Directionality(
+                    child: Obx(() {
+                      return Directionality(
                         textDirection: TextDirection.rtl,
                         child: ListView.builder(
                           padding: EdgeInsets.symmetric(horizontal: 15),
                           physics: BouncingScrollPhysics(),
-                          itemCount: 10,
+                          itemCount: controller.selectedFilm.value.related_posts!.length,
                           scrollDirection: Axis.horizontal,
-                          itemBuilder: (context, index) => MovieItemWidget(
-                            title: 'Monarch',
-                            hasSubtitle: true,
-                            hasDubbed: true,
-                            imdbRate: '5',
-                            year: '2020',
-                          ),
-                        )),
+                          itemBuilder: (context, index){
+                           var film = controller.selectedFilm.value.related_posts![index];
+                           return MovieItemWidget(
+                             title: '${film.titleMovie}',
+                             hasDubbed: film.hasDubbed != '',
+                             hasSubtitle: film.hasSubtitle == 'on',
+                             imdbRate: '${film.imdbRate}',
+                             year: film.release!.length > 0
+                                 ? '${film.release?.first.name}'
+                                 : '',
+                             image: film.thumbnail,
+                             onTap: () {
+                               controller.selectedFilm(film);
+                               Get.toNamed('/movie-detail');
+                             },
+                           );
+                          },
+                        ),
+                      );
+                    }),
                   )
                 ],
               ),
