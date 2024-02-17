@@ -142,4 +142,24 @@ class ApiProvider extends GetConnect {
     Response res = await get('${base_url}filter/age_rates');
     return res;
   }
+
+  Future<Response> register({
+    required String? username,
+    required String? email,
+    String? phone,
+    required String? password,
+    required String? re_password,
+
+  }) async {
+    var data = {
+      "username":username,
+      "email":email,
+      "phone":phone,
+      "password":password,
+      "re_password":re_password,
+    };
+    Response res = await post('${base_url}register',data);
+    return res;
+  }
+
 }
