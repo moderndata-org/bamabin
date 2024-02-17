@@ -162,4 +162,17 @@ class ApiProvider extends GetConnect {
     return res;
   }
 
+  Future<Response> login({
+    required String? username,
+    required String? password,
+
+  }) async {
+    var data = {
+      "username":username,
+      "password":password,
+    };
+    Response res = await post('${base_url}login',data);
+    return res;
+  }
+
 }
