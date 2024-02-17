@@ -34,6 +34,7 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
   final controller = Get.find<DetailController>();
   @override
   void initState() {
+    controller.isSerial(controller.selectedFilm.value.type == 'series');
     controller.getNewData();
     controller.isTextExpandedMovieDetail(false);
     if (controller.selectedFilm.value.trailer_url != '' &&
@@ -512,7 +513,7 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                     icon: SizedBox(
                         height: 20,
                         width: 20,
-                        child: Image.asset('assets/images/ic_imdb.png')),
+                        child: Image.asset('assets/images/ic_imdb_circle.png')),
                     title: '${controller.selectedFilm.value.imdbRate}',
                   )),
                   Expanded(
@@ -869,24 +870,26 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                         child: ListView.builder(
                           padding: EdgeInsets.symmetric(horizontal: 15),
                           physics: BouncingScrollPhysics(),
-                          itemCount: controller.selectedFilm.value.related_posts!.length,
+                          itemCount: controller
+                              .selectedFilm.value.related_posts!.length,
                           scrollDirection: Axis.horizontal,
-                          itemBuilder: (context, index){
-                           var film = controller.selectedFilm.value.related_posts![index];
-                           return MovieItemWidget(
-                             title: '${film.titleMovie}',
-                             hasDubbed: film.hasDubbed != '',
-                             hasSubtitle: film.hasSubtitle == 'on',
-                             imdbRate: '${film.imdbRate}',
-                             year: film.release!.length > 0
-                                 ? '${film.release?.first.name}'
-                                 : '',
-                             image: film.thumbnail,
-                             onTap: () {
-                               controller.selectedFilm(film);
-                               Get.toNamed('/movie-detail');
-                             },
-                           );
+                          itemBuilder: (context, index) {
+                            var film = controller
+                                .selectedFilm.value.related_posts![index];
+                            return MovieItemWidget(
+                              title: '${film.titleMovie}',
+                              hasDubbed: film.hasDubbed != '',
+                              hasSubtitle: film.hasSubtitle == 'on',
+                              imdbRate: '${film.imdbRate}',
+                              year: film.release!.length > 0
+                                  ? '${film.release?.first.name}'
+                                  : '',
+                              image: film.thumbnail,
+                              onTap: () {
+                                controller.selectedFilm(film);
+                                Get.toNamed('/movie-detail');
+                              },
+                            );
                           },
                         ),
                       );
