@@ -1,9 +1,7 @@
-import 'package:bamabin/constant/strings.dart';
 import 'package:bamabin/controller/public_controller.dart';
 import 'package:bamabin/widgets/MyText.dart';
 import 'package:bamabin/widgets/MyTextButton.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
 import '../constant/colors.dart';
