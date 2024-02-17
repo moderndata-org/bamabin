@@ -175,4 +175,15 @@ class ApiProvider extends GetConnect {
     return res;
   }
 
+  Future<Response> forget({
+    required String? email,
+
+  }) async {
+    var data = {
+      "email":email
+    };
+    Response res = await post('${base_url}forget',data);
+    return res;
+  }
+
 }
