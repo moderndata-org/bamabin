@@ -367,6 +367,6 @@ class FilmModel {
     malRate = json['mal_rate'];
     malVoteCount = json['mal_vote_count'];
 
-    genresListForDetail = genreMovie!.split(',');
+    genresListForDetail = genreMovie?.split(',');
   }
 }
