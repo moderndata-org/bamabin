@@ -33,7 +33,7 @@ class Main extends StatelessWidget {
       initialBinding: MyBindings(),
       scrollBehavior: MyBehavior(),
       getPages: Routes.page,
-      initialRoute: '/signup',
+      initialRoute: '/splash',
       theme: ThemeData(fontFamily: "vazir"),
       debugShowCheckedModeBanner: false,
     );

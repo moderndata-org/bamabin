@@ -144,45 +144,40 @@ class ApiProvider extends GetConnect {
   }
 
   Future<Response> register({
-    required String? username,
-    required String? email,
+    required String username,
+    required String email,
     String? phone,
-    required String? password,
-    required String? re_password,
-
+    required String password,
+    required String re_password,
   }) async {
-    var data = {
-      "username":username,
-      "email":email,
-      "phone":phone,
-      "password":password,
-      "re_password":re_password,
-    };
-    Response res = await post('${base_url}register',data);
+    FormData data = FormData({
+      "username": username,
+      "email": email,
+      "password": password,
+      "phone": '${phone ?? ''}',
+      "re_password": re_password,
+    });
+    Response res = await post('${base_url}register', data);
     return res;
   }
 
   Future<Response> login({
     required String? username,
     required String? password,
-
   }) async {
     var data = {
-      "username":username,
-      "password":password,
+      "username": username,
+      "password": password,
     };
-    Response res = await post('${base_url}login',data);
+    Response res = await post('${base_url}login', data);
     return res;
   }
 
   Future<Response> forget({
     required String? email,
-
   }) async {
-    var data = {
-      "email":email
-    };
-    Response res = await post('${base_url}forget',data);
+    var data = {"email": email};
+    Response res = await post('${base_url}forget', data);
     return res;
   }
 
@@ -193,18 +188,16 @@ class ApiProvider extends GetConnect {
     String? last_name,
     String? phone,
     String? city,
-
   }) async {
     var data = {
-      "nickname":nickname,
-      "description":description,
-      "first_name":first_name,
-      "last_name":last_name,
-      "phone":phone,
-      "city":city
+      "nickname": nickname,
+      "description": description,
+      "first_name": first_name,
+      "last_name": last_name,
+      "phone": phone,
+      "city": city
     };
-    Response res = await post('${base_url}edit_profile',data);
+    Response res = await post('${base_url}edit_profile', data);
     return res;
   }
-
 }

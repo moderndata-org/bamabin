@@ -2,6 +2,7 @@ import 'package:bamabin/api/api_handler.dart';
 import 'package:bamabin/widgets/MySncakBar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 
 class AuthController extends GetxController {
   TextEditingController txtUsername = TextEditingController();
@@ -9,6 +10,7 @@ class AuthController extends GetxController {
   TextEditingController txtPasswrod2 = TextEditingController();
   RxBool terms = true.obs;
   RxBool isLoadingRegister = false.obs;
+  GetStorage box = GetStorage('bamabin');
 
   void signUp({
     required String username,
@@ -18,21 +20,41 @@ class AuthController extends GetxController {
   }) {
     if (terms.isTrue) {
       if (username != '' && password != '' && rePassword != '' && email != '') {
-        if (password == rePassword) {
-          isLoadingRegister(true);
-          print('$username $email $password $rePassword');
-          ApiProvider()
-              .register(
-                  username: username,
-                  email: email,
-                  password: password,
-                  re_password: rePassword)
-              .then((res) {
-            isLoadingRegister(false);
-            print(res.body);
-          });
+        if (GetUtils.isEmail(email)) {
+          if (password == rePassword) {
+            isLoadingRegister(true);
+            ApiProvider()
+                .register(
+                    username: username,
+                    email: email,
+                    password: password,
+                    re_password: rePassword)
+                .then((res) {
+              isLoadingRegister(false);
+              if (res.body != null) {
+                if (res.body['status'] == true) {
+                  MySnackBar(
+                      '${res.body['message']}',
+                      Colors.green,
+                      Icon(
+                        Icons.check_circle_rounded,
+                        color: Colors.green,
+                      ),
+                      Duration(milliseconds: 1500));
+                  box.write('api_key', res.body['api_key']);
+                  box.save();
+                  Get.back();
+                } else {
+                  showErrorMessage(text: res.body['message']);
+                }
+              }
+              print(res.body);
+            });
+          } else {
+            showErrorMessage(text: 'رمز با تکرار رمز یکسان نمیباشد');
+          }
         } else {
-          showErrorMessage(text: 'رمز با تکرار رمز یکسان نمیباشد');
+          showErrorMessage(text: 'لطفا ایمیل را بررسی نمایید');
         }
       } else {
         showErrorMessage(text: 'لطفا اطلاعات را وارد نمایید');
