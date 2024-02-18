@@ -27,7 +27,7 @@ import '../screens/splash_screen.dart';
 
 class Routes {
   static List<GetPage> get page => [
-        GetPage(name: '/splash', page: () => const SplashScreen()),
+        GetPage(name: '/splash', page: () => SplashScreen()),
         GetPage(name: '/signin', page: () => const SigninScreen()),
         GetPage(name: '/signin-qrcode', page: () => const SignInQrCodeScreen()),
         GetPage(name: '/notifications', page: () => const NotificationScreen()),

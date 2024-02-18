@@ -11,6 +11,18 @@ class AuthController extends GetxController {
   RxBool terms = true.obs;
   RxBool isLoadingRegister = false.obs;
   GetStorage box = GetStorage('bamabin');
+  var isLogin = false.obs;
+  void checkLogin(){
+    if (box.hasData("api_key")){
+      // TODO Check Server Login
+      isLogin(true);
+    }else{
+      isLogin(false);
+    }
+
+    Get.offNamed('/main');
+
+  }
 
   void signUp({
     required String username,

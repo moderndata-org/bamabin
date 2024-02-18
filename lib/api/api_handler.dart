@@ -1,6 +1,7 @@
 // ignore_for_file: avoid_print
 
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 
 import '../constant/classes.dart';
 
@@ -9,8 +10,13 @@ class ApiProvider extends GetConnect {
   var head;
   var timeout = const Duration(seconds: 15);
   var maxAuthRetries = 5;
+  GetStorage box = GetStorage('bamabin');
   ApiProvider() {
-    // head = {"Authorization": "Token $token"};
+    if (box.hasData("api_key")){
+      var api_key = box.read("api_key");
+      head = {"BAMABIN_API_KEY": "$api_key"};
+    }
+
   }
 
   Future<Response> getMovieDetail({required String id}) async {

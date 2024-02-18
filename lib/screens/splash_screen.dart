@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:bamabin/constant/colors.dart';
+import 'package:bamabin/controller/auth_controller.dart';
 import 'package:bamabin/widgets/MyCircularProgress.dart';
 import 'package:bamabin/widgets/MyText.dart';
 import 'package:flutter/material.dart';
@@ -8,12 +9,13 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 class SplashScreen extends StatelessWidget {
-  const SplashScreen({super.key});
+  SplashScreen({super.key});
+  AuthController authController = Get.find();
 
   @override
   Widget build(BuildContext context) {
-    Timer(Duration(seconds: 2), () {
-      Get.offNamed('/main');
+    Timer(Duration.zero, () {
+      authController.checkLogin();
     });
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
