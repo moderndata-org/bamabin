@@ -1,6 +1,5 @@
 import 'package:bamabin/constant/colors.dart';
 import 'package:bamabin/controller/auth_controller.dart';
-import 'package:bamabin/controller/public_controller.dart';
 import 'package:bamabin/screens/dialogs/changepassword_profile_dialog.dart';
 import 'package:bamabin/widgets/back_button_custom.dart';
 import 'package:flutter/material.dart';
