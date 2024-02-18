@@ -36,6 +36,8 @@ class AuthController extends GetxController {
         if(value.body["statue"] == true){
           box.write("api_key", value.body["api_key"]);
           isLogin(true);
+          Get.toNamed('/main');
+
 
         }else{
           showErrorMessage(text: value.body["message"]);

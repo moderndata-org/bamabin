@@ -1,5 +1,6 @@
 import 'package:bamabin/constant/colors.dart';
 import 'package:bamabin/controller/auth_controller.dart';
+import 'package:bamabin/widgets/MyCircularProgress.dart';
 import 'package:bamabin/widgets/MyText.dart';
 import 'package:bamabin/widgets/MyTextField.dart';
 import 'package:bamabin/widgets/back_button_custom.dart';
@@ -8,7 +9,7 @@ import 'package:get/get.dart';
 import 'package:bamabin/widgets/MyTextButton.dart';
 
 class SigninScreen extends GetView<AuthController> {
-  const SigninScreen({super.key});
+  SigninScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -59,7 +60,7 @@ class SigninScreen extends GetView<AuthController> {
                   ),
                   MyTextField(
                     hint: 'رمز عبور',
-                    controller: controller.txtUsername,
+                    controller: controller.txtPasswrod,
                     prefixIcon: Icon(
                       Icons.lock,
                       size: 25,
@@ -103,13 +104,26 @@ class SigninScreen extends GetView<AuthController> {
               borderRadius: 5,
               size: Size(Get.width * .8, 55),
               bgColor: cAccent,
-              onTap: () => Get.toNamed('/main'),
-              child: MyText(
-                text: 'ورود',
-                color: cB,
-                size: 17,
-                fontWeight: FontWeight.bold,
-              ),
+              onTap: () {
+                if (controller.txtUsername.text.trim().isNotEmpty &&
+                    controller.txtPasswrod.text.trim().isNotEmpty) {
+                  controller.login(
+                      username: controller.txtUsername.text.trim(),
+                      password: controller.txtPasswrod.text.trim());
+                }
+              },
+              child: Obx(() {
+                return (controller.isLoadingLogin.isTrue)
+                    ? Center(
+                        child: MyCircularProgress(size: 25,color: Colors.black,),
+                      )
+                    : MyText(
+                        text: 'ورود',
+                        color: cB,
+                        size: 17,
+                        fontWeight: FontWeight.bold,
+                      );
+              }),
             ),
             SizedBox(
               height: 10,
@@ -184,7 +198,6 @@ class SigninScreen extends GetView<AuthController> {
     ));
   }
 }
-
 
 // class BottomBlackGradientWidget extends StatelessWidget {
 //   const BottomBlackGradientWidget({
