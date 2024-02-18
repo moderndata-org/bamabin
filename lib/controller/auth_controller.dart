@@ -15,8 +15,11 @@ class AuthController extends GetxController {
   var isLogin = false.obs;
   void checkLogin() {
     if (box.hasData("api_key")) {
-      // TODO Check Server Login
-      isLogin(true);
+      ApiProvider().checkLogin().then((value){
+        if(value.isOk){
+          isLogin(value.body["status"]);
+        }
+      });
     } else {
       isLogin(false);
     }
