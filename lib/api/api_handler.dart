@@ -192,10 +192,10 @@ class ApiProvider extends GetConnect {
     required String? username,
     required String? password,
   }) async {
-    var data = {
+    var data = FormData({
       "username": username,
       "password": password,
-    };
+    });
     Response res = await post('${base_url}login', data);
     return res;
   }
@@ -203,8 +203,13 @@ class ApiProvider extends GetConnect {
   Future<Response> forget({
     required String? email,
   }) async {
-    var data = {"email": email};
+    var data = FormData({"email": email});
     Response res = await post('${base_url}forget', data);
+    return res;
+  }
+
+  Future<Response> checkLogin() async {
+    Response res = await get('${base_url}is_login',headers: head);
     return res;
   }
 }

@@ -11,12 +11,17 @@ class AuthController extends GetxController {
   RxBool terms = true.obs;
   RxBool isLoadingUpdateProfile = false.obs;
   RxBool isLoadingRegister = false.obs;
+  RxBool isLoadingLogin = false.obs;
+
   GetStorage box = GetStorage('bamabin');
   var isLogin = false.obs;
   void checkLogin() {
     if (box.hasData("api_key")) {
-      // TODO Check Server Login
-      isLogin(true);
+      ApiProvider().checkLogin().then((value){
+        if(value.isOk){
+          isLogin(value.body["status"]);
+        }
+      });
     } else {
       isLogin(false);
     }
@@ -24,6 +29,22 @@ class AuthController extends GetxController {
     Get.offNamed('/main');
   }
 
+  void login({required String? username,required String? password}){
+    isLoadingLogin(true);
+    ApiProvider().login(username: username, password: password).then((value){
+      if(value.isOk){
+        if(value.body["statue"] == true){
+          box.write("api_key", value.body["api_key"]);
+          isLogin(true);
+
+        }else{
+          showErrorMessage(text: value.body["message"]);
+        }
+      }
+      isLoadingLogin(false);
+
+    });
+  }
   void updateProfile({
     String? nickname,
     String? description,
