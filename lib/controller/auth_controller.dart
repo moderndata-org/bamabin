@@ -9,7 +9,7 @@ class AuthController extends GetxController {
   TextEditingController txtPasswrod = TextEditingController();
   TextEditingController txtPasswrod2 = TextEditingController();
   RxBool terms = true.obs;
-  RxBool isLoadingUpdateProfile = true.obs;
+  RxBool isLoadingUpdateProfile = false.obs;
   RxBool isLoadingRegister = false.obs;
   GetStorage box = GetStorage('bamabin');
   var isLogin = false.obs;
@@ -32,19 +32,23 @@ class AuthController extends GetxController {
     String? phone,
     String? city,
   }) {
-    if (nickname != null || nickname != '') {
+    print(nickname);
+    if (nickname != null && nickname != '') {
       isLoadingUpdateProfile(true);
       ApiProvider()
           .updateProfile(
-              nickname: nickname!,
+              nickname: nickname,
               city: city,
               description: description,
               first_name: first_name,
               last_name: last_name,
               phone: phone)
           .then((res) {
+        isLoadingUpdateProfile(false);
         print(res.body);
       });
+    } else {
+      showErrorMessage(text: 'لطفا نام نمایشی خود را وارد نمایید');
     }
   }
 

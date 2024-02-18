@@ -182,7 +182,9 @@ class ApiProvider extends GetConnect {
       "phone": phone ?? '',
       "city": city ?? '',
     });
-    Response res = await post('${base_url}edit_profile', data, headers: head);
+    print(head);
+    Response res =
+        await post('${base_url}panel/edit_profile', data, headers: head);
     return res;
   }
 

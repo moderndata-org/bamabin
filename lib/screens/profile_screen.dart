@@ -1,10 +1,12 @@
 import 'package:bamabin/constant/colors.dart';
+import 'package:bamabin/controller/auth_controller.dart';
 import 'package:bamabin/controller/public_controller.dart';
 import 'package:bamabin/screens/dialogs/changepassword_profile_dialog.dart';
 import 'package:bamabin/widgets/back_button_custom.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../widgets/MyCircularProgress.dart';
 import '../widgets/MyText.dart';
 import '../widgets/MyTextButton.dart';
 import '../widgets/MyTextField.dart';
@@ -17,20 +19,20 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-  late PublicController controller;
+  late AuthController controller;
   TextEditingController? txtName;
   TextEditingController? txtFamily;
-  TextEditingController? txtEmail;
+  // TextEditingController? txtEmail;
   TextEditingController? txtNickname;
   TextEditingController? txtCity;
   TextEditingController? txtPhone;
   TextEditingController? txtAboutMe;
   @override
   void initState() {
-    controller = Get.find<PublicController>();
+    controller = Get.find<AuthController>();
     txtName = TextEditingController();
     txtFamily = TextEditingController();
-    txtEmail = TextEditingController();
+    // txtEmail = TextEditingController();
     txtNickname = TextEditingController();
     txtCity = TextEditingController();
     txtPhone = TextEditingController();
@@ -42,7 +44,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   void dispose() {
     txtName?.dispose();
     txtFamily?.dispose();
-    txtEmail?.dispose();
+    // txtEmail?.dispose();
     txtNickname?.dispose();
     txtCity?.dispose();
     txtPhone?.dispose();
@@ -74,9 +76,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       color: cDrawerGrey,
                       boxShadow: [bs010of],
                       shape: BoxShape.circle,
-                      // image: DecorationImage(
-                      //   image: AssetImage('assets/images/bg_crausel.jpg'),
-                      //   fit: BoxFit.cover,
                     ),
                     child: Icon(
                       Icons.account_circle_outlined,
@@ -119,18 +118,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               color: cW,
                             ),
                           ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          MyTextField(
-                            hint: 'ایمیل',
-                            controller: txtEmail!,
-                            prefixIcon: Icon(
-                              Icons.mail,
-                              size: 30,
-                              color: cW,
-                            ),
-                          ),
+                          // SizedBox(
+                          //   height: 10,
+                          // ),
+                          // MyTextField(
+                          //   hint: 'ایمیل',
+                          //   controller: txtEmail!,
+                          //   prefixIcon: Icon(
+                          //     Icons.mail,
+                          //     size: 30,
+                          //     color: cW,
+                          //   ),
+                          // ),
                           SizedBox(
                             height: 10,
                           ),
@@ -209,14 +208,26 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             width: Get.width,
                             height: 45,
                             child: MyTextButton(
-                                onTap: () {},
+                                onTap: () => controller.updateProfile(
+                                    first_name: txtName!.text,
+                                    last_name: txtFamily!.text,
+                                    phone: txtPhone!.text,
+                                    nickname: txtNickname!.text,
+                                    city: txtCity!.text,
+                                    description: txtAboutMe!.text),
                                 bgColor: cY,
-                                child: MyText(
-                                  text: 'ذخیره تغییرات',
-                                  size: 15,
-                                  color: cB,
-                                  fontWeight: FontWeight.w500,
-                                )),
+                                child: Obx(() =>
+                                    controller.isLoadingUpdateProfile.isTrue
+                                        ? MyCircularProgress(
+                                            color: cB,
+                                            size: 25,
+                                          )
+                                        : MyText(
+                                            text: 'ذخیره تغییرات',
+                                            size: 15,
+                                            color: cB,
+                                            fontWeight: FontWeight.w500,
+                                          ))),
                           ),
                         ],
                       ),
