@@ -11,6 +11,8 @@ class AuthController extends GetxController {
   RxBool terms = true.obs;
   RxBool isLoadingUpdateProfile = true.obs;
   RxBool isLoadingRegister = false.obs;
+  RxBool isLoadingLogin = false.obs;
+
   GetStorage box = GetStorage('bamabin');
   var isLogin = false.obs;
   void checkLogin() {
@@ -27,6 +29,22 @@ class AuthController extends GetxController {
     Get.offNamed('/main');
   }
 
+  void login({required String? username,required String? password}){
+    isLoadingLogin(true);
+    ApiProvider().login(username: username, password: password).then((value){
+      if(value.isOk){
+        if(value.body["statue"] == true){
+          box.write("api_key", value.body["api_key"]);
+          isLogin(true);
+
+        }else{
+          showErrorMessage(text: value.body["message"]);
+        }
+      }
+      isLoadingLogin(false);
+
+    });
+  }
   void updateProfile({
     String? nickname,
     String? description,
