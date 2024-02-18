@@ -9,19 +9,43 @@ class AuthController extends GetxController {
   TextEditingController txtPasswrod = TextEditingController();
   TextEditingController txtPasswrod2 = TextEditingController();
   RxBool terms = true.obs;
+  RxBool isLoadingUpdateProfile = true.obs;
   RxBool isLoadingRegister = false.obs;
   GetStorage box = GetStorage('bamabin');
   var isLogin = false.obs;
-  void checkLogin(){
-    if (box.hasData("api_key")){
+  void checkLogin() {
+    if (box.hasData("api_key")) {
       // TODO Check Server Login
       isLogin(true);
-    }else{
+    } else {
       isLogin(false);
     }
 
     Get.offNamed('/main');
+  }
 
+  void updateProfile({
+    String? nickname,
+    String? description,
+    String? first_name,
+    String? last_name,
+    String? phone,
+    String? city,
+  }) {
+    if (nickname != null || nickname != '') {
+      isLoadingUpdateProfile(true);
+      ApiProvider()
+          .updateProfile(
+              nickname: nickname!,
+              city: city,
+              description: description,
+              first_name: first_name,
+              last_name: last_name,
+              phone: phone)
+          .then((res) {
+        print(res.body);
+      });
+    }
   }
 
   void signUp({
