@@ -17,8 +17,9 @@ class AuthController extends GetxController {
   var isLogin = false.obs;
   void checkLogin() {
     if (box.hasData("api_key")) {
-      ApiProvider().checkLogin().then((value){
-        if(value.isOk){
+      ApiProvider().checkLogin().then((value) {
+        if (value.isOk) {
+          print(value.body);
           isLogin(value.body["status"]);
         }
       });
@@ -29,24 +30,22 @@ class AuthController extends GetxController {
     Get.offNamed('/main');
   }
 
-  void login({required String? username,required String? password}){
+  void login({required String? username, required String? password}) {
     isLoadingLogin(true);
-    ApiProvider().login(username: username, password: password).then((value){
-      if(value.isOk){
-        if(value.body["statue"] == true){
+    ApiProvider().login(username: username, password: password).then((value) {
+      if (value.isOk) {
+        if (value.body["statue"] == true) {
           box.write("api_key", value.body["api_key"]);
           isLogin(true);
           Get.toNamed('/main');
-
-
-        }else{
+        } else {
           showErrorMessage(text: value.body["message"]);
         }
       }
       isLoadingLogin(false);
-
     });
   }
+
   void updateProfile({
     String? nickname,
     String? description,

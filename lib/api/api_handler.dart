@@ -209,7 +209,8 @@ class ApiProvider extends GetConnect {
   }
 
   Future<Response> checkLogin() async {
-    Response res = await get('${base_url}is_login',headers: head);
+    print(head);
+    Response res = await get('${base_url}is_login', headers: head);
     return res;
   }
 }

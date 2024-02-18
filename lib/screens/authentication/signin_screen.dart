@@ -59,6 +59,8 @@ class SigninScreen extends GetView<AuthController> {
                     height: 15,
                   ),
                   MyTextField(
+                    isPassword: true,
+                    maxLines: 1,
                     hint: 'رمز عبور',
                     controller: controller.txtPasswrod,
                     prefixIcon: Icon(
@@ -115,7 +117,10 @@ class SigninScreen extends GetView<AuthController> {
               child: Obx(() {
                 return (controller.isLoadingLogin.isTrue)
                     ? Center(
-                        child: MyCircularProgress(size: 25,color: Colors.black,),
+                        child: MyCircularProgress(
+                          size: 25,
+                          color: Colors.black,
+                        ),
                       )
                     : MyText(
                         text: 'ورود',
