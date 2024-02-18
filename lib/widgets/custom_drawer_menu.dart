@@ -1,4 +1,5 @@
 import 'package:bamabin/constant/colors.dart';
+import 'package:bamabin/controller/auth_controller.dart';
 import 'package:bamabin/controller/main_controller.dart';
 import 'package:bamabin/controller/public_controller.dart';
 import 'package:bamabin/widgets/MyText.dart';
@@ -12,6 +13,7 @@ import '../screens/dialogs/tokenBot_dialog.dart';
 class CustomDrawerMenu extends GetView<MainController> {
   CustomDrawerMenu({super.key});
   final publicController = Get.find<PublicController>();
+  final authController = Get.find<AuthController>();
 
   @override
   Widget build(BuildContext context) {
@@ -99,7 +101,8 @@ class CustomDrawerMenu extends GetView<MainController> {
                                     alignment: Alignment.centerRight,
                                     child: GestureDetector(
                                       onTap: () {
-                                        Get.toNamed('/profile');
+                                        (authController.isLogin.isTrue) ?
+                                        Get.toNamed('/profile') : Get.toNamed('/signin');
                                         controller.scaffolState.currentState!
                                             .closeEndDrawer();
                                       },
@@ -116,7 +119,7 @@ class CustomDrawerMenu extends GetView<MainController> {
                                             top: 5,
                                             bottom: 5),
                                         child: MyText(
-                                          text: 'ویرایش پروفایل',
+                                          text: (authController.isLogin.isTrue) ? 'ویرایش پروفایل' : 'ورود / ثبت نام',
                                           color: cW,
                                           size: 13,
                                         ),
