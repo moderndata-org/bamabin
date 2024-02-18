@@ -99,7 +99,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       child: Column(
                         children: [
                           MyTextField(
-                            hint: 'نام کاربری',
+                            hint: 'نام',
                             controller: txtName!,
                             prefixIcon: Icon(
                               Icons.account_circle_rounded,

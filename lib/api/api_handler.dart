@@ -12,11 +12,10 @@ class ApiProvider extends GetConnect {
   var maxAuthRetries = 5;
   GetStorage box = GetStorage('bamabin');
   ApiProvider() {
-    if (box.hasData("api_key")){
+    if (box.hasData("api_key")) {
       var api_key = box.read("api_key");
       head = {"BAMABIN_API_KEY": "$api_key"};
     }
-
   }
 
   Future<Response> getMovieDetail({required String id}) async {
@@ -167,6 +166,26 @@ class ApiProvider extends GetConnect {
     return res;
   }
 
+  Future<Response> updateProfile({
+    required String nickname,
+    String? description,
+    String? first_name,
+    String? last_name,
+    String? phone,
+    String? city,
+  }) async {
+    FormData data = FormData({
+      "nickname": nickname,
+      "description": description ?? '',
+      "first_name": first_name ?? '',
+      "last_name": last_name ?? '',
+      "phone": phone ?? '',
+      "city": city ?? '',
+    });
+    Response res = await post('${base_url}edit_profile', data);
+    return res;
+  }
+
   Future<Response> login({
     required String? username,
     required String? password,
@@ -184,26 +203,6 @@ class ApiProvider extends GetConnect {
   }) async {
     var data = {"email": email};
     Response res = await post('${base_url}forget', data);
-    return res;
-  }
-
-  Future<Response> updateProfile({
-    required String? nickname,
-    String? description,
-    String? first_name,
-    String? last_name,
-    String? phone,
-    String? city,
-  }) async {
-    var data = {
-      "nickname": nickname,
-      "description": description,
-      "first_name": first_name,
-      "last_name": last_name,
-      "phone": phone,
-      "city": city
-    };
-    Response res = await post('${base_url}edit_profile', data);
     return res;
   }
 }
