@@ -8,14 +8,17 @@ class NotificationController extends GetxController{
   var selectedNotification = NotificationModel().obs;
 
   void getNotifications(){
+    loadingNotifications(true);
     ApiProvider().notifications().then((value){
       if(value.isOk){
+        print(value.body);
          if(value.body["status"] == true){
            (value.body["result"] as List).forEach((element) {
              notifications.add(NotificationModel.fromJson(element));
            });
          }
       }
+      loadingNotifications(false);
     });
   }
 
