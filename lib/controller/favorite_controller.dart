@@ -21,21 +21,21 @@ class FavoriteController extends GetxController {
   void getFavorites() {
     listFavorites.clear();
     isLoadingFavorites(true);
-    GetConnect()
-        .get('https://www.aliamaterasu.ir/api/watchlist/list',
-            headers: ApiProvider().head)
-        .then((res) {
+    ApiProvider().getFavorites().then((res) {
       isLoadingFavorites(false);
       if (res.body != null) {
         if (res.body['status'] == true) {
           List tmp = res.body['result'];
-        } else {}
+          for (var e in tmp) {
+            listFavorites.add(FilmModel.fromJson(e));
+          }
+        }
       }
       print(res.body);
     });
   }
 
-  void setFavorites(
+  void setFavorite(
       {required String id, required FavoriteAction favoriteAction}) {
     String action = '';
     switch (favoriteAction) {
@@ -44,14 +44,7 @@ class FavoriteController extends GetxController {
       case FavoriteAction.Remove:
         action = 'remove';
     }
-    FormData frm = FormData({
-      'post_id': '71970',
-      'action': action,
-    });
-    GetConnect()
-        .post('https://www.aliamaterasu.ir/api/watchlist/set', frm,
-            headers: ApiProvider().head)
-        .then((res) {
+    ApiProvider().setFavorite(action: action, id: id).then((res) {
       print(res.body);
     });
   }
