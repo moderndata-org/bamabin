@@ -82,13 +82,22 @@ class AuthController extends GetxController {
               last_name: last_name,
               phone: phone)
           .then((res) {
+        print(res.body);
         isLoadingUpdateProfile(false);
         if (res.body != null) {
           if (res.body['status'] == true) {
             showMessage(text: 'با موفقیت ویرایش شد', isSucces: true);
+            profile.value
+              ..description = description ?? ''
+              ..nickname = nickname
+              ..firstName = first_name ?? ''
+              ..lastName = last_name ?? ''
+              ..phone = phone ?? ''
+              ..city = city ?? '';
+            profile.refresh();
             Navigator.pop(Get.context!);
           } else {
-            showMessage(text: 'خطا در ارتباط', isSucces: false);
+            showMessage(text: '${res.body['message']}', isSucces: false);
           }
         }
       });

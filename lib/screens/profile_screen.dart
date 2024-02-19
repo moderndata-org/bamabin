@@ -25,17 +25,22 @@ class _ProfileScreenState extends State<ProfileScreen> {
   TextEditingController? txtNickname;
   TextEditingController? txtCity;
   TextEditingController? txtPhone;
-  TextEditingController? txtAboutMe;
+  TextEditingController? txtDescription;
   @override
   void initState() {
     controller = Get.find<AuthController>();
-    txtName = TextEditingController();
-    txtFamily = TextEditingController();
-    // txtEmail = TextEditingController();
-    txtNickname = TextEditingController();
-    txtCity = TextEditingController();
-    txtPhone = TextEditingController();
-    txtAboutMe = TextEditingController();
+    txtName = TextEditingController()
+      ..text = '${controller.profile.value.firstName}';
+    txtFamily = TextEditingController()
+      ..text = '${controller.profile.value.lastName}';
+    txtNickname = TextEditingController()
+      ..text = '${controller.profile.value.nickname}';
+    txtCity = TextEditingController()
+      ..text = '${controller.profile.value.city}';
+    txtPhone = TextEditingController()
+      ..text = '${controller.profile.value.phone}';
+    txtDescription = TextEditingController()
+      ..text = '${controller.profile.value.description}';
     super.initState();
   }
 
@@ -47,7 +52,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     txtNickname?.dispose();
     txtCity?.dispose();
     txtPhone?.dispose();
-    txtAboutMe?.dispose();
+    txtDescription?.dispose();
     super.dispose();
   }
 
@@ -158,7 +163,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           ),
                           MyTextField(
                             hint: 'شماره تماس',
-                            controller: txtCity!,
+                            controller: txtPhone!,
+                            inputType: TextInputType.number,
+                            maxLength: 11,
                             prefixIcon: Icon(
                               Icons.phone_enabled_rounded,
                               size: 30,
@@ -170,7 +177,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           ),
                           MyTextField(
                             hint: 'درباره من',
-                            controller: txtCity!,
+                            controller: txtDescription!,
                             maxLines: 2,
                             prefixIcon: Icon(
                               Icons.info,
@@ -213,7 +220,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     phone: txtPhone!.text,
                                     nickname: txtNickname!.text,
                                     city: txtCity!.text,
-                                    description: txtAboutMe!.text),
+                                    description: txtDescription!.text),
                                 bgColor: cY,
                                 child: Obx(() =>
                                     controller.isLoadingUpdateProfile.isTrue
