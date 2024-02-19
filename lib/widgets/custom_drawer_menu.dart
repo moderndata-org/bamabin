@@ -472,7 +472,9 @@ class CustomDrawerMenu extends GetView<MainController> {
                           size: Size.fromHeight(45),
                           boxShadow: bsTextLowOpacity,
                           bgColor: cBgDrawerItem,
-                          onTap: () {},
+                          onTap: () {
+                            authController.logOut();
+                          },
                           child: Row(
                             textDirection: TextDirection.rtl,
                             children: [

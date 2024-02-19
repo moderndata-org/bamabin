@@ -12,17 +12,19 @@ class AuthController extends GetxController {
   RxBool terms = true.obs;
   RxBool isLoadingUpdateProfile = false.obs;
   RxBool isLoadingRegister = false.obs;
+  RxBool isForgotPasswordRegister = false.obs;
   RxBool isLoadingLogin = false.obs;
   var profile = ProfileModel().obs;
 
   GetStorage box = GetStorage('bamabin');
   var isLogin = false.obs;
+
   void checkLogin() {
     if (box.hasData("api_key")) {
       ApiProvider().checkLogin().then((value) {
         if (value.isOk) {
           isLogin(value.body["status"]);
-          if(isLogin.isTrue){
+          if (isLogin.isTrue) {
             getProfile();
           }
         }
@@ -52,9 +54,9 @@ class AuthController extends GetxController {
     });
   }
 
-  void getProfile(){
-    ApiProvider().getProfile().then((value){
-      if(value.isOk){
+  void getProfile() {
+    ApiProvider().getProfile().then((value) {
+      if (value.isOk) {
         profile(ProfileModel.fromJson(value.body["result"]));
       }
     });
@@ -141,6 +143,30 @@ class AuthController extends GetxController {
     }
   }
 
+  void forgotPassword({required String email}) {
+    isForgotPasswordRegister(true);
+    if (email != '') {
+      if (GetUtils.isEmail(email)) {
+        ApiProvider().forget(email: email).then((res) {
+          isForgotPasswordRegister(false);
+          if (res.body != null) {
+              showMessage(text: res.body['message'], isSucces: res.body['status'] );
+          }
+        });
+      } else {
+        showMessage(text: 'لطفا ایمیل را بررسی نمایید', isSucces: false);
+      }
+    } else {
+      showMessage(text: 'لطفا اطلاعات را وارد نمایید', isSucces: false);
+    }
+  }
+
+  void logOut(){
+    box.remove("api_key");
+    box.save();
+    isLogin(false);
+    Get.back();
+  }
   void showMessage({required String text, required bool isSucces}) {
     MySnackBar(
         text,
