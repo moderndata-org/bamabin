@@ -9,14 +9,17 @@ class AuthController extends GetxController {
   TextEditingController txtUsername = TextEditingController();
   TextEditingController txtPasswrod = TextEditingController();
   TextEditingController txtPasswrod2 = TextEditingController();
+  TextEditingController txtEmail = TextEditingController();
   RxBool terms = true.obs;
   RxBool isLoadingUpdateProfile = false.obs;
   RxBool isLoadingRegister = false.obs;
+  RxBool isForgotPasswordRegister = false.obs;
   RxBool isLoadingLogin = false.obs;
   var profile = ProfileModel().obs;
 
   GetStorage box = GetStorage('bamabin');
   var isLogin = false.obs;
+
   void checkLogin() {
     if (box.hasData("api_key")) {
       ApiProvider().checkLogin().then((value) {
@@ -150,6 +153,34 @@ class AuthController extends GetxController {
     }
   }
 
+  void forgotPassword({required String email}) {
+    isForgotPasswordRegister(true);
+    if (email != '') {
+      if (GetUtils.isEmail(email)) {
+        ApiProvider().forget(email: email).then((res) {
+          isForgotPasswordRegister(false);
+          if (res.body != null) {
+              showMessage(text: res.body['message'], isSucces: res.body['status'] );
+
+          }
+        });
+      } else {
+        showMessage(text: 'لطفا ایمیل را بررسی نمایید', isSucces: false);
+        isForgotPasswordRegister(false);
+      }
+    } else {
+      showMessage(text: 'لطفا اطلاعات را وارد نمایید', isSucces: false);
+      isForgotPasswordRegister(false);
+    }
+
+  }
+
+  void logOut(){
+    box.remove("api_key");
+    box.save();
+    isLogin(false);
+    Get.back();
+  }
   void showMessage({required String text, required bool isSucces}) {
     MySnackBar(
         text,
