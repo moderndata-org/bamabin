@@ -9,6 +9,8 @@ import '../widgets/custom_appbar.dart';
 class NotificationScreen extends GetView<NotificationController> {
   const NotificationScreen({Key? key}) : super(key: key);
   void init(){
+    controller.page(1);
+    controller.last_page_num(1);
     controller.getNotifications();
   }
   @override
@@ -45,7 +47,10 @@ class NotificationScreen extends GetView<NotificationController> {
 
                       if(notification.readStatus == false)
                       controller.readNotification(index: index);
+                      if(index == controller.notifications.length - 1){
+                        Future.delayed(Duration.zero,() => controller.nextPage());
 
+                      }
                       return NotificationItem(
                         text:notification.content
                       );

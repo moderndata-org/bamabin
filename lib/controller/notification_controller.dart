@@ -7,16 +7,30 @@ class NotificationController extends GetxController{
   var loadingNotifications = false.obs;
   var loadingDeleteNotifications = false.obs;
   var selectedNotification = NotificationModel().obs;
+  var page = 1.obs;
+  var last_page_num = 1.obs;
 
+  void nextPage(){
+    if(page != last_page_num){
+      page += 1;
+      getNotifications();
+    }
+  }
   void getNotifications(){
-    loadingNotifications(true);
-    ApiProvider().notifications().then((value){
+    if(page == 1){
+      notifications.clear();
+      loadingNotifications(true);
+
+    }
+
+    ApiProvider().notifications(page: page.toString()).then((value){
       if(value.isOk){
-        print(value.body);
          if(value.body["status"] == true){
            (value.body["result"] as List).forEach((element) {
              notifications.add(NotificationModel.fromJson(element));
            });
+
+           last_page_num(value.body["info"]["last_page_num"]);
          }
       }
       loadingNotifications(false);
