@@ -208,12 +208,12 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                           //! dislike
                           GestureDetector(
                             onTap: () =>
-                                controller.movieLikeStatus(LikeStatus.dislike),
+                                controller.movieLikeStatus(LikeAction.dislike),
                             child: Obx(() => AnimatedContainer(
                                   duration: Duration(milliseconds: 300),
                                   decoration: BoxDecoration(
                                       color: controller.movieLikeStatus.value ==
-                                              LikeStatus.dislike
+                                              LikeAction.dislike
                                           ? cDisklike
                                           : cDisklike.withOpacity(.5),
                                       borderRadius: BorderRadius.only(
@@ -245,12 +245,12 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                           //! like
                           GestureDetector(
                             onTap: () =>
-                                controller.movieLikeStatus(LikeStatus.like),
+                                controller.movieLikeStatus(LikeAction.like),
                             child: Obx(() => AnimatedContainer(
                                   duration: Duration(milliseconds: 300),
                                   decoration: BoxDecoration(
                                       color: controller.movieLikeStatus.value ==
-                                              LikeStatus.like
+                                              LikeAction.like
                                           ? cSecondaryLight
                                           : cSecondaryLight.withOpacity(.5),
                                       borderRadius: BorderRadius.only(

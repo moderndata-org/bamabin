@@ -12,7 +12,7 @@ class DetailController extends GetxController {
   ScrollController movieDetailScrollController = ScrollController();
   RxBool isPlayingTrailer = false.obs;
   RxBool isLoadingTrailer = false.obs;
-  Rx<LikeStatus> movieLikeStatus = LikeStatus.notSelected.obs;
+  Rx<LikeAction> movieLikeStatus = LikeAction.notSelected.obs;
   RxDouble trailerPosition = 0.0.obs;
   TextEditingController? txtComment;
   RxBool showGoToTop = false.obs;

@@ -1,3 +1,4 @@
+import 'package:bamabin/constant/classes.dart';
 import 'package:bamabin/constant/colors.dart';
 import 'package:bamabin/controller/auth_controller.dart';
 import 'package:bamabin/controller/favorite_controller.dart';

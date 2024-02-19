@@ -1,3 +1,4 @@
+import 'package:bamabin/constant/classes.dart';
 import 'package:bamabin/controller/auth_controller.dart';
 import 'package:get/get.dart';
 
@@ -18,8 +19,37 @@ class FavoriteController extends GetxController {
   }
 
   void getFavorites() {
+    listFavorites.clear();
+    isLoadingFavorites(true);
     GetConnect()
         .get('https://www.aliamaterasu.ir/api/watchlist/list',
+            headers: ApiProvider().head)
+        .then((res) {
+      isLoadingFavorites(false);
+      if (res.body != null) {
+        if (res.body['status'] == true) {
+          List tmp = res.body['result'];
+        } else {}
+      }
+      print(res.body);
+    });
+  }
+
+  void setFavorites(
+      {required String id, required FavoriteAction favoriteAction}) {
+    String action = '';
+    switch (favoriteAction) {
+      case FavoriteAction.Add:
+        action = 'add';
+      case FavoriteAction.Remove:
+        action = 'remove';
+    }
+    FormData frm = FormData({
+      'post_id': '71970',
+      'action': action,
+    });
+    GetConnect()
+        .post('https://www.aliamaterasu.ir/api/watchlist/set', frm,
             headers: ApiProvider().head)
         .then((res) {
       print(res.body);

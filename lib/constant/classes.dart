@@ -6,7 +6,12 @@ enum SubtitleType { HardSub, SoftSub }
 
 enum ActionMethod { Play, Download }
 
-enum LikeStatus { like, dislike, notSelected }
+enum LikeAction { like, dislike, notSelected }
+
+enum FavoriteAction {
+  Add,
+  Remove,
+}
 
 enum OrderBy { none, date, modified, imdb }
 
