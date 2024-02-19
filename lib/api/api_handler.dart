@@ -236,8 +236,8 @@ class ApiProvider extends GetConnect {
     return res;
   }
 
-  Future<Response> notifications() async {
-    Response res = await get('${base_url}notification', headers: head);
+  Future<Response> notifications({required String? page}) async {
+    Response res = await get('${base_url}notification?page=${page}', headers: head);
     return res;
   }
 

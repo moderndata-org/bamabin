@@ -9,6 +9,8 @@ import '../widgets/custom_appbar.dart';
 class NotificationScreen extends GetView<NotificationController> {
   const NotificationScreen({Key? key}) : super(key: key);
   void init(){
+    controller.page(1);
+    controller.last_page_num(1);
     controller.getNotifications();
   }
   @override
@@ -43,6 +45,12 @@ class NotificationScreen extends GetView<NotificationController> {
                     itemBuilder: (context, index) {
                       var notification = controller.notifications[index];
 
+                      if(notification.readStatus == false)
+                      controller.readNotification(index: index);
+                      if(index == controller.notifications.length - 1){
+                        Future.delayed(Duration.zero,() => controller.nextPage());
+
+                      }
                       return NotificationItem(
                         text:notification.content
                       );
@@ -58,7 +66,11 @@ class NotificationScreen extends GetView<NotificationController> {
               height: 50,
               width: Get.width,
               child: InkWell(
-                onTap: () {},
+                onTap: () {
+                  if(controller.notifications.length > 0){
+                    controller.deleteAllNotifications();
+                  }
+                },
                 child: Container(
                   alignment: Alignment.center,
                   padding: EdgeInsets.symmetric(vertical: 13),
@@ -67,13 +79,18 @@ class NotificationScreen extends GetView<NotificationController> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text(
-                          "حذف اعلانات",
-                          style: TextStyle(
-                              color: cW,
-                              fontWeight: FontWeight.w500,
-                              fontSize: 16),
-                        ),
+                        Obx((){
+                          if(controller.loadingDeleteNotifications.isTrue)
+                            return MyCircularProgress(color: Colors.white,size: 28,);
+
+                          return Text(
+                            "حذف اعلانات",
+                            style: TextStyle(
+                                color: cW,
+                                fontWeight: FontWeight.w500,
+                                fontSize: 16),
+                          );
+                        }),
                         SizedBox(
                           width: 10,
                         ),

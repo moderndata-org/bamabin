@@ -1,5 +1,5 @@
 class NotificationModel{
-  int? id;
+  String? id;
   String? title;
   String? content;
   bool? readStatus;
@@ -12,7 +12,7 @@ class NotificationModel{
         this.content,
         this.readStatus,
         this.createdAt,
-        this.readAt});
+        this.readAt}); 
 
   NotificationModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
