@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 class NotificationController extends GetxController{
   var notifications = <NotificationModel>[].obs;
   var loadingNotifications = false.obs;
+  var loadingDeleteNotifications = false.obs;
   var selectedNotification = NotificationModel().obs;
 
   void getNotifications(){
@@ -23,11 +24,23 @@ class NotificationController extends GetxController{
   }
 
   void deleteAllNotifications(){
+    loadingDeleteNotifications(true);
     ApiProvider().deleteAllNotifications().then((value){
       if(value.isOk){
         if(value.body["status"] == true){
           notifications.clear();
         }
+        loadingDeleteNotifications(false);
+      }
+    });
+  }
+
+  void readNotification({required int? index}){
+    var notification = notifications[index!];
+    ApiProvider().readNotification(id: notification.id.toString()).then((value){
+      if(value.isOk){
+        notifications[index].readStatus = true;
+        notifications.refresh();
       }
     });
   }
