@@ -214,6 +214,23 @@ class ApiProvider extends GetConnect {
     return res;
   }
 
+  Future<Response> setFavorite({
+    required String? action,
+    required String? id,
+  }) async {
+    FormData frm = FormData({
+      'post_id': '71970',
+      'action': action,
+    });
+    Response res = await post('${base_url}watchlist/set', frm, headers: head);
+    return res;
+  }
+
+  Future<Response> getFavorites() async {
+    Response res = await get('${base_url}watchlist/list', headers: head);
+    return res;
+  }
+
   Future<Response> getProfile() async {
     Response res = await get('${base_url}panel/profile', headers: head);
     return res;
@@ -223,6 +240,7 @@ class ApiProvider extends GetConnect {
     Response res = await get('${base_url}notification', headers: head);
     return res;
   }
+
   Future<Response> notification({required String? id}) async {
     Response res = await get('${base_url}notification/$id', headers: head);
     return res;
@@ -232,8 +250,10 @@ class ApiProvider extends GetConnect {
     Response res = await get('${base_url}notification/$id/read', headers: head);
     return res;
   }
+
   Future<Response> deleteAllNotifications() async {
-    Response res = await get('${base_url}notification/delete_all', headers: head);
+    Response res =
+        await get('${base_url}notification/delete_all', headers: head);
     return res;
   }
 }
