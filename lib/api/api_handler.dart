@@ -218,4 +218,22 @@ class ApiProvider extends GetConnect {
     Response res = await get('${base_url}panel/profile', headers: head);
     return res;
   }
+
+  Future<Response> notifications() async {
+    Response res = await get('${base_url}notification', headers: head);
+    return res;
+  }
+  Future<Response> notification({required String? id}) async {
+    Response res = await get('${base_url}notification/$id', headers: head);
+    return res;
+  }
+
+  Future<Response> readNotification({required String? id}) async {
+    Response res = await get('${base_url}notification/$id/read', headers: head);
+    return res;
+  }
+  Future<Response> deleteAllNotifications() async {
+    Response res = await get('${base_url}notification/delete_all', headers: head);
+    return res;
+  }
 }
