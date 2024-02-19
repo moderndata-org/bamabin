@@ -219,7 +219,7 @@ class ApiProvider extends GetConnect {
     required String? id,
   }) async {
     FormData frm = FormData({
-      'post_id': '71970',
+      'post_id': '$id',
       'action': action,
     });
     Response res = await post('${base_url}watchlist/set', frm, headers: head);

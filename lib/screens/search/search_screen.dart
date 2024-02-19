@@ -169,7 +169,7 @@ class SearchScreen extends GetView<PublicController> {
                                       image: fm.thumbnail,
                                       onTap: () {
                                         var detail =
-                                            Get.put(DetailController());
+                                            Get.find<DetailController>();
                                         detail.selectedFilm(fm);
                                         Get.toNamed('/movie-detail');
                                       },

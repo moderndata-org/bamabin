@@ -216,7 +216,7 @@ class PartScreen extends GetView<MainController> {
                                   year: '${fm.releaseMovie}',
                                   image: fm.thumbnail,
                                   onTap: () {
-                                    var detail = Get.put(DetailController());
+                                    var detail = Get.find<DetailController>();
                                     detail.selectedFilm(fm);
                                     Get.toNamed('/movie-detail');
                                   },

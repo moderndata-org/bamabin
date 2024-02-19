@@ -1,6 +1,7 @@
 import 'package:bamabin/constant/classes.dart';
 import 'package:bamabin/constant/colors.dart';
 import 'package:bamabin/controller/detail_controller.dart';
+import 'package:bamabin/controller/favorite_controller.dart';
 import 'package:bamabin/screens/dialogs/download_movie_dialog.dart';
 import 'package:bamabin/screens/dialogs/download_serial_dialog.dart';
 import 'package:bamabin/widgets/MyCircularProgress.dart';
@@ -32,6 +33,7 @@ class MovieDetailsScreen extends StatefulWidget {
 
 class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
   final controller = Get.find<DetailController>();
+  final favoriteController = Get.find<FavoriteController>();
   @override
   void initState() {
     controller.isSerial(controller.selectedFilm.value.type == 'series');
@@ -68,6 +70,13 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    bool a = false;
+    favoriteController.listFavorites.forEach((element) {
+      if (element.id == controller.selectedFilm.value.id) {
+        a = true;
+      }
+    });
+    controller.isFavorite(a);
     return SafeArea(
       child: Scaffold(
         floatingActionButton: Obx(() => controller.showGoToTop.value
@@ -936,6 +945,7 @@ class ButtonSectionMovieDetailWidget extends GetView<DetailController> {
 
   @override
   Widget build(BuildContext context) {
+    final favoritecontroller = Get.find<FavoriteController>();
     return Container(
       margin: EdgeInsets.only(top: 10),
       width: Get.width,
@@ -979,33 +989,42 @@ class ButtonSectionMovieDetailWidget extends GetView<DetailController> {
                   borderRadius: 5,
                   padding: EdgeInsets.zero,
                   fgColor: cW,
-                  onTap: () {
-                    controller.isFavorite(!controller.isFavorite.value);
-                  },
+                  onTap: () => favoritecontroller.setFavorite(
+                      id: '${controller.selectedFilm.value.id}',
+                      favoriteAction: controller.isFavorite.isTrue
+                          ? FavoriteAction.Remove
+                          : FavoriteAction.Add),
                   bgColor: cGrey,
                   boxShadow: bsBtnMovieDetail,
                   size: Size.fromHeight(60),
-                  child: Column(
-                    children: [
-                      Expanded(
-                        child: Center(
-                          child: Obx(() => Icon(
-                                controller.isFavorite.value
-                                    ? Icons.bookmark
-                                    : Icons.bookmark_border_rounded,
-                                size: 25,
-                                color: cW,
-                              )),
-                        ),
-                      ),
-                      MyText(
-                        text: 'علاقه مندی',
-                      ),
-                      SizedBox(
-                        height: 5,
-                      )
-                    ],
-                  ))),
+                  child: Obx(() => favoritecontroller.isSettingFavorites.isTrue
+                      ? Center(
+                          child: MyCircularProgress(
+                            color: cW,
+                            size: 25,
+                          ),
+                        )
+                      : Column(
+                          children: [
+                            Expanded(
+                              child: Center(
+                                child: Obx(() => Icon(
+                                      controller.isFavorite.value
+                                          ? Icons.bookmark
+                                          : Icons.bookmark_border_rounded,
+                                      size: 25,
+                                      color: cW,
+                                    )),
+                              ),
+                            ),
+                            MyText(
+                              text: 'علاقه مندی',
+                            ),
+                            SizedBox(
+                              height: 5,
+                            )
+                          ],
+                        )))),
           SizedBox(
             width: 5,
           ),

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 SnackbarController MySnackBar(
-    String mytext, Color snackcolor, Icon myicon, Duration? duration) {
+    {String? message, Color? color, Icon? icon, Duration? duration}) {
   return Get.snackbar('title', 'message',
       onTap: (snack) => Get.back(),
       messageText: Container(),
@@ -36,13 +36,12 @@ SnackbarController MySnackBar(
                     width: 5,
                     height: 40,
                     decoration: BoxDecoration(
-                        color: snackcolor,
-                        borderRadius: BorderRadius.circular(10)),
+                        color: color, borderRadius: BorderRadius.circular(10)),
                   ),
                   const SizedBox(
                     width: 10,
                   ),
-                  myicon,
+                  icon ?? SizedBox(),
                   const SizedBox(
                     width: 10,
                   ),
@@ -52,7 +51,7 @@ SnackbarController MySnackBar(
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       textScaleFactor: 1,
-                      mytext,
+                      '${message}',
                       style: const TextStyle(color: Colors.white),
                     ),
                   ),

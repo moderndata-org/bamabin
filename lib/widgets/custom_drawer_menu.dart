@@ -251,7 +251,7 @@ class CustomDrawerMenu extends GetView<MainController> {
                             FavoriteController fc =
                                 Get.find<FavoriteController>();
                             if (authController.isLogin.isTrue) {
-                              fc.getFavorites();
+                              fc.getFavoritesList();
                               fc.isLoadingFavorites(true);
                               Get.toNamed('/favorite');
                             } else {

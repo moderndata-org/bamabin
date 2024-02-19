@@ -14,7 +14,6 @@ class CollectionsSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return Container(
       width: Get.width,
       color: cPrimaryDark,
@@ -46,16 +45,18 @@ class CollectionsSection extends StatelessWidget {
           SizedBox(
             width: Get.width,
             height: 200,
-            child: Obx((){
+            child: Obx(() {
               return Directionality(
                   textDirection: TextDirection.rtl,
                   child: ListView.builder(
                     padding: EdgeInsets.symmetric(horizontal: 15),
                     physics: BouncingScrollPhysics(),
-                    itemCount: detailController.selectedFilm.value.collection_posts!.length,
+                    itemCount: detailController
+                        .selectedFilm.value.collection_posts!.length,
                     scrollDirection: Axis.horizontal,
-                    itemBuilder: (context, index){
-                      var film = detailController.selectedFilm.value.collection_posts![index];
+                    itemBuilder: (context, index) {
+                      var film = detailController
+                          .selectedFilm.value.collection_posts![index];
                       return MovieItemWidget(
                         title: '${film.titleMovie}',
                         hasDubbed: film.hasDubbed != '',
@@ -66,7 +67,7 @@ class CollectionsSection extends StatelessWidget {
                             : '',
                         image: film.thumbnail,
                         onTap: () {
-                          var detail = Get.put(DetailController());
+                          var detail = Get.find<DetailController>();
                           detail.selectedFilm(film);
                           Get.toNamed('/movie-detail');
                         },

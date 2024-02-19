@@ -14,6 +14,7 @@ class SplashScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    precacheImage(AssetImage('assets/images/ic_logo.png'), context);
     Timer(Duration.zero, () {
       authController.checkLogin();
     });

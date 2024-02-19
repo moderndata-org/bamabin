@@ -110,13 +110,13 @@ class PublicController extends GetxController {
 
   void showErrorMessage({required String message}) {
     MySnackBar(
-        message,
-        Colors.amber,
-        Icon(
-          Icons.warning_rounded,
-          color: Colors.amber,
-        ),
-        Duration(milliseconds: 500));
+      message: message,
+      color: Colors.amber,
+      icon: Icon(
+        Icons.warning_rounded,
+        color: Colors.amber,
+      ),
+    );
   }
 
   void getGenre() {

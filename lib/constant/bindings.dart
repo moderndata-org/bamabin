@@ -1,4 +1,5 @@
 import 'package:bamabin/controller/auth_controller.dart';
+import 'package:bamabin/controller/detail_controller.dart';
 import 'package:bamabin/controller/favorite_controller.dart';
 import 'package:bamabin/controller/main_controller.dart';
 import 'package:bamabin/controller/notification_controller.dart';
@@ -13,6 +14,12 @@ class MyBindings extends Bindings {
       AuthController(),
     );
     Get.put(
+      FavoriteController(),
+    );
+    Get.put(
+      DetailController(),
+    );
+    Get.put(
       PublicController(),
     );
     Get.put(
@@ -20,9 +27,6 @@ class MyBindings extends Bindings {
     );
     Get.put(
       MainController(),
-    );
-    Get.put(
-      FavoriteController(),
     );
     Get.put(
       NotificationController(),

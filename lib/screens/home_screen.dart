@@ -1,6 +1,5 @@
 import 'package:bamabin/controller/main_controller.dart';
 import 'package:bamabin/controller/public_controller.dart';
-import 'package:bamabin/widgets/custom_shimmer.dart';
 import 'package:bamabin/widgets/genre_item.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
@@ -172,7 +171,7 @@ class HomeScreen extends GetView<PublicController> {
                                   physics: BouncingScrollPhysics(),
                                   padding: EdgeInsets.symmetric(horizontal: 10),
                                   scrollDirection: Axis.horizontal,
-                                  itemBuilder: (context, index){
+                                  itemBuilder: (context, index) {
                                     var genre = section.genres![index];
                                     return Center(
                                       child: GenreItem(
@@ -185,7 +184,8 @@ class HomeScreen extends GetView<PublicController> {
                                         boxShadow: BoxShadow(
                                             blurRadius: 2,
                                             offset: Offset(0, 1),
-                                            color: Colors.black.withOpacity(.2)),
+                                            color:
+                                                Colors.black.withOpacity(.2)),
                                       ),
                                     );
                                   },
@@ -197,16 +197,22 @@ class HomeScreen extends GetView<PublicController> {
                       return Column(
                         children: [
                           MainTitleWidget(
-                            icon: (section.icon != null ) ? CachedNetworkImage(imageUrl: section.icon!) : null,
+                            icon: (section.icon != null)
+                                ? CachedNetworkImage(imageUrl: section.icon!)
+                                : null,
                             title: '${section.name}',
-
-                            onTapMore: (){
-                            Get.toNamed("/more",arguments: {
-                              "title":"${section.name}",
-                              "filter_key":(section.taxonomy != null) ? section.taxonomy : "type",
-                              "filter_value": (section.taxonomy != null) ? section.id : section.post_type![0]
-                            });
-                          },),
+                            onTapMore: () {
+                              Get.toNamed("/more", arguments: {
+                                "title": "${section.name}",
+                                "filter_key": (section.taxonomy != null)
+                                    ? section.taxonomy
+                                    : "type",
+                                "filter_value": (section.taxonomy != null)
+                                    ? section.id
+                                    : section.post_type![0]
+                              });
+                            },
+                          ),
                           SizedBox(
                             height: 200,
                             width: Get.width,
@@ -229,7 +235,7 @@ class HomeScreen extends GetView<PublicController> {
                                         : '',
                                     image: film.thumbnail,
                                     onTap: () {
-                                      var detail = Get.put(DetailController());
+                                      var detail = Get.find<DetailController>();
                                       detail.selectedFilm(film);
                                       Get.toNamed('/movie-detail');
                                     },
@@ -246,7 +252,7 @@ class HomeScreen extends GetView<PublicController> {
                         title: "${section.post?.enTitle}",
                         imageUrl: section.post!.bgThumbnail,
                         onDetail: () {
-                          var detail = Get.put(DetailController());
+                          var detail = Get.find<DetailController>();
                           detail.selectedFilm(section.post);
                           Get.toNamed('/movie-detail');
                         },

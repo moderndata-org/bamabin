@@ -1,4 +1,7 @@
+import 'dart:async';
+
 import 'package:bamabin/api/api_handler.dart';
+import 'package:bamabin/controller/favorite_controller.dart';
 import 'package:bamabin/models/profile_model.dart';
 import 'package:bamabin/widgets/MySncakBar.dart';
 import 'package:flutter/material.dart';
@@ -27,14 +30,16 @@ class AuthController extends GetxController {
           isLogin(value.body["status"]);
           if (isLogin.isTrue) {
             getProfile();
+            Get.find<FavoriteController>().getFavoritesList();
           }
         }
       });
     } else {
       isLogin(false);
     }
-
-    Get.offNamed('/main');
+    Timer(Duration(seconds: 4), () {
+      Get.offNamed('/main');
+    });
   }
 
   void login({required String? username, required String? password}) {
@@ -160,8 +165,8 @@ class AuthController extends GetxController {
         ApiProvider().forget(email: email).then((res) {
           isForgotPasswordRegister(false);
           if (res.body != null) {
-              showMessage(text: res.body['message'], isSucces: res.body['status'] );
-
+            showMessage(
+                text: res.body['message'], isSucces: res.body['status']);
           }
         });
       } else {
@@ -172,28 +177,28 @@ class AuthController extends GetxController {
       showMessage(text: 'لطفا اطلاعات را وارد نمایید', isSucces: false);
       isForgotPasswordRegister(false);
     }
-
   }
 
-  void logOut(){
+  void logOut() {
     box.remove("api_key");
     box.save();
     isLogin(false);
     Get.back();
   }
+
   void showMessage({required String text, required bool isSucces}) {
     MySnackBar(
-        text,
-        isSucces ? Colors.green : Colors.amber,
-        isSucces
-            ? Icon(
-                Icons.check_circle_rounded,
-                color: Colors.green,
-              )
-            : Icon(
-                Icons.warning_rounded,
-                color: Colors.amber,
-              ),
-        Duration(milliseconds: 1500));
+      message: text,
+      color: isSucces ? Colors.green : Colors.amber,
+      icon: isSucces
+          ? Icon(
+              Icons.check_circle_rounded,
+              color: Colors.green,
+            )
+          : Icon(
+              Icons.warning_rounded,
+              color: Colors.amber,
+            ),
+    );
   }
 }
