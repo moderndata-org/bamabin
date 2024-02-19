@@ -1,5 +1,6 @@
 import 'package:bamabin/constant/colors.dart';
 import 'package:bamabin/controller/auth_controller.dart';
+import 'package:bamabin/controller/favorite_controller.dart';
 import 'package:bamabin/controller/main_controller.dart';
 import 'package:bamabin/controller/public_controller.dart';
 import 'package:bamabin/widgets/MyText.dart';
@@ -246,9 +247,15 @@ class CustomDrawerMenu extends GetView<MainController> {
                           boxShadow: bsTextLowOpacity,
                           bgColor: cBgDrawerItem,
                           onTap: () {
-                            (authController.isLogin.isTrue)
-                                ? Get.toNamed('/favorite')
-                                : Get.toNamed('/signin');
+                            FavoriteController fc =
+                                Get.find<FavoriteController>();
+                            if (authController.isLogin.isTrue) {
+                              fc.getFavorites();
+                              fc.isLoadingFavorites(true);
+                              Get.toNamed('/favorite');
+                            } else {
+                              Get.toNamed('/signin');
+                            }
                             controller.scaffolState.currentState!
                                 .closeEndDrawer();
                           },

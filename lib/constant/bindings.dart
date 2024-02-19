@@ -1,4 +1,5 @@
 import 'package:bamabin/controller/auth_controller.dart';
+import 'package:bamabin/controller/favorite_controller.dart';
 import 'package:bamabin/controller/main_controller.dart';
 import 'package:bamabin/controller/player_controller.dart';
 import 'package:bamabin/controller/public_controller.dart';
@@ -18,6 +19,9 @@ class MyBindings extends Bindings {
     );
     Get.put(
       MainController(),
+    );
+    Get.put(
+      FavoriteController(),
     );
   }
 }

@@ -12,9 +12,9 @@ class PublicController extends GetxController {
   RxInt homeBannerIndex = 0.obs;
   ScrollController favoriteScrollController = ScrollController();
   RxBool hasSubscribe = false.obs;
-  List<Genre> listGenre = <Genre>[].obs;
-  List<AgeRate> listAge = <AgeRate>[].obs;
-  List<Country> listCountry = <Country>[].obs;
+  RxList<Genre> listGenre = <Genre>[].obs;
+  RxList<AgeRate> listAge = <AgeRate>[].obs;
+  RxList<Country> listCountry = <Country>[].obs;
   //! Search Page
   RxBool isShowShimmerSearch = false.obs;
   RxBool isLoadingSearchResults = false.obs;
