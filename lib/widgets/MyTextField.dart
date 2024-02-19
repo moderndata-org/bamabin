@@ -8,7 +8,7 @@ class MyTextField extends StatelessWidget {
     required this.controller,
     this.borderRadius,
     this.inputType,
-    this.length,
+    this.maxLength,
     this.textAlign,
     this.action,
     this.onchangedAction,
@@ -39,7 +39,7 @@ class MyTextField extends StatelessWidget {
   final double? paddingVertical;
   final TextEditingController controller;
   final TextInputType? inputType;
-  final int? length;
+  final int? maxLength;
   final TextStyle? textStyle;
   final TextAlign? textAlign;
   final TextInputAction? action;
@@ -77,7 +77,7 @@ class MyTextField extends StatelessWidget {
         onChanged: onchangedAction,
         cursorColor: cursorColor ?? cW,
         textAlign: textAlign ?? TextAlign.right,
-        inputFormatters: addlist(length, inputType),
+        inputFormatters: addlist(maxLength, inputType),
         decoration: InputDecoration(
           fillColor: cSecondary,
           prefixIcon: prefixIcon,

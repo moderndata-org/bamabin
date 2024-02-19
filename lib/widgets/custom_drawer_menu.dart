@@ -246,7 +246,9 @@ class CustomDrawerMenu extends GetView<MainController> {
                           boxShadow: bsTextLowOpacity,
                           bgColor: cBgDrawerItem,
                           onTap: () {
-                            Get.toNamed('/favorite');
+                            (authController.isLogin.isTrue)
+                                ? Get.toNamed('/favorite')
+                                : Get.toNamed('/signin');
                             controller.scaffolState.currentState!
                                 .closeEndDrawer();
                           },

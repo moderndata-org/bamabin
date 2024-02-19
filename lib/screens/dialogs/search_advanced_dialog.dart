@@ -254,7 +254,7 @@ class _SearchAdvancedDialogState extends State<SearchAdvancedDialog> {
                         hint: "از سال",
                         controller: txtFromYear,
                         inputType: TextInputType.number,
-                        length: 4,
+                        maxLength: 4,
                       ),
                     ),
                     SizedBox(
@@ -266,7 +266,7 @@ class _SearchAdvancedDialogState extends State<SearchAdvancedDialog> {
                         hint: "تا سال",
                         controller: txtToYear,
                         inputType: TextInputType.number,
-                        length: 4,
+                        maxLength: 4,
                       ),
                     ),
                   ],
@@ -282,7 +282,7 @@ class _SearchAdvancedDialogState extends State<SearchAdvancedDialog> {
                         hint: "امتیاز از",
                         inputType: TextInputType.number,
                         controller: txtFromImdb,
-                        length: 2,
+                        maxLength: 2,
                         onchangedAction: (text) {
                           if (text.length == 2) {
                             if (int.tryParse(text)! > 10) {
@@ -301,7 +301,7 @@ class _SearchAdvancedDialogState extends State<SearchAdvancedDialog> {
                         hint: "امتیاز تا",
                         inputType: TextInputType.number,
                         controller: txtToImdb,
-                        length: 2,
+                        maxLength: 2,
                         onchangedAction: (text) {
                           if (text.length == 2) {
                             if (int.tryParse(text)! > 10) {
