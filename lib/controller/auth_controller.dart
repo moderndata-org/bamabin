@@ -1,4 +1,5 @@
 import 'package:bamabin/api/api_handler.dart';
+import 'package:bamabin/models/profile_model.dart';
 import 'package:bamabin/widgets/MySncakBar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -12,6 +13,7 @@ class AuthController extends GetxController {
   RxBool isLoadingUpdateProfile = false.obs;
   RxBool isLoadingRegister = false.obs;
   RxBool isLoadingLogin = false.obs;
+  var profile = ProfileModel().obs;
 
   GetStorage box = GetStorage('bamabin');
   var isLogin = false.obs;
@@ -19,8 +21,10 @@ class AuthController extends GetxController {
     if (box.hasData("api_key")) {
       ApiProvider().checkLogin().then((value) {
         if (value.isOk) {
-          print(value.body);
           isLogin(value.body["status"]);
+          if(isLogin.isTrue){
+            getProfile();
+          }
         }
       });
     } else {
@@ -38,15 +42,21 @@ class AuthController extends GetxController {
         if (res.body["status"] == true) {
           box.write("api_key", res.body["api_key"]);
           isLogin(true);
-          //! Sould be return to the last page that user come from
-          // Get.toNamed('/main');
-          Navigator.pop(Get.context!);
-          showMessage(text: '${res.body['message']}', isSucces: true);
+          getProfile();
+          Get.back();
         } else {
           showMessage(text: res.body["message"], isSucces: false);
         }
       }
       isLoadingLogin(false);
+    });
+  }
+
+  void getProfile(){
+    ApiProvider().getProfile().then((value){
+      if(value.isOk){
+        profile(ProfileModel.fromJson(value.body["result"]));
+      }
     });
   }
 

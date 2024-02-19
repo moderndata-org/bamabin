@@ -213,4 +213,9 @@ class ApiProvider extends GetConnect {
     Response res = await get('${base_url}is_login', headers: head);
     return res;
   }
+
+  Future<Response> getProfile() async {
+    Response res = await get('${base_url}panel/profile', headers: head);
+    return res;
+  }
 }
