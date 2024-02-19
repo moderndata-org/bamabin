@@ -108,6 +108,7 @@ class FilmModel {
   String? imdbVoteCount;
   String? malRate;
   String? malVoteCount;
+  bool? is_watchlist;
   List<String>? genresListForDetail;
   List<FilmModel>? collection_posts;
   List<FilmModel>? related_posts;
@@ -124,6 +125,7 @@ class FilmModel {
       this.status,
       this.commentStatus,
       this.pingStatus,
+      this.is_watchlist,
       this.password,
       this.name,
       this.toPing,
@@ -219,6 +221,7 @@ class FilmModel {
 
   FilmModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
+    is_watchlist = json['is_watchlist'];
     authorId = json['author_id'];
     date = json['date'];
     dateGmt = json['date_gmt'];

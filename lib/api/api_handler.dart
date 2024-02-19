@@ -226,6 +226,18 @@ class ApiProvider extends GetConnect {
     return res;
   }
 
+  Future<Response> setLike({
+    required String? id,
+    required String? action,
+  }) async {
+    FormData frm = FormData({
+      'post_id': '$id',
+      'action': action,
+    });
+    Response res = await post('${base_url}like/post', frm, headers: head);
+    return res;
+  }
+
   Future<Response> getFavorites() async {
     Response res = await get('${base_url}watchlist/list', headers: head);
     return res;
@@ -237,7 +249,8 @@ class ApiProvider extends GetConnect {
   }
 
   Future<Response> notifications({required String? page}) async {
-    Response res = await get('${base_url}notification?page=${page}', headers: head);
+    Response res =
+        await get('${base_url}notification?page=${page}', headers: head);
     return res;
   }
 

@@ -70,13 +70,14 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    bool a = false;
-    favoriteController.listFavorites.forEach((element) {
-      if (element.id == controller.selectedFilm.value.id) {
-        a = true;
-      }
-    });
-    controller.isFavorite(a);
+    // print(controller.selectedFilm.value.is_watchlist);
+    // bool a = false;
+    // favoriteController.listFavorites.forEach((element) {
+    //   if (element.id == controller.selectedFilm.value.id) {
+    //     a = true;
+    //   }
+    // });
+    // controller.isFavorite(a);
     return SafeArea(
       child: Scaffold(
         floatingActionButton: Obx(() => controller.showGoToTop.value
@@ -216,8 +217,9 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                         children: [
                           //! dislike
                           GestureDetector(
-                            onTap: () =>
-                                controller.movieLikeStatus(LikeAction.dislike),
+                            onTap: () => controller.setLikeAction(
+                                action: LikeAction.dislike,
+                                id: '${controller.selectedFilm.value.id}'),
                             child: Obx(() => AnimatedContainer(
                                   duration: Duration(milliseconds: 300),
                                   decoration: BoxDecoration(
@@ -253,8 +255,9 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                           ),
                           //! like
                           GestureDetector(
-                            onTap: () =>
-                                controller.movieLikeStatus(LikeAction.like),
+                            onTap: () => controller.setLikeAction(
+                                action: LikeAction.dislike,
+                                id: '${controller.selectedFilm.value.id}'),
                             child: Obx(() => AnimatedContainer(
                                   duration: Duration(milliseconds: 300),
                                   decoration: BoxDecoration(
@@ -1009,7 +1012,9 @@ class ButtonSectionMovieDetailWidget extends GetView<DetailController> {
                             Expanded(
                               child: Center(
                                 child: Obx(() => Icon(
-                                      controller.isFavorite.value
+                                      controller.selectedFilm.value
+                                                  .is_watchlist ==
+                                              true
                                           ? Icons.bookmark
                                           : Icons.bookmark_border_rounded,
                                       size: 25,
