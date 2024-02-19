@@ -32,14 +32,18 @@ class AuthController extends GetxController {
 
   void login({required String? username, required String? password}) {
     isLoadingLogin(true);
-    ApiProvider().login(username: username, password: password).then((value) {
-      if (value.isOk) {
-        if (value.body["statue"] == true) {
-          box.write("api_key", value.body["api_key"]);
+    ApiProvider().login(username: username, password: password).then((res) {
+      print(res.body);
+      if (res.isOk) {
+        if (res.body["status"] == true) {
+          box.write("api_key", res.body["api_key"]);
           isLogin(true);
-          Get.toNamed('/main');
+          //! Sould be return to the last page that user come from
+          // Get.toNamed('/main');
+          Navigator.pop(Get.context!);
+          showMessage(text: '${res.body['message']}', isSucces: true);
         } else {
-          showErrorMessage(text: value.body["message"]);
+          showMessage(text: res.body["message"], isSucces: false);
         }
       }
       isLoadingLogin(false);
@@ -54,7 +58,6 @@ class AuthController extends GetxController {
     String? phone,
     String? city,
   }) {
-    print(nickname);
     if (nickname != null && nickname != '') {
       isLoadingUpdateProfile(true);
       ApiProvider()
@@ -67,10 +70,17 @@ class AuthController extends GetxController {
               phone: phone)
           .then((res) {
         isLoadingUpdateProfile(false);
-        print(res.body);
+        if (res.body != null) {
+          if (res.body['status'] == true) {
+            showMessage(text: 'با موفقیت ویرایش شد', isSucces: true);
+            Navigator.pop(Get.context!);
+          } else {
+            showMessage(text: 'خطا در ارتباط', isSucces: false);
+          }
+        }
       });
     } else {
-      showErrorMessage(text: 'لطفا نام نمایشی خود را وارد نمایید');
+      showMessage(text: 'لطفا نام نمایشی خود را وارد نمایید', isSucces: false);
     }
   }
 
@@ -95,45 +105,45 @@ class AuthController extends GetxController {
               isLoadingRegister(false);
               if (res.body != null) {
                 if (res.body['status'] == true) {
-                  MySnackBar(
-                      '${res.body['message']}',
-                      Colors.green,
-                      Icon(
-                        Icons.check_circle_rounded,
-                        color: Colors.green,
-                      ),
-                      Duration(milliseconds: 1500));
+                  showMessage(text: '${res.body['message']}', isSucces: true);
                   box.write('api_key', res.body['api_key']);
                   box.save();
                   Get.back();
                 } else {
-                  showErrorMessage(text: res.body['message']);
+                  showMessage(text: res.body['message'], isSucces: false);
                 }
               }
               print(res.body);
             });
           } else {
-            showErrorMessage(text: 'رمز با تکرار رمز یکسان نمیباشد');
+            showMessage(
+                text: 'رمز با تکرار رمز یکسان نمیباشد', isSucces: false);
           }
         } else {
-          showErrorMessage(text: 'لطفا ایمیل را بررسی نمایید');
+          showMessage(text: 'لطفا ایمیل را بررسی نمایید', isSucces: false);
         }
       } else {
-        showErrorMessage(text: 'لطفا اطلاعات را وارد نمایید');
+        showMessage(text: 'لطفا اطلاعات را وارد نمایید', isSucces: false);
       }
     } else {
-      showErrorMessage(text: 'لطفا گزینه شرایط و قوانین را فعال نمایید');
+      showMessage(
+          text: 'لطفا گزینه شرایط و قوانین را فعال نمایید', isSucces: false);
     }
   }
 
-  void showErrorMessage({required String text}) {
+  void showMessage({required String text, required bool isSucces}) {
     MySnackBar(
         text,
-        Colors.amber,
-        Icon(
-          Icons.warning_rounded,
-          color: Colors.amber,
-        ),
+        isSucces ? Colors.green : Colors.amber,
+        isSucces
+            ? Icon(
+                Icons.check_circle_rounded,
+                color: Colors.green,
+              )
+            : Icon(
+                Icons.warning_rounded,
+                color: Colors.amber,
+              ),
         Duration(milliseconds: 1500));
   }
 }

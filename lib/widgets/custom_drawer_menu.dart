@@ -101,8 +101,9 @@ class CustomDrawerMenu extends GetView<MainController> {
                                     alignment: Alignment.centerRight,
                                     child: GestureDetector(
                                       onTap: () {
-                                        (authController.isLogin.isTrue) ?
-                                        Get.toNamed('/profile') : Get.toNamed('/signin');
+                                        (authController.isLogin.isTrue)
+                                            ? Get.toNamed('/profile')
+                                            : Get.toNamed('/signin');
                                         controller.scaffolState.currentState!
                                             .closeEndDrawer();
                                       },
@@ -119,7 +120,9 @@ class CustomDrawerMenu extends GetView<MainController> {
                                             top: 5,
                                             bottom: 5),
                                         child: MyText(
-                                          text: (authController.isLogin.isTrue) ? 'ویرایش پروفایل' : 'ورود / ثبت نام',
+                                          text: (authController.isLogin.isTrue)
+                                              ? 'ویرایش پروفایل'
+                                              : 'ورود / ثبت نام',
                                           color: cW,
                                           size: 13,
                                         ),
