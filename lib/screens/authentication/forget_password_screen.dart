@@ -1,4 +1,5 @@
 import 'package:bamabin/controller/auth_controller.dart';
+import 'package:bamabin/widgets/MyCircularProgress.dart';
 import 'package:bamabin/widgets/back_button_custom.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -56,7 +57,7 @@ class ForgetPasswordScreen extends GetView<AuthController> {
                   ),
                   MyTextField(
                     hint: 'ایمیل',
-                    controller: controller.txtUsername,
+                    controller: controller.txtEmail,
                     prefixIcon: Icon(
                       Icons.account_circle_rounded,
                       size: 30,
@@ -93,12 +94,25 @@ class ForgetPasswordScreen extends GetView<AuthController> {
             MyTextButton(
               size: Size(Get.width * .8, 55),
               bgColor: cAccent,
-              onTap: () {},
-              child: MyText(
-                text: 'ارسال',
-                color: cB,
-                size: 15,
-              ),
+              onTap: () {
+                if(controller.txtEmail.text.trim().isNotEmpty){
+                  controller.forgotPassword(email: controller.txtEmail.text.trim());
+                }else{
+                  controller.showMessage(text: "لطفا ایمیل را صحیح وارد کنید.", isSucces: false);
+                }
+              },
+              child: Obx(() {
+                return (controller.isForgotPasswordRegister.isTrue)
+                    ? MyCircularProgress(
+                        color: Colors.black,
+                        size: 28,
+                      )
+                    : MyText(
+                        text: 'ارسال',
+                        color: cB,
+                        size: 15,
+                      );
+              }),
             ),
             SizedBox(
               height: 10,

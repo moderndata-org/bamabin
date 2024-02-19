@@ -9,6 +9,7 @@ class AuthController extends GetxController {
   TextEditingController txtUsername = TextEditingController();
   TextEditingController txtPasswrod = TextEditingController();
   TextEditingController txtPasswrod2 = TextEditingController();
+  TextEditingController txtEmail = TextEditingController();
   RxBool terms = true.obs;
   RxBool isLoadingUpdateProfile = false.obs;
   RxBool isLoadingRegister = false.obs;
@@ -151,14 +152,18 @@ class AuthController extends GetxController {
           isForgotPasswordRegister(false);
           if (res.body != null) {
               showMessage(text: res.body['message'], isSucces: res.body['status'] );
+
           }
         });
       } else {
         showMessage(text: 'لطفا ایمیل را بررسی نمایید', isSucces: false);
+        isForgotPasswordRegister(false);
       }
     } else {
       showMessage(text: 'لطفا اطلاعات را وارد نمایید', isSucces: false);
+      isForgotPasswordRegister(false);
     }
+
   }
 
   void logOut(){
