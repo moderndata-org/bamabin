@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:bamabin/api/api_handler.dart';
 import 'package:bamabin/controller/auth_controller.dart';
 import 'package:bamabin/models/film_model.dart';
@@ -21,6 +23,7 @@ class DetailController extends GetxController {
   RxBool isFavorite = false.obs;
   RxBool isLoadingLikeStatus = false.obs;
   late VideoPlayerController trailerController;
+  AuthController? _authController;
 
   void setLikeAction({required LikeAction action, required String id}) {
     isLoadingLikeStatus(true);
@@ -43,17 +46,21 @@ class DetailController extends GetxController {
   void getNewData() {
     ApiProvider()
         .getMovieDetail(
-      id: '${selectedFilm.value.id}',
-    )
+            id: '${selectedFilm.value.id}',
+            isLogin: _authController!.isLogin.value)
         .then((res) {
       if (res.body != null) {
         selectedFilm(FilmModel.fromJson(res.body['result']));
+        print('ooooops ${selectedFilm.value.is_watchlist}');
       }
     });
   }
 
   @override
   void onInit() {
+    Timer(Duration(milliseconds: 50), () {
+      _authController = Get.find<AuthController>();
+    });
     txtComment = TextEditingController();
     movieDetailScrollController.addListener(() {
       if (movieDetailScrollController.offset > Get.height / 5) {

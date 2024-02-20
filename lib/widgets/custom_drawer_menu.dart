@@ -320,7 +320,6 @@ class CustomDrawerMenu extends GetView<MainController> {
                           boxShadow: bsTextLowOpacity,
                           bgColor: cBgDrawerItem,
                           onTap: () {
-                            Get.toNamed('/order');
                             controller.scaffolState.currentState!
                                 .closeEndDrawer();
                           },

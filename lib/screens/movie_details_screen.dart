@@ -78,6 +78,7 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
     //   }
     // });
     // controller.isFavorite(a);
+    print('${controller.selectedFilm.value.is_watchlist}');
     return SafeArea(
       child: Scaffold(
         floatingActionButton: Obx(() => controller.showGoToTop.value
@@ -212,87 +213,94 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                   Positioned(
                       left: padding,
                       bottom: 0,
-                      child: Row(
-                        textDirection: TextDirection.ltr,
-                        children: [
-                          //! dislike
-                          GestureDetector(
-                            onTap: () => controller.setLikeAction(
-                                action: LikeAction.dislike,
-                                id: '${controller.selectedFilm.value.id}'),
-                            child: Obx(() => AnimatedContainer(
-                                  duration: Duration(milliseconds: 300),
-                                  decoration: BoxDecoration(
-                                      color: controller.movieLikeStatus.value ==
-                                              LikeAction.dislike
-                                          ? cDisklike
-                                          : cDisklike.withOpacity(.5),
-                                      borderRadius: BorderRadius.only(
-                                        topLeft: Radius.circular(5),
-                                        bottomLeft: Radius.circular(5),
+                      child: Obx(() => controller.isLoadingLikeStatus.isTrue
+                          ? CustomShimmerWidget(width: 160, height: 30)
+                          : Row(
+                              textDirection: TextDirection.ltr,
+                              children: [
+                                //! dislike
+                                GestureDetector(
+                                  onTap: () => controller.setLikeAction(
+                                      action: LikeAction.dislike,
+                                      id: '${controller.selectedFilm.value.id}'),
+                                  child: Obx(() => AnimatedContainer(
+                                        duration: Duration(milliseconds: 300),
+                                        decoration: BoxDecoration(
+                                            color: controller.movieLikeStatus
+                                                        .value ==
+                                                    LikeAction.dislike
+                                                ? cDisklike
+                                                : cDisklike.withOpacity(.5),
+                                            borderRadius: BorderRadius.only(
+                                              topLeft: Radius.circular(5),
+                                              bottomLeft: Radius.circular(5),
+                                            )),
+                                        height: 30,
+                                        width: 80,
+                                        child: Row(
+                                          textDirection: TextDirection.rtl,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Icon(
+                                              Icons.thumb_down_alt_rounded,
+                                              color: cW,
+                                              size: 16,
+                                            ),
+                                            SizedBox(
+                                              width: 5,
+                                            ),
+                                            MyText(
+                                              text: 'نپسندیدم',
+                                              size: 12,
+                                            ),
+                                          ],
+                                        ),
                                       )),
-                                  height: 30,
-                                  width: 80,
-                                  child: Row(
-                                    textDirection: TextDirection.rtl,
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Icon(
-                                        Icons.thumb_down_alt_rounded,
-                                        color: cW,
-                                        size: 16,
-                                      ),
-                                      SizedBox(
-                                        width: 5,
-                                      ),
-                                      MyText(
-                                        text: 'نپسندیدم',
-                                        size: 12,
-                                      ),
-                                    ],
-                                  ),
-                                )),
-                          ),
-                          //! like
-                          GestureDetector(
-                            onTap: () => controller.setLikeAction(
-                                action: LikeAction.dislike,
-                                id: '${controller.selectedFilm.value.id}'),
-                            child: Obx(() => AnimatedContainer(
-                                  duration: Duration(milliseconds: 300),
-                                  decoration: BoxDecoration(
-                                      color: controller.movieLikeStatus.value ==
-                                              LikeAction.like
-                                          ? cSecondaryLight
-                                          : cSecondaryLight.withOpacity(.5),
-                                      borderRadius: BorderRadius.only(
-                                        topRight: Radius.circular(5),
-                                        bottomRight: Radius.circular(5),
+                                ),
+                                //! like
+                                GestureDetector(
+                                  onTap: () => controller.setLikeAction(
+                                      action: LikeAction.dislike,
+                                      id: '${controller.selectedFilm.value.id}'),
+                                  child: Obx(() => AnimatedContainer(
+                                        duration: Duration(milliseconds: 300),
+                                        decoration: BoxDecoration(
+                                            color: controller.movieLikeStatus
+                                                        .value ==
+                                                    LikeAction.like
+                                                ? cSecondaryLight
+                                                : cSecondaryLight
+                                                    .withOpacity(.5),
+                                            borderRadius: BorderRadius.only(
+                                              topRight: Radius.circular(5),
+                                              bottomRight: Radius.circular(5),
+                                            )),
+                                        height: 30,
+                                        width: 80,
+                                        child: Row(
+                                          textDirection: TextDirection.rtl,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Icon(
+                                              Icons.thumb_up_alt_rounded,
+                                              color: cW,
+                                              size: 16,
+                                            ),
+                                            SizedBox(
+                                              width: 5,
+                                            ),
+                                            MyText(
+                                              text: 'پسندیدم',
+                                              size: 12,
+                                            ),
+                                          ],
+                                        ),
                                       )),
-                                  height: 30,
-                                  width: 80,
-                                  child: Row(
-                                    textDirection: TextDirection.rtl,
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Icon(
-                                        Icons.thumb_up_alt_rounded,
-                                        color: cW,
-                                        size: 16,
-                                      ),
-                                      SizedBox(
-                                        width: 5,
-                                      ),
-                                      MyText(
-                                        text: 'پسندیدم',
-                                        size: 12,
-                                      ),
-                                    ],
-                                  ),
-                                )),
-                          ),
-                        ],
-                      )),
+                                ),
+                              ],
+                            ))),
                   //! Back Btn
                   Positioned(
                       left: 0,

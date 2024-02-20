@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:bamabin/api/api_handler.dart';
+import 'package:bamabin/controller/auth_controller.dart';
 import 'package:bamabin/models/film_model.dart';
 import 'package:bamabin/models/genre_model.dart';
 import 'package:bamabin/models/section_model.dart';
@@ -30,9 +31,13 @@ class MainController extends GetxController {
   var taxonomypageNumber = 1;
   var sectionsList = <SectionModel>[].obs;
   var moreFilmList = <FilmModel>[].obs;
+  AuthController? _authController;
 
   @override
   void onInit() {
+    Timer(Duration(milliseconds: 50), () {
+      _authController = Get.find<AuthController>();
+    });
     //! on open screen
     getSliders();
     getMainSections();
@@ -100,6 +105,7 @@ class MainController extends GetxController {
       }
       ApiProvider()
           .archive(
+              isLogin: _authController!.isLogin.value,
               type: selectedBottomNav.value,
               page: pageNumber == null ? null : pageNumber.toString(),
               orderBy: selectedOrder.value,
@@ -157,19 +163,19 @@ class MainController extends GetxController {
     });
   }
 
-  void getTaxonomy(String taxonomy,String id) {
-    if(taxonomypageNumber == 1){
+  void getTaxonomy(String taxonomy, String id) {
+    if (taxonomypageNumber == 1) {
       moreFilmList.clear();
     }
     print(taxonomypageNumber);
-    ApiProvider().getTaxonomy(taxonomy, id,taxonomypageNumber.toString()).then((value) {
-
+    ApiProvider()
+        .getTaxonomy(taxonomy, id, taxonomypageNumber.toString())
+        .then((value) {
       if (value.body != null) {
         if (value.body["status"] == true) {
           (value.body["results"] as List).forEach((element) {
             moreFilmList.add(FilmModel.fromJson(element));
           });
-
         }
       }
     });

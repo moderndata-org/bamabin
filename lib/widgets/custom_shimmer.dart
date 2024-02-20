@@ -6,10 +6,12 @@ class CustomShimmerWidget extends StatelessWidget {
     super.key,
     required this.width,
     required this.height,
+    this.radius,
   });
 
   final double width;
-  final double? height;
+  final double height;
+  final double? radius;
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +20,8 @@ class CustomShimmerWidget extends StatelessWidget {
         height: height,
         width: width,
         decoration: BoxDecoration(
-            color: Colors.white, borderRadius: BorderRadius.circular(5)),
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(radius ?? 5)),
       ),
       gradient: LinearGradient(
           begin: Alignment.topLeft,

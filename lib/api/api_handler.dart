@@ -18,24 +18,31 @@ class ApiProvider extends GetConnect {
     }
   }
 
-  Future<Response> getMovieDetail({required String id}) async {
+  Future<Response> getMovieDetail({
+    required String id,
+    required bool isLogin,
+  }) async {
     String url = '${base_url}post/show/$id';
-    Response res = await get(url);
+    Response res = isLogin ? await get(url, headers: head) : await get(url);
     return res;
   }
 
-  Future<Response> sendCode({required String phoneNumber}) async {
+  Future<Response> sendCode({
+    required String phoneNumber,
+  }) async {
     Map map = {'phone_number': phoneNumber};
     Response res = await post('${base_url}send-code', map);
     return res;
   }
 
-  Future<Response> archive(
-      {required BottomNavType type,
-      String? page,
-      String? genreId,
-      String? imdb_min_rate,
-      required OrderBy orderBy}) async {
+  Future<Response> archive({
+    required BottomNavType type,
+    String? page,
+    String? genreId,
+    String? imdb_min_rate,
+    required OrderBy orderBy,
+    required bool isLogin,
+  }) async {
     Map<String, String> m = {
       'type': switch (type) {
         BottomNavType.home => 'movies',
@@ -58,10 +65,12 @@ class ApiProvider extends GetConnect {
           OrderBy.imdb => 'imdb',
           OrderBy.modified => 'modified',
         }}');
-    Response res = await get(
-      '${base_url}archive/post_type',
-      query: m,
-    );
+    Response res = isLogin
+        ? await get('${base_url}archive/post_type', query: m, headers: head)
+        : await get(
+            '${base_url}archive/post_type',
+            query: m,
+          );
     print(m);
     return res;
   }
@@ -240,6 +249,11 @@ class ApiProvider extends GetConnect {
 
   Future<Response> getFavorites() async {
     Response res = await get('${base_url}watchlist/list', headers: head);
+    return res;
+  }
+
+  Future<Response> getOrderList() async {
+    Response res = await get('${base_url}panel/lists', headers: head);
     return res;
   }
 

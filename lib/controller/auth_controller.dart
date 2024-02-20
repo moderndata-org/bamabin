@@ -30,7 +30,6 @@ class AuthController extends GetxController {
           isLogin(value.body["status"]);
           if (isLogin.isTrue) {
             getProfile();
-            Get.find<FavoriteController>().getFavoritesList();
           }
         }
       });
