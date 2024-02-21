@@ -283,4 +283,51 @@ class ApiProvider extends GetConnect {
         await get('${base_url}notification/delete_all', headers: head);
     return res;
   }
+
+  Future<Response> tickets() async {
+    Response res =
+    await get('${base_url}panel/ticket/index', headers: head);
+    return res;
+  }
+
+  Future<Response> singleTicket({required String? id}) async {
+    Response res =
+    await get('${base_url}panel/ticket/${id}', headers: head);
+    return res;
+  }
+
+  Future<Response> departments({required String? id}) async {
+    Response res =
+    await get('${base_url}panel/ticket/departments', headers: head);
+    return res;
+  }
+
+  Future<Response> createTicket({required String? title, required String? department_id , required String? content}) async {
+    var data = FormData({
+      "title": title,
+      "department": department_id,
+      "content":content
+    });
+    Response res =
+    await post('${base_url}panel/ticket/create',data, headers: head);
+    return res;
+  }
+
+  Future<Response> replyTicket({required String? id , required String? content}) async {
+    var data = FormData({
+      "content":content
+    });
+    Response res =
+    await post('${base_url}panel/ticket/${id}/reply',data, headers: head);
+    return res;
+  }
+
+  Future<Response> closeTicket({required String? id}) async {
+
+    Response res =
+    await get('${base_url}panel/ticket/${id}/close', headers: head);
+    return res;
+  }
+
+
 }
