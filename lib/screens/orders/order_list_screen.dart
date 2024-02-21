@@ -1,8 +1,6 @@
-import 'package:bamabin/api/api_handler.dart';
 import 'package:bamabin/controller/order_list_controller.dart';
 import 'package:bamabin/models/order_list_model.dart';
-import 'package:bamabin/screens/dialogs/orderlist_add_list_dialog.dart';
-import 'package:bamabin/screens/dialogs/orderlist_edit_list_dialog.dart';
+import 'package:bamabin/screens/orders/order_list_show_items_dialog.dart';
 import 'package:bamabin/widgets/MyText.dart';
 import 'package:bamabin/widgets/MyTextButton.dart';
 import 'package:bamabin/widgets/custom_shimmer.dart';
@@ -11,6 +9,8 @@ import 'package:get/get.dart';
 
 import '../../constant/colors.dart';
 import '../../widgets/custom_appbar.dart';
+import 'orderlist_add_list_dialog.dart';
+import 'orderlist_edit_list_dialog.dart';
 
 class OrderlistScreen extends StatefulWidget {
   const OrderlistScreen({super.key});
@@ -84,6 +84,12 @@ class _OrderlistScreenState extends State<OrderlistScreen> {
                             itemCount: '${ol.items}',
                             type: 'فیلم',
                             date: '${ol.persianDate}',
+                            show: () => showDialog(
+                              barrierColor: cBgDialogColor,
+                              context: context,
+                              builder: (context) => OrderListShowItemsDialog(
+                                  listFilms: ol.posts ?? []),
+                            ),
                             edit: () => showDialog(
                               barrierColor: cBgDialogColor,
                               context: context,

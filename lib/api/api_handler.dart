@@ -252,6 +252,19 @@ class ApiProvider extends GetConnect {
     return res;
   }
 
+  Future<Response> addOrderList({
+    required String? title,
+    required String? content,
+  }) async {
+    FormData frm = FormData({
+      'title': title,
+      'content': content,
+    });
+    Response res =
+        await post('${base_url}panel/lists/create', frm, headers: head);
+    return res;
+  }
+
   Future<Response> getOrderList() async {
     Response res = await get('${base_url}panel/lists', headers: head);
     return res;
@@ -285,49 +298,43 @@ class ApiProvider extends GetConnect {
   }
 
   Future<Response> tickets() async {
-    Response res =
-    await get('${base_url}panel/ticket/index', headers: head);
+    Response res = await get('${base_url}panel/ticket/index', headers: head);
     return res;
   }
 
   Future<Response> singleTicket({required String? id}) async {
-    Response res =
-    await get('${base_url}panel/ticket/${id}', headers: head);
+    Response res = await get('${base_url}panel/ticket/${id}', headers: head);
     return res;
   }
 
   Future<Response> departments() async {
     Response res =
-    await get('${base_url}panel/ticket/departments', headers: head);
+        await get('${base_url}panel/ticket/departments', headers: head);
     return res;
   }
 
-  Future<Response> createTicket({required String? title, required String? department_id , required String? content}) async {
-    var data = FormData({
-      "title": title,
-      "department": department_id,
-      "content":content
-    });
+  Future<Response> createTicket(
+      {required String? title,
+      required String? department_id,
+      required String? content}) async {
+    var data = FormData(
+        {"title": title, "department": department_id, "content": content});
     Response res =
-    await post('${base_url}panel/ticket/create',data, headers: head);
+        await post('${base_url}panel/ticket/create', data, headers: head);
     return res;
   }
 
-  Future<Response> replyTicket({required String? id , required String? content}) async {
-    var data = FormData({
-      "content":content
-    });
+  Future<Response> replyTicket(
+      {required String? id, required String? content}) async {
+    var data = FormData({"content": content});
     Response res =
-    await post('${base_url}panel/ticket/${id}/reply',data, headers: head);
+        await post('${base_url}panel/ticket/${id}/reply', data, headers: head);
     return res;
   }
 
   Future<Response> closeTicket({required String? id}) async {
-
     Response res =
-    await get('${base_url}panel/ticket/${id}/close', headers: head);
+        await get('${base_url}panel/ticket/${id}/close', headers: head);
     return res;
   }
-
-
 }

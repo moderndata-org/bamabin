@@ -66,14 +66,12 @@ class _OrderlistAddListDialogState extends State<OrderlistAddListDialog> {
                           ))),
                   Positioned(
                     top: 15,
-                    child: Obx(() => controller.isLoadingAddOrder.isTrue
-                        ? MyCircularProgress(color: cB)
-                        : MyText(
-                            text: 'افزودن لیست',
-                            color: cW,
-                            size: 15,
-                            fontWeight: FontWeight.w500,
-                          )),
+                    child: MyText(
+                      text: 'افزودن لیست',
+                      color: cW,
+                      size: 15,
+                      fontWeight: FontWeight.w500,
+                    ),
                   ),
                 ],
               ),
@@ -130,13 +128,20 @@ class _OrderlistAddListDialogState extends State<OrderlistAddListDialog> {
               child: SizedBox(
                 width: Get.width,
                 child: MyTextButton(
-                    onTap: () {},
+                    onTap: () => controller.addOrderList(
+                        title: txtAddlistTitle!.text,
+                        content: txtAddlistDescription!.text),
                     bgColor: cY,
-                    child: MyText(
-                      text: 'ثبت لیست',
-                      size: 14,
-                      color: cB,
-                    )),
+                    child: Obx(() => controller.isLoadingAddOrder.isTrue
+                        ? MyCircularProgress(
+                            color: cB,
+                            size: 25,
+                          )
+                        : MyText(
+                            text: 'ثبت لیست',
+                            size: 14,
+                            color: cB,
+                          ))),
               ),
             ),
             SizedBox(

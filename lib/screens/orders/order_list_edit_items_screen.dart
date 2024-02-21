@@ -1,10 +1,10 @@
-import 'package:bamabin/screens/dialogs/orderlist_add_movie_with_search_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../constant/colors.dart';
 import '../../widgets/custom_appbar.dart';
 import '../../widgets/movie_item_widget.dart';
+import 'orderlist_add_movie_with_search_dialog.dart';
 
 class OrderlistEditItemsScreen extends StatelessWidget {
   const OrderlistEditItemsScreen({super.key});
