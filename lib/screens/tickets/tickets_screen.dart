@@ -64,7 +64,19 @@ class TicketsScreen extends GetView<TicketController> {
                         padding: EdgeInsets.only(right: 10, left: 10),
                         itemCount: controller.tickets.length,
                         itemBuilder: (context, index) {
-                          return TicketsItem();
+                          var ticket = controller.tickets[index];
+                          return TicketsItem(
+                            id: ticket.id,
+                            title: ticket.title,
+                            department: ticket.department_name,
+                            updated: ticket.updated_at,
+                            date: ticket.created_at,
+                            onShow: (){
+                              controller.selectedTicket(ticket);
+                              Get.toNamed("/ticket-details");
+                            },
+
+                          );
                         },
                       ) : Center(child: Text("تیکتی برای نمایش وجود ندارد",style: TextStyle(color: Colors.white),),);
               },

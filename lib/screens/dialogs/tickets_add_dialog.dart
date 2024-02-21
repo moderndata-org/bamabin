@@ -1,5 +1,6 @@
 import 'package:bamabin/constant/utils.dart';
 import 'package:bamabin/controller/ticket_controller.dart';
+import 'package:bamabin/widgets/MyCircularProgress.dart';
 import 'package:bamabin/widgets/custom_dropdown.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -126,19 +127,33 @@ class TicketsAddDialog extends GetView<TicketController> {
             ),
             MyTextButton(
                 onTap: () {
-                  if(controller.titleController.text.trim().isNotEmpty && controller.descriptionController.text.trim().isNotEmpty){
+                  if(controller.titleController.text.trim().isNotEmpty &&
+                      controller.descriptionController.text.trim().isNotEmpty &&
+                      controller.selectedDepartment.value.id != null
+                  ){
+
+                    controller.createTicket(
+                        title: controller.titleController.text.trim(),
+                        department_id: controller.selectedDepartment.value.id,
+                        content: controller.descriptionController.text.trim()
+                    );
 
                   }else{
-                    showMessage(text: "عنوان و توضیحات را وارد کنید.", isSucces: false);
+                    showMessage(text: "پر کردن تمامی فیلدها اجباری است.", isSucces: false);
                   }
                 },
                 size: Size(Get.width / 1.4, 35),
                 bgColor: cY,
-                child: MyText(
-                  text: "ارسال تیکت",
-                  size: 14,
-                  color: cB,
-                )),
+                child: Obx(() {
+                  if(controller.loadingCreateTicket.isTrue)
+                    return Center(child: MyCircularProgress(color: Colors.white,size: 28,),);
+
+                  return MyText(
+                    text: "ارسال تیکت",
+                    size: 14,
+                    color: cB,
+                  );
+                },)),
             SizedBox(
               height: 15,
             ),

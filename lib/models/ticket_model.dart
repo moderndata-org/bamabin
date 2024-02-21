@@ -1,14 +1,16 @@
-class TicketModel{
+import 'package:shamsi_date/shamsi_date.dart';
+
+class TicketModel {
   String? id;
   String? user_id;
   String? title;
   String? department;
   String? status;
-  String? created_at;
-  String? updated_at;
+  String? department_name;
+  String? _created_at;
+  String? _updated_at;
 
-  TicketModel({this.id, this.user_id, this.title, this.department, this.status,
-      this.created_at, this.updated_at});
+  TicketModel();
 
   TicketModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -16,7 +18,20 @@ class TicketModel{
     title = json['title'];
     department = json['department'];
     status = json['status'];
-    created_at = json['created_at'];
-    updated_at = json['updated_at'];
+    department_name = json['department_name'];
+    _created_at = json['created_at'];
+    _updated_at = json['updated_at'];
+  }
+
+  String get created_at {
+    DateTime a = DateTime.parse(_created_at!);
+    Jalali j = a.toJalali();
+    return '${j.formatter.yyyy}/${j.formatter.mm}/${j.formatter.dd} ${a.hour.toString().padLeft(2, '0')}:${a.minute.toString().padLeft(2, '0')}';
+  }
+
+  String get updated_at {
+    DateTime a = DateTime.parse(_updated_at!);
+    Jalali j = a.toJalali();
+    return '${j.formatter.yyyy}/${j.formatter.mm}/${j.formatter.dd} ${a.hour.toString().padLeft(2, '0')}:${a.minute.toString().padLeft(2, '0')}';
   }
 }

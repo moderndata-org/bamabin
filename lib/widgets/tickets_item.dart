@@ -13,12 +13,14 @@ class TicketsItem extends StatelessWidget {
   String? condition;
   String? date;
   String? updated;
+  Function? onShow;
   TicketsItem(
       {this.id,
       this.title,
       this.department,
       this.updated,
       this.date,
+        this.onShow,
       super.key});
 
   @override
@@ -35,7 +37,7 @@ class TicketsItem extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Container(
+              GestureDetector(child: Container(
                 padding: EdgeInsets.symmetric(horizontal: 10),
                 child: MyTextButton(
                   size: Size(90, 35),
@@ -44,8 +46,16 @@ class TicketsItem extends StatelessWidget {
                     "مشاهده",
                     style: TextStyle(color: cW, fontWeight: FontWeight.bold),
                   ),
-                  onTap: () {},
+                  onTap: () {
+                    if(onShow != null){
+                      onShow!();
+                    }
+                  },
                 ),
+              ),
+              onTap: (){
+
+              },
               ),
               Row(
                 children: [
