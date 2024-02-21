@@ -1,8 +1,11 @@
 import 'package:bamabin/api/api_handler.dart';
+import 'package:bamabin/controller/order_list_controller.dart';
+import 'package:bamabin/models/order_list_model.dart';
 import 'package:bamabin/screens/dialogs/orderlist_add_list_dialog.dart';
 import 'package:bamabin/screens/dialogs/orderlist_edit_list_dialog.dart';
 import 'package:bamabin/widgets/MyText.dart';
 import 'package:bamabin/widgets/MyTextButton.dart';
+import 'package:bamabin/widgets/custom_shimmer.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -17,6 +20,7 @@ class OrderlistScreen extends StatefulWidget {
 }
 
 class _OrderlistScreenState extends State<OrderlistScreen> {
+  final controller = Get.find<OrderListController>();
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -51,23 +55,43 @@ class _OrderlistScreenState extends State<OrderlistScreen> {
           height: Get.height,
           child: Directionality(
             textDirection: TextDirection.rtl,
-            child: ListView.builder(
-              itemCount: 10,
-              physics: BouncingScrollPhysics(),
-              padding:
-                  EdgeInsets.only(top: 10, left: 10, right: 10, bottom: 60),
-              itemBuilder: (context, index) => OrderItemWidget(
-                title: 'لیست جدید من',
-                itemCount: '2',
-                type: 'فیلم',
-                date: '1402/10/22',
-                edit: () => showDialog(
-                  barrierColor: cBgDialogColor,
-                  context: context,
-                  builder: (context) => OrderlistEditListDialog(),
-                ),
-              ),
-            ),
+            child: Obx(() => controller.isLoadingOrderLists.isTrue
+                ? ListView.builder(
+                    padding: EdgeInsets.only(
+                        top: 10, left: 10, right: 10, bottom: 60),
+                    itemCount: 10,
+                    physics: BouncingScrollPhysics(),
+                    itemBuilder: (context, index) => Container(
+                      width: Get.width,
+                      child: CustomShimmerWidget(width: Get.width, height: 200),
+                      padding: EdgeInsets.symmetric(vertical: 5),
+                    ),
+                  )
+                : controller.orderList.isEmpty
+                    ? Center(
+                        child: MyText(text: 'اطلاعاتی یافت نشد'),
+                      )
+                    : ListView.builder(
+                        itemCount: controller.orderList.length,
+                        physics: BouncingScrollPhysics(),
+                        padding: EdgeInsets.only(
+                            top: 10, left: 10, right: 10, bottom: 60),
+                        itemBuilder: (context, index) {
+                          OrderListModel ol = controller.orderList[index];
+                          var a = DateTime.parse(ol.createdAt!);
+                          return OrderItemWidget(
+                            title: '${ol.title}',
+                            itemCount: '${ol.items}',
+                            type: 'فیلم',
+                            date: '${ol.persianDate}',
+                            edit: () => showDialog(
+                              barrierColor: cBgDialogColor,
+                              context: context,
+                              builder: (context) => OrderlistEditListDialog(),
+                            ),
+                          );
+                        },
+                      )),
           )),
     ));
   }

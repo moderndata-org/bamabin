@@ -1,5 +1,7 @@
 import 'package:bamabin/constant/colors.dart';
+import 'package:bamabin/controller/order_list_controller.dart';
 import 'package:bamabin/controller/public_controller.dart';
+import 'package:bamabin/widgets/MyCircularProgress.dart';
 import 'package:bamabin/widgets/MyText.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -15,7 +17,7 @@ class OrderlistAddListDialog extends StatefulWidget {
 }
 
 class _OrderlistAddListDialogState extends State<OrderlistAddListDialog> {
-  final controller = Get.find<PublicController>();
+  final controller = Get.find<OrderListController>();
   TextEditingController? txtAddlistTitle;
   TextEditingController? txtAddlistDescription;
 
@@ -64,12 +66,14 @@ class _OrderlistAddListDialogState extends State<OrderlistAddListDialog> {
                           ))),
                   Positioned(
                     top: 15,
-                    child: MyText(
-                      text: 'افزودن لیست',
-                      color: cW,
-                      size: 15,
-                      fontWeight: FontWeight.w500,
-                    ),
+                    child: Obx(() => controller.isLoadingAddOrder.isTrue
+                        ? MyCircularProgress(color: cB)
+                        : MyText(
+                            text: 'افزودن لیست',
+                            color: cW,
+                            size: 15,
+                            fontWeight: FontWeight.w500,
+                          )),
                   ),
                 ],
               ),

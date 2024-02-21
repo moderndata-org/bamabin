@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 
+import '../controller/order_list_controller.dart';
 import '../screens/dialogs/tokenBot_dialog.dart';
 
 class CustomDrawerMenu extends GetView<MainController> {
@@ -322,6 +323,7 @@ class CustomDrawerMenu extends GetView<MainController> {
                           onTap: () {
                             controller.scaffolState.currentState!
                                 .closeEndDrawer();
+                            Get.put(OrderListController());
                           },
                           child: Row(
                             textDirection: TextDirection.rtl,
