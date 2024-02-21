@@ -296,7 +296,7 @@ class ApiProvider extends GetConnect {
     return res;
   }
 
-  Future<Response> departments({required String? id}) async {
+  Future<Response> departments() async {
     Response res =
     await get('${base_url}panel/ticket/departments', headers: head);
     return res;

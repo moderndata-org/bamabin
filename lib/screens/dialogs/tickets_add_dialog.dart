@@ -1,3 +1,5 @@
+import 'package:bamabin/constant/utils.dart';
+import 'package:bamabin/controller/ticket_controller.dart';
 import 'package:bamabin/widgets/custom_dropdown.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -7,7 +9,7 @@ import '../../widgets/MyText.dart';
 import '../../widgets/MyTextButton.dart';
 import '../../widgets/MyTextField.dart';
 
-class TicketsAddDialog extends StatelessWidget {
+class TicketsAddDialog extends GetView<TicketController> {
   const TicketsAddDialog({super.key});
 
   @override
@@ -60,7 +62,7 @@ class TicketsAddDialog extends StatelessWidget {
                 borderRadius: 5,
                 height: 41,
                 hint: "عنوان",
-                controller: new TextEditingController(),
+                controller: controller.titleController,
                 suffixIcon: Icon(
                   Icons.description,
                   size: 25,
@@ -70,15 +72,35 @@ class TicketsAddDialog extends StatelessWidget {
             ),
             Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 15),
-                child: CustomDropDown(
-                  alignment: Alignment.centerRight,
-                  title: 'دپارتمان',
-                  borderRadius: 5,
-                  buttonColor: cSecondary,
-                  list: [
-                    DropdownMenuItem(
-                        onTap: () {}, child: MyText(text: 'زمان انتشار'))
-                  ],
+                child: Obx(
+                  () {
+                    return CustomDropDown(
+                      alignment: Alignment.centerRight,
+                      title: (controller.selectedDepartment.value.id != null)
+                          ? '${controller.selectedDepartment.value.name}'
+                          : 'دپارتمان',
+                      borderRadius: 5,
+                      buttonColor: cSecondary,
+                      list:
+                          List.generate(controller.departments.length, (index) {
+                        var department = controller.departments[index];
+
+                        return DropdownMenuItem(
+                            value: department,
+                            onTap: () {
+                              controller.selectedDepartment(department);
+                            },
+                            child: SizedBox(
+                              width: Get.width,
+                              child: MyText(
+                                text: '${department.name}',
+                                textDirection: TextDirection.rtl,
+                                textAlign: TextAlign.right,
+                              ),
+                            ));
+                      }),
+                    );
+                  },
                 )),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
@@ -87,7 +109,7 @@ class TicketsAddDialog extends StatelessWidget {
                 maxLines: 3,
                 height: 90,
                 hint: "توضیحات",
-                controller: new TextEditingController(),
+                controller: controller.descriptionController,
                 suffixIcon: Column(
                   children: [
                     SizedBox(
@@ -103,7 +125,13 @@ class TicketsAddDialog extends StatelessWidget {
               ),
             ),
             MyTextButton(
-                onTap: () {},
+                onTap: () {
+                  if(controller.titleController.text.trim().isNotEmpty && controller.descriptionController.text.trim().isNotEmpty){
+
+                  }else{
+                    showMessage(text: "عنوان و توضیحات را وارد کنید.", isSucces: false);
+                  }
+                },
                 size: Size(Get.width / 1.4, 35),
                 bgColor: cY,
                 child: MyText(

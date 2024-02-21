@@ -1,15 +1,23 @@
 import 'package:bamabin/constant/colors.dart';
+import 'package:bamabin/controller/ticket_controller.dart';
 import 'package:bamabin/screens/dialogs/tickets_add_dialog.dart';
+import 'package:bamabin/widgets/MyCircularProgress.dart';
 import 'package:bamabin/widgets/tickets_item.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../widgets/custom_appbar.dart';
 
-class TicketsScreen extends StatelessWidget {
+class TicketsScreen extends GetView<TicketController> {
   const TicketsScreen({super.key});
+
+  void init() {
+    controller.getTickets();
+    controller.getDepartments();
+  }
 
   @override
   Widget build(BuildContext context) {
+    Future.delayed(Duration.zero, () => init());
     return SafeArea(
         child: Scaffold(
       appBar: CustomAppbar(
@@ -43,36 +51,23 @@ class TicketsScreen extends StatelessWidget {
         height: Get.height,
         child: Column(
           children: [
-            // DetailsAppBar(
-            //     leftWidget: MyTextButton(
-            //         size: const Size(40, 40),
-            //         onTap: () {
-            //           Get.back();
-            //         },
-            //         fgColor: cGrey,
-            //         bgColor: cPrimaryDark,
-            //         child: Icon(
-            //           Icons.arrow_back_ios,
-            //           color: cGrey,
-            //         )),
-            //     rightWidget: MyTextButton(
-            //         size: const Size(40, 40),
-            //         onTap: () {
-            //           Get.back();
-            //         },
-            //         fgColor: cGrey,
-            //         bgColor: cPrimaryDark,
-            //         child: Icon(
-            //           Icons.support_outlined,
-            //           color: cAccent,
-            //         )),
-            //     title: "تیکت"),
-            Expanded(
-                child: ListView(
-              padding: EdgeInsets.only(right: 10, left: 10),
-              children: [
-                TicketsItem(),
-              ],
+            Expanded(child: Obx(
+              () {
+                return (controller.loadingTickets.isTrue)
+                    ? Center(
+                        child: MyCircularProgress(
+                          size: 32,
+                          color: cAccent,
+                        ),
+                      )
+                    : (controller.tickets.length > 0) ? ListView.builder(
+                        padding: EdgeInsets.only(right: 10, left: 10),
+                        itemCount: controller.tickets.length,
+                        itemBuilder: (context, index) {
+                          return TicketsItem();
+                        },
+                      ) : Center(child: Text("تیکتی برای نمایش وجود ندارد",style: TextStyle(color: Colors.white),),);
+              },
             ))
           ],
         ),
