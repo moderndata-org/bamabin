@@ -1,3 +1,4 @@
+import 'package:bamabin/models/film_model.dart';
 import 'package:shamsi_date/shamsi_date.dart';
 
 class OrderListModel {
@@ -11,20 +12,19 @@ class OrderListModel {
   String? id;
   User? user;
   String? persianDate;
-  // List<Null>? posts;
+  List<FilmModel>? posts;
 
-  OrderListModel({
-    this.iD,
-    this.userId,
-    this.title,
-    this.type,
-    this.items,
-    this.content,
-    this.createdAt,
-    this.id,
-    this.user,
-    // this.posts
-  });
+  OrderListModel(
+      {this.iD,
+      this.userId,
+      this.title,
+      this.type,
+      this.items,
+      this.content,
+      this.createdAt,
+      this.id,
+      this.user,
+      this.posts});
 
   OrderListModel.fromJson(Map<String, dynamic> json) {
     iD = json['ID'];
@@ -37,21 +37,16 @@ class OrderListModel {
     id = json['id'];
     user = json['user'] != null ? new User.fromJson(json['user']) : null;
     if (createdAt != null) {
-      DateTime a = DateTime.parse(createdAt!);
-      DateTime b = DateTime(a.year, a.month, a.day);
-      print(a);
-      Jalali j = a.toJalali();
-      print(b);
-      print(j);
+      Jalali j = DateTime.parse(createdAt!).toJalali();
       persianDate =
           '${j.year}/${j.month.toString().padLeft(2, '0')}/${j.day.toString().padLeft(2, '0')}';
     }
-    // if (json['posts'] != null) {
-    //   posts = <Null>[];
-    //   json['posts'].forEach((v) {
-    //     posts!.add(new Null.fromJson(v));
-    //   });
-    // }
+    if (json['posts'] != null) {
+      posts = <FilmModel>[];
+      json['posts'].forEach((v) {
+        posts!.add(new FilmModel.fromJson(v));
+      });
+    }
   }
 
   Map<String, dynamic> toJson() {
