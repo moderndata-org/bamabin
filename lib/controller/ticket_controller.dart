@@ -1,6 +1,7 @@
 import 'package:bamabin/api/api_handler.dart';
 import 'package:bamabin/constant/utils.dart';
 import 'package:bamabin/models/department_model.dart';
+import 'package:bamabin/models/reply_model.dart';
 import 'package:bamabin/models/ticket_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
@@ -15,6 +16,9 @@ class TicketController extends GetxController{
   var selectedDepartment = DepartmentModel().obs;
   
   var loadingCreateTicket = false.obs;
+
+  var replies = <ReplyModel>[].obs;
+  var loadingSingleTicket = false.obs;
 
   TextEditingController titleController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
@@ -32,6 +36,23 @@ class TicketController extends GetxController{
         }
       }
       loadingTickets(false);
+    });
+  }
+
+  void getSingleTicket(){
+    loadingSingleTicket(true);
+    replies.clear();
+    ApiProvider().singleTicket(id: selectedTicket.value.id).then((value){
+      replies.clear();
+      if(value.isOk){
+        if(value.body["status"] == true){
+          (value.body["result"]["replies"] as List).forEach((element) {
+            replies.add(ReplyModel.fromJson(element));
+          });
+        }
+      }
+
+      loadingSingleTicket(false);
     });
   }
 

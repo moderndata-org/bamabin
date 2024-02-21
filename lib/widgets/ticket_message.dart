@@ -23,14 +23,14 @@ class TicketMessage extends StatelessWidget {
           SizedBox(
             width: 5,
           ),
-          Container(
+          Expanded(child: Container(
             padding: EdgeInsets.symmetric(vertical: 10,horizontal: 20),
             decoration: BoxDecoration(
-              color: cPrimaryDark,
-              borderRadius: BorderRadius.circular(10)
+                color: cPrimaryDark,
+                borderRadius: BorderRadius.circular(10)
             ),
             child: Text("${content}",style: TextStyle(color: Colors.white),),
-          )
+          ))
         ],
       ),
     );

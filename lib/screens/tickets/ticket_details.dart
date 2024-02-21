@@ -1,3 +1,4 @@
+import 'package:bamabin/widgets/MyCircularProgress.dart';
 import 'package:bamabin/widgets/ticket_message.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -12,8 +13,13 @@ import '../../widgets/custom_appbar.dart';
 class TicketDetails extends GetView<TicketController> {
   const TicketDetails({Key? key}) : super(key: key);
 
+  void init() {
+    controller.getSingleTicket();
+  }
+
   @override
   Widget build(BuildContext context) {
+    Future.delayed(Duration.zero,()=> init());
     return SafeArea(
         child: Scaffold(
       appBar: CustomAppbar(
@@ -130,38 +136,58 @@ class TicketDetails extends GetView<TicketController> {
                     height: 1,
                     color: Colors.white.withOpacity(0.2),
                   ),
-                  SizedBox(height: 10,),
-                  Expanded(child: ListView.builder(
-                    itemCount: 15,
-                    itemBuilder: (context, index) {
-                    return TicketMessage(isSelf: index % 2 == 0,content: "این پیام تستی",);
-                  },),
-
+                  SizedBox(
+                    height: 10,
                   ),
-                  SizedBox(height: 10,),
-                  Row(children: [
-                    Expanded(child: Container(
-                      padding: EdgeInsets.all(5),
-                      height: 50,
-                      decoration: BoxDecoration(
-                          color: cPrimaryDark,
-                          borderRadius: BorderRadius.circular(10)
-                      ),
-                      child: Directionality(
-                        textDirection: TextDirection.rtl,
-                        child: MyTextField(
+                  Expanded(
+                    child: Obx(() {
+                      if(controller.loadingSingleTicket.isTrue)
+                        return Center(child: MyCircularProgress(color: cAccent,size: 38,),);
+
+                      return ListView.builder(
+                        itemCount: controller.replies.length,
+                        itemBuilder: (context, index) {
+                          var reply = controller.replies[index];
+                          return TicketMessage(
+                            isSelf: index % 2 == 0,
+                            content: reply.content,
+                          );
+                        },
+                      );
+                    }),
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Row(
+                    children: [
+                      Expanded(
+                          child: Container(
+                        padding: EdgeInsets.all(5),
+                        height: 50,
+                        decoration: BoxDecoration(
+                            color: cPrimaryDark,
+                            borderRadius: BorderRadius.circular(10)),
+                        child: Directionality(
                           textDirection: TextDirection.rtl,
-                          borderRadius: 5,
-                          hint: "پیام جدید",
-                          controller: new TextEditingController(),
+                          child: MyTextField(
+                            textDirection: TextDirection.rtl,
+                            borderRadius: 5,
+                            hint: "پیام جدید",
+                            controller: new TextEditingController(),
+                          ),
                         ),
-                      ),)),
-                    IconButton(onPressed: (){}, icon: Icon(Icons.send),style: IconButton.styleFrom(backgroundColor: cAccent),)
-                  ],)
+                      )),
+                      IconButton(
+                        onPressed: () {},
+                        icon: Icon(Icons.send),
+                        style: IconButton.styleFrom(backgroundColor: cAccent),
+                      )
+                    ],
+                  )
                 ],
               ),
             )),
-
             SizedBox(height: 20)
           ],
         ),
