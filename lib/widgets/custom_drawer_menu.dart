@@ -74,7 +74,7 @@ class CustomDrawerMenu extends GetView<MainController> {
                                 children: [
                                   Align(
                                       alignment: Alignment.centerRight,
-                                      child: MyText(text: 'کاربر مهمان')),
+                                      child: MyText(text: (authController.isLogin.isTrue) ? '${authController.profile.value.firstName} ${authController.profile.value.lastName}' :'کاربر مهمان')),
                                   Obx(() {
                                     return publicController.hasSubscribe.isFalse
                                         ? SizedBox()
