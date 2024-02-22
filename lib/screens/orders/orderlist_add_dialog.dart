@@ -1,22 +1,21 @@
 import 'package:bamabin/constant/colors.dart';
-import 'package:bamabin/controller/public_controller.dart';
+import 'package:bamabin/controller/order_list_controller.dart';
+import 'package:bamabin/widgets/MyCircularProgress.dart';
 import 'package:bamabin/widgets/MyText.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 import '../../widgets/MyTextButton.dart';
 import '../../widgets/MyTextField.dart';
 
-class OrderlistEditListDialog extends StatefulWidget {
-  const OrderlistEditListDialog({super.key});
+class OrderlistAddDialog extends StatefulWidget {
+  const OrderlistAddDialog({super.key});
 
   @override
-  State<OrderlistEditListDialog> createState() =>
-      _OrderlistEditListDialogState();
+  State<OrderlistAddDialog> createState() => _OrderlistAddDialogState();
 }
 
-class _OrderlistEditListDialogState extends State<OrderlistEditListDialog> {
-  final controller = Get.find<PublicController>();
+class _OrderlistAddDialogState extends State<OrderlistAddDialog> {
+  final controller = Get.find<OrderListController>();
   TextEditingController? txtAddlistTitle;
   TextEditingController? txtAddlistDescription;
 
@@ -66,7 +65,7 @@ class _OrderlistEditListDialogState extends State<OrderlistEditListDialog> {
                   Positioned(
                     top: 15,
                     child: MyText(
-                      text: 'ویرایش',
+                      text: 'افزودن لیست',
                       color: cW,
                       size: 15,
                       fontWeight: FontWeight.w500,
@@ -109,44 +108,26 @@ class _OrderlistEditListDialogState extends State<OrderlistEditListDialog> {
             SizedBox(
               height: 20,
             ),
-            Row(
-              textDirection: TextDirection.rtl,
-              children: [
-                SizedBox(
-                  width: 10,
-                ),
-                Expanded(
-                  child: MyTextButton(
-                      onTap: () {},
-                      size: Size.fromHeight(40),
-                      bgColor: cY,
-                      child: MyText(
-                        text: 'ثبت',
-                        size: 14,
-                        color: cB,
-                      )),
-                ),
-                SizedBox(
-                  width: 10,
-                ),
-                Expanded(
-                  child: MyTextButton(
-                      onTap: () {
-                        Navigator.pop(context);
-                        Get.toNamed('/order-edit-item');
-                      },
-                      size: Size.fromHeight(40),
-                      bgColor: cY,
-                      child: MyText(
-                        text: 'ویرایش آیتم ها',
-                        size: 14,
-                        color: cB,
-                      )),
-                ),
-                SizedBox(
-                  width: 10,
-                ),
-              ],
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10),
+              child: SizedBox(
+                width: Get.width,
+                child: MyTextButton(
+                    onTap: () => controller.addOrderList(
+                        title: txtAddlistTitle!.text,
+                        content: txtAddlistDescription!.text),
+                    bgColor: cY,
+                    child: Obx(() => controller.isLoadingAddOrder.isTrue
+                        ? MyCircularProgress(
+                            color: cB,
+                            size: 25,
+                          )
+                        : MyText(
+                            text: 'ثبت لیست',
+                            size: 14,
+                            color: cB,
+                          ))),
+              ),
             ),
             SizedBox(
               height: 20,

@@ -162,7 +162,7 @@ class SearchScreen extends GetView<PublicController> {
                                       width: width,
                                       height: height,
                                       title: '${fm.titleMovie}',
-                                      hasDubbed: fm.hasDubbed != '',
+                                      hasDubbed: fm.hasDubbed == 'on',
                                       hasSubtitle: fm.hasSubtitle == 'on',
                                       imdbRate: '${fm.imdbRate}',
                                       year: '${fm.releaseMovie}',

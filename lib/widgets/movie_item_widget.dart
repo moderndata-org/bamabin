@@ -130,7 +130,7 @@ class MovieItemWidget extends StatelessWidget {
                               : Positioned(
                                   bottom: 0,
                                   child: Container(
-                                    width: 115,
+                                    width: width,
                                     height: 30,
                                     color: cY,
                                     alignment: Alignment.center,
@@ -145,7 +145,7 @@ class MovieItemWidget extends StatelessWidget {
                               : Positioned(
                                   bottom: 0,
                                   child: Container(
-                                    width: 115,
+                                    width: width,
                                     height: 30,
                                     color: cPink,
                                     alignment: Alignment.center,

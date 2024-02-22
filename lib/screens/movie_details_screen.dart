@@ -70,7 +70,7 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // print(controller.selectedFilm.value.is_watchlist);
+    // print(controller.selectedFilm.value.id);
     // bool a = false;
     // favoriteController.listFavorites.forEach((element) {
     //   if (element.id == controller.selectedFilm.value.id) {

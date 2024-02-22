@@ -1,3 +1,4 @@
+import 'package:bamabin/constant/utils.dart';
 import 'package:bamabin/controller/order_list_controller.dart';
 import 'package:bamabin/models/order_list_model.dart';
 import 'package:bamabin/screens/orders/order_list_show_items_dialog.dart';
@@ -9,8 +10,8 @@ import 'package:get/get.dart';
 
 import '../../constant/colors.dart';
 import '../../widgets/custom_appbar.dart';
-import 'orderlist_add_list_dialog.dart';
-import 'orderlist_edit_list_dialog.dart';
+import 'orderlist_add_dialog.dart';
+import 'orderlist_edit_dialog.dart';
 
 class OrderlistScreen extends StatefulWidget {
   const OrderlistScreen({super.key});
@@ -34,7 +35,7 @@ class _OrderlistScreenState extends State<OrderlistScreen> {
             barrierColor: cBgDialogColor,
             context: context,
             barrierDismissible: true,
-            builder: (context) => OrderlistAddListDialog(),
+            builder: (context) => OrderlistAddDialog(),
           );
         },
         child: Icon(
@@ -78,22 +79,33 @@ class _OrderlistScreenState extends State<OrderlistScreen> {
                             top: 10, left: 10, right: 10, bottom: 60),
                         itemBuilder: (context, index) {
                           OrderListModel ol = controller.orderList[index];
-                          var a = DateTime.parse(ol.createdAt!);
                           return OrderItemWidget(
                             title: '${ol.title}',
-                            itemCount: '${ol.items}',
-                            type: 'فیلم',
+                            itemCount: '${ol.posts?.length}',
+                            // type: 'فیلم',
                             date: '${ol.persianDate}',
-                            show: () => showDialog(
-                              barrierColor: cBgDialogColor,
-                              context: context,
-                              builder: (context) => OrderListShowItemsDialog(
-                                  listFilms: ol.posts ?? []),
-                            ),
+                            delete: () =>
+                                controller.deleteOrderList(listId: '${ol.id}'),
+                            show: () {
+                              if (ol.posts!.isNotEmpty) {
+                                showDialog(
+                                  barrierColor: cBgDialogColor,
+                                  context: context,
+                                  builder: (context) =>
+                                      OrderListShowItemsDialog(
+                                          listFilms: ol.posts!),
+                                );
+                              } else {
+                                showMessage(
+                                    text: 'لیست شما خالی میباشد',
+                                    isSucces: false);
+                              }
+                            },
                             edit: () => showDialog(
                               barrierColor: cBgDialogColor,
                               context: context,
-                              builder: (context) => OrderlistEditListDialog(),
+                              builder: (context) => OrderlistEditDialog(
+                                  orderListModel: ol, orderListIndex: index),
                             ),
                           );
                         },
@@ -106,7 +118,7 @@ class _OrderlistScreenState extends State<OrderlistScreen> {
 class OrderItemWidget extends StatelessWidget {
   const OrderItemWidget({
     this.title = '',
-    this.type = '',
+    // this.type = '',
     this.itemCount = '',
     this.date = '',
     this.show,
@@ -115,7 +127,7 @@ class OrderItemWidget extends StatelessWidget {
     super.key,
   });
   final String? title;
-  final String? type;
+  // final String? type;
   final String? itemCount;
   final String? date;
   final Function()? show;
@@ -135,10 +147,10 @@ class OrderItemWidget extends StatelessWidget {
           title: 'عنوان',
           subject: title,
         ),
-        OrderlistSmallItemWidget(
-          title: 'نوع',
-          subject: '$type',
-        ),
+        // OrderlistSmallItemWidget(
+        //   title: 'نوع',
+        //   subject: '$type',
+        // ),
         OrderlistSmallItemWidget(
           title: 'تعداد آیتم',
           subject: '$itemCount',
