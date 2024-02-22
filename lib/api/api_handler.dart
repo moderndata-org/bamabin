@@ -265,8 +265,62 @@ class ApiProvider extends GetConnect {
     return res;
   }
 
-  Future<Response> getOrderList() async {
+  Future<Response> editOrderList({
+    required String? listId,
+    required String? title,
+    required String? content,
+  }) async {
+    FormData frm = FormData({
+      'title': title,
+      'content': content,
+    });
+    Response res =
+        await post('${base_url}panel/lists/$listId/edit', frm, headers: head);
+    return res;
+  }
+
+  Future<Response> deleteOrderListItem({
+    required String? post_id,
+    required String? list_id,
+  }) async {
+    FormData frm = FormData({
+      'post_id': post_id,
+    });
+    Response res = await post(
+        '${base_url}panel/lists/${list_id}/remove_item', frm,
+        headers: head);
+    return res;
+  }
+
+  Future<Response> addOrderListItem({
+    required String? post_id,
+    required String? list_id,
+  }) async {
+    FormData frm = FormData({
+      'post_id': post_id,
+    });
+    Response res = await post('${base_url}panel/lists/${list_id}/add_item', frm,
+        headers: head);
+    return res;
+  }
+
+  Future<Response> getOrderListDetails({
+    required String? list_id,
+  }) async {
+    Response res = await get('${base_url}panel/lists/$list_id', headers: head);
+    return res;
+  }
+
+  Future<Response> getOrdersList() async {
     Response res = await get('${base_url}panel/lists', headers: head);
+    return res;
+  }
+
+  Future<Response> deleteOrderList({
+    required String? listId,
+  }) async {
+    Response res =
+        await get('${base_url}panel/lists/$listId/delete', headers: head);
     return res;
   }
 

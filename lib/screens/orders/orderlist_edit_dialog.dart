@@ -1,37 +1,42 @@
 import 'package:bamabin/constant/colors.dart';
 import 'package:bamabin/controller/order_list_controller.dart';
-import 'package:bamabin/controller/public_controller.dart';
+import 'package:bamabin/models/order_list_model.dart';
 import 'package:bamabin/widgets/MyCircularProgress.dart';
 import 'package:bamabin/widgets/MyText.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
 import '../../widgets/MyTextButton.dart';
 import '../../widgets/MyTextField.dart';
-import '../../widgets/custom_dropdown.dart';
 
-class OrderlistAddListDialog extends StatefulWidget {
-  const OrderlistAddListDialog({super.key});
+class OrderlistEditDialog extends StatefulWidget {
+  const OrderlistEditDialog(
+      {required this.orderListModel, required this.orderListIndex, super.key});
+  final OrderListModel orderListModel;
+  final int orderListIndex;
 
   @override
-  State<OrderlistAddListDialog> createState() => _OrderlistAddListDialogState();
+  State<OrderlistEditDialog> createState() => _OrderlistEditDialogState();
 }
 
-class _OrderlistAddListDialogState extends State<OrderlistAddListDialog> {
+class _OrderlistEditDialogState extends State<OrderlistEditDialog> {
   final controller = Get.find<OrderListController>();
-  TextEditingController? txtAddlistTitle;
-  TextEditingController? txtAddlistDescription;
+  TextEditingController? txtEditlistTitle;
+  TextEditingController? txtEditlistDescription;
 
   @override
   void initState() {
-    txtAddlistTitle = TextEditingController();
-    txtAddlistDescription = TextEditingController();
+    txtEditlistTitle = TextEditingController()
+      ..text = '${widget.orderListModel.content}';
+    txtEditlistDescription = TextEditingController()
+      ..text = '${widget.orderListModel.content}';
     super.initState();
   }
 
   @override
   void dispose() {
-    txtAddlistTitle?.dispose();
-    txtAddlistDescription?.dispose();
+    txtEditlistTitle?.dispose();
+    txtEditlistDescription?.dispose();
     super.dispose();
   }
 
@@ -67,7 +72,7 @@ class _OrderlistAddListDialogState extends State<OrderlistAddListDialog> {
                   Positioned(
                     top: 15,
                     child: MyText(
-                      text: 'افزودن لیست',
+                      text: 'ویرایش',
                       color: cW,
                       size: 15,
                       fontWeight: FontWeight.w500,
@@ -84,7 +89,7 @@ class _OrderlistAddListDialogState extends State<OrderlistAddListDialog> {
               child: MyTextField(
                 height: 45,
                 hint: 'عنوان لیست',
-                controller: txtAddlistTitle!,
+                controller: txtEditlistTitle!,
                 maxLines: 1,
                 suffixIcon: Icon(
                   Icons.article_rounded,
@@ -94,24 +99,11 @@ class _OrderlistAddListDialogState extends State<OrderlistAddListDialog> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10),
-              child: SizedBox(
-                width: Get.width,
-                child: CustomDropDown(
-                  borderRadius: 5,
-                  title: 'نوع لیست',
-                  list: [],
-                  buttonColor: cSecondary,
-                  alignment: Alignment.centerRight,
-                ),
-              ),
-            ),
-            Padding(
               padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
               child: MyTextField(
                 height: 70,
                 hint: 'توضیحات',
-                controller: txtAddlistDescription!,
+                controller: txtEditlistDescription!,
                 maxLines: 3,
                 suffixIcon: Icon(
                   Icons.description,
@@ -123,26 +115,54 @@ class _OrderlistAddListDialogState extends State<OrderlistAddListDialog> {
             SizedBox(
               height: 20,
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10),
-              child: SizedBox(
-                width: Get.width,
-                child: MyTextButton(
-                    onTap: () => controller.addOrderList(
-                        title: txtAddlistTitle!.text,
-                        content: txtAddlistDescription!.text),
-                    bgColor: cY,
-                    child: Obx(() => controller.isLoadingAddOrder.isTrue
-                        ? MyCircularProgress(
-                            color: cB,
-                            size: 25,
-                          )
-                        : MyText(
-                            text: 'ثبت لیست',
-                            size: 14,
-                            color: cB,
-                          ))),
-              ),
+            Row(
+              textDirection: TextDirection.rtl,
+              children: [
+                SizedBox(
+                  width: 10,
+                ),
+                Expanded(
+                  child: MyTextButton(
+                      onTap: () => controller.editOrderList(
+                          listId: widget.orderListModel.id,
+                          title: txtEditlistTitle?.text,
+                          content: txtEditlistDescription?.text),
+                      size: Size.fromHeight(40),
+                      bgColor: cY,
+                      child: Obx(() => controller.isLoadingEditOrder.isTrue
+                          ? MyCircularProgress(
+                              color: cB,
+                              size: 25,
+                            )
+                          : MyText(
+                              text: 'ثبت',
+                              size: 14,
+                              color: cB,
+                            ))),
+                ),
+                SizedBox(
+                  width: 10,
+                ),
+                Expanded(
+                  child: MyTextButton(
+                      onTap: () {
+                        Navigator.pop(context);
+                        controller.selectedOrderList(widget.orderListModel);
+                        controller.selectedOrderIndex(widget.orderListIndex);
+                        Get.toNamed('/order-edit-item');
+                      },
+                      size: Size.fromHeight(40),
+                      bgColor: cY,
+                      child: MyText(
+                        text: 'ویرایش آیتم ها',
+                        size: 14,
+                        color: cB,
+                      )),
+                ),
+                SizedBox(
+                  width: 10,
+                ),
+              ],
             ),
             SizedBox(
               height: 20,
