@@ -16,12 +16,14 @@ class TicketController extends GetxController{
   var selectedDepartment = DepartmentModel().obs;
   
   var loadingCreateTicket = false.obs;
+  var loadingReplyTicket = false.obs;
 
   var replies = <ReplyModel>[].obs;
   var loadingSingleTicket = false.obs;
 
   TextEditingController titleController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
+  TextEditingController replyTextController = TextEditingController();
 
   void getTickets(){
     tickets.clear();
@@ -86,6 +88,22 @@ class TicketController extends GetxController{
         }
       }
       loadingCreateTicket(false);
+    });
+  }
+
+  void replyTicket(){
+    loadingReplyTicket(true);
+    ApiProvider().replyTicket(id: selectedTicket.value.id, content: replyTextController.text.trim()).then((value){
+      if(value.isOk){
+        if(value.body["status"] == true){
+          replyTextController.clear();
+          showMessage(text: "تیکت با موفقیت ثبت شد", isSucces: true);
+          getSingleTicket();
+        }else{
+          showMessage(text: value.body["message"], isSucces: false);
+        }
+      }
+      loadingReplyTicket(false);
     });
   }
 }

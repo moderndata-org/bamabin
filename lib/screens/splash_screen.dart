@@ -21,8 +21,6 @@ class SplashScreen extends StatelessWidget {
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
     ]);
-    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
-        overlays: [SystemUiOverlay.top]);
     return SafeArea(
         child: Scaffold(
       backgroundColor: cPrimary,

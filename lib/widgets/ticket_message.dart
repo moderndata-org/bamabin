@@ -16,9 +16,10 @@ class TicketMessage extends StatelessWidget {
       width: Get.width,
       child: Row(
         textDirection: (isSelf == true) ? TextDirection.rtl : TextDirection.ltr,
+
         children: [
           CircleAvatar(
-            backgroundImage: AssetImage("assets/images/ic_logo.png"),
+            backgroundImage: NetworkImage(user_profile!),
           ),
           SizedBox(
             width: 5,
@@ -29,7 +30,7 @@ class TicketMessage extends StatelessWidget {
                 color: cPrimaryDark,
                 borderRadius: BorderRadius.circular(10)
             ),
-            child: Text("${content}",style: TextStyle(color: Colors.white),),
+            child: Text("${content}",style: TextStyle(color: Colors.white),textDirection: TextDirection.rtl,),
           ))
         ],
       ),

@@ -151,6 +151,7 @@ class TicketDetails extends GetView<TicketController> {
                           return TicketMessage(
                             isSelf: index % 2 == 0,
                             content: reply.content,
+                            user_profile: reply.user_avatar,
                           );
                         },
                       );
@@ -173,16 +174,27 @@ class TicketDetails extends GetView<TicketController> {
                           child: MyTextField(
                             textDirection: TextDirection.rtl,
                             borderRadius: 5,
+                            maxLines: 1,
                             hint: "پیام جدید",
-                            controller: new TextEditingController(),
+                            controller: controller.replyTextController,
                           ),
                         ),
                       )),
-                      IconButton(
-                        onPressed: () {},
-                        icon: Icon(Icons.send),
-                        style: IconButton.styleFrom(backgroundColor: cAccent),
-                      )
+                      Obx(() {
+                        if(controller.loadingReplyTicket.isTrue){
+                          return Padding(padding: EdgeInsets.symmetric(horizontal: 5),child: MyCircularProgress(color: cAccent,size: 28,),);
+                        }
+
+                        return IconButton(
+                          onPressed: () {
+                            if(controller.replyTextController.text.trim().isNotEmpty){
+                              controller.replyTicket();
+                            }
+                          },
+                          icon: Icon(Icons.send),
+                          style: IconButton.styleFrom(backgroundColor: cAccent),
+                        );
+                      },)
                     ],
                   )
                 ],
