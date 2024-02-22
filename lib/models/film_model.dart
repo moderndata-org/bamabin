@@ -1,7 +1,11 @@
 import 'package:bamabin/models/actor.dart';
 import 'package:bamabin/models/director.dart';
 import 'package:bamabin/models/release_model.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
+import '../constant/colors.dart';
+import '../widgets/movie_detail/movie_detail_small_item.dart';
 import 'comment_model.dart';
 import 'country_model.dart';
 import 'genre_model.dart';
@@ -381,5 +385,83 @@ class FilmModel {
     } else {
       releaseYear = '';
     }
+  }
+
+  List<Widget> generateSmallItemsList() {
+    List<Widget> list = [];
+    list.add(_SmallItem(
+      text: releaseYear,
+      icon: Icons.calendar_month_rounded,
+    ));
+    list.addIf(
+        countryMovie != null && countryMovie != '',
+        _SmallItem(
+          text: countryMovie,
+          icon: Icons.public,
+        ));
+    list.addIf(
+        languageMovie != null && languageMovie != '',
+        _SmallItem(
+          text: languageMovie,
+          icon: Icons.language,
+        ));
+    list.addIf(
+        runtimeMovie != null && runtimeMovie != '',
+        _SmallItem(
+          text: runtimeMovie,
+          icon: Icons.timer,
+        ));
+    list.addIf(
+        imdbRate != null && imdbRate != '',
+        _SmallItem(
+          text: imdbRate,
+          image: 'assets/images/ic_imdb_circle.png',
+        ));
+    list.addIf(
+        malRateMovie != null && malRateMovie != '',
+        _SmallItem(
+          text: malRateMovie,
+          image: 'assets/images/ic_rotten.png',
+        ));
+    list.addIf(
+        metacriticRate != null && metacriticRate != '',
+        _SmallItem(
+          text: metacriticRate,
+          image: 'assets/images/ic_metacritic.png',
+        ));
+    return list;
+  }
+}
+
+class _SmallItem extends StatelessWidget {
+  const _SmallItem({
+    super.key,
+    this.text,
+    this.image,
+    this.icon,
+  });
+
+  final String? text;
+  final String? image;
+  final IconData? icon;
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: Get.width / 4.22,
+      child: MovieItemSmallDetailWidget(
+        icon: image != null
+            ? SizedBox(height: 20, width: 20, child: Image.asset('${image}'))
+            : Padding(
+                padding: const EdgeInsets.only(bottom: 2),
+                child: Icon(
+                  icon,
+                  color: cW,
+                  size: 19,
+                ),
+              ),
+        title: '${text}',
+      ),
+    );
   }
 }

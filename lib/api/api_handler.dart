@@ -316,6 +316,11 @@ class ApiProvider extends GetConnect {
     return res;
   }
 
+  Future<Response> aboutUs() async {
+    Response res = await get('${base_url}informations');
+    return res;
+  }
+
   Future<Response> deleteOrderList({
     required String? listId,
   }) async {

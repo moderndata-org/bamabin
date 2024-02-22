@@ -75,7 +75,10 @@ class CustomDrawerMenu extends GetView<MainController> {
                                 children: [
                                   Align(
                                       alignment: Alignment.centerRight,
-                                      child: MyText(text: (authController.isLogin.isTrue) ? '${authController.profile.value.firstName} ${authController.profile.value.lastName}' :'کاربر مهمان')),
+                                      child: MyText(
+                                          text: (authController.isLogin.isTrue)
+                                              ? '${authController.profile.value.firstName} ${authController.profile.value.lastName}'
+                                              : 'کاربر مهمان')),
                                   Obx(() {
                                     return authController.paymentController.isVip.isTrue
                                         ? Align(
