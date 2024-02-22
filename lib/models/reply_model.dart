@@ -5,6 +5,7 @@ class ReplyModel{
   String? content;
   String? _created_at;
   String? user_avatar;
+  int? user_id;
 
   ReplyModel();
 
@@ -13,6 +14,7 @@ class ReplyModel{
     content = json['content'];
     _created_at = json['created_at'];
     user_avatar = json['user']["avatar"];
+    user_id = json['user']["id"];
 
   }
 

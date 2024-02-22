@@ -45,10 +45,12 @@ class TicketController extends GetxController{
     loadingSingleTicket(true);
     replies.clear();
     ApiProvider().singleTicket(id: selectedTicket.value.id).then((value){
+      print(value.body);
       replies.clear();
       if(value.isOk){
         if(value.body["status"] == true){
           (value.body["result"]["replies"] as List).forEach((element) {
+            print(element["user"]["id"]);
             replies.add(ReplyModel.fromJson(element));
           });
         }

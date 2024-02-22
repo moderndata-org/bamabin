@@ -1,3 +1,4 @@
+import 'package:bamabin/controller/auth_controller.dart';
 import 'package:bamabin/widgets/MyCircularProgress.dart';
 import 'package:bamabin/widgets/ticket_message.dart';
 import 'package:flutter/material.dart';
@@ -11,8 +12,8 @@ import '../../widgets/MyTextField.dart';
 import '../../widgets/custom_appbar.dart';
 
 class TicketDetails extends GetView<TicketController> {
-  const TicketDetails({Key? key}) : super(key: key);
-
+  TicketDetails({Key? key}) : super(key: key);
+  AuthController authController = Get.find();
   void init() {
     controller.getSingleTicket();
   }
@@ -149,7 +150,7 @@ class TicketDetails extends GetView<TicketController> {
                         itemBuilder: (context, index) {
                           var reply = controller.replies[index];
                           return TicketMessage(
-                            isSelf: index % 2 == 0,
+                            isSelf: (authController.profile.value.id == reply.user_id),
                             content: reply.content,
                             user_profile: reply.user_avatar,
                           );

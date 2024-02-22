@@ -31,7 +31,7 @@ class Routes {
         GetPage(name: '/signin', page: () => SigninScreen()),
         GetPage(name: '/signin-qrcode', page: () => const SignInQrCodeScreen()),
         GetPage(name: '/notifications', page: () => const NotificationScreen()),
-        GetPage(name: '/ticket-details', page: () => const TicketDetails()),
+        GetPage(name: '/ticket-details', page: () => TicketDetails()),
         GetPage(name: '/player', page: () => const PlayerScreen()),
         GetPage(
             name: '/forgetpassword', page: () => const ForgetPasswordScreen()),
