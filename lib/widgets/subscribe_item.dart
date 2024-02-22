@@ -2,15 +2,20 @@
 
 import 'package:bamabin/constant/colors.dart';
 import 'package:bamabin/widgets/MyText.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 
 class SubscribeItem extends StatelessWidget {
   bool? is_selected = false;
   String? price;
   String? price_of;
+  String? title;
+  String? svg_image;
+  Function? onTap;
 
-  SubscribeItem({this.is_selected, this.price, this.price_of, super.key});
+  SubscribeItem({this.title,this.is_selected, this.price, this.price_of,this.onTap,this.svg_image ,super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -79,7 +84,7 @@ class SubscribeItem extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 MyText(
-                  text: "اشتراک 1 ماهه",
+                  text: "${title}",
                   size: 15,
                 ),
                 SizedBox(
@@ -88,13 +93,17 @@ class SubscribeItem extends StatelessWidget {
                 SizedBox(
                     width: 35,
                     height: 35,
-                    child:
-                        MyText(padding: EdgeInsets.only(top: 7), text: 'icon'))
+                    child:(svg_image != null) ? CachedNetworkImage(imageUrl: svg_image!) : MyText(text: "آیکون"))
               ],
             )
           ],
         ),
       ),
+      onTap: (){
+        if(onTap != null){
+          onTap!();
+        }
+      },
     );
   }
 }

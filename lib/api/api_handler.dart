@@ -421,4 +421,14 @@ class ApiProvider extends GetConnect {
     await get('${base_url}vip/gateways');
     return res;
   }
+
+  Future<Response> checkDiscountCode({required String? plan_id,required String? discount_code}) async {
+    var data = FormData({
+      "discount_code":discount_code
+    });
+
+    Response res =
+    await post('${base_url}vip/plan/${plan_id}/verify_discount_code',data,headers: head);
+    return res;
+  }
 }

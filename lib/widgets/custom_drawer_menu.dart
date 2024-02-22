@@ -77,28 +77,28 @@ class CustomDrawerMenu extends GetView<MainController> {
                                       alignment: Alignment.centerRight,
                                       child: MyText(text: (authController.isLogin.isTrue) ? '${authController.profile.value.firstName} ${authController.profile.value.lastName}' :'کاربر مهمان')),
                                   Obx(() {
-                                    return publicController.hasSubscribe.isFalse
-                                        ? SizedBox()
-                                        : Align(
-                                            alignment: Alignment.centerRight,
-                                            child: Row(
-                                              textDirection: TextDirection.rtl,
-                                              children: [
-                                                MyText(
-                                                  text: '50',
-                                                  color: cY,
-                                                  size: 10,
-                                                ),
-                                                SizedBox(
-                                                  width: 3,
-                                                ),
-                                                MyText(
-                                                  text:
-                                                      'روز از اشتراک شما باقی مانده',
-                                                  size: 10,
-                                                ),
-                                              ],
-                                            ));
+                                    return authController.paymentController.isVip.isTrue
+                                        ? Align(
+                                        alignment: Alignment.centerRight,
+                                        child: Row(
+                                          textDirection: TextDirection.rtl,
+                                          children: [
+                                            MyText(
+                                              text: '50',
+                                              color: cY,
+                                              size: 10,
+                                            ),
+                                            SizedBox(
+                                              width: 3,
+                                            ),
+                                            MyText(
+                                              text:
+                                              'روز از اشتراک شما باقی مانده',
+                                              size: 10,
+                                            ),
+                                          ],
+                                        ))
+                                        : SizedBox();
                                   }),
                                   Align(
                                     alignment: Alignment.centerRight,
