@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../widgets/MySncakBar.dart';
 
@@ -8,12 +9,18 @@ void showMessage({required String text, required bool isSucces}) {
     color: isSucces ? Colors.green : Colors.amber,
     icon: isSucces
         ? Icon(
-      Icons.check_circle_rounded,
-      color: Colors.green,
-    )
+            Icons.check_circle_rounded,
+            color: Colors.green,
+          )
         : Icon(
-      Icons.warning_rounded,
-      color: Colors.amber,
-    ),
+            Icons.warning_rounded,
+            color: Colors.amber,
+          ),
   );
+}
+
+Future<void> launchTheUrl({required String url}) async {
+  if (!await launchUrl(Uri.parse(url))) {
+    throw Exception('Could not launch $url');
+  }
 }

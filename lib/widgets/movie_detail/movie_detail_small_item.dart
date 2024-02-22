@@ -28,9 +28,11 @@ class MovieItemSmallDetailWidget extends StatelessWidget {
           icon ?? SizedBox(),
           Expanded(
             child: MyText(
+              textOverflow: TextOverflow.ellipsis,
               textAlign: TextAlign.center,
               textDirection: textDirection,
               text: '$title',
+              maxLines: 1,
               color: cW,
               size: 12,
             ),

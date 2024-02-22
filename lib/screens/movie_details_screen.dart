@@ -462,193 +462,208 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                 ),
               ],
             ),
-            Container(
-              margin: EdgeInsets.only(top: 10),
-              width: Get.width,
-              child: Row(
-                textDirection: TextDirection.rtl,
-                children: [
-                  SizedBox(
-                    width: padding,
+            SizedBox(
+              height: 10,
+            ),
+            Obx(() => Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                  child: Directionality(
+                    textDirection: TextDirection.rtl,
+                    child: Wrap(
+                        runSpacing: 5,
+                        direction: Axis.horizontal,
+                        children: controller.selectedFilm.value
+                            .generateSmallItemsList()),
                   ),
+                )),
+            // Container(
+            //   margin: EdgeInsets.only(top: 10),
+            //   width: Get.width,
+            //   child: Row(
+            //     textDirection: TextDirection.rtl,
+            //     children: [
+            //       SizedBox(
+            //         width: padding,
+            //       ),
+            //       //! Release year
+            //       Expanded(
+            //           child: MovieItemSmallDetailWidget(
+            //         icon: Padding(
+            //           padding: const EdgeInsets.only(bottom: 2),
+            //           child: Icon(
+            //             Icons.calendar_month_rounded,
+            //             color: cW,
+            //             size: 19,
+            //           ),
+            //         ),
+            //         title: '${controller.selectedFilm.value.releaseYear}',
+            //       )),
+            //       //! Country
+            //       Expanded(
+            //           child: MovieItemSmallDetailWidget(
+            //         icon: Icon(
+            //           Icons.public,
+            //           color: cW,
+            //           size: 19,
+            //         ),
+            //         title: '${controller.selectedFilm.value.countryMovie}',
+            //       )),
+            //       //! language
+            //       Expanded(
+            //           child: MovieItemSmallDetailWidget(
+            //         icon: Padding(
+            //           padding: const EdgeInsets.only(bottom: 2),
+            //           child: Icon(
+            //             Icons.language,
+            //             color: cW,
+            //             size: 19,
+            //           ),
+            //         ),
+            //         title: '${controller.selectedFilm.value.languageMovie}',
+            //       )),
+            //       //! time
+            //       Expanded(
+            //           child: MovieItemSmallDetailWidget(
+            //         icon: Padding(
+            //           padding: const EdgeInsets.only(bottom: 2),
+            //           child: Icon(
+            //             Icons.timer,
+            //             color: cW,
+            //             size: 19,
+            //           ),
+            //         ),
+            //         title: '${controller.selectedFilm.value.runtimeMovie}',
+            //       )),
+            //       SizedBox(
+            //         width: padding,
+            //       ),
+            //     ],
+            //   ),
+            // ),
 
-                  //! Release year
-                  Expanded(
-                      child: MovieItemSmallDetailWidget(
-                    icon: Padding(
-                      padding: const EdgeInsets.only(bottom: 2),
-                      child: Icon(
-                        Icons.calendar_month_rounded,
-                        color: cW,
-                        size: 19,
-                      ),
-                    ),
-                    title: '${controller.selectedFilm.value.releaseYear}',
-                  )),
-                  //! Country
-                  Expanded(
-                      child: MovieItemSmallDetailWidget(
-                    icon: Icon(
-                      Icons.public,
-                      color: cW,
-                      size: 19,
-                    ),
-                    title: '${controller.selectedFilm.value.countryMovie}',
-                  )),
-                  //! language
-                  Expanded(
-                      child: MovieItemSmallDetailWidget(
-                    icon: Padding(
-                      padding: const EdgeInsets.only(bottom: 2),
-                      child: Icon(
-                        Icons.language,
-                        color: cW,
-                        size: 19,
-                      ),
-                    ),
-                    title: '${controller.selectedFilm.value.languageMovie}',
-                  )),
-                  //! time
-                  Expanded(
-                      child: MovieItemSmallDetailWidget(
-                    icon: Padding(
-                      padding: const EdgeInsets.only(bottom: 2),
-                      child: Icon(
-                        Icons.timer,
-                        color: cW,
-                        size: 19,
-                      ),
-                    ),
-                    title: '${controller.selectedFilm.value.runtimeMovie}',
-                  )),
-                  SizedBox(
-                    width: padding,
-                  ),
-                ],
-              ),
-            ),
-            Container(
-              margin: EdgeInsets.only(top: 5),
-              width: Get.width,
-              child: Row(
-                textDirection: TextDirection.rtl,
-                children: [
-                  SizedBox(
-                    width: padding,
-                  ),
-                  Expanded(
-                      child: MovieItemSmallDetailWidget(
-                    icon: SizedBox(
-                        height: 20,
-                        width: 20,
-                        child: Image.asset('assets/images/ic_imdb_circle.png')),
-                    title: '${controller.selectedFilm.value.imdbRate}',
-                  )),
-                  Expanded(
-                      child: MovieItemSmallDetailWidget(
-                    icon: SizedBox(
-                        height: 20,
-                        width: 20,
-                        child: Image.asset('assets/images/ic_rotten.png')),
-                    title: '${controller.selectedFilm.value.malRateMovie}',
-                  )),
-                  Expanded(
-                      child: MovieItemSmallDetailWidget(
-                    icon: SizedBox(
-                        height: 20,
-                        width: 20,
-                        child: Image.asset('assets/images/ic_metacritic.png')),
-                    title: '${controller.selectedFilm.value.metacriticRate}',
-                  )),
-                  Expanded(
-                      child: MovieItemSmallDetailWidget(
-                    icon: Padding(
-                      padding: const EdgeInsets.only(bottom: 2),
-                      child: Icon(
-                        Icons.monetization_on,
-                        color: cW,
-                        size: 19,
-                      ),
-                    ),
-                    title: '250 M \$',
-                    textDirection: TextDirection.ltr,
-                  )),
-                  SizedBox(
-                    width: padding,
-                  ),
-                ],
-              ),
-            ),
-            Container(
-              margin: EdgeInsets.only(top: 5),
-              width: Get.width,
-              child: Row(
-                textDirection: TextDirection.rtl,
-                children: [
-                  SizedBox(
-                    width: padding,
-                  ),
-                  controller.selectedFilm.value.ageRate == null ||
-                          controller.selectedFilm.value.ageRate == ''
-                      ? SizedBox()
-                      : Expanded(
-                          child: MovieItemSmallDetailWidget(
-                          icon: Padding(
-                            padding: const EdgeInsets.only(bottom: 2),
-                            child: Icon(
-                              Icons.diversity_3_rounded,
-                              color: cW,
-                              size: 19,
-                            ),
-                          ),
-                          title: '${controller.selectedFilm.value.ageRate}',
-                          textDirection: TextDirection.ltr,
-                        )),
-                  // Expanded(
-                  //     child: MovieItemSmallDetailWidget(
-                  //   icon: Padding(
-                  //     padding: const EdgeInsets.only(bottom: 2),
-                  //     child: Icon(
-                  //       Icons.request_quote_rounded,
-                  //       color: cW,
-                  //       size: 19,
-                  //     ),
-                  //   ),
-                  //   title: '100 M \$',
-                  //   textDirection: TextDirection.ltr,
-                  // )),
-                  // Expanded(
-                  //     child: MovieItemSmallDetailWidget(
-                  //   icon: Padding(
-                  //     padding: const EdgeInsets.only(bottom: 2),
-                  //     child: Icon(
-                  //       Icons.request_quote_rounded,
-                  //       color: cW,
-                  //       size: 19,
-                  //     ),
-                  //   ),
-                  //   title: '100 M \$',
-                  //   textDirection: TextDirection.ltr,
-                  // )),
-                  // Expanded(
-                  //     child: MovieItemSmallDetailWidget(
-                  //   icon: Padding(
-                  //     padding: const EdgeInsets.only(bottom: 2),
-                  //     child: Icon(
-                  //       Icons.request_quote_rounded,
-                  //       color: cW,
-                  //       size: 19,
-                  //     ),
-                  //   ),
-                  //   title: '100 M \$',
-                  //   textDirection: TextDirection.ltr,
-                  // )),
-                  SizedBox(
-                    width: padding,
-                  ),
-                ],
-              ),
-            ),
+            // Container(
+            //   margin: EdgeInsets.only(top: 5),
+            //   width: Get.width,
+            //   child: Row(
+            //     textDirection: TextDirection.rtl,
+            //     children: [
+            //       SizedBox(
+            //         width: padding,
+            //       ),
+            //       Expanded(
+            //           child: MovieItemSmallDetailWidget(
+            //         icon: SizedBox(
+            //             height: 20,
+            //             width: 20,
+            //             child: Image.asset('assets/images/ic_imdb_circle.png')),
+            //         title: '${controller.selectedFilm.value.imdbRate}',
+            //       )),
+            //       Expanded(
+            //           child: MovieItemSmallDetailWidget(
+            //         icon: SizedBox(
+            //             height: 20,
+            //             width: 20,
+            //             child: Image.asset('assets/images/ic_rotten.png')),
+            //         title: '${controller.selectedFilm.value.malRateMovie}',
+            //       )),
+            //       Expanded(
+            //           child: MovieItemSmallDetailWidget(
+            //         icon: SizedBox(
+            //             height: 20,
+            //             width: 20,
+            //             child: Image.asset('assets/images/ic_metacritic.png')),
+            //         title: '${controller.selectedFilm.value.metacriticRate}',
+            //       )),
+            //       Expanded(
+            //           child: MovieItemSmallDetailWidget(
+            //         icon: Padding(
+            //           padding: const EdgeInsets.only(bottom: 2),
+            //           child: Icon(
+            //             Icons.monetization_on,
+            //             color: cW,
+            //             size: 19,
+            //           ),
+            //         ),
+            //         title: '250 M \$',
+            //         textDirection: TextDirection.ltr,
+            //       )),
+            //       SizedBox(
+            //         width: padding,
+            //       ),
+            //     ],
+            //   ),
+            // ),
+            // Container(
+            //   margin: EdgeInsets.only(top: 5),
+            //   width: Get.width,
+            //   child: Row(
+            //     textDirection: TextDirection.rtl,
+            //     children: [
+            //       SizedBox(
+            //         width: padding,
+            //       ),
+            //       controller.selectedFilm.value.ageRate == null ||
+            //               controller.selectedFilm.value.ageRate == ''
+            //           ? SizedBox()
+            //           : Expanded(
+            //               child: MovieItemSmallDetailWidget(
+            //               icon: Padding(
+            //                 padding: const EdgeInsets.only(bottom: 2),
+            //                 child: Icon(
+            //                   Icons.diversity_3_rounded,
+            //                   color: cW,
+            //                   size: 19,
+            //                 ),
+            //               ),
+            //               title: '${controller.selectedFilm.value.ageRate}',
+            //               textDirection: TextDirection.ltr,
+            //             )),
+            //       // Expanded(
+            //       //     child: MovieItemSmallDetailWidget(
+            //       //   icon: Padding(
+            //       //     padding: const EdgeInsets.only(bottom: 2),
+            //       //     child: Icon(
+            //       //       Icons.request_quote_rounded,
+            //       //       color: cW,
+            //       //       size: 19,
+            //       //     ),
+            //       //   ),
+            //       //   title: '100 M \$',
+            //       //   textDirection: TextDirection.ltr,
+            //       // )),
+            //       // Expanded(
+            //       //     child: MovieItemSmallDetailWidget(
+            //       //   icon: Padding(
+            //       //     padding: const EdgeInsets.only(bottom: 2),
+            //       //     child: Icon(
+            //       //       Icons.request_quote_rounded,
+            //       //       color: cW,
+            //       //       size: 19,
+            //       //     ),
+            //       //   ),
+            //       //   title: '100 M \$',
+            //       //   textDirection: TextDirection.ltr,
+            //       // )),
+            //       // Expanded(
+            //       //     child: MovieItemSmallDetailWidget(
+            //       //   icon: Padding(
+            //       //     padding: const EdgeInsets.only(bottom: 2),
+            //       //     child: Icon(
+            //       //       Icons.request_quote_rounded,
+            //       //       color: cW,
+            //       //       size: 19,
+            //       //     ),
+            //       //   ),
+            //       //   title: '100 M \$',
+            //       //   textDirection: TextDirection.ltr,
+            //       // )),
+            //       SizedBox(
+            //         width: padding,
+            //       ),
+            //     ],
+            //   ),
+            // ),
+
             //! Buttons Section
             ButtonSectionMovieDetailWidget(),
             SizedBox(

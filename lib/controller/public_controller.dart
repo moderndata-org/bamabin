@@ -1,5 +1,6 @@
 import 'package:bamabin/api/api_handler.dart';
 import 'package:bamabin/constant/classes.dart';
+import 'package:bamabin/models/about_us_model.dart';
 import 'package:bamabin/models/age_model.dart';
 import 'package:bamabin/models/country_model.dart';
 import 'package:bamabin/models/film_model.dart';
@@ -11,10 +12,12 @@ import 'package:get/get.dart';
 class PublicController extends GetxController {
   RxInt homeBannerIndex = 0.obs;
   ScrollController favoriteScrollController = ScrollController();
+  RxBool isLoadingAboutUs = false.obs;
   RxBool hasSubscribe = false.obs;
   RxList<Genre> listGenre = <Genre>[].obs;
   RxList<AgeRate> listAge = <AgeRate>[].obs;
   RxList<Country> listCountry = <Country>[].obs;
+  Rx<aboutUsModel> aboutUs = aboutUsModel().obs;
   //! Search Page
   RxBool isShowShimmerSearch = false.obs;
   RxBool isLoadingSearchResults = false.obs;
@@ -43,6 +46,22 @@ class PublicController extends GetxController {
   String? lastsubtitle;
   //! End Advanced Search
   //! Search Page End
+
+  void getAboutUs() {
+    isLoadingAboutUs(true);
+    ApiProvider().aboutUs().then((res) {
+      isLoadingAboutUs(false);
+      if (res.body != null) {
+        if (res.body['status'] == true) {
+          aboutUs(aboutUsModel.fromJson(res.body['result']));
+        } else {
+          getAboutUs();
+        }
+      } else {
+        getAboutUs();
+      }
+    });
+  }
 
   void clearAndOpenSearch() {
     selectedGenre(Genre());
@@ -278,6 +297,7 @@ class PublicController extends GetxController {
     getGenre();
     getAges();
     getCountries();
+    getAboutUs();
     super.onInit();
   }
 }
