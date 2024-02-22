@@ -8,6 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
+import '../constant/utils.dart';
+
 class AuthController extends GetxController {
   TextEditingController txtUsername = TextEditingController();
   TextEditingController txtPasswrod = TextEditingController();
@@ -183,21 +185,5 @@ class AuthController extends GetxController {
     box.save();
     isLogin(false);
     Get.back();
-  }
-
-  void showMessage({required String text, required bool isSucces}) {
-    MySnackBar(
-      message: text,
-      color: isSucces ? Colors.green : Colors.amber,
-      icon: isSucces
-          ? Icon(
-              Icons.check_circle_rounded,
-              color: Colors.green,
-            )
-          : Icon(
-              Icons.warning_rounded,
-              color: Colors.amber,
-            ),
-    );
   }
 }

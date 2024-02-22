@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../api/api_handler.dart';
+import '../constant/utils.dart';
 import '../models/film_model.dart';
 
 class FavoriteController extends GetxController {
@@ -54,24 +55,13 @@ class FavoriteController extends GetxController {
           var _detailcontroller = Get.find<DetailController>();
           _detailcontroller.isFavorite(!_detailcontroller.isFavorite.value);
           getFavoritesList();
-          showMessage(message: res.body['message'], isSucces: true);
+          showMessage(text: res.body['message'], isSucces: true);
         } else {
-          showMessage(message: res.body['message'], isSucces: false);
+          showMessage(text: res.body['message'], isSucces: false);
         }
       }
       print(res.body);
       isSettingFavorites(false);
     });
-  }
-
-  void showMessage({required String message, required bool isSucces}) {
-    MySnackBar(
-      message: message,
-      color: isSucces ? Colors.green : Colors.amber,
-      icon: Icon(
-        isSucces ? Icons.check_circle_rounded : Icons.warning_rounded,
-        color: isSucces ? Colors.green : Colors.amber,
-      ),
-    );
   }
 }

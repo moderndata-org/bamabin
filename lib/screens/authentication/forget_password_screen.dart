@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../constant/colors.dart';
+import '../../constant/utils.dart';
 import '../../widgets/MyText.dart';
 import '../../widgets/MyTextButton.dart';
 import '../../widgets/MyTextField.dart';
@@ -95,10 +96,12 @@ class ForgetPasswordScreen extends GetView<AuthController> {
               size: Size(Get.width * .8, 55),
               bgColor: cAccent,
               onTap: () {
-                if(controller.txtEmail.text.trim().isNotEmpty){
-                  controller.forgotPassword(email: controller.txtEmail.text.trim());
-                }else{
-                  controller.showMessage(text: "لطفا ایمیل را صحیح وارد کنید.", isSucces: false);
+                if (controller.txtEmail.text.trim().isNotEmpty) {
+                  controller.forgotPassword(
+                      email: controller.txtEmail.text.trim());
+                } else {
+                  showMessage(
+                      text: "لطفا ایمیل را صحیح وارد کنید.", isSucces: false);
                 }
               },
               child: Obx(() {

@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:video_player/video_player.dart';
 import '../constant/classes.dart';
+import '../constant/utils.dart';
 import '../widgets/MySncakBar.dart';
 
 class DetailController extends GetxController {
@@ -33,9 +34,9 @@ class DetailController extends GetxController {
         isLoadingLikeStatus(true);
         if (res.body['status'] == true) {
           movieLikeStatus(action);
-          showMessage(message: res.body['message'], isSucces: true);
+          showMessage(text: res.body['message'], isSucces: true);
         } else {
-          showMessage(message: res.body['message'], isSucces: false);
+          showMessage(text: res.body['message'], isSucces: false);
         }
       }
       print(res.body);
@@ -70,16 +71,5 @@ class DetailController extends GetxController {
       }
     });
     super.onInit();
-  }
-
-  void showMessage({required String message, required bool isSucces}) {
-    MySnackBar(
-      message: message,
-      color: isSucces ? Colors.green : Colors.amber,
-      icon: Icon(
-        isSucces ? Icons.check_circle_rounded : Icons.warning_rounded,
-        color: isSucces ? Colors.green : Colors.amber,
-      ),
-    );
   }
 }
