@@ -1,4 +1,6 @@
 import 'package:bamabin/constant/colors.dart';
+import 'package:bamabin/controller/payment_controller.dart';
+import 'package:bamabin/widgets/MyCircularProgress.dart';
 import 'package:bamabin/widgets/MyText.dart';
 import 'package:bamabin/widgets/MyTextField.dart';
 import 'package:bamabin/widgets/custom_appbar.dart';
@@ -8,11 +10,16 @@ import 'package:get/get.dart';
 
 import '../../widgets/MyTextButton.dart';
 
-class SubscribeScreen extends StatelessWidget {
+class SubscribeScreen extends GetView<PaymentController> {
   const SubscribeScreen({super.key});
+
+  void init() {
+    controller.getPlans();
+  }
 
   @override
   Widget build(BuildContext context) {
+    Future.delayed(Duration.zero, () => init());
     return SafeArea(
         child: Scaffold(
       backgroundColor: cPrimary,
@@ -30,16 +37,37 @@ class SubscribeScreen extends StatelessWidget {
         child: Column(
           children: [
             Expanded(
-                child: ListView.builder(
-              physics: BouncingScrollPhysics(),
-              itemCount: 10,
-              padding: EdgeInsets.only(right: 10, left: 10),
-              itemBuilder: (context, index) => SubscribeItem(
-                price: "35,000",
-                price_of: "30,000",
-              ),
-            )),
-            Container(
+              child: Obx(() {
+                if (controller.loadingPlans.isTrue)
+                  return Center(
+                    child: MyCircularProgress(
+                      color: cAccent,
+                      size: 32,
+                    ),
+                  );
+
+                return ListView.builder(
+                  physics: BouncingScrollPhysics(),
+                  itemCount: controller.plans.length,
+                  padding: EdgeInsets.only(right: 10, left: 10),
+                  itemBuilder: (context, index) {
+                    var plan = controller.plans[index];
+                    return SubscribeItem(
+                      price: "${plan.price}",
+                      is_selected: controller.selectedPlan.value.id == plan.id,
+                      price_of: "${plan.discountPrice}",
+                      title: "اشتراک ${plan.name}",
+                      svg_image: plan.iconUrl,
+                      onTap: () {
+                        controller.selectedPlan(plan);
+                        controller.plans.refresh();
+                      },
+                    );
+                  },
+                );
+              }),
+            ),
+            Obx(() => (controller.selectedPlan.value.id != null) ? Container(
               padding: EdgeInsets.all(10),
               width: Get.width,
               decoration: BoxDecoration(color: cPrimary, boxShadow: [
@@ -104,19 +132,20 @@ class SubscribeScreen extends StatelessWidget {
                             Column(
                               children: [
                                 Text(
-                                  "45,000 تومان",
+                                  "${controller.selectedPlan.value.price} تومان",
                                   textDirection: TextDirection.rtl,
                                   style: TextStyle(
                                       fontSize: 13,
                                       color: cPink,
-                                      decoration: TextDecoration.lineThrough,
+                                      decoration:
+                                      TextDecoration.lineThrough,
                                       decorationColor: cPink),
                                 ),
                                 Row(
                                   textDirection: TextDirection.rtl,
                                   children: [
                                     Text(
-                                      "35,000",
+                                      "${controller.selectedPlan.value.discountPrice}",
                                       style: TextStyle(
                                           color: cAccent, fontSize: 17),
                                       textDirection: TextDirection.rtl,
@@ -126,7 +155,8 @@ class SubscribeScreen extends StatelessWidget {
                                     ),
                                     Text(
                                       "تومان",
-                                      style: TextStyle(color: cW, fontSize: 11),
+                                      style: TextStyle(
+                                          color: cW, fontSize: 11),
                                       textDirection: TextDirection.rtl,
                                     ),
                                   ],
@@ -140,16 +170,19 @@ class SubscribeScreen extends StatelessWidget {
                           onTap: () {},
                           child: Text(
                             "پرداخت",
-                            style: TextStyle(fontSize: 13, color: Colors.black),
+                            style: TextStyle(
+                                fontSize: 13, color: Colors.black),
                           ),
                           bgColor: cAccent,
                         )
                       ],
                     ),
                   )
+
                 ],
               ),
-            )
+            ) : Container())
+
           ],
         ),
       ),

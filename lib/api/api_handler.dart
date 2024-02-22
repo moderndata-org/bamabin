@@ -396,4 +396,44 @@ class ApiProvider extends GetConnect {
         await get('${base_url}panel/ticket/${id}/close', headers: head);
     return res;
   }
+
+  Future<Response> checkVip() async {
+    Response res =
+    await get('${base_url}have_vip', headers: head);
+    return res;
+  }
+
+  Future<Response> vipInfo() async {
+    Response res =
+    await get('${base_url}vip_info', headers: head);
+    return res;
+  }
+
+  Future<Response> plans() async {
+    Response res =
+    await get('${base_url}vip/plans');
+    return res;
+  }
+
+  Future<Response> planDetails({required String? id}) async {
+    Response res =
+    await get('${base_url}vip/plan/${id}', headers: head);
+    return res;
+  }
+
+  Future<Response> gateways() async {
+    Response res =
+    await get('${base_url}vip/gateways');
+    return res;
+  }
+
+  Future<Response> checkDiscountCode({required String? plan_id,required String? discount_code}) async {
+    var data = FormData({
+      "discount_code":discount_code
+    });
+
+    Response res =
+    await post('${base_url}vip/plan/${plan_id}/verify_discount_code',data,headers: head);
+    return res;
+  }
 }

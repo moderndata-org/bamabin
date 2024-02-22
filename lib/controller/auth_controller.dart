@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:bamabin/api/api_handler.dart';
 import 'package:bamabin/controller/favorite_controller.dart';
+import 'package:bamabin/controller/payment_controller.dart';
 import 'package:bamabin/models/profile_model.dart';
 import 'package:bamabin/widgets/MySncakBar.dart';
 import 'package:flutter/material.dart';
@@ -22,6 +23,8 @@ class AuthController extends GetxController {
   RxBool isLoadingLogin = false.obs;
   var profile = ProfileModel().obs;
 
+  PaymentController paymentController = Get.find();
+
   GetStorage box = GetStorage('bamabin');
   var isLogin = false.obs;
 
@@ -32,6 +35,7 @@ class AuthController extends GetxController {
           isLogin(value.body["status"]);
           if (isLogin.isTrue) {
             getProfile();
+            paymentController.checkVip();
           }
         }
       });
