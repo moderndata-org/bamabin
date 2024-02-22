@@ -150,7 +150,7 @@ class _OrderlistAddMovieWithSearchDialogState
                                   hasDubbed: fm.hasDubbed != '',
                                   hasSubtitle: fm.hasSubtitle == 'on',
                                   imdbRate: '${fm.imdbRate}',
-                                  year: '${fm.releaseMovie}',
+                                  year: '${fm.releaseYear}',
                                   image: fm.thumbnail,
                                   isAddItem: true,
                                   onTap: () {

@@ -146,43 +146,51 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                         ),
                       )),
                   //! Geners
-                  Positioned(
-                      right: 140,
-                      bottom: 60,
-                      left: 0,
-                      child: Container(
-                        width: Get.width,
-                        height: 25,
-                        child: Directionality(
-                          textDirection: TextDirection.ltr,
-                          child: ListView.builder(
-                            padding: EdgeInsets.symmetric(horizontal: padding),
-                            physics: BouncingScrollPhysics(),
-                            itemCount: controller
-                                .selectedFilm.value.genresListForDetail?.length,
-                            scrollDirection: Axis.horizontal,
-                            itemBuilder: (context, index) {
-                              String genre = controller.selectedFilm.value
-                                  .genresListForDetail![index];
-                              return Container(
-                                  decoration: BoxDecoration(
-                                      color:
-                                          cbgGenerMovieDetail.withOpacity(.6),
-                                      border: Border.all(
-                                        color: cW.withOpacity(.2),
-                                      ),
-                                      borderRadius: BorderRadius.circular(5)),
-                                  margin: EdgeInsets.symmetric(horizontal: 1),
-                                  padding: EdgeInsets.only(
-                                      left: 10, right: 10, top: 4, bottom: 4),
-                                  child: MyText(
-                                    text: '$genre',
-                                    size: 11,
-                                  ));
-                            },
-                          ),
-                        ),
-                      )),
+                  controller.selectedFilm.value.genresListForDetail == null
+                      ? SizedBox()
+                      : Positioned(
+                          right: 140,
+                          bottom: 60,
+                          left: 0,
+                          child: Container(
+                            width: Get.width,
+                            height: 25,
+                            child: Directionality(
+                              textDirection: TextDirection.ltr,
+                              child: ListView.builder(
+                                padding:
+                                    EdgeInsets.symmetric(horizontal: padding),
+                                physics: BouncingScrollPhysics(),
+                                itemCount: controller.selectedFilm.value
+                                    .genresListForDetail?.length,
+                                scrollDirection: Axis.horizontal,
+                                itemBuilder: (context, index) {
+                                  String genre = controller.selectedFilm.value
+                                      .genresListForDetail![index];
+                                  return Container(
+                                      decoration: BoxDecoration(
+                                          color: cbgGenerMovieDetail
+                                              .withOpacity(.6),
+                                          border: Border.all(
+                                            color: cW.withOpacity(.2),
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(5)),
+                                      margin:
+                                          EdgeInsets.symmetric(horizontal: 1),
+                                      padding: EdgeInsets.only(
+                                          left: 10,
+                                          right: 10,
+                                          top: 4,
+                                          bottom: 4),
+                                      child: MyText(
+                                        text: '$genre',
+                                        size: 11,
+                                      ));
+                                },
+                              ),
+                            ),
+                          )),
                   //! Poster
                   Positioned(
                       right: padding,
@@ -475,7 +483,7 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                         size: 19,
                       ),
                     ),
-                    title: '${controller.selectedFilm.value.releaseMovie}',
+                    title: '${controller.selectedFilm.value.releaseYear}',
                   )),
                   //! Country
                   Expanded(

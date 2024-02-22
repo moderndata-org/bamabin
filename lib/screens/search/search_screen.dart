@@ -165,7 +165,7 @@ class SearchScreen extends GetView<PublicController> {
                                       hasDubbed: fm.hasDubbed == 'on',
                                       hasSubtitle: fm.hasSubtitle == 'on',
                                       imdbRate: '${fm.imdbRate}',
-                                      year: '${fm.releaseMovie}',
+                                      year: '${fm.releaseYear}',
                                       image: fm.thumbnail,
                                       onTap: () {
                                         var detail =

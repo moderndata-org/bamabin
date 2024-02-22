@@ -141,7 +141,7 @@ class MoreScreen extends StatelessWidget {
                                     hasDubbed: fm.hasDubbed != '',
                                     hasSubtitle: fm.hasSubtitle == 'on',
                                     imdbRate: '${fm.imdbRate}',
-                                    year: '${fm.releaseMovie}',
+                                    year: '${fm.releaseYear}',
                                     image: fm.thumbnail,
                                     onTap: () {
                                       var detail = Get.find<DetailController>();

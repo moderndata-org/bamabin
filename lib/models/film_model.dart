@@ -10,6 +10,7 @@ import 'language_model.dart';
 class FilmModel {
   int? id;
   String? authorId;
+  String? releaseYear;
   String? date;
   String? dateGmt;
   String? content;
@@ -369,7 +370,16 @@ class FilmModel {
     imdbVoteCount = json['imdb_vote_count'];
     malRate = json['mal_rate'];
     malVoteCount = json['mal_vote_count'];
-
     genresListForDetail = genreMovie?.split(',');
+    if (releaseMovie != null) {
+      if (releaseMovie!.contains(',')) {
+        List tmp = releaseMovie!.split(',');
+        releaseYear = tmp[0];
+      } else {
+        releaseYear = releaseMovie;
+      }
+    } else {
+      releaseYear = '';
+    }
   }
 }

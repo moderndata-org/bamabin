@@ -134,7 +134,7 @@ class OrderlistEditItemsScreen extends GetView<OrderListController> {
                                       hasDubbed: fm.hasDubbed != '',
                                       hasSubtitle: fm.hasSubtitle == 'on',
                                       imdbRate: '${fm.imdbRate}',
-                                      year: '${fm.releaseMovie}',
+                                      year: '${fm.releaseYear}',
                                       image: fm.thumbnail,
                                       isDeleteItem: true,
                                       onTap: () {

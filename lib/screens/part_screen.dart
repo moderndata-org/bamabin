@@ -151,9 +151,7 @@ class PartScreen extends GetView<MainController> {
                           crossAxisSpacing: 0,
                           itemCount: controller.selectedList.length,
                           itemBuilder: (context, index) {
-                            // print(index);
                             FilmModel fm = controller.selectedList[index];
-                            // print('${fm.release?.first.name}');
                             if (index == controller.selectedList.length - 1) {
                               controller.getArchive(isFirstPage: false);
                             }
@@ -168,7 +166,7 @@ class PartScreen extends GetView<MainController> {
                                   hasDubbed: fm.hasDubbed != '',
                                   hasSubtitle: fm.hasSubtitle == 'on',
                                   imdbRate: '${fm.imdbRate}',
-                                  year: '${fm.releaseMovie}',
+                                  year: '${fm.releaseYear}',
                                   image: fm.thumbnail,
                                   onTap: () {
                                     var detail = Get.find<DetailController>();

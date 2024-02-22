@@ -114,7 +114,7 @@ class FavoriteScreen extends GetView<FavoriteController> {
                                       hasDubbed: fm.hasDubbed != '',
                                       hasSubtitle: fm.hasSubtitle == 'on',
                                       imdbRate: '${fm.imdbRate}',
-                                      year: '${fm.releaseMovie}',
+                                      year: '${fm.releaseYear}',
                                       image: fm.thumbnail,
                                       onTap: () {
                                         var detail =
