@@ -1,4 +1,5 @@
 import 'package:bamabin/constant/colors.dart';
+import 'package:bamabin/controller/movie_request_controller.dart';
 import 'package:bamabin/screens/dialogs/film_request_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -7,7 +8,7 @@ import '../../widgets/MyTextButton.dart';
 import '../../widgets/custom_appbar.dart';
 import '../../widgets/request_list_item.dart.dart';
 
-class MovieRequestListScreen extends StatelessWidget {
+class MovieRequestListScreen extends GetView<MovieRequestController> {
   const MovieRequestListScreen({super.key});
 
   @override
@@ -28,40 +29,16 @@ class MovieRequestListScreen extends StatelessWidget {
         height: Get.height,
         child: Column(
           children: [
-            // DetailsAppBar(
-            //     leftWidget: MyTextButton(
-            //         size: const Size(40, 40),
-            //         onTap: () {
-            //           Get.back();
-            //         },
-            //         fgColor: cGrey,
-            //         bgColor: cPrimaryDark,
-            //         child: Icon(
-            //           Icons.arrow_back_ios,
-            //           color: cGrey,
-            //         )),
-            //     rightWidget: MyTextButton(
-            //         size: const Size(40, 40),
-            //         onTap: () {
-            //           Get.back();
-            //         },
-            //         fgColor: cGrey,
-            //         bgColor: cPrimaryDark,
-            //         child: Icon(
-            //           Icons.video_call,
-            //           color: cAccent,
-            //         )),
-            //     title: "درخواست فیلم و سریال"),
             Expanded(
-              child: ListView(
-                padding: EdgeInsets.only(right: 10, left: 10),
-                children: [
-                  RequestItem(
-                    referral_link: "dsfd",
-                  ),
-                  RequestItem()
-                ],
-              ),
+              child: Obx(() => ListView.builder(
+                    itemCount: controller.listMovieRequest.length,
+                    padding: EdgeInsets.only(right: 10, left: 10),
+                    itemBuilder: (context, index) {
+                      return RequestItem(
+                        referral_link: "dsfd",
+                      );
+                    },
+                  )),
             ),
             Container(
               padding: EdgeInsets.all(10),

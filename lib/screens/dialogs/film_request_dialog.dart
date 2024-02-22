@@ -1,12 +1,15 @@
+import 'package:bamabin/controller/movie_request_controller.dart';
+import 'package:bamabin/widgets/MyCircularProgress.dart';
 import 'package:bamabin/widgets/custom_dropdown.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../../constant/classes.dart';
 import '../../constant/colors.dart';
 import '../../widgets/MyText.dart';
 import '../../widgets/MyTextButton.dart';
 import '../../widgets/MyTextField.dart';
 
-class FilmRequestDialog extends StatelessWidget {
+class FilmRequestDialog extends GetView<MovieRequestController> {
   const FilmRequestDialog({super.key});
 
   @override
@@ -61,24 +64,57 @@ class FilmRequestDialog extends StatelessWidget {
                   width: 10,
                 ),
                 Expanded(
-                    child: CustomDropDown(
-                  alignment: Alignment.centerRight,
-                  borderRadius: 5,
-                  buttonColor: cSecondary,
-                  title: 'نوع',
-                  list: [],
-                )),
+                    child: Obx(() => CustomDropDown(
+                          alignment: Alignment.centerRight,
+                          borderRadius: 5,
+                          buttonColor: cSecondary,
+                          title: switch (controller.selectedType.value) {
+                            AdvancedSearchType.none => 'نوع',
+                            AdvancedSearchType.animations => 'انیمیشن‌ها',
+                            AdvancedSearchType.anime => 'انیمه‌ها',
+                            AdvancedSearchType.movies => 'فیلم‌ها',
+                            AdvancedSearchType.series => 'سریال‌ها',
+                            AdvancedSearchType.all => '',
+                          },
+                          list: [
+                            DropdownMenuItem(
+                                onTap: () => controller
+                                    .selectedType(AdvancedSearchType.movies),
+                                value: 0,
+                                child: Center(child: MyText(text: 'فیلم‌ها'))),
+                            DropdownMenuItem(
+                                onTap: () => controller
+                                    .selectedType(AdvancedSearchType.series),
+                                value: 0,
+                                child: Center(child: MyText(text: 'سریال‌ها'))),
+                            DropdownMenuItem(
+                                onTap: () => controller.selectedType(
+                                    AdvancedSearchType.animations),
+                                value: 0,
+                                child:
+                                    Center(child: MyText(text: 'انیمیشن‌ها'))),
+                            DropdownMenuItem(
+                                onTap: () => controller
+                                    .selectedType(AdvancedSearchType.anime),
+                                value: 0,
+                                child: Center(child: MyText(text: 'انیمه‌ها'))),
+                          ],
+                        ))),
                 SizedBox(
                   width: 5,
                 ),
                 Expanded(
-                    child: CustomDropDown(
-                  buttonColor: cSecondary,
-                  alignment: Alignment.centerRight,
-                  borderRadius: 5,
-                  title: 'سال',
-                  list: [],
-                )),
+                  child: Directionality(
+                    textDirection: TextDirection.rtl,
+                    child: MyTextField(
+                      textDirection: TextDirection.rtl,
+                      borderRadius: 5,
+                      hint: 'سال',
+                      inputType: TextInputType.number,
+                      controller: controller.txtYear,
+                    ),
+                  ),
+                ),
                 SizedBox(
                   width: 10,
                 ),
@@ -96,18 +132,8 @@ class FilmRequestDialog extends StatelessWidget {
                         textDirection: TextDirection.rtl,
                         borderRadius: 5,
                         hint: "نام فیلم،سریال،انیمه،انیمیشن",
-                        controller: new TextEditingController(),
+                        controller: controller.txtMovieName,
                       ),
-                    ),
-                  ),
-                  SizedBox(
-                    width: 5,
-                  ),
-                  Expanded(
-                    child: MyTextField(
-                      borderRadius: 5,
-                      hint: 'IMDB',
-                      controller: new TextEditingController(),
                     ),
                   ),
                 ],
@@ -116,15 +142,24 @@ class FilmRequestDialog extends StatelessWidget {
             SizedBox(
               height: 20,
             ),
-            MyTextButton(
-                onTap: () {},
-                size: Size(Get.width / 1.4, 35),
-                bgColor: cY,
-                child: MyText(
-                  text: "ثبت",
-                  size: 14,
-                  color: cB,
-                )),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10),
+              child: MyTextButton(
+                  onTap: () => controller.submitRequest(),
+                  size: Size(Get.width, 35),
+                  bgColor: cY,
+                  child: Obx(() => controller.isLoadingSubmitting.value
+                      ? MyCircularProgress(
+                          color: cB,
+                          size: 20,
+                        )
+                      : MyText(
+                          text: "ثبت",
+                          fontWeight: FontWeight.bold,
+                          size: 15,
+                          color: cB,
+                        ))),
+            ),
             SizedBox(
               height: 20,
             ),
