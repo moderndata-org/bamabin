@@ -1,4 +1,5 @@
 import 'package:bamabin/constant/colors.dart';
+import 'package:bamabin/constant/utils.dart';
 import 'package:bamabin/controller/payment_controller.dart';
 import 'package:bamabin/widgets/MyCircularProgress.dart';
 import 'package:bamabin/widgets/MyText.dart';
@@ -81,12 +82,24 @@ class SubscribeScreen extends GetView<PaymentController> {
                   Row(textDirection: TextDirection.ltr, children: [
                     MyTextButton(
                       size: Size(120, 35),
-                      onTap: () {},
+                      onTap: () {
+                        if(controller.discountTextController.text.trim().isNotEmpty){
+                          controller.checkDiscountCode();
+                        }else{
+                          showMessage(text: "لطفا کد تخفیف را وارد کنید", isSucces: false);
+                        }
+                      },
                       child: Center(
-                        child: MyText(
-                          text: "اعمال کد تخفیف",
-                          color: cB,
-                        ),
+                        child: Obx(() {
+                          if(controller.loadingDiscountCode.isTrue)
+                            return MyCircularProgress(color: Colors.black,size: 20,);
+                          
+                          return MyText(
+                            text: "اعمال کد تخفیف",
+                            color: cB,
+                          );
+
+                        }),
                       ),
                       bgColor: cAccent,
                     ),
@@ -98,7 +111,8 @@ class SubscribeScreen extends GetView<PaymentController> {
                         height: 35,
                         child: MyTextField(
                           hint: "کد تخفیف",
-                          controller: TextEditingController(),
+                          maxLines: 1,
+                          controller: controller.discountTextController,
                         ),
                       ),
                     ),
