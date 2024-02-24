@@ -1,6 +1,7 @@
 // ignore_for_file: must_be_immutable
 
 import 'package:bamabin/constant/colors.dart';
+import 'package:bamabin/constant/utils.dart';
 import 'package:bamabin/controller/detail_controller.dart';
 import 'package:bamabin/models/comment_model.dart';
 import 'package:bamabin/widgets/MyCircularProgress.dart';
@@ -13,7 +14,7 @@ import 'package:get/get.dart';
 
 class CommentsSection extends GetView<DetailController> {
   CommentsSection({super.key, this.comments});
-  List<Comment>? comments;
+  List<CommentModel>? comments;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -49,14 +50,11 @@ class CommentsSection extends GetView<DetailController> {
               var comment = comments![index];
               return CommentItem(
                 isReply: false,
-                user: comment.commentAuthor,
-                date: comment.commentDateGmt,
-                text: comment.commentContent,
+                user: comment.author,
+                date: getPersianDate(dateTime: '${comment.createdAt}'),
+                text: comment.content,
                 replyFunc: () {
                   controller.selectedCommentForReply(comment);
-                  //TODO:// change this later
-                  controller.selectedCommentForReply(
-                      Comment(commentID: '$index', commentContent: '$index'));
                   controller.movieDetailScrollController.animateTo(
                       controller
                           .movieDetailScrollController.position.maxScrollExtent,
@@ -69,7 +67,7 @@ class CommentsSection extends GetView<DetailController> {
           SizedBox(
             height: 10,
           ),
-          Obx(() => controller.selectedCommentForReply.value.commentID == null
+          Obx(() => controller.selectedCommentForReply.value.id == null
               ? SizedBox()
               : Container(
                   margin: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
@@ -82,8 +80,8 @@ class CommentsSection extends GetView<DetailController> {
                     textDirection: TextDirection.rtl,
                     children: [
                       IconButton(
-                          onPressed: () =>
-                              controller.selectedCommentForReply(Comment()),
+                          onPressed: () => controller
+                              .selectedCommentForReply(CommentModel()),
                           icon: Icon(
                             Icons.cancel,
                             shadows: [bsTextLowOpacity],
@@ -92,7 +90,7 @@ class CommentsSection extends GetView<DetailController> {
                       Expanded(
                           child: MyText(
                         text:
-                            '${controller.selectedCommentForReply.value.commentContent}',
+                            '${controller.selectedCommentForReply.value.content}',
                         maxLines: 1,
                         textOverflow: TextOverflow.ellipsis,
                         shadows: [bsText],

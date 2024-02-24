@@ -45,7 +45,7 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
     controller.getNewData();
     controller.getDepartments();
     controller.showGoToTop(false);
-    controller.selectedCommentForReply(Comment());
+    controller.selectedCommentForReply(CommentModel());
     super.initState();
   }
 

@@ -48,9 +48,11 @@ class CommentItem extends StatelessWidget {
                   textDirection: TextDirection.rtl,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
-                      "${user}",
-                      style: TextStyle(color: cW, fontSize: 12),
+                    MyText(
+                      textDirection: TextDirection.rtl,
+                      text: "$user",
+                      size: 12,
+                      color: cW,
                     ),
                     Row(
                       textDirection: TextDirection.rtl,

@@ -44,7 +44,7 @@ class FilmModel {
   String? authorEmail;
   String? authorAvatar;
   String? trailer_url;
-  List<Comment>? comments;
+  List<CommentModel>? comments;
   bool? isFinished;
   List<Country>? countries;
   List<Release>? release;
@@ -260,9 +260,9 @@ class FilmModel {
     authorEmail = json['author_email'];
     authorAvatar = json['author_avatar'];
     if (json['comments'] != null) {
-      comments = <Comment>[];
+      comments = <CommentModel>[];
       json['comments'].forEach((v) {
-        comments!.add(new Comment.fromJson(v));
+        comments!.add(new CommentModel.fromJson(v));
       });
     }
     if (json['actors'] != null) {
@@ -390,6 +390,10 @@ class FilmModel {
       releaseYear = '';
     }
   }
+
+  // void sortCommentList(){
+
+  // }
 
   List<Widget> generateSmallItemsList({required double fullWidth}) {
     List<Widget> list = [];

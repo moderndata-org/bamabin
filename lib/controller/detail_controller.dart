@@ -29,7 +29,7 @@ class DetailController extends GetxController {
   RxList<DepartmentModel> departments = <DepartmentModel>[].obs;
   RxBool loadingDepartments = false.obs;
   Rx<DepartmentModel> selectedDepartment = DepartmentModel().obs;
-  Rx<Comment> selectedCommentForReply = Comment().obs;
+  Rx<CommentModel> selectedCommentForReply = CommentModel().obs;
 
   void setLikeAction({required LikeAction action, required String id}) {
     isLoadingLikeStatus(true);
@@ -69,7 +69,7 @@ class DetailController extends GetxController {
   void submitComment({
     required String comment,
   }) {
-    String replyCommentId = selectedCommentForReply.value.commentID ?? '';
+    String replyCommentId = selectedCommentForReply.value.id ?? '';
     if (authController!.isLogin.isTrue) {
       if (isSubmmitingComment.isFalse) {
         if (comment.trim().length > 3) {
