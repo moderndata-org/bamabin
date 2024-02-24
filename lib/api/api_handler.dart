@@ -36,11 +36,16 @@ class ApiProvider extends GetConnect {
     return res;
   }
 
-  Future<Response> sendCode({
-    required String phoneNumber,
+  Future<Response> sendBugReport({
+    required String department,
+    required String content,
   }) async {
-    Map map = {'phone_number': phoneNumber};
-    Response res = await post('${base_url}send-code', map);
+    FormData frm = FormData({
+      'department': department,
+      'content': content,
+    });
+    Response res =
+        await post('${base_url}panel/report/create', frm, headers: head);
     return res;
   }
 
@@ -80,7 +85,6 @@ class ApiProvider extends GetConnect {
             '${base_url}archive/post_type',
             query: m,
           );
-    print(m);
     return res;
   }
 
@@ -141,7 +145,6 @@ class ApiProvider extends GetConnect {
       'm[dubbed]': isDubbed,
       'm[subtitle]': isSubtitle,
     };
-    print(m);
     Response res = await get('${base_url}advanced_search/', query: m);
     return res;
   }
@@ -200,7 +203,6 @@ class ApiProvider extends GetConnect {
       "phone": phone ?? '',
       "city": city ?? '',
     });
-    print(head);
     Response res =
         await post('${base_url}panel/edit_profile', data, headers: head);
     return res;
@@ -313,6 +315,26 @@ class ApiProvider extends GetConnect {
     return res;
   }
 
+  Future<Response> sendMovieRequest({
+    required String? title,
+    required String? release,
+    required String? type,
+  }) async {
+    FormData frm = FormData({
+      'title': title,
+      'release': release,
+      'type': type,
+    });
+    Response res =
+        await post('${base_url}panel/request/create', frm, headers: head);
+    return res;
+  }
+
+  Future<Response> getMovieRequests() async {
+    Response res = await get('${base_url}panel/request/index', headers: head);
+    return res;
+  }
+
   Future<Response> getOrderListDetails({
     required String? list_id,
   }) async {
@@ -381,6 +403,12 @@ class ApiProvider extends GetConnect {
     return res;
   }
 
+  Future<Response> reportDepartments() async {
+    Response res =
+        await get('${base_url}panel/report/departments', headers: head);
+    return res;
+  }
+
   Future<Response> createTicket(
       {required String? title,
       required String? department_id,
@@ -389,6 +417,20 @@ class ApiProvider extends GetConnect {
         {"title": title, "department": department_id, "content": content});
     Response res =
         await post('${base_url}panel/ticket/create', data, headers: head);
+    return res;
+  }
+
+  Future<Response> submitComment({
+    required String content_comment,
+    required String post_id,
+    String? reply_comment_id,
+  }) async {
+    var data = FormData({
+      "content_comment": content_comment,
+      "parent_comment_id": reply_comment_id,
+    });
+    Response res =
+        await post('${base_url}comment/add/$post_id', data, headers: head);
     return res;
   }
 
@@ -407,42 +449,37 @@ class ApiProvider extends GetConnect {
   }
 
   Future<Response> checkVip() async {
-    Response res =
-    await get('${base_url}have_vip', headers: head);
+    Response res = await get('${base_url}have_vip', headers: head);
     return res;
   }
 
   Future<Response> vipInfo() async {
-    Response res =
-    await get('${base_url}vip_info', headers: head);
+    Response res = await get('${base_url}vip_info', headers: head);
     return res;
   }
 
   Future<Response> plans() async {
-    Response res =
-    await get('${base_url}vip/plans');
+    Response res = await get('${base_url}vip/plans');
     return res;
   }
 
   Future<Response> planDetails({required String? id}) async {
-    Response res =
-    await get('${base_url}vip/plan/${id}', headers: head);
+    Response res = await get('${base_url}vip/plan/${id}', headers: head);
     return res;
   }
 
   Future<Response> gateways() async {
-    Response res =
-    await get('${base_url}vip/gateways');
+    Response res = await get('${base_url}vip/gateways');
     return res;
   }
 
-  Future<Response> checkDiscountCode({required String? plan_id,required String? discount_code}) async {
-    var data = FormData({
-      "discount_code":discount_code
-    });
+  Future<Response> checkDiscountCode(
+      {required String? plan_id, required String? discount_code}) async {
+    var data = FormData({"discount_code": discount_code});
 
-    Response res =
-    await post('${base_url}vip/plan/${plan_id}/verify_discount_code',data,headers: head);
+    Response res = await post(
+        '${base_url}vip/plan/${plan_id}/verify_discount_code', data,
+        headers: head);
     return res;
   }
 }

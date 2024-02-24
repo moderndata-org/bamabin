@@ -1,78 +1,109 @@
-class Comment {
-  String? commentID;
-  String? commentPostID;
-  String? commentAuthor;
-  String? commentAuthorEmail;
-  String? commentAuthorUrl;
-  String? commentAuthorIP;
-  String? commentDate;
-  String? commentDateGmt;
-  String? commentContent;
-  String? commentKarma;
-  String? commentApproved;
-  String? commentAgent;
-  String? commentType;
-  String? commentParent;
+class CommentModel {
+  String? id;
+  String? postId;
+  String? postTitle;
+  String? postLink;
+  String? author;
+  String? email;
+  String? createdAt;
+  String? convertedCreatedAt;
+  String? content;
+  String? status;
+  String? parentId;
   String? userId;
+  String? avatar;
+  LikeInfo? likeInfo;
+  bool? hasSpoil;
 
-  Comment(
-      {this.commentID,
-        this.commentPostID,
-        this.commentAuthor,
-        this.commentAuthorEmail,
-        this.commentAuthorUrl,
-        this.commentAuthorIP,
-        this.commentDate,
-        this.commentDateGmt,
-        this.commentContent,
-        this.commentKarma,
-        this.commentApproved,
-        this.commentAgent,
-        this.commentType,
-        this.commentParent,
-        this.userId});
+  CommentModel(
+      {this.id,
+      this.postId,
+      this.postTitle,
+      this.postLink,
+      this.author,
+      this.email,
+      this.createdAt,
+      this.convertedCreatedAt,
+      this.content,
+      this.status,
+      this.parentId,
+      this.userId,
+      this.avatar,
+      this.likeInfo,
+      this.hasSpoil});
 
-  Comment.fromJson(Map<String, dynamic> json) {
-    commentID = json['comment_ID'];
-    commentPostID = json['comment_post_ID'];
-    commentAuthor = json['comment_author'];
-    commentAuthorEmail = json['comment_author_email'];
-    commentAuthorUrl = json['comment_author_url'];
-    commentAuthorIP = json['comment_author_IP'];
-    commentDate = json['comment_date'];
-    commentDateGmt = json['comment_date_gmt'];
-    commentContent = json['comment_content'];
-    commentKarma = json['comment_karma'];
-    commentApproved = json['comment_approved'];
-    commentAgent = json['comment_agent'];
-    commentType = json['comment_type'];
-    commentParent = json['comment_parent'];
+  CommentModel.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    postId = json['post_id'];
+    postTitle = json['post_title'];
+    postLink = json['post_link'];
+    author = json['author'];
+    email = json['email'];
+    createdAt = json['created_at'];
+    convertedCreatedAt = json['converted_created_at'];
+    content = json['content'];
+    status = json['status'];
+    parentId = json['parent_id'];
     userId = json['user_id'];
+    avatar = json['avatar'];
+    likeInfo = json['like_info'] != null
+        ? new LikeInfo.fromJson(json['like_info'])
+        : null;
+    hasSpoil = json['has_spoil'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['comment_ID'] = this.commentID;
-    data['comment_post_ID'] = this.commentPostID;
-    data['comment_author'] = this.commentAuthor;
-    data['comment_author_email'] = this.commentAuthorEmail;
-    data['comment_author_url'] = this.commentAuthorUrl;
-    data['comment_author_IP'] = this.commentAuthorIP;
-    data['comment_date'] = this.commentDate;
-    data['comment_date_gmt'] = this.commentDateGmt;
-    data['comment_content'] = this.commentContent;
-    data['comment_karma'] = this.commentKarma;
-    data['comment_approved'] = this.commentApproved;
-    data['comment_agent'] = this.commentAgent;
-    data['comment_type'] = this.commentType;
-    data['comment_parent'] = this.commentParent;
+    data['id'] = this.id;
+    data['post_id'] = this.postId;
+    data['post_title'] = this.postTitle;
+    data['post_link'] = this.postLink;
+    data['author'] = this.author;
+    data['email'] = this.email;
+    data['created_at'] = this.createdAt;
+    data['converted_created_at'] = this.convertedCreatedAt;
+    data['content'] = this.content;
+    data['status'] = this.status;
+    data['parent_id'] = this.parentId;
     data['user_id'] = this.userId;
+    data['avatar'] = this.avatar;
+    if (this.likeInfo != null) {
+      data['like_info'] = this.likeInfo!.toJson();
+    }
+    data['has_spoil'] = this.hasSpoil;
     return data;
   }
+}
 
+class LikeInfo {
+  int? likes;
+  int? dislikes;
+  int? likePercent;
+  int? dislikePercent;
+  int? total;
 
-  void getCommentDate(){
-    var date = DateTime.parse(this.commentDate!);
+  LikeInfo(
+      {this.likes,
+      this.dislikes,
+      this.likePercent,
+      this.dislikePercent,
+      this.total});
 
+  LikeInfo.fromJson(Map<String, dynamic> json) {
+    likes = json['likes'];
+    dislikes = json['dislikes'];
+    likePercent = json['like_percent'];
+    dislikePercent = json['dislike_percent'];
+    total = json['total'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['likes'] = this.likes;
+    data['dislikes'] = this.dislikes;
+    data['like_percent'] = this.likePercent;
+    data['dislike_percent'] = this.dislikePercent;
+    data['total'] = this.total;
+    return data;
   }
 }

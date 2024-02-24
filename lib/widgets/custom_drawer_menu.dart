@@ -1,15 +1,14 @@
-import 'package:bamabin/constant/classes.dart';
 import 'package:bamabin/constant/colors.dart';
 import 'package:bamabin/controller/auth_controller.dart';
 import 'package:bamabin/controller/favorite_controller.dart';
 import 'package:bamabin/controller/main_controller.dart';
 import 'package:bamabin/controller/public_controller.dart';
+import 'package:bamabin/controller/movie_request_controller.dart';
 import 'package:bamabin/widgets/MyText.dart';
 import 'package:bamabin/widgets/MyTextButton.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-
 import '../controller/order_list_controller.dart';
 import '../screens/dialogs/tokenBot_dialog.dart';
 
@@ -80,27 +79,28 @@ class CustomDrawerMenu extends GetView<MainController> {
                                               ? '${authController.profile.value.firstName} ${authController.profile.value.lastName}'
                                               : 'کاربر مهمان')),
                                   Obx(() {
-                                    return authController.paymentController.isVip.isTrue
+                                    return authController
+                                            .paymentController.isVip.isTrue
                                         ? Align(
-                                        alignment: Alignment.centerRight,
-                                        child: Row(
-                                          textDirection: TextDirection.rtl,
-                                          children: [
-                                            MyText(
-                                              text: '50',
-                                              color: cY,
-                                              size: 10,
-                                            ),
-                                            SizedBox(
-                                              width: 3,
-                                            ),
-                                            MyText(
-                                              text:
-                                              'روز از اشتراک شما باقی مانده',
-                                              size: 10,
-                                            ),
-                                          ],
-                                        ))
+                                            alignment: Alignment.centerRight,
+                                            child: Row(
+                                              textDirection: TextDirection.rtl,
+                                              children: [
+                                                MyText(
+                                                  text: '50',
+                                                  color: cY,
+                                                  size: 10,
+                                                ),
+                                                SizedBox(
+                                                  width: 3,
+                                                ),
+                                                MyText(
+                                                  text:
+                                                      'روز از اشتراک شما باقی مانده',
+                                                  size: 10,
+                                                ),
+                                              ],
+                                            ))
                                         : SizedBox();
                                   }),
                                   Align(
@@ -388,7 +388,7 @@ class CustomDrawerMenu extends GetView<MainController> {
                           boxShadow: bsTextLowOpacity,
                           bgColor: cBgDrawerItem,
                           onTap: () {
-                            Get.toNamed('/request');
+                            Get.put(MovieRequestController());
                             controller.scaffolState.currentState!
                                 .closeEndDrawer();
                           },

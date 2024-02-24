@@ -1,8 +1,5 @@
-import 'dart:ffi';
-
 import 'package:bamabin/constant/colors.dart';
 import 'package:bamabin/controller/public_controller.dart';
-import 'package:bamabin/widgets/genre_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:get/get.dart';
@@ -11,8 +8,6 @@ import 'package:shimmer/shimmer.dart';
 import '../controller/detail_controller.dart';
 import '../models/film_model.dart';
 import '../widgets/custom_appbar.dart';
-import 'package:get/get.dart';
-
 import '../widgets/movie_item_widget.dart';
 
 class MoreScreen extends StatelessWidget {

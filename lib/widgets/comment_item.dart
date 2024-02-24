@@ -7,11 +7,18 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class CommentItem extends StatelessWidget {
-  CommentItem({required this.isReply, super.key,this.user,this.date,this.text});
+  CommentItem(
+      {required this.isReply,
+      super.key,
+      this.user,
+      this.replyFunc,
+      this.date,
+      this.text});
   bool? isReply;
   String? user;
   String? date;
   String? text;
+  final Function()? replyFunc;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -41,9 +48,11 @@ class CommentItem extends StatelessWidget {
                   textDirection: TextDirection.rtl,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
-                      "${user}",
-                      style: TextStyle(color: cW, fontSize: 12),
+                    MyText(
+                      textDirection: TextDirection.rtl,
+                      text: "$user",
+                      size: 12,
+                      color: cW,
                     ),
                     Row(
                       textDirection: TextDirection.rtl,
@@ -69,7 +78,7 @@ class CommentItem extends StatelessWidget {
                             : MyTextButton(
                                 borderRadius: 5,
                                 size: Size(60, 30),
-                                onTap: () {},
+                                onTap: replyFunc,
                                 bgColor: cY,
                                 fgColor: cB,
                                 child: MyText(

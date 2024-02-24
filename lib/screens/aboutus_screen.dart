@@ -1,4 +1,3 @@
-import 'package:bamabin/constant/strings.dart';
 import 'package:bamabin/constant/utils.dart';
 import 'package:bamabin/controller/public_controller.dart';
 import 'package:bamabin/widgets/MyText.dart';

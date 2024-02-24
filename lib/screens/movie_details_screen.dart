@@ -1,9 +1,12 @@
 import 'package:bamabin/constant/classes.dart';
 import 'package:bamabin/constant/colors.dart';
+import 'package:bamabin/controller/auth_controller.dart';
 import 'package:bamabin/controller/detail_controller.dart';
 import 'package:bamabin/controller/favorite_controller.dart';
+import 'package:bamabin/models/comment_model.dart';
 import 'package:bamabin/screens/dialogs/download_movie_dialog.dart';
 import 'package:bamabin/screens/dialogs/download_serial_dialog.dart';
+import 'package:bamabin/screens/dialogs/report_bug_dialog.dart';
 import 'package:bamabin/widgets/MyCircularProgress.dart';
 import 'package:bamabin/widgets/MyText.dart';
 import 'package:bamabin/widgets/MyTextButton.dart';
@@ -17,10 +20,9 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:video_player/video_player.dart';
-
+import '../constant/utils.dart';
 import '../widgets/custom_shimmer.dart';
 import '../widgets/movie_detail/actors_widget.dart';
-import '../widgets/movie_detail_small_item.dart';
 
 late double padding = 10;
 
@@ -34,31 +36,16 @@ class MovieDetailsScreen extends StatefulWidget {
 class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
   final controller = Get.find<DetailController>();
   final favoriteController = Get.find<FavoriteController>();
+
   @override
   void initState() {
+    controller.txtComment!.clear();
+    controller.authController = Get.find<AuthController>();
     controller.isSerial(controller.selectedFilm.value.type == 'series');
     controller.getNewData();
-    controller.isTextExpandedMovieDetail(false);
-    if (controller.selectedFilm.value.trailer_url != '' &&
-        controller.selectedFilm.value.trailer_url != null) {
-      controller.isPlayingTrailer(false);
-      controller.isLoadingTrailer(true);
-      controller.trailerController = VideoPlayerController.networkUrl(
-          Uri.parse('${controller.selectedFilm.value.trailer_url}'))
-        ..initialize().then((value) {
-          controller.isLoadingTrailer(false);
-          controller.trailerController.addListener(() {
-            controller.trailerPosition(controller
-                .trailerController.value.position.inSeconds
-                .toDouble());
-            if (controller.trailerController.value.position ==
-                controller.trailerController.value.duration) {
-              controller.isPlayingTrailer(false);
-              controller.trailerController.seekTo(Duration.zero);
-            }
-          });
-        });
-    }
+    controller.getDepartments();
+    controller.showGoToTop(false);
+    controller.selectedCommentForReply(CommentModel());
     super.initState();
   }
 
@@ -70,15 +57,7 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // print(controller.selectedFilm.value.id);
-    // bool a = false;
-    // favoriteController.listFavorites.forEach((element) {
-    //   if (element.id == controller.selectedFilm.value.id) {
-    //     a = true;
-    //   }
-    // });
-    // controller.isFavorite(a);
-    print('${controller.selectedFilm.value.is_watchlist}');
+    print(controller.selectedFilm.value.id);
     return SafeArea(
       child: Scaffold(
         floatingActionButton: Obx(() => controller.showGoToTop.value
@@ -109,20 +88,22 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                 clipBehavior: Clip.none,
                 children: [
                   //! Background Cover
-                  SizedBox(
-                    height: 220,
-                    width: Get.width,
-                    child: CachedNetworkImage(
-                      imageUrl: '${controller.selectedFilm.value.bgThumbnail}',
-                      fit: BoxFit.cover,
-                      placeholder: (context, url) => Center(
-                          child: CustomShimmerWidget(
+                  Obx(() => SizedBox(
+                        height: 220,
                         width: Get.width,
-                        height: 220 - 20,
+                        child: CachedNetworkImage(
+                          imageUrl:
+                              '${controller.selectedFilm.value.bgThumbnail}',
+                          fit: BoxFit.cover,
+                          placeholder: (context, url) => Center(
+                              child: CustomShimmerWidget(
+                            width: Get.width,
+                            height: 220 - 20,
+                          )),
+                          errorWidget: (context, url, error) =>
+                              Icon(Icons.error),
+                        ),
                       )),
-                      errorWidget: (context, url, error) => Icon(Icons.error),
-                    ),
-                  ),
                   //! TopGradient
                   Positioned(
                       top: 0,
@@ -146,77 +127,81 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                         ),
                       )),
                   //! Geners
-                  controller.selectedFilm.value.genresListForDetail == null
-                      ? SizedBox()
-                      : Positioned(
-                          right: 140,
-                          bottom: 60,
-                          left: 0,
-                          child: Container(
-                            width: Get.width,
-                            height: 25,
-                            child: Directionality(
-                              textDirection: TextDirection.ltr,
-                              child: ListView.builder(
-                                padding:
-                                    EdgeInsets.symmetric(horizontal: padding),
-                                physics: BouncingScrollPhysics(),
-                                itemCount: controller.selectedFilm.value
-                                    .genresListForDetail?.length,
-                                scrollDirection: Axis.horizontal,
-                                itemBuilder: (context, index) {
-                                  String genre = controller.selectedFilm.value
-                                      .genresListForDetail![index];
-                                  return Container(
-                                      decoration: BoxDecoration(
-                                          color: cbgGenerMovieDetail
-                                              .withOpacity(.6),
-                                          border: Border.all(
-                                            color: cW.withOpacity(.2),
-                                          ),
-                                          borderRadius:
-                                              BorderRadius.circular(5)),
-                                      margin:
-                                          EdgeInsets.symmetric(horizontal: 1),
-                                      padding: EdgeInsets.only(
-                                          left: 10,
-                                          right: 10,
-                                          top: 4,
-                                          bottom: 4),
-                                      child: MyText(
-                                        text: '$genre',
-                                        size: 11,
-                                      ));
-                                },
+                  Obx(
+                    () => controller.selectedFilm.value.genresListForDetail ==
+                            null
+                        ? SizedBox()
+                        : Positioned(
+                            right: 140,
+                            bottom: 60,
+                            left: 0,
+                            child: Container(
+                              width: Get.width,
+                              height: 25,
+                              child: Directionality(
+                                textDirection: TextDirection.ltr,
+                                child: ListView.builder(
+                                  padding:
+                                      EdgeInsets.symmetric(horizontal: padding),
+                                  physics: BouncingScrollPhysics(),
+                                  itemCount: controller.selectedFilm.value
+                                      .genresListForDetail?.length,
+                                  scrollDirection: Axis.horizontal,
+                                  itemBuilder: (context, index) {
+                                    String genre = controller.selectedFilm.value
+                                        .genresListForDetail![index];
+                                    return Container(
+                                        decoration: BoxDecoration(
+                                            color: cbgGenerMovieDetail
+                                                .withOpacity(.6),
+                                            border: Border.all(
+                                              color: cW.withOpacity(.2),
+                                            ),
+                                            borderRadius:
+                                                BorderRadius.circular(5)),
+                                        margin:
+                                            EdgeInsets.symmetric(horizontal: 1),
+                                        padding: EdgeInsets.only(
+                                            left: 10,
+                                            right: 10,
+                                            top: 4,
+                                            bottom: 4),
+                                        child: MyText(
+                                          text: '$genre',
+                                          size: 11,
+                                        ));
+                                  },
+                                ),
                               ),
-                            ),
-                          )),
+                            )),
+                  ),
+
                   //! Poster
                   Positioned(
                       right: padding,
                       bottom: 10,
-                      child: Container(
-                        width: 130,
-                        height: 190,
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(5),
-                          child: CachedNetworkImage(
-                            imageUrl:
-                                '${controller.selectedFilm.value.thumbnail}',
-                            fit: BoxFit.cover,
-                            placeholder: (context, url) => Center(
-                                child: CustomShimmerWidget(
-                              width: 130,
-                              height: 190,
-                            )),
-                            errorWidget: (context, url, error) =>
-                                CustomShimmerWidget(
-                              width: 130,
-                              height: 190,
+                      child: Obx(() => Container(
+                            width: 130,
+                            height: 190,
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(5),
+                              child: CachedNetworkImage(
+                                imageUrl:
+                                    '${controller.selectedFilm.value.thumbnail}',
+                                fit: BoxFit.cover,
+                                placeholder: (context, url) => Center(
+                                    child: CustomShimmerWidget(
+                                  width: 130,
+                                  height: 190,
+                                )),
+                                errorWidget: (context, url, error) =>
+                                    CustomShimmerWidget(
+                                  width: 130,
+                                  height: 190,
+                                ),
+                              ),
                             ),
-                          ),
-                        ),
-                      )),
+                          ))),
                   //! LikeDislikeBox
                   Positioned(
                       left: padding,
@@ -322,7 +307,16 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                       top: 10,
                       right: 20,
                       child: GestureDetector(
-                        onTap: () {},
+                        onTap: () => Get.find<AuthController>().isLogin.isFalse
+                            ? showMessage(
+                                text: 'ابتدا وارد شوید', isSucces: false)
+                            : showDialog(
+                                barrierColor: cBgDialogColor,
+                                context: context,
+                                builder: (context) {
+                                  return BugReportDialog();
+                                },
+                              ),
                         child: Container(
                           padding:
                               EdgeInsets.symmetric(vertical: 5, horizontal: 5),
@@ -362,47 +356,88 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                   width: padding,
                 ),
                 Expanded(
-                    child: MyText(
-                  padding: EdgeInsets.only(top: 5),
-                  text: '${controller.selectedFilm.value.enTitle}',
-                  textAlign: TextAlign.right,
-                  size: 15,
-                  fontWeight: FontWeight.bold,
-                  textDirection: TextDirection.ltr,
-                  textOverflow: TextOverflow.ellipsis,
-                )),
+                    child: Obx(() => Tooltip(
+                          preferBelow: false,
+                          showDuration: Duration(seconds: 3),
+                          message: '${controller.selectedFilm.value.enTitle}',
+                          child: MyText(
+                            padding: EdgeInsets.only(top: 5),
+                            text: '${controller.selectedFilm.value.enTitle}',
+                            textAlign: TextAlign.right,
+                            size: 15,
+                            fontWeight: FontWeight.bold,
+                            textDirection: TextDirection.ltr,
+                            textOverflow: TextOverflow.ellipsis,
+                          ),
+                        ))),
                 SizedBox(
-                  width: 160,
-                  child: Column(
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          MyText(
-                            text: '0%',
-                            size: 9,
-                          ),
-                          MyText(
-                            text: '100%',
-                            size: 9,
-                          ),
-                        ],
-                      ),
-                      Row(
-                        textDirection: TextDirection.ltr,
-                        children: [
-                          Container(
-                            height: 8,
-                            width: 160,
-                            decoration: BoxDecoration(
-                                color: cSecondaryLight,
-                                borderRadius: BorderRadius.circular(50)),
-                          )
-                        ],
-                      )
-                    ],
-                  ),
+                  width: 5,
                 ),
+                //! like/dislike precents
+                Obx(() => controller.selectedFilm.value.likeInfo == null
+                    ? SizedBox()
+                    : SizedBox(
+                        width: 160,
+                        child: Column(
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                //! dislike
+                                MyText(
+                                  text:
+                                      '${controller.selectedFilm.value.likeInfo?.dislikePercent}%',
+                                  size: 9,
+                                ),
+                                //! like
+                                MyText(
+                                  text:
+                                      '${controller.selectedFilm.value.likeInfo?.likePercent}%',
+                                  size: 9,
+                                ),
+                              ],
+                            ),
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(50),
+                              child: Obx(() =>
+                                  controller.selectedFilm.value.likeInfo == null
+                                      ? SizedBox()
+                                      : SizedBox(
+                                          width: 160,
+                                          child: Row(
+                                            textDirection: TextDirection.ltr,
+                                            children: [
+                                              Container(
+                                                height: 8,
+                                                width: (controller
+                                                            .selectedFilm
+                                                            .value
+                                                            .likeInfo
+                                                            ?.dislikePercent ??
+                                                        0) *
+                                                    160 /
+                                                    100,
+                                                color: cR,
+                                              ),
+                                              Container(
+                                                height: 8,
+                                                width: (controller
+                                                            .selectedFilm
+                                                            .value
+                                                            .likeInfo
+                                                            ?.likePercent ??
+                                                        0) *
+                                                    160 /
+                                                    100,
+                                                color: cSecondaryLight,
+                                              ),
+                                            ],
+                                          ),
+                                        )),
+                            )
+                          ],
+                        ),
+                      )),
                 SizedBox(
                   width: padding,
                 ),
@@ -416,14 +451,19 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                   width: padding,
                 ),
                 Expanded(
-                    child: MyText(
-                  text: '${controller.selectedFilm.value.faTitle}',
-                  textAlign: TextAlign.right,
-                  size: 15,
-                  fontWeight: FontWeight.w500,
-                  textDirection: TextDirection.rtl,
-                  textOverflow: TextOverflow.ellipsis,
-                )),
+                    child: Obx(() => Tooltip(
+                          preferBelow: true,
+                          showDuration: Duration(seconds: 3),
+                          message: '${controller.selectedFilm.value.faTitle}',
+                          child: MyText(
+                            text: '${controller.selectedFilm.value.faTitle}',
+                            textAlign: TextAlign.right,
+                            size: 15,
+                            fontWeight: FontWeight.w500,
+                            textDirection: TextDirection.rtl,
+                            textOverflow: TextOverflow.ellipsis,
+                          ),
+                        ))),
                 MyTextButton(
                     borderRadius: 5,
                     size: Size(160, 30),
@@ -473,7 +513,7 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                         runSpacing: 5,
                         direction: Axis.horizontal,
                         children: controller.selectedFilm.value
-                            .generateSmallItemsList()),
+                            .generateSmallItemsList(fullWidth: Get.width - 20)),
                   ),
                 )),
             // Container(
@@ -703,7 +743,7 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                 )),
 
             //! TrailerSection
-            controller.selectedFilm.value.trailer_url == '' ||
+            Obx(() => controller.selectedFilm.value.trailer_url == '' ||
                     controller.selectedFilm.value.trailer_url == null
                 ? SizedBox()
                 : Container(
@@ -809,7 +849,7 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                         )
                       ],
                     ),
-                  ),
+                  )),
             SizedBox(
               height: 15,
             ),
@@ -847,27 +887,28 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                     height: 130,
                     child: Directionality(
                         textDirection: TextDirection.rtl,
-                        child: ListView.builder(
-                          padding: EdgeInsets.symmetric(horizontal: 15),
-                          physics: BouncingScrollPhysics(),
-                          itemCount: (controller.selectedFilm.value.actors! +
-                                  controller.selectedFilm.value.directors!)
-                              .length,
-                          scrollDirection: Axis.horizontal,
-                          itemBuilder: (context, index) {
-                            var actors_list =
-                                (controller.selectedFilm.value.actors! +
+                        child: Obx(() => ListView.builder(
+                              padding: EdgeInsets.symmetric(horizontal: 15),
+                              physics: BouncingScrollPhysics(),
+                              itemCount: (controller
+                                          .selectedFilm.value.actors! +
+                                      controller.selectedFilm.value.directors!)
+                                  .length,
+                              scrollDirection: Axis.horizontal,
+                              itemBuilder: (context, index) {
+                                var actors_list = (controller
+                                        .selectedFilm.value.actors! +
                                     controller.selectedFilm.value.directors!);
-                            var actor = actors_list[index];
-                            return Container(
-                              width: 80,
-                              margin: EdgeInsets.symmetric(horizontal: 7),
-                              child: ActorsWidget(
-                                  imageUrl: '${actor.avatar}',
-                                  name: '${actor.name}'),
-                            );
-                          },
-                        )),
+                                var actor = actors_list[index];
+                                return Container(
+                                  width: 80,
+                                  margin: EdgeInsets.symmetric(horizontal: 7),
+                                  child: ActorsWidget(
+                                      imageUrl: '${actor.avatar}',
+                                      name: '${actor.name}'),
+                                );
+                              },
+                            ))),
                   )
                 ],
               ),
@@ -930,7 +971,12 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                               image: film.thumbnail,
                               onTap: () {
                                 controller.selectedFilm(film);
-                                Get.toNamed('/movie-detail');
+                                controller.getNewData();
+                                controller.movieDetailScrollController
+                                    .animateTo(0,
+                                        duration: Duration(seconds: 1),
+                                        curve: Easing.standard);
+                                // Get.toNamed('/movie-detail');
                               },
                             );
                           },
@@ -959,9 +1005,9 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
             SizedBox(
               height: 15,
             ),
-            CommentsSection(
-              comments: controller.selectedFilm.value.comments,
-            ),
+            Obx(() => CommentsSection(
+                  comments: controller.selectedFilm.value.comments,
+                )),
             SizedBox(
               height: 30,
             ),

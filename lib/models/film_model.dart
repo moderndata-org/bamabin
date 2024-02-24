@@ -1,5 +1,4 @@
 import 'package:bamabin/models/actor.dart';
-import 'package:bamabin/models/director.dart';
 import 'package:bamabin/models/release_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -45,7 +44,7 @@ class FilmModel {
   String? authorEmail;
   String? authorAvatar;
   String? trailer_url;
-  List<Comment>? comments;
+  List<CommentModel>? comments;
   bool? isFinished;
   List<Country>? countries;
   List<Release>? release;
@@ -114,6 +113,7 @@ class FilmModel {
   String? malRate;
   String? malVoteCount;
   bool? is_watchlist;
+  like_info? likeInfo;
   List<String>? genresListForDetail;
   List<FilmModel>? collection_posts;
   List<FilmModel>? related_posts;
@@ -221,6 +221,7 @@ class FilmModel {
       this.imdbId,
       this.imdbRate,
       this.imdbVoteCount,
+      this.likeInfo,
       this.malRate,
       this.malVoteCount});
 
@@ -259,9 +260,9 @@ class FilmModel {
     authorEmail = json['author_email'];
     authorAvatar = json['author_avatar'];
     if (json['comments'] != null) {
-      comments = <Comment>[];
+      comments = <CommentModel>[];
       json['comments'].forEach((v) {
-        comments!.add(new Comment.fromJson(v));
+        comments!.add(new CommentModel.fromJson(v));
       });
     }
     if (json['actors'] != null) {
@@ -374,6 +375,9 @@ class FilmModel {
     imdbVoteCount = json['imdb_vote_count'];
     malRate = json['mal_rate'];
     malVoteCount = json['mal_vote_count'];
+    likeInfo = json['like_info'] != null
+        ? new like_info.fromJson(json['like_info'])
+        : null;
     genresListForDetail = genreMovie?.split(',');
     if (releaseMovie != null) {
       if (releaseMovie!.contains(',')) {
@@ -387,49 +391,94 @@ class FilmModel {
     }
   }
 
-  List<Widget> generateSmallItemsList() {
+  // void sortCommentList(){
+
+  // }
+
+  List<Widget> generateSmallItemsList({required double fullWidth}) {
     List<Widget> list = [];
+    double width = fullWidth / 4;
     list.add(_SmallItem(
+      width: width,
       text: releaseYear,
       icon: Icons.calendar_month_rounded,
     ));
     list.addIf(
         countryMovie != null && countryMovie != '',
         _SmallItem(
+          width: width,
           text: countryMovie,
           icon: Icons.public,
         ));
     list.addIf(
         languageMovie != null && languageMovie != '',
         _SmallItem(
+          width: width,
           text: languageMovie,
           icon: Icons.language,
         ));
     list.addIf(
         runtimeMovie != null && runtimeMovie != '',
         _SmallItem(
+          width: width,
           text: runtimeMovie,
           icon: Icons.timer,
         ));
     list.addIf(
         imdbRate != null && imdbRate != '',
         _SmallItem(
+          width: width,
           text: imdbRate,
           image: 'assets/images/ic_imdb_circle.png',
         ));
     list.addIf(
         malRateMovie != null && malRateMovie != '',
         _SmallItem(
+          width: width,
           text: malRateMovie,
           image: 'assets/images/ic_rotten.png',
         ));
     list.addIf(
         metacriticRate != null && metacriticRate != '',
         _SmallItem(
+          width: width,
           text: metacriticRate,
           image: 'assets/images/ic_metacritic.png',
         ));
     return list;
+  }
+}
+
+class like_info {
+  int? likes;
+  int? dislikes;
+  int? likePercent;
+  int? dislikePercent;
+  int? total;
+
+  like_info(
+      {this.likes,
+      this.dislikes,
+      this.likePercent,
+      this.dislikePercent,
+      this.total});
+
+  like_info.fromJson(Map<String, dynamic> json) {
+    likes = json['likes'];
+    dislikes = json['dislikes'];
+    likePercent = json['like_percent'];
+    dislikePercent = json['dislike_percent'];
+    total = json['total'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['likes'] = this.likes;
+    data['dislikes'] = this.dislikes;
+    data['like_percent'] = this.likePercent;
+    data['dislike_percent'] = this.dislikePercent;
+    data['total'] = this.total;
+    return data;
   }
 }
 
@@ -439,16 +488,19 @@ class _SmallItem extends StatelessWidget {
     this.text,
     this.image,
     this.icon,
+    required this.width,
   });
 
   final String? text;
   final String? image;
   final IconData? icon;
+  final double width;
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: Get.width / 4.22,
+      //  Get.width / 4.22
+      width: width,
       child: MovieItemSmallDetailWidget(
         icon: image != null
             ? SizedBox(height: 20, width: 20, child: Image.asset('${image}'))

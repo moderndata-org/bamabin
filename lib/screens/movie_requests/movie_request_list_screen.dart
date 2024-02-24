@@ -1,13 +1,17 @@
 import 'package:bamabin/constant/colors.dart';
+import 'package:bamabin/constant/utils.dart';
+import 'package:bamabin/controller/movie_request_controller.dart';
+import 'package:bamabin/models/movie_request_movie.dart';
 import 'package:bamabin/screens/dialogs/film_request_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../widgets/MyTextButton.dart';
 import '../../widgets/custom_appbar.dart';
+import '../../widgets/custom_shimmer.dart';
 import '../../widgets/request_list_item.dart.dart';
 
-class MovieRequestListScreen extends StatelessWidget {
+class MovieRequestListScreen extends GetView<MovieRequestController> {
   const MovieRequestListScreen({super.key});
 
   @override
@@ -28,40 +32,38 @@ class MovieRequestListScreen extends StatelessWidget {
         height: Get.height,
         child: Column(
           children: [
-            // DetailsAppBar(
-            //     leftWidget: MyTextButton(
-            //         size: const Size(40, 40),
-            //         onTap: () {
-            //           Get.back();
-            //         },
-            //         fgColor: cGrey,
-            //         bgColor: cPrimaryDark,
-            //         child: Icon(
-            //           Icons.arrow_back_ios,
-            //           color: cGrey,
-            //         )),
-            //     rightWidget: MyTextButton(
-            //         size: const Size(40, 40),
-            //         onTap: () {
-            //           Get.back();
-            //         },
-            //         fgColor: cGrey,
-            //         bgColor: cPrimaryDark,
-            //         child: Icon(
-            //           Icons.video_call,
-            //           color: cAccent,
-            //         )),
-            //     title: "درخواست فیلم و سریال"),
             Expanded(
-              child: ListView(
-                padding: EdgeInsets.only(right: 10, left: 10),
-                children: [
-                  RequestItem(
-                    referral_link: "dsfd",
-                  ),
-                  RequestItem()
-                ],
-              ),
+              child: Obx(() => controller.isLoadingData.isTrue
+                  ? ListView.builder(
+                      padding: EdgeInsets.only(
+                          top: 10, left: 10, right: 10, bottom: 60),
+                      itemCount: 10,
+                      physics: BouncingScrollPhysics(),
+                      itemBuilder: (context, index) => Container(
+                        width: Get.width,
+                        child:
+                            CustomShimmerWidget(width: Get.width, height: 200),
+                        padding: EdgeInsets.symmetric(vertical: 5),
+                      ),
+                    )
+                  : ListView.builder(
+                      physics: BouncingScrollPhysics(),
+                      itemCount: controller.listMovieRequest.length,
+                      padding: EdgeInsets.only(right: 10, left: 10),
+                      itemBuilder: (context, index) {
+                        MovieRequestModel mr =
+                            controller.listMovieRequest[index];
+                        return RequestItem(
+                          id: mr.id,
+                          condition: mr.status,
+                          request: mr.title,
+                          message: mr.message,
+                          date: getPersianDate(dateTime: '${mr.createdAt}'),
+                          referral_link:
+                              mr.referralLink == '' ? null : mr.referralLink,
+                        );
+                      },
+                    )),
             ),
             Container(
               padding: EdgeInsets.all(10),
