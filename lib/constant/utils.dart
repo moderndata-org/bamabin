@@ -27,8 +27,8 @@ Future<void> launchTheUrl({required String url}) async {
 }
 
 String getPersianDate({required String dateTime}) {
-  String a = '';
   Jalali j = DateTime.parse(dateTime).toJalali();
-  a = '${j.year}/${j.month.toString().padLeft(2, '0')}/${j.day.toString().padLeft(2, '0')}';
+  String a =
+      '${j.year}/${j.month.toString().padLeft(2, '0')}/${j.day.toString().padLeft(2, '0')}';
   return a;
 }

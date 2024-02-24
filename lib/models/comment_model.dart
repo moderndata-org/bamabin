@@ -17,20 +17,20 @@ class Comment {
 
   Comment(
       {this.commentID,
-        this.commentPostID,
-        this.commentAuthor,
-        this.commentAuthorEmail,
-        this.commentAuthorUrl,
-        this.commentAuthorIP,
-        this.commentDate,
-        this.commentDateGmt,
-        this.commentContent,
-        this.commentKarma,
-        this.commentApproved,
-        this.commentAgent,
-        this.commentType,
-        this.commentParent,
-        this.userId});
+      this.commentPostID,
+      this.commentAuthor,
+      this.commentAuthorEmail,
+      this.commentAuthorUrl,
+      this.commentAuthorIP,
+      this.commentDate,
+      this.commentDateGmt,
+      this.commentContent,
+      this.commentKarma,
+      this.commentApproved,
+      this.commentAgent,
+      this.commentType,
+      this.commentParent,
+      this.userId});
 
   Comment.fromJson(Map<String, dynamic> json) {
     commentID = json['comment_ID'];
@@ -70,9 +70,7 @@ class Comment {
     return data;
   }
 
-
-  void getCommentDate(){
+  void getCommentDate() {
     var date = DateTime.parse(this.commentDate!);
-
   }
 }

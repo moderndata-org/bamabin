@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:bamabin/constant/colors.dart';
 import 'package:bamabin/controller/public_controller.dart';
 import 'package:bamabin/widgets/genre_item.dart';
@@ -7,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:bamabin/controller/main_controller.dart';
 import '../widgets/custom_appbar.dart';
-import 'package:get/get.dart';
 
 class GenreScreen extends StatelessWidget {
   GenreScreen({Key? key}) : super(key: key);
@@ -42,10 +39,15 @@ class GenreScreen extends StatelessWidget {
                     childAspectRatio: 8 / 3,
                     crossAxisSpacing: 10,
                     mainAxisSpacing: 8),
-                itemCount: publicController.listGenre.length, // Total number of items
+                itemCount:
+                    publicController.listGenre.length, // Total number of items
                 itemBuilder: (BuildContext context, int index) {
                   var genre = publicController.listGenre[index];
-                  return GenreItem(title: genre.name,imageUrl: genre.icon,backgroundUrl: genre.background_url, );
+                  return GenreItem(
+                    title: genre.name,
+                    imageUrl: genre.icon,
+                    backgroundUrl: genre.background_url,
+                  );
                 },
               ))
             ],

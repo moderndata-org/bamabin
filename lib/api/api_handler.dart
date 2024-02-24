@@ -27,11 +27,16 @@ class ApiProvider extends GetConnect {
     return res;
   }
 
-  Future<Response> sendCode({
-    required String phoneNumber,
+  Future<Response> sendBugReport({
+    required String department,
+    required String content,
   }) async {
-    Map map = {'phone_number': phoneNumber};
-    Response res = await post('${base_url}send-code', map);
+    FormData frm = FormData({
+      'department': department,
+      'content': content,
+    });
+    Response res =
+        await post('${base_url}panel/report/create', frm, headers: head);
     return res;
   }
 
@@ -71,7 +76,6 @@ class ApiProvider extends GetConnect {
             '${base_url}archive/post_type',
             query: m,
           );
-    print(m);
     return res;
   }
 
@@ -132,7 +136,6 @@ class ApiProvider extends GetConnect {
       'm[dubbed]': isDubbed,
       'm[subtitle]': isSubtitle,
     };
-    print(m);
     Response res = await get('${base_url}advanced_search/', query: m);
     return res;
   }
@@ -191,7 +194,6 @@ class ApiProvider extends GetConnect {
       "phone": phone ?? '',
       "city": city ?? '',
     });
-    print(head);
     Response res =
         await post('${base_url}panel/edit_profile', data, headers: head);
     return res;
@@ -392,6 +394,12 @@ class ApiProvider extends GetConnect {
     return res;
   }
 
+  Future<Response> reportDepartments() async {
+    Response res =
+        await get('${base_url}panel/report/departments', headers: head);
+    return res;
+  }
+
   Future<Response> createTicket(
       {required String? title,
       required String? department_id,
@@ -400,6 +408,20 @@ class ApiProvider extends GetConnect {
         {"title": title, "department": department_id, "content": content});
     Response res =
         await post('${base_url}panel/ticket/create', data, headers: head);
+    return res;
+  }
+
+  Future<Response> submitComment({
+    required String content_comment,
+    required String post_id,
+    String? reply_comment_id,
+  }) async {
+    var data = FormData({
+      "content_comment": content_comment,
+      "parent_comment_id": reply_comment_id,
+    });
+    Response res =
+        await post('${base_url}comment/add/$post_id', data, headers: head);
     return res;
   }
 

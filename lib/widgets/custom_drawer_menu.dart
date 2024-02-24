@@ -1,4 +1,3 @@
-import 'package:bamabin/constant/classes.dart';
 import 'package:bamabin/constant/colors.dart';
 import 'package:bamabin/controller/auth_controller.dart';
 import 'package:bamabin/controller/favorite_controller.dart';
@@ -10,7 +9,6 @@ import 'package:bamabin/widgets/MyTextButton.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-
 import '../controller/order_list_controller.dart';
 import '../screens/dialogs/tokenBot_dialog.dart';
 
@@ -391,7 +389,6 @@ class CustomDrawerMenu extends GetView<MainController> {
                           bgColor: cBgDrawerItem,
                           onTap: () {
                             Get.put(MovieRequestController());
-                            Get.toNamed('/request');
                             controller.scaffolState.currentState!
                                 .closeEndDrawer();
                           },

@@ -13,6 +13,13 @@ class MovieRequestController extends GetxController {
   RxBool isLoadingSubmitting = false.obs;
   RxList<MovieRequestModel> listMovieRequest = <MovieRequestModel>[].obs;
 
+  @override
+  void onInit() {
+    Get.toNamed('/request');
+    getRequests();
+    super.onInit();
+  }
+
   void getRequests() {
     isLoadingData(true);
     ApiProvider().getMovieRequests().then((res) {
@@ -35,6 +42,7 @@ class MovieRequestController extends GetxController {
     if (selectedType.value != AdvancedSearchType.none &&
         txtYear.text.length == 4 &&
         int.parse(txtYear.text) > 1900 &&
+        int.parse(txtYear.text) <= DateTime.now().year &&
         txtMovieName.text.length > 3) {
       String type = switch (selectedType.value) {
         AdvancedSearchType.none => 'نوع',
