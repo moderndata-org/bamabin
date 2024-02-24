@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -6,11 +7,15 @@ import '../constant/ScrollBehavior.dart';
 import '../constant/colors.dart';
 import '../constant/bindings.dart';
 import '../constant/strings.dart';
+import 'firebase_options.dart';
 import 'routes/route.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await GetStorage.init('bamabin');
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
       .then((_) {
     runApp(const Main());

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "415579686885",
+    "project_id": "bamabin-bcc05",
+    "storage_bucket": "bamabin-bcc05.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:415579686885:android:3572a3744e12364d48d10c",
+        "android_client_info": {
+          "package_name": "com.example.bamabin"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBx2a9kH-Uj-f8bda0kuMrSkp0Udpf1T3M"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,5 +1,6 @@
 // ignore_for_file: avoid_print
 
+import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
@@ -12,6 +13,14 @@ class ApiProvider extends GetConnect {
   var maxAuthRetries = 5;
   GetStorage box = GetStorage('bamabin');
   ApiProvider() {
+    final remoteConfig = FirebaseRemoteConfig.instance;
+    remoteConfig.fetch().then((value){
+        var u = remoteConfig.getString("api_url");
+        print(u);
+
+    });
+
+
     if (box.hasData("api_key")) {
       var api_key = box.read("api_key");
       head = {"BAMABIN_API_KEY": "$api_key"};
