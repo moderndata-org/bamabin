@@ -147,7 +147,9 @@ class DetailController extends GetxController {
             isLogin: authController!.isLogin.value)
         .then((res) {
       if (res.body != null) {
+        print(selectedFilm.value.releaseYear);
         selectedFilm(FilmModel.fromJson(res.body['result']));
+        print(selectedFilm.value.releaseYear);
         setNewurlTrailer();
         isTextExpandedMovieDetail(false);
       }

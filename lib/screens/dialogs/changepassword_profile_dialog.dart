@@ -1,5 +1,6 @@
 import 'package:bamabin/constant/colors.dart';
-import 'package:bamabin/controller/public_controller.dart';
+import 'package:bamabin/controller/auth_controller.dart';
+import 'package:bamabin/widgets/MyCircularProgress.dart';
 import 'package:bamabin/widgets/MyText.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -17,7 +18,7 @@ class ProfileChangePasswordDialog extends StatefulWidget {
 
 class _ProfileChangePasswordDialogState
     extends State<ProfileChangePasswordDialog> {
-  final controller = Get.find<PublicController>();
+  final controller = Get.find<AuthController>();
   TextEditingController? txtOldPassword;
   TextEditingController? txtNewPassword;
   TextEditingController? txtNewPasswordRepeat;
@@ -88,6 +89,7 @@ class _ProfileChangePasswordDialogState
                 height: 45,
                 hint: 'رمز عبور قبلی',
                 controller: txtOldPassword!,
+                isPassword: true,
                 maxLines: 1,
                 prefixIcon: Icon(
                   Icons.lock,
@@ -102,6 +104,7 @@ class _ProfileChangePasswordDialogState
                 height: 45,
                 hint: 'رمز عبور جدید',
                 controller: txtNewPassword!,
+                isPassword: true,
                 maxLines: 1,
                 prefixIcon: Icon(
                   Icons.lock,
@@ -116,6 +119,7 @@ class _ProfileChangePasswordDialogState
                 height: 45,
                 hint: 'تکرار رمز عبور جدید',
                 controller: txtNewPasswordRepeat!,
+                isPassword: true,
                 maxLines: 1,
                 prefixIcon: Icon(
                   Icons.lock,
@@ -130,14 +134,22 @@ class _ProfileChangePasswordDialogState
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
               child: MyTextButton(
-                  onTap: () {},
+                  onTap: () => controller.changePassword(
+                      current_password: txtOldPassword!.text,
+                      password: txtNewPassword!.text,
+                      re_password: txtNewPasswordRepeat!.text),
                   size: Size.fromHeight(40),
                   bgColor: cY,
-                  child: MyText(
-                    text: 'ثبت',
-                    size: 15,
-                    color: cB,
-                  )),
+                  child: Obx(() => controller.isChangingPassword.isTrue
+                      ? MyCircularProgress(
+                          color: cB,
+                          size: 20,
+                        )
+                      : MyText(
+                          text: 'ثبت',
+                          size: 15,
+                          color: cB,
+                        ))),
             ),
             SizedBox(
               height: 20,

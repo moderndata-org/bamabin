@@ -1,10 +1,8 @@
 import 'dart:async';
 
 import 'package:bamabin/api/api_handler.dart';
-import 'package:bamabin/controller/favorite_controller.dart';
 import 'package:bamabin/controller/payment_controller.dart';
 import 'package:bamabin/models/profile_model.dart';
-import 'package:bamabin/widgets/MySncakBar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -21,12 +19,52 @@ class AuthController extends GetxController {
   RxBool isLoadingRegister = false.obs;
   RxBool isForgotPasswordRegister = false.obs;
   RxBool isLoadingLogin = false.obs;
+  RxBool isChangingPassword = false.obs;
   var profile = ProfileModel().obs;
 
   PaymentController paymentController = Get.find();
 
   GetStorage box = GetStorage('bamabin');
   var isLogin = false.obs;
+
+  void changePassword({
+    required String current_password,
+    required String password,
+    required String re_password,
+  }) {
+    if (isChangingPassword.isFalse) {
+      isChangingPassword(true);
+      ApiProvider()
+          .changePassword(
+              current_password: current_password,
+              password: password,
+              re_password: re_password)
+          .then((res) {
+        isChangingPassword(false);
+        if (current_password.isNotEmpty &&
+            password.isNotEmpty &&
+            re_password.isNotEmpty) {
+          if (password == re_password) {
+            if (res.body != null) {
+              if (res.body['status'] == true) {
+                Get.back();
+                box.write('api_key', res.body['api_key']);
+                box.save();
+                showMessage(text: 'ثبت شد', isSucces: true);
+              } else {
+                showMessage(text: res.body['message'], isSucces: false);
+              }
+            }
+          } else {
+            showMessage(
+                text: 'رمز عبور با تکرار آن یکسان نمیباشد', isSucces: false);
+          }
+        } else {
+          showMessage(text: 'پر کردن فیلد ها اجباری است', isSucces: false);
+        }
+      });
+    }
+  }
 
   void checkLogin() {
     if (box.hasData("api_key")) {

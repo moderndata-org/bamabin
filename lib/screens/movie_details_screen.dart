@@ -58,6 +58,8 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
   @override
   Widget build(BuildContext context) {
     print(controller.selectedFilm.value.id);
+    print(controller.selectedFilm.value.releaseYear);
+    print(controller.selectedFilm.value.releaseMovie);
     return SafeArea(
       child: Scaffold(
         floatingActionButton: Obx(() => controller.showGoToTop.value
@@ -1001,12 +1003,12 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
             SizedBox(
               height: 15,
             ),
-            UserListSection(),
-            SizedBox(
-              height: 15,
-            ),
+            // UserListSection(),
+            // SizedBox(
+            //   height: 15,
+            // ),
             Obx(() => CommentsSection(
-                  comments: controller.selectedFilm.value.comments,
+                  comments: controller.selectedFilm.value.sortedComments,
                 )),
             SizedBox(
               height: 30,

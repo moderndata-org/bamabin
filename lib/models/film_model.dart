@@ -45,6 +45,7 @@ class FilmModel {
   String? authorAvatar;
   String? trailer_url;
   List<CommentModel>? comments;
+  List<CommentModel>? sortedComments;
   bool? isFinished;
   List<Country>? countries;
   List<Release>? release;
@@ -389,11 +390,35 @@ class FilmModel {
     } else {
       releaseYear = '';
     }
+    sortCommentList();
   }
 
-  // void sortCommentList(){
-
-  // }
+  void sortCommentList() {
+    sortedComments = [];
+    List<CommentModel> childs = [];
+    List<CommentModel> parents = [];
+    parents.addAll(comments ?? []);
+    //! add childs
+    parents.forEach((child) {
+      if (child.parentId != '' &&
+          child.parentId != '0' &&
+          child.parentId != null) {
+        childs.add(child);
+      }
+    });
+    //! add parents with their child to sorted comments
+    parents.forEach((parent) {
+      if (parent.parentId == '0') {
+        sortedComments?.add(parent);
+        childs.forEach((child) {
+          if (child.parentId == parent.id) {
+            sortedComments?.add(child);
+            // childs.removeWhere((element) => child.id == element.id);
+          }
+        });
+      }
+    });
+  }
 
   List<Widget> generateSmallItemsList({required double fullWidth}) {
     List<Widget> list = [];

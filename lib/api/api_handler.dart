@@ -13,13 +13,12 @@ class ApiProvider extends GetConnect {
   var maxAuthRetries = 5;
   GetStorage box = GetStorage('bamabin');
   ApiProvider() {
-    final remoteConfig = FirebaseRemoteConfig.instance;
-    remoteConfig.fetch().then((value){
-        var u = remoteConfig.getString("api_url");
-        print(u);
+    // final remoteConfig = FirebaseRemoteConfig.instance;
+    // remoteConfig.fetch().then((value){
+    //     var u = remoteConfig.getString("api_url");
+    //     print(u);
 
-    });
-
+    // });
 
     if (box.hasData("api_key")) {
       var api_key = box.read("api_key");
@@ -46,6 +45,21 @@ class ApiProvider extends GetConnect {
     });
     Response res =
         await post('${base_url}panel/report/create', frm, headers: head);
+    return res;
+  }
+
+  Future<Response> changePassword({
+    required String current_password,
+    required String password,
+    required String re_password,
+  }) async {
+    FormData frm = FormData({
+      'current_password': current_password,
+      'password': password,
+      're_password': re_password,
+    });
+    Response res =
+        await post('${base_url}panel/change_password', frm, headers: head);
     return res;
   }
 

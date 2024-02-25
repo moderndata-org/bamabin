@@ -46,23 +46,27 @@ class CommentsSection extends GetView<DetailController> {
             height: 10,
           ),
           Column(
-            children: List.generate(comments!.length, (index) {
-              var comment = comments![index];
-              return CommentItem(
-                isReply: false,
-                user: comment.author,
-                date: getPersianDate(dateTime: '${comment.createdAt}'),
-                text: comment.content,
-                replyFunc: () {
-                  controller.selectedCommentForReply(comment);
-                  controller.movieDetailScrollController.animateTo(
-                      controller
-                          .movieDetailScrollController.position.maxScrollExtent,
-                      duration: Duration(seconds: 1),
-                      curve: Curves.easeIn);
-                },
-              );
-            }),
+            children: (comments?.length ?? 0) <= 0
+                ? []
+                : List.generate(comments!.length, (index) {
+                    var comment = comments![index];
+                    return CommentItem(
+                      isReply: comment.parentId != '0' &&
+                          comment.parentId != '' &&
+                          comment.parentId != null,
+                      user: comment.author,
+                      date: getPersianDate(dateTime: '${comment.createdAt}'),
+                      text: comment.content,
+                      replyFunc: () {
+                        controller.selectedCommentForReply(comment);
+                        controller.movieDetailScrollController.animateTo(
+                            controller.movieDetailScrollController.position
+                                .maxScrollExtent,
+                            duration: Duration(seconds: 1),
+                            curve: Curves.easeIn);
+                      },
+                    );
+                  }),
           ),
           SizedBox(
             height: 10,
