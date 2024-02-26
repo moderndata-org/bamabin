@@ -13,12 +13,6 @@ class ApiProvider extends GetConnect {
   var maxAuthRetries = 5;
   GetStorage box = GetStorage('bamabin');
   ApiProvider() {
-    // final remoteConfig = FirebaseRemoteConfig.instance;
-    // remoteConfig.fetch().then((value){
-    //     var u = remoteConfig.getString("api_url");
-    //     print(u);
-
-    // });
 
     if (box.hasData("api_key")) {
       var api_key = box.read("api_key");
