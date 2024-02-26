@@ -1,5 +1,6 @@
 import 'package:bamabin/constant/colors.dart';
 import 'package:bamabin/controller/public_controller.dart';
+import 'package:bamabin/screens/part_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:get/get.dart';
@@ -50,63 +51,17 @@ class MoreScreen extends StatelessWidget {
               Expanded(
                   child: Obx(() => mainController.isShowShimmer.value
                       ? ListView(
-                          padding: EdgeInsets.symmetric(horizontal: 5),
-                          physics: BouncingScrollPhysics(),
+                    padding: EdgeInsets.symmetric(horizontal: 5),
+                    physics: BouncingScrollPhysics(),
+                    children: List.generate(
+                        5,
+                            (index) => Row(
                           children: List.generate(
-                              5,
-                              (index) => Row(
-                                    children: List.generate(
-                                        3,
-                                        (index) => Expanded(
-                                                child: Shimmer(
-                                              direction: ShimmerDirection.ltr,
-                                              period: Duration(seconds: 3),
-                                              enabled: true,
-                                              gradient: LinearGradient(
-                                                  begin: Alignment.topLeft,
-                                                  end: Alignment.bottomRight,
-                                                  colors: [
-                                                    Color.fromARGB(
-                                                        255, 52, 52, 52),
-                                                    Color.fromARGB(
-                                                        255, 93, 93, 93),
-                                                    Color.fromARGB(
-                                                        255, 52, 52, 52),
-                                                  ]),
-                                              child: Column(
-                                                children: [
-                                                  Container(
-                                                    margin:
-                                                        EdgeInsets.symmetric(
-                                                            horizontal: 5,
-                                                            vertical: 5),
-                                                    height: 200,
-                                                    decoration: BoxDecoration(
-                                                        color: Colors.white,
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(5)),
-                                                  ),
-                                                  Align(
-                                                    alignment:
-                                                        Alignment.centerLeft,
-                                                    child: Container(
-                                                      margin: EdgeInsets.only(
-                                                          left: 5),
-                                                      width: 70,
-                                                      height: 10,
-                                                      decoration: BoxDecoration(
-                                                          color: Colors.white,
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(5)),
-                                                    ),
-                                                  )
-                                                ],
-                                              ),
-                                            ))),
-                                  )),
-                        )
+                              3,
+                                  (index) =>
+                                  Expanded(child: MovieItemShimmer())),
+                        )),
+                  )
                       : Directionality(
                           textDirection: TextDirection.rtl,
                           child: AlignedGridView.count(

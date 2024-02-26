@@ -120,10 +120,7 @@ class MainController extends GetxController {
         }
         if (res.body != null && res.body['status'] == true) {
           lastPageNumber = res.body['info']['last_page_num'];
-          print('ssssss $pageNumber');
-
           List tmp = res.body['results'];
-          print(res.body);
           for (var element in tmp) {
             selectedList.add(FilmModel.fromJson(element));
           }
@@ -167,7 +164,7 @@ class MainController extends GetxController {
     if (taxonomypageNumber == 1) {
       moreFilmList.clear();
     }
-    print(taxonomypageNumber);
+    isShowShimmer(true);
     ApiProvider()
         .getTaxonomy(taxonomy, id, taxonomypageNumber.toString())
         .then((value) {
@@ -178,6 +175,7 @@ class MainController extends GetxController {
           });
         }
       }
+      isShowShimmer(false);
     });
   }
 

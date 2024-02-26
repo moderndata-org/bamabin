@@ -1,3 +1,4 @@
+import 'package:bamabin/constant/classes.dart';
 import 'package:bamabin/controller/main_controller.dart';
 import 'package:bamabin/controller/public_controller.dart';
 import 'package:bamabin/widgets/genre_item.dart';
@@ -174,19 +175,25 @@ class HomeScreen extends GetView<PublicController> {
                                   itemBuilder: (context, index) {
                                     var genre = section.genres![index];
                                     return Center(
-                                      child: GenreItem(
-                                        width: 100,
-                                        height: 55,
-                                        title: genre.name,
-                                        imageUrl: genre.icon,
-                                        backgroundUrl: genre.background_url,
-                                        margin: EdgeInsets.only(right: 5),
-                                        boxShadow: BoxShadow(
-                                            blurRadius: 2,
-                                            offset: Offset(0, 1),
-                                            color:
-                                                Colors.black.withOpacity(.2)),
-                                      ),
+                                      child: GestureDetector(
+                                        child: GenreItem(
+                                          width: 100,
+                                          height: 55,
+                                          title: genre.name,
+                                          imageUrl: genre.icon,
+                                          backgroundUrl: genre.background_url,
+                                          margin: EdgeInsets.only(right: 5),
+                                          boxShadow: BoxShadow(
+                                              blurRadius: 2,
+                                              offset: Offset(0, 1),
+                                              color:
+                                              Colors.black.withOpacity(.2)),
+                                        ),
+                                        onTap: (){
+                                          mainController.changeGenre(gener: genre);
+                                          Get.toNamed("/part");
+                                        },
+                                      )
                                     );
                                   },
                                 )),
@@ -202,15 +209,35 @@ class HomeScreen extends GetView<PublicController> {
                                 : null,
                             title: '${section.name}',
                             onTapMore: () {
-                              Get.toNamed("/more", arguments: {
-                                "title": "${section.name}",
-                                "filter_key": (section.taxonomy != null)
-                                    ? section.taxonomy
-                                    : "type",
-                                "filter_value": (section.taxonomy != null)
-                                    ? section.id
-                                    : section.post_type![0]
-                              });
+                              if(section.taxonomy == null){
+                                mainController.isVisibleAppbar(true);
+                                switch(section.post_type!.first) {
+                                  case "movies":
+                                    mainController.appBarCenterText('فیلم');
+                                    mainController.selectedBottomNav(BottomNavType.movies);
+                                    break;
+                                  case "series":
+                                    mainController.appBarCenterText('سریال');
+                                    mainController.selectedBottomNav(BottomNavType.series);
+                                    break;
+                                  case "animations":
+                                    mainController.appBarCenterText('انیمیشن');
+                                    mainController.selectedBottomNav(BottomNavType.animations);
+                                    break;
+                                  case "anime":
+                                    mainController.appBarCenterText('انیمه');
+                                    mainController.selectedBottomNav(BottomNavType.anime);
+                                    break;
+                                }
+
+                              }else{
+                                Get.toNamed("/more", arguments: {
+                                  "title": "${section.name}",
+                                  "filter_key": section.taxonomy,
+                                  "filter_value": section.id
+                                });
+                              }
+
                             },
                           ),
                           SizedBox(

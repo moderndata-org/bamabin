@@ -43,11 +43,14 @@ class GenreScreen extends StatelessWidget {
                     publicController.listGenre.length, // Total number of items
                 itemBuilder: (BuildContext context, int index) {
                   var genre = publicController.listGenre[index];
-                  return GenreItem(
+                  return GestureDetector(child: GenreItem(
                     title: genre.name,
                     imageUrl: genre.icon,
                     backgroundUrl: genre.background_url,
-                  );
+                  ),onTap: (){
+                    mainController.changeGenre(gener: genre);
+                    Get.toNamed("/part");
+                  },);
                 },
               ))
             ],
