@@ -51,7 +51,7 @@ class FilmModel {
   List<Release>? release;
   List<Actor>? actors;
   List<Actor>? directors;
-  // List<Null>? networks;
+  List<NetworkModel>? networks;
   List<Language>? languages;
   List<Genre>? genres;
   String? sEditLock;
@@ -106,6 +106,7 @@ class FilmModel {
   String? faSummary;
   String? updateDescription;
   String? ageRate;
+  String? broadcast_status;
   String? hasPlay;
   String? runtime;
   String? imdbId;
@@ -114,8 +115,11 @@ class FilmModel {
   String? malRate;
   String? mdl_rate;
   String? malVoteCount;
+  int? sales_amount;
   bool? is_watchlist;
   like_info? likeInfo;
+  int? broadcast_day;
+  int? production_budget;
   List<String>? genresListForDetail;
   List<FilmModel>? collection_posts;
   List<FilmModel>? related_posts;
@@ -123,10 +127,13 @@ class FilmModel {
   FilmModel(
       {this.id,
       this.authorId,
+      this.production_budget,
+      this.broadcast_day,
       this.genresListForDetail,
       this.date,
       this.dateGmt,
       this.content,
+      this.sales_amount,
       this.title,
       this.mdl_rate,
       this.excerpt,
@@ -134,6 +141,7 @@ class FilmModel {
       this.commentStatus,
       this.pingStatus,
       this.is_watchlist,
+      this.broadcast_status,
       this.password,
       this.name,
       this.toPing,
@@ -164,7 +172,7 @@ class FilmModel {
       this.release,
       this.actors,
       this.directors,
-      // this.networks,
+      this.networks,
       this.languages,
       this.genres,
       this.sEditLock,
@@ -237,6 +245,8 @@ class FilmModel {
     dateGmt = json['date_gmt'];
     content = json['content'];
     title = json['title'];
+    broadcast_status = json['broadcast_status'];
+    production_budget = json['production_budget'];
     excerpt = json['excerpt'];
     status = json['status'];
     commentStatus = json['comment_status'];
@@ -244,7 +254,9 @@ class FilmModel {
     password = json['password'];
     trailer_url = json['trailer_url'];
     name = json['name'];
+    sales_amount = json['sales_amount'];
     toPing = json['to_ping'];
+    broadcast_day = json['broadcast_day'];
     pinged = json['pinged'];
     modified = json['modified'];
     modifiedGmt = json['modified_gmt'];
@@ -382,6 +394,12 @@ class FilmModel {
     likeInfo = json['like_info'] != null
         ? new like_info.fromJson(json['like_info'])
         : null;
+    if (json['networks'] != null) {
+      networks = <NetworkModel>[];
+      json['networks'].forEach((v) {
+        networks!.add(new NetworkModel.fromJson(v));
+      });
+    }
     genresListForDetail = genreMovie?.split(',');
     if (releaseMovie != null) {
       if (releaseMovie!.contains(',')) {
@@ -426,6 +444,38 @@ class FilmModel {
   List<Widget> generateSmallItemsList({required double fullWidth}) {
     List<Widget> list = [];
     double width = fullWidth / 4;
+    String? brStatus;
+    String? playChannel;
+    if (networks != null) {
+      for (int i = 0; i < networks!.length; i++) {
+        if (i != 0) {
+          playChannel = playChannel ?? '' + ',';
+        }
+        playChannel = playChannel ?? '' + '${networks![i].name}';
+      }
+    }
+    switch (broadcast_status) {
+      case 'finished':
+        {
+          brStatus = 'اتمام پخش';
+          break;
+        }
+      case 'soon':
+        {
+          brStatus = 'به‌زودی';
+          break;
+        }
+      case 'playing':
+        {
+          brStatus = 'در حال پخش';
+          break;
+        }
+      case 'canceled':
+        {
+          brStatus = 'لغو شده';
+          break;
+        }
+    }
     list.add(_SmallItem(
       width: width,
       text: releaseYear,
@@ -494,7 +544,57 @@ class FilmModel {
           text: ageRate,
           icon: Icons.groups_2,
         ));
+    list.addIf(
+        brStatus != null && brStatus != '',
+        _SmallItem(
+          width: width,
+          text: brStatus,
+          icon: Icons.play_arrow_rounded,
+        ));
+    list.addIf(
+        sales_amount != null && sales_amount != 0,
+        _SmallItem(
+          width: width,
+          text: '$sales_amount',
+          icon: Icons.monetization_on_rounded,
+        ));
+    list.addIf(
+        production_budget != null && production_budget != 0,
+        _SmallItem(
+          width: width,
+          text: '$production_budget',
+          icon: Icons.request_quote_rounded,
+        ));
+    list.addIf(
+        playChannel != null && playChannel != '',
+        _SmallItem(
+          width: width,
+          text: playChannel,
+          icon: Icons.live_tv_rounded,
+        ));
     return list;
+  }
+}
+
+class NetworkModel {
+  int? id;
+  String? name;
+  String? link;
+
+  NetworkModel({this.id, this.name, this.link});
+
+  NetworkModel.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    name = json['name'];
+    link = json['link'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['name'] = this.name;
+    data['link'] = this.link;
+    return data;
   }
 }
 

@@ -39,6 +39,7 @@ class DetailController extends GetxController {
       if (res.body != null) {
         isLoadingLikeStatus(true);
         if (res.body['status'] == true) {
+          // LikeInfo
           movieLikeStatus(action);
           showMessage(text: res.body['message'], isSucces: true);
         } else {
