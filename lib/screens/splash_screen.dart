@@ -16,14 +16,6 @@ class SplashScreen extends StatelessWidget {
 
   void initFireBase() async{
 
-    final remoteConfig = FirebaseRemoteConfig.instance;
-    await remoteConfig.setConfigSettings(RemoteConfigSettings(
-      fetchTimeout: const Duration(minutes: 1),
-      minimumFetchInterval: const Duration(hours: 1),
-    ));
-    // await remoteConfig.setDefaults(const {
-    //   "api_url": "https://www.aliamaterasu.ir/api/",
-    // });
 
     authController.checkLogin();
 
