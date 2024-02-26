@@ -6,7 +6,7 @@ import 'package:get/get.dart';
 import '../constant/colors.dart';
 
 class ScoreSection extends StatelessWidget {
-  ScoreSection({super.key,this.award_summery,this.rank});
+  ScoreSection({super.key, this.award_summery, this.rank});
   String? award_summery;
   String? rank;
   @override
@@ -39,14 +39,15 @@ class ScoreSection extends StatelessWidget {
           SizedBox(
             height: 10,
           ),
-          ScoreItem(
-              title: "جوایز",
-              descirption:
-                  "${award_summery}"),
-          ScoreItem(
-            title: "رتبه",
-            descirption: "${rank}",
-          )
+          award_summery == '' || award_summery == null
+              ? SizedBox()
+              : ScoreItem(title: "جوایز", descirption: "${award_summery}"),
+          rank == '' || rank == null
+              ? SizedBox()
+              : ScoreItem(
+                  title: "رتبه",
+                  descirption: "${rank}",
+                )
         ],
       ),
     );

@@ -57,9 +57,9 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    print(controller.selectedFilm.value.id);
-    print(controller.selectedFilm.value.releaseYear);
-    print(controller.selectedFilm.value.releaseMovie);
+    print(controller.selectedFilm.value.collection_posts?.length);
+    // print(controller.selectedFilm.value.releaseYear);
+    // print(controller.selectedFilm.value.releaseMovie);
     return SafeArea(
       child: Scaffold(
         floatingActionButton: Obx(() => controller.showGoToTop.value
@@ -916,90 +916,109 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
               ),
             ),
             SizedBox(
-              height: 15,
+              height: controller.selectedFilm.value.related_posts == null ||
+                      controller.selectedFilm.value.related_posts == []
+                  ? 0
+                  : 15,
             ),
             //! SuggestSection
-            Container(
-              width: Get.width,
-              color: cPrimaryDark,
-              padding: EdgeInsets.only(top: 15, bottom: 15),
-              child: Column(
-                children: [
-                  Row(
-                    textDirection: TextDirection.rtl,
-                    children: [
-                      SizedBox(
-                        width: 15,
-                      ),
-                      Icon(
-                        Icons.movie_filter_rounded,
-                        color: cW,
-                      ),
-                      SizedBox(
-                        width: 10,
-                      ),
-                      MyText(
-                        text: 'پیشنهاد ها',
-                        size: 15,
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  SizedBox(
+            Obx(() => controller.selectedFilm.value.related_posts!.isEmpty
+                ? SizedBox()
+                : Container(
                     width: Get.width,
-                    height: 210,
-                    child: Obx(() {
-                      return Directionality(
-                        textDirection: TextDirection.rtl,
-                        child: ListView.builder(
-                          padding: EdgeInsets.symmetric(horizontal: 15),
-                          physics: BouncingScrollPhysics(),
-                          itemCount: controller
-                              .selectedFilm.value.related_posts!.length,
-                          scrollDirection: Axis.horizontal,
-                          itemBuilder: (context, index) {
-                            var film = controller
-                                .selectedFilm.value.related_posts![index];
-                            return MovieItemWidget(
-                              title: '${film.titleMovie}',
-                              hasDubbed: film.hasDubbed != '',
-                              hasSubtitle: film.hasSubtitle == 'on',
-                              imdbRate: '${film.imdbRate}',
-                              year: film.release!.length > 0
-                                  ? '${film.release?.first.name}'
-                                  : '',
-                              image: film.thumbnail,
-                              onTap: () {
-                                controller.selectedFilm(film);
-                                controller.getNewData();
-                                controller.movieDetailScrollController
-                                    .animateTo(0,
-                                        duration: Duration(seconds: 1),
-                                        curve: Easing.standard);
-                                // Get.toNamed('/movie-detail');
-                              },
-                            );
-                          },
+                    color: cPrimaryDark,
+                    padding: EdgeInsets.only(top: 15, bottom: 15),
+                    child: Column(
+                      children: [
+                        Row(
+                          textDirection: TextDirection.rtl,
+                          children: [
+                            SizedBox(
+                              width: 15,
+                            ),
+                            Icon(
+                              Icons.movie_filter_rounded,
+                              color: cW,
+                            ),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            MyText(
+                              text: 'پیشنهاد ها',
+                              size: 15,
+                            ),
+                          ],
                         ),
-                      );
-                    }),
-                  )
-                ],
-              ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        SizedBox(
+                          width: Get.width,
+                          height: 210,
+                          child: Obx(() {
+                            return Directionality(
+                              textDirection: TextDirection.rtl,
+                              child: ListView.builder(
+                                padding: EdgeInsets.symmetric(horizontal: 15),
+                                physics: BouncingScrollPhysics(),
+                                itemCount: controller
+                                    .selectedFilm.value.related_posts!.length,
+                                scrollDirection: Axis.horizontal,
+                                itemBuilder: (context, index) {
+                                  var film = controller
+                                      .selectedFilm.value.related_posts![index];
+                                  return MovieItemWidget(
+                                    title: '${film.titleMovie}',
+                                    hasDubbed: film.hasDubbed != '',
+                                    hasSubtitle: film.hasSubtitle == 'on',
+                                    imdbRate: '${film.imdbRate}',
+                                    year: film.release!.length > 0
+                                        ? '${film.release?.first.name}'
+                                        : '',
+                                    image: film.thumbnail,
+                                    onTap: () {
+                                      controller.selectedFilm(film);
+                                      controller.getNewData();
+                                      controller.movieDetailScrollController
+                                          .animateTo(0,
+                                              duration: Duration(seconds: 1),
+                                              curve: Easing.standard);
+                                      // Get.toNamed('/movie-detail');
+                                    },
+                                  );
+                                },
+                              ),
+                            );
+                          }),
+                        )
+                      ],
+                    ),
+                  )),
+            SizedBox(
+              height: (controller.selectedFilm.value.summaryAwards == null ||
+                          controller.selectedFilm.value.summaryAwards == '') &&
+                      (controller.selectedFilm.value.top250movie == null ||
+                          controller.selectedFilm.value.top250movie == '')
+                  ? 0
+                  : 15,
             ),
+            (controller.selectedFilm.value.summaryAwards == null ||
+                        controller.selectedFilm.value.summaryAwards == '') &&
+                    (controller.selectedFilm.value.top250movie == null ||
+                        controller.selectedFilm.value.top250movie == '')
+                ? SizedBox()
+                : ScoreSection(
+                    award_summery: controller.selectedFilm.value.summaryAwards,
+                    rank: controller.selectedFilm.value.top250movie,
+                  ),
             SizedBox(
               height: 15,
             ),
-            ScoreSection(
-              award_summery: "${controller.selectedFilm.value.summaryAwards}",
-              rank: controller.selectedFilm.value.top250movie ?? "-",
+            Obx(
+              () => controller.selectedFilm.value.collection_posts!.isEmpty
+                  ? SizedBox()
+                  : CollectionsSection(),
             ),
-            SizedBox(
-              height: 15,
-            ),
-            CollectionsSection(),
             SizedBox(
               height: 15,
             ),

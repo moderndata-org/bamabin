@@ -6,6 +6,7 @@ import 'package:bamabin/widgets/tickets_item.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../widgets/custom_appbar.dart';
+import '../../widgets/custom_shimmer.dart';
 
 class TicketsScreen extends GetView<TicketController> {
   const TicketsScreen({super.key});
@@ -54,31 +55,43 @@ class TicketsScreen extends GetView<TicketController> {
             Expanded(child: Obx(
               () {
                 return (controller.loadingTickets.isTrue)
-                    ? Center(
-                        child: MyCircularProgress(
-                          size: 32,
-                          color: cAccent,
+                    ? ListView.builder(
+                        padding: EdgeInsets.only(
+                            top: 10, left: 10, right: 10, bottom: 60),
+                        itemCount: 10,
+                        physics: BouncingScrollPhysics(),
+                        itemBuilder: (context, index) => Container(
+                          width: Get.width,
+                          child: CustomShimmerWidget(
+                              width: Get.width, height: 200),
+                          padding: EdgeInsets.symmetric(vertical: 5),
                         ),
                       )
-                    : (controller.tickets.length > 0) ? ListView.builder(
-                        padding: EdgeInsets.only(right: 10, left: 10),
-                        itemCount: controller.tickets.length,
-                        itemBuilder: (context, index) {
-                          var ticket = controller.tickets[index];
-                          return TicketsItem(
-                            id: ticket.id,
-                            title: ticket.title,
-                            department: ticket.department_name,
-                            updated: ticket.updated_at,
-                            date: ticket.created_at,
-                            onShow: (){
-                              controller.selectedTicket(ticket);
-                              Get.toNamed("/ticket-details");
+                    : (controller.tickets.length > 0)
+                        ? ListView.builder(
+                            padding: EdgeInsets.only(right: 10, left: 10),
+                            itemCount: controller.tickets.length,
+                            itemBuilder: (context, index) {
+                              var ticket = controller.tickets[index];
+                              return TicketsItem(
+                                id: ticket.id,
+                                title: ticket.title,
+                                department: ticket.department_name,
+                                updated: ticket.updated_at,
+                                date: ticket.created_at,
+                                onShow: () {
+                                  controller.selectedTicket(ticket);
+                                  Get.toNamed("/ticket-details");
+                                },
+                              );
                             },
-
+                          )
+                        : Center(
+                            child: Text(
+                              "تیکتی برای نمایش وجود ندارد",
+                              style: TextStyle(color: Colors.white),
+                            ),
                           );
-                        },
-                      ) : Center(child: Text("تیکتی برای نمایش وجود ندارد",style: TextStyle(color: Colors.white),),);
               },
             ))
           ],

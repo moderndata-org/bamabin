@@ -258,11 +258,12 @@ class ApiProvider extends GetConnect {
     required String? id,
     required String? action,
   }) async {
-    FormData frm = FormData({
-      'post_id': '$id',
-      'action': action,
-    });
-    Response res = await post('${base_url}like/post', frm, headers: head);
+    // FormData frm = FormData({
+    //   'post_id': '$id',
+    //   'action': action,
+    // });
+    Response res = await get('${base_url}like/post/$id/$action', headers: head);
+    print(res.body);
     return res;
   }
 
