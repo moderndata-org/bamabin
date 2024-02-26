@@ -16,6 +16,7 @@ class SubscribeScreen extends GetView<PaymentController> {
 
   void init() {
     controller.getPlans();
+    controller.getGateways();
   }
 
   @override
@@ -181,7 +182,9 @@ class SubscribeScreen extends GetView<PaymentController> {
                         ),
                         MyTextButton(
                           size: Size(120, 35),
-                          onTap: () {},
+                          onTap: () {
+                            controller.showGatewayDialog();
+                          },
                           child: Text(
                             "پرداخت",
                             style: TextStyle(

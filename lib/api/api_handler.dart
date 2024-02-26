@@ -12,8 +12,8 @@ class ApiProvider extends GetConnect {
   var timeout = const Duration(seconds: 15);
   var maxAuthRetries = 5;
   GetStorage box = GetStorage('bamabin');
-  ApiProvider() {
 
+  ApiProvider() {
     if (box.hasData("api_key")) {
       var api_key = box.read("api_key");
       head = {"BAMABIN_API_KEY": "$api_key"};
@@ -477,7 +477,7 @@ class ApiProvider extends GetConnect {
   }
 
   Future<Response> gateways() async {
-    Response res = await get('${base_url}vip/gateways');
+    Response res = await get('${base_url}vip/gateways', headers: head);
     return res;
   }
 
@@ -487,6 +487,24 @@ class ApiProvider extends GetConnect {
 
     Response res = await post(
         '${base_url}vip/plan/${plan_id}/verify_discount_code', data,
+        headers: head);
+    return res;
+  }
+
+  Future<Response> payment(
+      {required String? plan_id,
+      required String? gateway,
+      String? discount_code}) async {
+    var data = FormData({
+      "plan_id": plan_id,
+      "gateway": gateway,
+
+    });
+    if(discount_code != null)
+      data.fields.add(MapEntry("discount_doce", discount_code));
+
+    Response res = await post(
+        '${base_url}vip/select_plan', data,
         headers: head);
     return res;
   }
