@@ -3,6 +3,7 @@ import 'package:bamabin/constant/colors.dart';
 import 'package:bamabin/constant/utils.dart';
 import 'package:bamabin/models/gateway_model.dart';
 import 'package:bamabin/models/plan_model.dart';
+import 'package:bamabin/widgets/MyCircularProgress.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -55,56 +56,61 @@ class PaymentController extends GetxController {
             height: Get.height / 3,
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(16), color: cPrimary),
-            child: Column(
-              children: [
-                SizedBox(
-                  height: 15,
-                ),
-                Text(
-                  "درگاه پرداخت را انتخاب کنید",
-                  style: TextStyle(color: cAccent, fontWeight: FontWeight.bold),
-                ),
-                Expanded(
-                    child: ListView.builder(
-                  itemCount: gateways.length,
-                  itemBuilder: (context, index) {
-                    var gateway = gateways[index];
-                    return GestureDetector(
-                      child: Container(
-                        padding: EdgeInsets.all(5),
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(8),
-                            border: Border.all(
-                                color: Colors.grey.withOpacity(0.5))),
-                        margin: EdgeInsets.only(top: 10, left: 10, right: 10),
-                        child: Row(
-                          textDirection: TextDirection.rtl,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            SizedBox(
-                              width: 40,
-                              height: 40,
-                              child:
-                                  CachedNetworkImage(imageUrl: gateway.icon!),
+            child: Obx(() {
+              if(paymentLoading.isTrue)
+                return Center(child: MyCircularProgress(color: cAccent,size: 32,),);
+
+              return Column(
+                children: [
+                  SizedBox(
+                    height: 15,
+                  ),
+                  Text(
+                    "درگاه پرداخت را انتخاب کنید",
+                    style: TextStyle(color: cAccent, fontWeight: FontWeight.bold),
+                  ),
+                  Expanded(
+                      child: ListView.builder(
+                        itemCount: gateways.length,
+                        itemBuilder: (context, index) {
+                          var gateway = gateways[index];
+                          return GestureDetector(
+                            child: Container(
+                              padding: EdgeInsets.all(5),
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(8),
+                                  border: Border.all(
+                                      color: Colors.grey.withOpacity(0.5))),
+                              margin: EdgeInsets.only(top: 10, left: 10, right: 10),
+                              child: Row(
+                                textDirection: TextDirection.rtl,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  SizedBox(
+                                    width: 40,
+                                    height: 40,
+                                    child:
+                                    CachedNetworkImage(imageUrl: gateway.icon!),
+                                  ),
+                                  SizedBox(
+                                    width: 10,
+                                  ),
+                                  Text(
+                                    "${gateway.name}",
+                                    style: TextStyle(color: Colors.white),
+                                  )
+                                ],
+                              ),
                             ),
-                            SizedBox(
-                              width: 10,
-                            ),
-                            Text(
-                              "${gateway.name}",
-                              style: TextStyle(color: Colors.white),
-                            )
-                          ],
-                        ),
-                      ),
-                      onTap: () {
-                        sendPayment(gateway.id.toString());
-                      },
-                    );
-                  },
-                ))
-              ],
-            ),
+                            onTap: () {
+                              sendPayment(gateway.id.toString());
+                            },
+                          );
+                        },
+                      ))
+                ],
+              );
+            }),
           ),
         );
       },
@@ -170,7 +176,8 @@ class PaymentController extends GetxController {
       if (value.isOk) {
         print(value.body);
         if (value.body["status"] == true) {
-          showMessage(text: "کد تخفیف روی مبلغ کل اعمال شد", isSucces: true);
+          Get.back();
+          launchTheUrl(url: value.body["result"]["redirect_url"]);
         } else {
           showMessage(text: value.body["message"], isSucces: false);
         }
