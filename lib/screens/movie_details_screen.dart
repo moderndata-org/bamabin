@@ -15,7 +15,6 @@ import 'package:bamabin/widgets/collections_section.dart';
 import 'package:bamabin/widgets/comments_section.dart';
 import 'package:bamabin/widgets/movie_item_widget.dart';
 import 'package:bamabin/widgets/scores_section.dart';
-import 'package:bamabin/widgets/user_list_section.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -35,7 +34,6 @@ class MovieDetailsScreen extends StatefulWidget {
 
 class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
   final controller = Get.find<DetailController>();
-  final favoriteController = Get.find<FavoriteController>();
 
   @override
   void initState() {
