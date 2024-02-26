@@ -80,18 +80,17 @@ class CustomDrawerMenu extends GetView<MainController> {
                                               ? '${authController.profile.value.firstName} ${authController.profile.value.lastName}'
                                               : 'کاربر مهمان')),
                                   Obx(() {
-                                    return authController
-                                            .paymentController.isVip.isTrue
+                                    return authController.paymentController.isVip.isTrue
                                         ? Align(
                                             alignment: Alignment.centerRight,
                                             child: Row(
                                               textDirection: TextDirection.rtl,
                                               children: [
-                                                MyText(
-                                                  text: '50',
+                                                Obx(() => MyText(
+                                                  text: '${authController.paymentController.remainVipDays}',
                                                   color: cY,
                                                   size: 10,
-                                                ),
+                                                )),
                                                 SizedBox(
                                                   width: 3,
                                                 ),
@@ -150,13 +149,7 @@ class CustomDrawerMenu extends GetView<MainController> {
                             boxShadow: bsTextLowOpacity,
                             bgColor: cBgDrawerItem,
                             onTap: () {
-                              publicController.hasSubscribe(
-                                  !publicController.hasSubscribe.value);
-                              if (publicController.hasSubscribe.value) {
-                                Get.toNamed('/subscribe');
-                                controller.scaffolState.currentState!
-                                    .closeEndDrawer();
-                              }
+                              Get.toNamed('/subscribe');
                             },
                             child: Row(
                               textDirection: TextDirection.rtl,
@@ -170,7 +163,7 @@ class CustomDrawerMenu extends GetView<MainController> {
                                   width: 10,
                                 ),
                                 MyText(
-                                  text: publicController.hasSubscribe.value
+                                  text: authController.paymentController.isVip.isTrue
                                       ? 'تمدید اشتراک'
                                       : 'خرید اشتراک',
                                   color: cW,

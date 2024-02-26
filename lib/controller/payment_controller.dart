@@ -22,13 +22,29 @@ class PaymentController extends GetxController {
   var paymentLoading = false.obs;
   var discountTextController = TextEditingController();
   var discountCode = "".obs;
+  var remainVipDays = 0.obs;
 
   void checkVip() {
     ApiProvider().checkVip().then((value) {
       if (value.isOk) {
         isVip(value.body["status"]);
+        if(isVip.isTrue){
+          getVipDetails();
+        }
       }
     });
+  }
+
+  void getVipDetails(){
+    ApiProvider().vipInfo().then((value) {
+      if(value.isOk){
+        if(value.body["status"] == true){
+         DateTime start_time = DateTime.fromMillisecondsSinceEpoch(value.body["result"]["start_time"] * 1000);
+         DateTime end_time = DateTime.fromMillisecondsSinceEpoch(value.body["result"]["expire_time"] * 1000);
+         remainVipDays((end_time.difference(start_time)).inDays);
+        }
+      }
+    },);
   }
 
   void getGateways() {
@@ -174,7 +190,6 @@ class PaymentController extends GetxController {
             gateway: gateway_id)
         .then((value) {
       if (value.isOk) {
-        print(value.body);
         if (value.body["status"] == true) {
           Get.back();
           launchTheUrl(url: value.body["result"]["redirect_url"]);
