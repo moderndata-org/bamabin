@@ -112,6 +112,7 @@ class FilmModel {
   String? imdbRate;
   String? imdbVoteCount;
   String? malRate;
+  String? mdl_rate;
   String? malVoteCount;
   bool? is_watchlist;
   like_info? likeInfo;
@@ -127,6 +128,7 @@ class FilmModel {
       this.dateGmt,
       this.content,
       this.title,
+      this.mdl_rate,
       this.excerpt,
       this.status,
       this.commentStatus,
@@ -230,6 +232,7 @@ class FilmModel {
     id = json['id'];
     is_watchlist = json['is_watchlist'];
     authorId = json['author_id'];
+    mdl_rate = json['mdl_rate'];
     date = json['date'];
     dateGmt = json['date_gmt'];
     content = json['content'];
@@ -469,6 +472,27 @@ class FilmModel {
           width: width,
           text: metacriticRate,
           image: 'assets/images/ic_metacritic.png',
+        ));
+    list.addIf(
+        malRate != null && malRate != '',
+        _SmallItem(
+          width: width,
+          text: malRate,
+          image: 'assets/images/mal_logo.png',
+        ));
+    list.addIf(
+        mdl_rate != null && mdl_rate != '',
+        _SmallItem(
+          width: width,
+          text: mdl_rate,
+          image: 'assets/images/mdl_logo.png',
+        ));
+    list.addIf(
+        ageRate != null && ageRate != '',
+        _SmallItem(
+          width: width,
+          text: ageRate,
+          icon: Icons.groups_2,
         ));
     return list;
   }

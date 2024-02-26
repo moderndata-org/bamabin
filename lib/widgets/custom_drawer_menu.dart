@@ -1,4 +1,5 @@
 import 'package:bamabin/constant/colors.dart';
+import 'package:bamabin/constant/utils.dart';
 import 'package:bamabin/controller/auth_controller.dart';
 import 'package:bamabin/controller/favorite_controller.dart';
 import 'package:bamabin/controller/main_controller.dart';
@@ -521,7 +522,8 @@ class CustomDrawerMenu extends GetView<MainController> {
                 size: Size.fromHeight(45),
                 boxShadow: bsTextLowOpacity,
                 bgColor: Color.fromARGB(255, 34, 158, 217),
-                onTap: () {},
+                onTap: () => launchTheUrl(
+                    url: '${publicController.aboutUs.value.telegramChannel}'),
                 child: Row(
                   textDirection: TextDirection.rtl,
                   children: [
@@ -561,7 +563,8 @@ class CustomDrawerMenu extends GetView<MainController> {
                       backgroundColor: Colors.transparent,
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(5))),
-                  onPressed: () {},
+                  onPressed: () => launchTheUrl(
+                      url: '${publicController.aboutUs.value.instagramPage}'),
                   child: Row(
                     textDirection: TextDirection.rtl,
                     children: [

@@ -13,6 +13,7 @@ class DetailController extends GetxController {
   Rx<FilmModel> selectedFilm = FilmModel().obs;
   RxBool isTextExpandedMovieDetail = false.obs;
   RxBool isSerial = false.obs;
+  RxBool isLoadingNewData = false.obs;
   RxBool isSubmmitingComment = false.obs;
   ScrollController movieDetailScrollController = ScrollController();
   RxBool isPlayingTrailer = false.obs;
@@ -135,6 +136,7 @@ class DetailController extends GetxController {
   }
 
   void getNewData() {
+    isLoadingNewData(true);
     if (selectedFilm.value.trailer_url != '' &&
         selectedFilm.value.trailer_url != null) {
       setNewurlTrailer();
@@ -146,10 +148,9 @@ class DetailController extends GetxController {
             id: '${selectedFilm.value.id}',
             isLogin: authController!.isLogin.value)
         .then((res) {
+      isLoadingNewData(false);
       if (res.body != null) {
-        print(selectedFilm.value.releaseYear);
         selectedFilm(FilmModel.fromJson(res.body['result']));
-        print(selectedFilm.value.releaseYear);
         setNewurlTrailer();
         isTextExpandedMovieDetail(false);
       }

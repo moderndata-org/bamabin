@@ -69,7 +69,10 @@ class CollectionsSection extends StatelessWidget {
                         onTap: () {
                           var detail = Get.find<DetailController>();
                           detail.selectedFilm(film);
-                          Get.toNamed('/movie-detail');
+                          detail.getNewData();
+                          detail.movieDetailScrollController.animateTo(0,
+                              duration: Duration(seconds: 1),
+                              curve: Easing.standard);
                         },
                       );
                     },
