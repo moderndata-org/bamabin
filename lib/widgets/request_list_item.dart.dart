@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../constant/colors.dart';
+import '../constant/utils.dart';
 import 'MyTextButton.dart';
 
 class RequestItem extends StatelessWidget {
@@ -104,6 +105,7 @@ class RequestItem extends StatelessWidget {
                       style: TextStyle(color: Colors.white, fontSize: 16),
                     )
                   : MyTextButton(
+                      onTap: () => launchTheUrl(url: '$referral_link'),
                       size: Size(70, 35),
                       bgColor: cAccent,
                       child: Text(

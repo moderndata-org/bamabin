@@ -55,7 +55,13 @@ class MovieRequestListScreen extends GetView<MovieRequestController> {
                             controller.listMovieRequest[index];
                         return RequestItem(
                           id: mr.id,
-                          condition: mr.status,
+                          condition: switch (mr.status) {
+                            'confirmed' => 'تایید شد',
+                            'declined' => 'رد شد',
+                            'progress' => 'در حال بررسی',
+                            String() => '',
+                            null => null,
+                          },
                           request: mr.title,
                           message: mr.message,
                           date: getPersianDate(dateTime: '${mr.createdAt}'),
