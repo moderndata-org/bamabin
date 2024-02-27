@@ -67,7 +67,7 @@ class CustomMainAppBar extends GetView<MainController> {
                           BottomNavType.home
                       ? controller.isVisibleAppbar.value
                           ? SizedBox(
-                              height: 50,
+                              height: 30,
                               child:
                                   Image.asset('assets/images/ic_logotype.png'))
                           : SizedBox()

@@ -4,13 +4,13 @@ import 'package:shimmer/shimmer.dart';
 class CustomShimmerWidget extends StatelessWidget {
   const CustomShimmerWidget({
     super.key,
-    required this.width,
-    required this.height,
+    this.width,
+    this.height,
     this.radius,
   });
 
-  final double width;
-  final double height;
+  final double? width;
+  final double? height;
   final double? radius;
 
   @override

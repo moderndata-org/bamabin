@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:bamabin/api/api_handler.dart';
 import 'package:bamabin/controller/auth_controller.dart';
 import 'package:bamabin/models/film_model.dart';
@@ -13,6 +15,7 @@ class DetailController extends GetxController {
   Rx<FilmModel> selectedFilm = FilmModel().obs;
   RxBool isTextExpandedMovieDetail = false.obs;
   RxBool isSerial = false.obs;
+  RxDouble seekBarOpacity = 0.0.obs;
   RxBool isLoadingNewData = false.obs;
   RxBool isSubmmitingComment = false.obs;
   ScrollController movieDetailScrollController = ScrollController();
@@ -25,7 +28,7 @@ class DetailController extends GetxController {
   RxBool isFavorite = false.obs;
   RxBool isLoadingLikeStatus = false.obs;
   RxBool isSubmittingBugReport = false.obs;
-  late VideoPlayerController trailerController;
+  VideoPlayerController? trailerController;
   AuthController? authController;
   RxList<DepartmentModel> departments = <DepartmentModel>[].obs;
   RxBool loadingDepartments = false.obs;
@@ -37,11 +40,14 @@ class DetailController extends GetxController {
     String act = action == LikeAction.like ? 'like' : 'dislike';
     ApiProvider().setLike(id: id, action: act).then((res) {
       if (res.body != null) {
-        isLoadingLikeStatus(true);
+        isLoadingLikeStatus(false);
         if (res.body['status'] == true) {
           // LikeInfo
+
           movieLikeStatus(action);
-          showMessage(text: res.body['message'], isSucces: true);
+          selectedFilm.value.likeInfo =
+              LikeInfoModel.fromJson(res.body['result']);
+          selectedFilm.refresh();
         } else {
           showMessage(text: res.body['message'], isSucces: false);
         }
@@ -116,27 +122,31 @@ class DetailController extends GetxController {
         }
         loadingDepartments(false);
       });
-    } else {}
+    }
   }
 
   void setNewurlTrailer() {
+    isLoadingTrailer(true);
+    trailerController = null;
     trailerController = VideoPlayerController.networkUrl(
         Uri.parse('${selectedFilm.value.trailer_url}'))
       ..initialize().then((value) {
         isLoadingTrailer(false);
-        trailerController.addListener(() {
+        trailerController?.addListener(() {
           trailerPosition(
-              trailerController.value.position.inSeconds.toDouble());
-          if (trailerController.value.position ==
-              trailerController.value.duration) {
+              trailerController?.value.position.inSeconds.toDouble());
+          isPlayingTrailer(trailerController!.value.isPlaying);
+          if (trailerController?.value.position ==
+              trailerController?.value.duration) {
             isPlayingTrailer(false);
-            trailerController.seekTo(Duration.zero);
+            trailerController?.seekTo(Duration.zero);
           }
         });
       });
   }
 
   void getNewData() {
+    movieLikeStatus(LikeAction.notSelected);
     isLoadingNewData(true);
     if (selectedFilm.value.trailer_url != '' &&
         selectedFilm.value.trailer_url != null) {

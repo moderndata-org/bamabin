@@ -14,12 +14,10 @@ class SplashScreen extends StatelessWidget {
   SplashScreen({super.key});
   AuthController authController = Get.find();
 
-  void initFireBase() async{
-
-
+  void initFireBase() async {
     authController.checkLogin();
-
   }
+
   @override
   Widget build(BuildContext context) {
     precacheImage(AssetImage('assets/images/ic_logo.png'), context);
@@ -42,7 +40,7 @@ class SplashScreen extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 SizedBox.square(
-                  dimension: Get.width * .8,
+                  dimension: Get.width * .5,
                   child: Image.asset('assets/images/ic_logo.png'),
                 ),
                 MyText(

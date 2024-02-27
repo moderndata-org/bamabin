@@ -10,6 +10,7 @@ import 'package:bamabin/widgets/MyTextButton.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:simple_shadow/simple_shadow.dart';
 import '../controller/order_list_controller.dart';
 import '../screens/dialogs/tokenBot_dialog.dart';
 
@@ -76,28 +77,34 @@ class CustomDrawerMenu extends GetView<MainController> {
                                   Align(
                                       alignment: Alignment.centerRight,
                                       child: MyText(
+                                          maxLines: 1,
                                           text: (authController.isLogin.isTrue)
                                               ? '${authController.profile.value.firstName} ${authController.profile.value.lastName}'
                                               : 'کاربر مهمان')),
                                   Obx(() {
-                                    return authController.paymentController.isVip.isTrue
+                                    return authController
+                                            .paymentController.isVip.isTrue
                                         ? Align(
                                             alignment: Alignment.centerRight,
                                             child: Row(
                                               textDirection: TextDirection.rtl,
                                               children: [
                                                 Obx(() => MyText(
-                                                  text: '${authController.paymentController.remainVipDays}',
-                                                  color: cY,
-                                                  size: 10,
-                                                )),
+                                                      text:
+                                                          '${authController.paymentController.remainVipDays}',
+                                                      color: cY,
+                                                      size: 10,
+                                                    )),
                                                 SizedBox(
                                                   width: 3,
                                                 ),
-                                                MyText(
-                                                  text:
-                                                      'روز از اشتراک شما باقی مانده',
-                                                  size: 10,
+                                                Expanded(
+                                                  child: MyText(
+                                                    text:
+                                                        'روز از اشتراک شما باقی مانده',
+                                                    size: 10,
+                                                    maxLines: 1,
+                                                  ),
                                                 ),
                                               ],
                                             ))
@@ -147,23 +154,35 @@ class CustomDrawerMenu extends GetView<MainController> {
                         return MyTextButton(
                             size: Size.fromHeight(45),
                             boxShadow: bsTextLowOpacity,
-                            bgColor: cBgDrawerItem,
+                            bgColor:
+                                authController.paymentController.isVip.value &&
+                                        authController.paymentController
+                                                .remainVipDays <=
+                                            7
+                                    ? cR.withOpacity(.5)
+                                    : cBgDrawerItem,
                             onTap: () {
                               Get.toNamed('/subscribe');
                             },
                             child: Row(
                               textDirection: TextDirection.rtl,
                               children: [
-                                Icon(
-                                  shadows: [bsTextLowOpacity],
-                                  Icons.subscriptions_rounded,
-                                  color: cW,
-                                ),
+                                SizedBox(
+                                    width: 25,
+                                    height: 25,
+                                    child: SimpleShadow(
+                                      color: cB,
+                                      opacity: .2,
+                                      offset: Offset(0, 5),
+                                      child: SvgPicture.asset(
+                                          'assets/svg/ic_subscribe.svg'),
+                                    )),
                                 SizedBox(
                                   width: 10,
                                 ),
                                 MyText(
-                                  text: authController.paymentController.isVip.isTrue
+                                  text: authController
+                                          .paymentController.isVip.isTrue
                                       ? 'تمدید اشتراک'
                                       : 'خرید اشتراک',
                                   color: cW,

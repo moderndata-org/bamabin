@@ -49,7 +49,7 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
 
   @override
   void dispose() {
-    controller.trailerController.dispose();
+    controller.trailerController?.dispose();
     super.dispose();
   }
 
@@ -254,7 +254,7 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                                 //! like
                                 GestureDetector(
                                   onTap: () => controller.setLikeAction(
-                                      action: LikeAction.dislike,
+                                      action: LikeAction.like,
                                       id: '${controller.selectedFilm.value.id}'),
                                   child: Obx(() => AnimatedContainer(
                                         duration: Duration(milliseconds: 300),
@@ -516,194 +516,6 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                             .generateSmallItemsList(fullWidth: Get.width - 20)),
                   ),
                 )),
-            // Container(
-            //   margin: EdgeInsets.only(top: 10),
-            //   width: Get.width,
-            //   child: Row(
-            //     textDirection: TextDirection.rtl,
-            //     children: [
-            //       SizedBox(
-            //         width: padding,
-            //       ),
-            //       //! Release year
-            //       Expanded(
-            //           child: MovieItemSmallDetailWidget(
-            //         icon: Padding(
-            //           padding: const EdgeInsets.only(bottom: 2),
-            //           child: Icon(
-            //             Icons.calendar_month_rounded,
-            //             color: cW,
-            //             size: 19,
-            //           ),
-            //         ),
-            //         title: '${controller.selectedFilm.value.releaseYear}',
-            //       )),
-            //       //! Country
-            //       Expanded(
-            //           child: MovieItemSmallDetailWidget(
-            //         icon: Icon(
-            //           Icons.public,
-            //           color: cW,
-            //           size: 19,
-            //         ),
-            //         title: '${controller.selectedFilm.value.countryMovie}',
-            //       )),
-            //       //! language
-            //       Expanded(
-            //           child: MovieItemSmallDetailWidget(
-            //         icon: Padding(
-            //           padding: const EdgeInsets.only(bottom: 2),
-            //           child: Icon(
-            //             Icons.language,
-            //             color: cW,
-            //             size: 19,
-            //           ),
-            //         ),
-            //         title: '${controller.selectedFilm.value.languageMovie}',
-            //       )),
-            //       //! time
-            //       Expanded(
-            //           child: MovieItemSmallDetailWidget(
-            //         icon: Padding(
-            //           padding: const EdgeInsets.only(bottom: 2),
-            //           child: Icon(
-            //             Icons.timer,
-            //             color: cW,
-            //             size: 19,
-            //           ),
-            //         ),
-            //         title: '${controller.selectedFilm.value.runtimeMovie}',
-            //       )),
-            //       SizedBox(
-            //         width: padding,
-            //       ),
-            //     ],
-            //   ),
-            // ),
-
-            // Container(
-            //   margin: EdgeInsets.only(top: 5),
-            //   width: Get.width,
-            //   child: Row(
-            //     textDirection: TextDirection.rtl,
-            //     children: [
-            //       SizedBox(
-            //         width: padding,
-            //       ),
-            //       Expanded(
-            //           child: MovieItemSmallDetailWidget(
-            //         icon: SizedBox(
-            //             height: 20,
-            //             width: 20,
-            //             child: Image.asset('assets/images/ic_imdb_circle.png')),
-            //         title: '${controller.selectedFilm.value.imdbRate}',
-            //       )),
-            //       Expanded(
-            //           child: MovieItemSmallDetailWidget(
-            //         icon: SizedBox(
-            //             height: 20,
-            //             width: 20,
-            //             child: Image.asset('assets/images/ic_rotten.png')),
-            //         title: '${controller.selectedFilm.value.malRateMovie}',
-            //       )),
-            //       Expanded(
-            //           child: MovieItemSmallDetailWidget(
-            //         icon: SizedBox(
-            //             height: 20,
-            //             width: 20,
-            //             child: Image.asset('assets/images/ic_metacritic.png')),
-            //         title: '${controller.selectedFilm.value.metacriticRate}',
-            //       )),
-            //       Expanded(
-            //           child: MovieItemSmallDetailWidget(
-            //         icon: Padding(
-            //           padding: const EdgeInsets.only(bottom: 2),
-            //           child: Icon(
-            //             Icons.monetization_on,
-            //             color: cW,
-            //             size: 19,
-            //           ),
-            //         ),
-            //         title: '250 M \$',
-            //         textDirection: TextDirection.ltr,
-            //       )),
-            //       SizedBox(
-            //         width: padding,
-            //       ),
-            //     ],
-            //   ),
-            // ),
-            // Container(
-            //   margin: EdgeInsets.only(top: 5),
-            //   width: Get.width,
-            //   child: Row(
-            //     textDirection: TextDirection.rtl,
-            //     children: [
-            //       SizedBox(
-            //         width: padding,
-            //       ),
-            //       controller.selectedFilm.value.ageRate == null ||
-            //               controller.selectedFilm.value.ageRate == ''
-            //           ? SizedBox()
-            //           : Expanded(
-            //               child: MovieItemSmallDetailWidget(
-            //               icon: Padding(
-            //                 padding: const EdgeInsets.only(bottom: 2),
-            //                 child: Icon(
-            //                   Icons.diversity_3_rounded,
-            //                   color: cW,
-            //                   size: 19,
-            //                 ),
-            //               ),
-            //               title: '${controller.selectedFilm.value.ageRate}',
-            //               textDirection: TextDirection.ltr,
-            //             )),
-            //       // Expanded(
-            //       //     child: MovieItemSmallDetailWidget(
-            //       //   icon: Padding(
-            //       //     padding: const EdgeInsets.only(bottom: 2),
-            //       //     child: Icon(
-            //       //       Icons.request_quote_rounded,
-            //       //       color: cW,
-            //       //       size: 19,
-            //       //     ),
-            //       //   ),
-            //       //   title: '100 M \$',
-            //       //   textDirection: TextDirection.ltr,
-            //       // )),
-            //       // Expanded(
-            //       //     child: MovieItemSmallDetailWidget(
-            //       //   icon: Padding(
-            //       //     padding: const EdgeInsets.only(bottom: 2),
-            //       //     child: Icon(
-            //       //       Icons.request_quote_rounded,
-            //       //       color: cW,
-            //       //       size: 19,
-            //       //     ),
-            //       //   ),
-            //       //   title: '100 M \$',
-            //       //   textDirection: TextDirection.ltr,
-            //       // )),
-            //       // Expanded(
-            //       //     child: MovieItemSmallDetailWidget(
-            //       //   icon: Padding(
-            //       //     padding: const EdgeInsets.only(bottom: 2),
-            //       //     child: Icon(
-            //       //       Icons.request_quote_rounded,
-            //       //       color: cW,
-            //       //       size: 19,
-            //       //     ),
-            //       //   ),
-            //       //   title: '100 M \$',
-            //       //   textDirection: TextDirection.ltr,
-            //       // )),
-            //       SizedBox(
-            //         width: padding,
-            //       ),
-            //     ],
-            //   ),
-            // ),
-
             //! Buttons Section
             ButtonSectionMovieDetailWidget(),
             SizedBox(
@@ -729,6 +541,7 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                           maxLines: controller.isTextExpandedMovieDetail.value
                               ? 50
                               : 2,
+                          textAlign: TextAlign.justify,
                           textOverflow: TextOverflow.ellipsis,
                         ),
                         Icon(
@@ -778,11 +591,11 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                           onTap: () {
                             if (controller.isLoadingTrailer.isFalse) {
                               if (controller
-                                  .trailerController.value.isPlaying) {
-                                controller.trailerController.pause();
+                                  .trailerController!.value.isPlaying) {
+                                controller.trailerController?.pause();
                                 controller.isPlayingTrailer(false);
                               } else {
-                                controller.trailerController.play();
+                                controller.trailerController?.play();
 
                                 controller.isPlayingTrailer(true);
                               }
@@ -797,7 +610,7 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                                     height: 200,
                                     width: Get.width,
                                     child: VideoPlayer(
-                                        controller.trailerController)),
+                                        controller.trailerController!)),
                                 Obx(() => controller.isPlayingTrailer.value
                                     ? Positioned(
                                         bottom: 10,
@@ -812,7 +625,7 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                                                     .trailerPosition.value,
                                                 min: 0,
                                                 max: controller
-                                                    .trailerController
+                                                    .trailerController!
                                                     .value
                                                     .duration
                                                     .inSeconds
@@ -820,7 +633,7 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                                                 onChanged: (value) {
                                                   controller
                                                       .trailerPosition(value);
-                                                  controller.trailerController
+                                                  controller.trailerController!
                                                       .seekTo(Duration(
                                                           seconds:
                                                               value.toInt()));
@@ -854,65 +667,72 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
               height: 15,
             ),
             //! ActorsSection
-            Container(
-              width: Get.width,
-              color: cPrimaryDark,
-              padding: EdgeInsets.only(top: 15),
-              child: Column(
-                children: [
-                  Row(
-                    textDirection: TextDirection.rtl,
-                    children: [
-                      SizedBox(
-                        width: 15,
-                      ),
-                      Icon(
-                        Icons.supervised_user_circle_rounded,
-                        color: cW,
-                      ),
-                      SizedBox(
-                        width: 10,
-                      ),
-                      MyText(
-                        text: 'بازیگران و سایر عوامل',
-                        size: 15,
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  SizedBox(
+            Obx(() => controller.selectedFilm.value.actors!.length == 0 &&
+                    controller.selectedFilm.value.directors!.length == 0
+                ? SizedBox()
+                : Container(
                     width: Get.width,
-                    height: 130,
-                    child: Directionality(
-                        textDirection: TextDirection.rtl,
-                        child: Obx(() => ListView.builder(
-                              padding: EdgeInsets.symmetric(horizontal: 15),
-                              physics: BouncingScrollPhysics(),
-                              itemCount: (controller
-                                          .selectedFilm.value.actors! +
-                                      controller.selectedFilm.value.directors!)
-                                  .length,
-                              scrollDirection: Axis.horizontal,
-                              itemBuilder: (context, index) {
-                                var actors_list = (controller
-                                        .selectedFilm.value.actors! +
-                                    controller.selectedFilm.value.directors!);
-                                var actor = actors_list[index];
-                                return Container(
-                                  width: 80,
-                                  margin: EdgeInsets.symmetric(horizontal: 7),
-                                  child: ActorsWidget(
-                                      imageUrl: '${actor.avatar}',
-                                      name: '${actor.name}'),
-                                );
-                              },
-                            ))),
-                  )
-                ],
-              ),
-            ),
+                    color: cPrimaryDark,
+                    padding: EdgeInsets.only(top: 15),
+                    child: Column(
+                      children: [
+                        Row(
+                          textDirection: TextDirection.rtl,
+                          children: [
+                            SizedBox(
+                              width: 15,
+                            ),
+                            Icon(
+                              Icons.supervised_user_circle_rounded,
+                              color: cW,
+                            ),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            MyText(
+                              text: 'بازیگران و سایر عوامل',
+                              size: 15,
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        SizedBox(
+                          width: Get.width,
+                          height: 130,
+                          child: Directionality(
+                              textDirection: TextDirection.rtl,
+                              child: Obx(() => ListView.builder(
+                                    padding:
+                                        EdgeInsets.symmetric(horizontal: 15),
+                                    physics: BouncingScrollPhysics(),
+                                    itemCount:
+                                        (controller.selectedFilm.value.actors! +
+                                                controller.selectedFilm.value
+                                                    .directors!)
+                                            .length,
+                                    scrollDirection: Axis.horizontal,
+                                    itemBuilder: (context, index) {
+                                      var actors_list = (controller
+                                              .selectedFilm.value.actors! +
+                                          controller
+                                              .selectedFilm.value.directors!);
+                                      var actor = actors_list[index];
+                                      return Container(
+                                        width: 80,
+                                        margin:
+                                            EdgeInsets.symmetric(horizontal: 7),
+                                        child: ActorsWidget(
+                                            imageUrl: '${actor.avatar}',
+                                            name: '${actor.name}'),
+                                      );
+                                    },
+                                  ))),
+                        )
+                      ],
+                    ),
+                  )),
             SizedBox(
               height: controller.selectedFilm.value.related_posts == null ||
                       controller.selectedFilm.value.related_posts == []

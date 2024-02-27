@@ -117,7 +117,7 @@ class FilmModel {
   String? malVoteCount;
   int? sales_amount;
   bool? is_watchlist;
-  like_info? likeInfo;
+  LikeInfoModel? likeInfo;
   int? broadcast_day;
   int? production_budget;
   List<String>? genresListForDetail;
@@ -392,7 +392,7 @@ class FilmModel {
     malRate = json['mal_rate'];
     malVoteCount = json['mal_vote_count'];
     likeInfo = json['like_info'] != null
-        ? new like_info.fromJson(json['like_info'])
+        ? new LikeInfoModel.fromJson(json['like_info'])
         : null;
     if (json['networks'] != null) {
       networks = <NetworkModel>[];
@@ -598,21 +598,21 @@ class NetworkModel {
   }
 }
 
-class like_info {
+class LikeInfoModel {
   int? likes;
   int? dislikes;
   int? likePercent;
   int? dislikePercent;
   int? total;
 
-  like_info(
+  LikeInfoModel(
       {this.likes,
       this.dislikes,
       this.likePercent,
       this.dislikePercent,
       this.total});
 
-  like_info.fromJson(Map<String, dynamic> json) {
+  LikeInfoModel.fromJson(Map<String, dynamic> json) {
     likes = json['likes'];
     dislikes = json['dislikes'];
     likePercent = json['like_percent'];

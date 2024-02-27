@@ -1,6 +1,8 @@
 import 'package:bamabin/constant/classes.dart';
 import 'package:bamabin/controller/main_controller.dart';
 import 'package:bamabin/controller/public_controller.dart';
+import 'package:bamabin/screens/part_screen.dart';
+import 'package:bamabin/widgets/custom_shimmer.dart';
 import 'package:bamabin/widgets/genre_item.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
@@ -140,14 +142,7 @@ class HomeScreen extends GetView<PublicController> {
                 ),
               )),
         Obx(() => (mainController.isLoadingMain.isTrue)
-            ? Center(
-                child: Padding(
-                  padding: EdgeInsets.only(top: 10),
-                  child: CircularProgressIndicator(
-                    color: cAccent,
-                  ),
-                ),
-              )
+            ? HomeShimmerWidgets()
             : Column(
                 children:
                     List.generate(mainController.sectionsList.length, (index) {
@@ -175,26 +170,26 @@ class HomeScreen extends GetView<PublicController> {
                                   itemBuilder: (context, index) {
                                     var genre = section.genres![index];
                                     return Center(
-                                      child: GestureDetector(
-                                        child: GenreItem(
-                                          width: 100,
-                                          height: 55,
-                                          title: genre.name,
-                                          imageUrl: genre.icon,
-                                          backgroundUrl: genre.background_url,
-                                          margin: EdgeInsets.only(right: 5),
-                                          boxShadow: BoxShadow(
-                                              blurRadius: 2,
-                                              offset: Offset(0, 1),
-                                              color:
-                                              Colors.black.withOpacity(.2)),
-                                        ),
-                                        onTap: (){
-                                          mainController.changeGenre(gener: genre);
-                                          Get.toNamed("/part");
-                                        },
-                                      )
-                                    );
+                                        child: GestureDetector(
+                                      child: GenreItem(
+                                        width: 100,
+                                        height: 55,
+                                        title: genre.name,
+                                        imageUrl: genre.icon,
+                                        backgroundUrl: genre.background_url,
+                                        margin: EdgeInsets.only(right: 5),
+                                        boxShadow: BoxShadow(
+                                            blurRadius: 2,
+                                            offset: Offset(0, 1),
+                                            color:
+                                                Colors.black.withOpacity(.2)),
+                                      ),
+                                      onTap: () {
+                                        mainController.changeGenre(
+                                            gener: genre);
+                                        Get.toNamed("/part");
+                                      },
+                                    ));
                                   },
                                 )),
                           )
@@ -209,35 +204,37 @@ class HomeScreen extends GetView<PublicController> {
                                 : null,
                             title: '${section.name}',
                             onTapMore: () {
-                              if(section.taxonomy == null){
+                              if (section.taxonomy == null) {
                                 mainController.isVisibleAppbar(true);
-                                switch(section.post_type!.first) {
+                                switch (section.post_type!.first) {
                                   case "movies":
                                     mainController.appBarCenterText('فیلم');
-                                    mainController.selectedBottomNav(BottomNavType.movies);
+                                    mainController.selectedBottomNav(
+                                        BottomNavType.movies);
                                     break;
                                   case "series":
                                     mainController.appBarCenterText('سریال');
-                                    mainController.selectedBottomNav(BottomNavType.series);
+                                    mainController.selectedBottomNav(
+                                        BottomNavType.series);
                                     break;
                                   case "animations":
                                     mainController.appBarCenterText('انیمیشن');
-                                    mainController.selectedBottomNav(BottomNavType.animations);
+                                    mainController.selectedBottomNav(
+                                        BottomNavType.animations);
                                     break;
                                   case "anime":
                                     mainController.appBarCenterText('انیمه');
-                                    mainController.selectedBottomNav(BottomNavType.anime);
+                                    mainController
+                                        .selectedBottomNav(BottomNavType.anime);
                                     break;
                                 }
-
-                              }else{
+                              } else {
                                 Get.toNamed("/more", arguments: {
                                   "title": "${section.name}",
                                   "filter_key": section.taxonomy,
                                   "filter_value": section.id
                                 });
                               }
-
                             },
                           ),
                           SizedBox(
@@ -289,6 +286,161 @@ class HomeScreen extends GetView<PublicController> {
                   return Text("data");
                 }),
               ))
+      ],
+    );
+  }
+}
+
+class HomeShimmerWidgets extends StatelessWidget {
+  const HomeShimmerWidgets({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        SizedBox(
+          height: 10,
+        ),
+        Row(
+          textDirection: TextDirection.rtl,
+          children: [
+            SizedBox(
+              width: 10,
+            ),
+            CustomShimmerWidget(width: 120, height: 30),
+            SizedBox(
+              width: 5,
+            ),
+            Expanded(child: CustomShimmerWidget(height: 2)),
+            SizedBox(
+              width: 5,
+            ),
+            CustomShimmerWidget(width: 50, height: 30),
+            SizedBox(
+              width: 10,
+            ),
+          ],
+        ),
+        SizedBox(
+          height: 10,
+        ),
+        SizedBox(
+          width: Get.width,
+          height: 195,
+          child: Directionality(
+            textDirection: TextDirection.rtl,
+            child: ListView.builder(
+              scrollDirection: Axis.horizontal,
+              itemCount: 10,
+              itemBuilder: (context, index) => Container(
+                margin: EdgeInsets.symmetric(
+                  horizontal: 2,
+                  vertical: 5,
+                ),
+                child: CustomShimmerWidget(
+                  width: 115,
+                  height: 195,
+                ),
+              ),
+            ),
+          ),
+        ),
+        SizedBox(
+          height: 10,
+        ),
+        Row(
+          textDirection: TextDirection.rtl,
+          children: [
+            SizedBox(
+              width: 10,
+            ),
+            CustomShimmerWidget(width: 120, height: 30),
+            SizedBox(
+              width: 5,
+            ),
+            Expanded(child: CustomShimmerWidget(height: 2)),
+            SizedBox(
+              width: 5,
+            ),
+            CustomShimmerWidget(width: 50, height: 30),
+            SizedBox(
+              width: 10,
+            ),
+          ],
+        ),
+        SizedBox(
+          height: 10,
+        ),
+        SizedBox(
+          width: Get.width,
+          height: 195,
+          child: Directionality(
+            textDirection: TextDirection.rtl,
+            child: ListView.builder(
+              scrollDirection: Axis.horizontal,
+              itemCount: 10,
+              itemBuilder: (context, index) => Container(
+                margin: EdgeInsets.symmetric(
+                  horizontal: 2,
+                  vertical: 5,
+                ),
+                child: CustomShimmerWidget(
+                  width: 115,
+                  height: 195,
+                ),
+              ),
+            ),
+          ),
+        ),
+        SizedBox(
+          height: 10,
+        ),
+        Row(
+          textDirection: TextDirection.rtl,
+          children: [
+            SizedBox(
+              width: 10,
+            ),
+            CustomShimmerWidget(width: 120, height: 30),
+            SizedBox(
+              width: 5,
+            ),
+            Expanded(child: CustomShimmerWidget(height: 2)),
+            SizedBox(
+              width: 5,
+            ),
+            CustomShimmerWidget(width: 50, height: 30),
+            SizedBox(
+              width: 10,
+            ),
+          ],
+        ),
+        SizedBox(
+          height: 10,
+        ),
+        SizedBox(
+          width: Get.width,
+          height: 195,
+          child: Directionality(
+            textDirection: TextDirection.rtl,
+            child: ListView.builder(
+              scrollDirection: Axis.horizontal,
+              itemCount: 10,
+              itemBuilder: (context, index) => Container(
+                margin: EdgeInsets.symmetric(
+                  horizontal: 2,
+                  vertical: 5,
+                ),
+                child: CustomShimmerWidget(
+                  width: 115,
+                  height: 195,
+                ),
+              ),
+            ),
+          ),
+        )
       ],
     );
   }

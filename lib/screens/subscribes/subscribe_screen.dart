@@ -7,7 +7,9 @@ import 'package:bamabin/widgets/MyTextField.dart';
 import 'package:bamabin/widgets/custom_appbar.dart';
 import 'package:bamabin/widgets/subscribe_item.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:simple_shadow/simple_shadow.dart';
 
 import '../../widgets/MyTextButton.dart';
 
@@ -26,13 +28,19 @@ class SubscribeScreen extends GetView<PaymentController> {
         child: Scaffold(
       backgroundColor: cPrimary,
       appBar: CustomAppbar(
-          title: 'خرید اشتراک',
-          icon: Icon(
-            Icons.subscriptions,
-            color: cW,
-            size: 25,
-            shadows: [bsText],
-          )),
+        title: 'خرید اشتراک',
+        icon: SizedBox(
+            width: 50,
+            height: 50,
+            child: SimpleShadow(
+              color: cB,
+              opacity: .2,
+              offset: Offset(0, 5),
+              child: SvgPicture.asset(
+                'assets/svg/ic_subscribe.svg',
+              ),
+            )),
+      ),
       body: Container(
         width: Get.width,
         height: Get.height,
@@ -69,137 +77,143 @@ class SubscribeScreen extends GetView<PaymentController> {
                 );
               }),
             ),
-            Obx(() => (controller.selectedPlan.value.id != null) ? Container(
-              padding: EdgeInsets.all(10),
-              width: Get.width,
-              decoration: BoxDecoration(color: cPrimary, boxShadow: [
-                BoxShadow(
-                    offset: Offset(0, -5),
-                    blurRadius: 5,
-                    color: cB.withOpacity(.2))
-              ]),
-              child: Column(
-                children: [
-                  Row(textDirection: TextDirection.ltr, children: [
-                    MyTextButton(
-                      size: Size(120, 35),
-                      onTap: () {
-                        if(controller.discountTextController.text.trim().isNotEmpty){
-                          controller.checkDiscountCode();
-                        }else{
-                          showMessage(text: "لطفا کد تخفیف را وارد کنید", isSucces: false);
-                        }
-                      },
-                      child: Center(
-                        child: Obx(() {
-                          if(controller.loadingDiscountCode.isTrue)
-                            return MyCircularProgress(color: Colors.black,size: 20,);
-                          
-                          return MyText(
-                            text: "اعمال کد تخفیف",
-                            color: cB,
-                          );
-
-                        }),
-                      ),
-                      bgColor: cAccent,
-                    ),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    Expanded(
-                      child: SizedBox(
-                        height: 35,
-                        child: MyTextField(
-                          hint: "کد تخفیف",
-                          maxLines: 1,
-                          controller: controller.discountTextController,
-                        ),
-                      ),
-                    ),
-                  ]),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Container(
-                    height: 1,
+            Obx(() => (controller.selectedPlan.value.id != null)
+                ? Container(
+                    padding: EdgeInsets.all(10),
                     width: Get.width,
-                    color: Colors.grey.withOpacity(0.3),
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Container(
-                    child: Row(
-                      textDirection: TextDirection.rtl,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    decoration: BoxDecoration(color: cPrimary, boxShadow: [
+                      BoxShadow(
+                          offset: Offset(0, -5),
+                          blurRadius: 5,
+                          color: cB.withOpacity(.2))
+                    ]),
+                    child: Column(
                       children: [
-                        Row(
-                          textDirection: TextDirection.rtl,
-                          children: [
-                            Text(
-                              "مبلغ کل",
-                              style: TextStyle(color: Colors.white),
+                        Row(textDirection: TextDirection.ltr, children: [
+                          MyTextButton(
+                            size: Size(120, 35),
+                            onTap: () {
+                              if (controller.discountTextController.text
+                                  .trim()
+                                  .isNotEmpty) {
+                                controller.checkDiscountCode();
+                              } else {
+                                showMessage(
+                                    text: "لطفا کد تخفیف را وارد کنید",
+                                    isSucces: false);
+                              }
+                            },
+                            child: Center(
+                              child: Obx(() {
+                                if (controller.loadingDiscountCode.isTrue)
+                                  return MyCircularProgress(
+                                    color: Colors.black,
+                                    size: 20,
+                                  );
+
+                                return MyText(
+                                  text: "اعمال کد تخفیف",
+                                  color: cB,
+                                );
+                              }),
                             ),
-                            SizedBox(
-                              width: 10,
-                            ),
-                            Column(
-                              children: [
-                                Text(
-                                  "${controller.selectedPlan.value.price} تومان",
-                                  textDirection: TextDirection.rtl,
-                                  style: TextStyle(
-                                      fontSize: 13,
-                                      color: cPink,
-                                      decoration:
-                                      TextDecoration.lineThrough,
-                                      decorationColor: cPink),
-                                ),
-                                Row(
-                                  textDirection: TextDirection.rtl,
-                                  children: [
-                                    Text(
-                                      "${controller.selectedPlan.value.discountPrice}",
-                                      style: TextStyle(
-                                          color: cAccent, fontSize: 17),
-                                      textDirection: TextDirection.rtl,
-                                    ),
-                                    SizedBox(
-                                      width: 5,
-                                    ),
-                                    Text(
-                                      "تومان",
-                                      style: TextStyle(
-                                          color: cW, fontSize: 11),
-                                      textDirection: TextDirection.rtl,
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            )
-                          ],
-                        ),
-                        MyTextButton(
-                          size: Size(120, 35),
-                          onTap: () {
-                            controller.showGatewayDialog();
-                          },
-                          child: Text(
-                            "پرداخت",
-                            style: TextStyle(
-                                fontSize: 13, color: Colors.black),
+                            bgColor: cAccent,
                           ),
-                          bgColor: cAccent,
+                          SizedBox(
+                            width: 10,
+                          ),
+                          Expanded(
+                            child: SizedBox(
+                              height: 35,
+                              child: MyTextField(
+                                hint: "کد تخفیف",
+                                maxLines: 1,
+                                controller: controller.discountTextController,
+                              ),
+                            ),
+                          ),
+                        ]),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Container(
+                          height: 1,
+                          width: Get.width,
+                          color: Colors.grey.withOpacity(0.3),
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Container(
+                          child: Row(
+                            textDirection: TextDirection.rtl,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Row(
+                                textDirection: TextDirection.rtl,
+                                children: [
+                                  Text(
+                                    "مبلغ کل",
+                                    style: TextStyle(color: Colors.white),
+                                  ),
+                                  SizedBox(
+                                    width: 10,
+                                  ),
+                                  Column(
+                                    children: [
+                                      Text(
+                                        "${controller.selectedPlan.value.price} تومان",
+                                        textDirection: TextDirection.rtl,
+                                        style: TextStyle(
+                                            fontSize: 13,
+                                            color: cPink,
+                                            decoration:
+                                                TextDecoration.lineThrough,
+                                            decorationColor: cPink),
+                                      ),
+                                      Row(
+                                        textDirection: TextDirection.rtl,
+                                        children: [
+                                          Text(
+                                            "${controller.selectedPlan.value.discountPrice}",
+                                            style: TextStyle(
+                                                color: cAccent, fontSize: 17),
+                                            textDirection: TextDirection.rtl,
+                                          ),
+                                          SizedBox(
+                                            width: 5,
+                                          ),
+                                          Text(
+                                            "تومان",
+                                            style: TextStyle(
+                                                color: cW, fontSize: 11),
+                                            textDirection: TextDirection.rtl,
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  )
+                                ],
+                              ),
+                              MyTextButton(
+                                size: Size(120, 35),
+                                onTap: () {
+                                  controller.showGatewayDialog();
+                                },
+                                child: Text(
+                                  "پرداخت",
+                                  style: TextStyle(
+                                      fontSize: 13, color: Colors.black),
+                                ),
+                                bgColor: cAccent,
+                              )
+                            ],
+                          ),
                         )
                       ],
                     ),
                   )
-
-                ],
-              ),
-            ) : Container())
-
+                : Container())
           ],
         ),
       ),
