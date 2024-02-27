@@ -2,7 +2,9 @@ import 'dart:async';
 
 import 'package:bamabin/api/api_handler.dart';
 import 'package:bamabin/controller/auth_controller.dart';
+import 'package:bamabin/controller/recent_controller.dart';
 import 'package:bamabin/models/film_model.dart';
+import 'package:bamabin/models/recent_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:video_player/video_player.dart';
@@ -42,8 +44,6 @@ class DetailController extends GetxController {
       if (res.body != null) {
         isLoadingLikeStatus(false);
         if (res.body['status'] == true) {
-          // LikeInfo
-
           movieLikeStatus(action);
           selectedFilm.value.likeInfo =
               LikeInfoModel.fromJson(res.body['result']);
@@ -146,6 +146,16 @@ class DetailController extends GetxController {
   }
 
   void getNewData() {
+    RecentModel rm = RecentModel(
+        bg_cover: selectedFilm.value.bgThumbnail,
+        cover: selectedFilm.value.thumbnail,
+        hasDubbed: selectedFilm.value.hasDubbed,
+        hasSubtitle: selectedFilm.value.hasSubtitle,
+        id: selectedFilm.value.id,
+        imdb: selectedFilm.value.imdbRate,
+        title: selectedFilm.value.title,
+        year: selectedFilm.value.releaseYear);
+    Get.find<RecentContoller>().addToRecent(recentModel: rm);
     movieLikeStatus(LikeAction.notSelected);
     isLoadingNewData(true);
     if (selectedFilm.value.trailer_url != '' &&

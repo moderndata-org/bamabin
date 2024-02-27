@@ -5,6 +5,7 @@ import 'package:bamabin/controller/favorite_controller.dart';
 import 'package:bamabin/controller/main_controller.dart';
 import 'package:bamabin/controller/public_controller.dart';
 import 'package:bamabin/controller/movie_request_controller.dart';
+import 'package:bamabin/controller/recent_controller.dart';
 import 'package:bamabin/widgets/MyText.dart';
 import 'package:bamabin/widgets/MyTextButton.dart';
 import 'package:flutter/material.dart';
@@ -234,6 +235,7 @@ class CustomDrawerMenu extends GetView<MainController> {
                           bgColor: cBgDrawerItem,
                           onTap: () {
                             Get.toNamed('/recent-views');
+                            Get.find<RecentContoller>().refreshData();
                             controller.scaffolState.currentState!
                                 .closeEndDrawer();
                           },

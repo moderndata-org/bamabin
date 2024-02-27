@@ -1,8 +1,11 @@
+import 'package:bamabin/models/film_model.dart';
+import 'package:bamabin/models/recent_model.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import '../constant/ScrollBehavior.dart';
 import '../constant/colors.dart';
 import '../constant/bindings.dart';
@@ -16,6 +19,9 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  await Hive.initFlutter();
+  Hive.registerAdapter(RecentModelAdapter());
+  await Hive.openBox<RecentModel>('recents');
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
       .then((_) {
     runApp(const Main());

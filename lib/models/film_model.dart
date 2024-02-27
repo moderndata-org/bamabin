@@ -127,6 +127,7 @@ class FilmModel {
   FilmModel(
       {this.id,
       this.authorId,
+      this.releaseYear,
       this.production_budget,
       this.broadcast_day,
       this.genresListForDetail,
