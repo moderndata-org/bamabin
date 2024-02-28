@@ -6,6 +6,7 @@ import 'package:bamabin/models/profile_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 import '../constant/utils.dart';
 
@@ -226,6 +227,24 @@ class AuthController extends GetxController {
     box.remove("api_key");
     box.save();
     isLogin(false);
+    paymentController.isVip(false);
+    paymentController.remainVipDays(0);
     Get.back();
+  }
+
+  void signInWithGoogle(){
+    const List<String> scopes = <String>[
+      'email',
+      'https://www.googleapis.com/auth/contacts.readonly',
+    ];
+
+    GoogleSignIn _googleSignIn = GoogleSignIn(
+      scopes: scopes,
+    );
+    _googleSignIn.signIn().then((value){
+      print(value);
+    }).onError((error, stackTrace){
+      print(error);
+    });
   }
 }

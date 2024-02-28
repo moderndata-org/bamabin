@@ -172,7 +172,9 @@ class SigninScreen extends GetView<AuthController> {
                       borderRadius: 5,
                       size: Size.fromHeight(55),
                       bgColor: Colors.transparent,
-                      onTap: () {},
+                      onTap: () {
+                        controller.signInWithGoogle();
+                      },
                       strokeColor: cAccent,
                       child: Row(
                         textDirection: TextDirection.rtl,
