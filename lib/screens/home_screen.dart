@@ -16,6 +16,7 @@ import '../widgets/MyText.dart';
 import '../widgets/movie_detail/main_title_widget.dart';
 import '../widgets/movie_item_widget.dart';
 import '../widgets/promote_widget.dart';
+import '../widgets/promote_widget_detail.dart';
 
 class HomeScreen extends GetView<PublicController> {
   HomeScreen({super.key});
@@ -200,7 +201,11 @@ class HomeScreen extends GetView<PublicController> {
                         children: [
                           MainTitleWidget(
                             icon: (section.icon != null)
-                                ? CachedNetworkImage(imageUrl: section.icon!)
+                                ? SizedBox(
+
+                              child: CachedNetworkImage(imageUrl: section.icon!),
+                            width: 30,
+                            height: 30,)
                                 : null,
                             title: '${section.name}',
                             onTapMore: () {
@@ -275,6 +280,19 @@ class HomeScreen extends GetView<PublicController> {
                       return PromoteWidget(
                         title: "${section.post?.enTitle}",
                         imageUrl: section.post!.bgThumbnail,
+                        hasPlay: true,
+                        listPromoteDetails: [
+                        PromoteDetailWidget(
+                          title:"وضعیت",
+                          icon: Icon(Icons.info_outline,color: Colors.white,),
+                          description: "${section.post!.status}",
+                        )
+                        ],
+                        onPlay: (){
+                          var detail = Get.find<DetailController>();
+                          detail.selectedFilm(section.post);
+                          Get.toNamed('/movie-detail');
+                        },
                         onDetail: () {
                           var detail = Get.find<DetailController>();
                           detail.selectedFilm(section.post);

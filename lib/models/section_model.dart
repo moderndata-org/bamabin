@@ -1,14 +1,15 @@
+
 import 'package:bamabin/models/film_model.dart';
 import 'genre_model.dart';
 
 class SectionModel {
-  int? id;
+  String? id;
   String? type;
   String? name;
   String? icon;
   String? link;
   String? taxonomy;
-  int? limit;
+  String? limit;
   List<FilmModel>? posts;
   List<Genre>? genres;
   List<dynamic>? post_type;
