@@ -19,7 +19,7 @@ class RecentViewsScreen extends GetView<RecentContoller> {
     return SafeArea(
         child: Scaffold(
       appBar: CustomAppbar(
-          title: "لیست مشاهده های اخیر",
+          title: "لیست مشاهده‌ی اخیر",
           icon: Icon(
             Icons.watch_later_rounded,
             color: cW,

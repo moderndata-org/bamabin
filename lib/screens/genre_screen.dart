@@ -16,7 +16,7 @@ class GenreScreen extends StatelessWidget {
       child: Scaffold(
         backgroundColor: cPrimary,
         appBar: CustomAppbar(
-            title: 'ژانر ها',
+            title: 'ژانرها',
             icon: Icon(
               Icons.hotel_class_rounded,
               color: cW,

@@ -767,7 +767,7 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                               width: 10,
                             ),
                             MyText(
-                              text: 'پیشنهاد ها',
+                              text: 'پیشنهادها',
                               size: 15,
                             ),
                           ],
@@ -944,7 +944,7 @@ class ButtonSectionMovieDetailWidget extends GetView<DetailController> {
                               ),
                             ),
                             MyText(
-                              text: 'علاقه مندی',
+                              text: 'علاقه‌مندی',
                             ),
                             SizedBox(
                               height: 5,

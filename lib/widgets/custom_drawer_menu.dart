@@ -291,7 +291,7 @@ class CustomDrawerMenu extends GetView<MainController> {
                                 width: 10,
                               ),
                               MyText(
-                                text: 'علاقه‌مندی ‌ها',
+                                text: 'علاقه‌مندی ها',
                                 color: cW,
                                 size: 14,
                                 shadows: [bsText],
@@ -486,7 +486,7 @@ class CustomDrawerMenu extends GetView<MainController> {
                                 width: 10,
                               ),
                               MyText(
-                                text: 'درباره ما',
+                                text: 'درباره‌ی ما',
                                 color: cW,
                                 size: 14,
                                 shadows: [bsText],
