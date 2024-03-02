@@ -3,6 +3,7 @@
 import 'package:bamabin/constant/colors.dart';
 import 'package:bamabin/widgets/MyText.dart';
 import 'package:bamabin/widgets/MyTextButton.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -13,11 +14,13 @@ class CommentItem extends StatelessWidget {
       this.user,
       this.replyFunc,
       this.date,
+        this.avatar,
       this.text});
   bool? isReply;
   String? user;
   String? date;
   String? text;
+  String? avatar;
   final Function()? replyFunc;
   @override
   Widget build(BuildContext context) {
@@ -29,7 +32,7 @@ class CommentItem extends StatelessWidget {
         children: [
           isReply == true ? Spacer() : SizedBox(),
           CircleAvatar(
-            child: Image.asset("assets/images/ic_logo.png"),
+            child: (avatar != null) ? CachedNetworkImage(imageUrl: avatar!,) :  Image.asset("assets/images/ic_logo.png"),
           ),
           SizedBox(
             width: 10,
