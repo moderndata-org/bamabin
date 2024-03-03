@@ -28,6 +28,7 @@ class MyTextField extends StatelessWidget {
     this.textStyle,
     this.suffixIcon,
     this.cursorColor,
+    this.onActionClicked,
     super.key,
   });
   final String hint;
@@ -44,6 +45,7 @@ class MyTextField extends StatelessWidget {
   final TextAlign? textAlign;
   final TextInputAction? action;
   final Function(String text)? onchangedAction;
+  final Function(String text)? onActionClicked;
   final FocusNode? focusNode;
   final int? maxLines;
   final TextDirection? textDirection;
@@ -73,6 +75,7 @@ class MyTextField extends StatelessWidget {
             ),
         textDirection: textDirection ?? TextDirection.rtl,
         keyboardType: inputType,
+        onSubmitted: onActionClicked,
         controller: controller,
         onChanged: onchangedAction,
         cursorColor: cursorColor ?? cW,

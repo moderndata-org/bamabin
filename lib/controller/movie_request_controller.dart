@@ -63,15 +63,15 @@ class MovieRequestController extends GetxController {
               Get.back();
               getRequests();
               showMessage(text: 'ثبت شد', isSucces: true);
-            } else {}
+            }
           }
-          print(res.body);
         });
       } else {
-        showMessage(text: 'لطفا سال را درست وارد نمایید', isSucces: false);
+        showMessage(text: 'لطفا سال را به درستی وارد کنید', isSucces: false);
       }
     } else {
-      showMessage(text: 'لطفا مقادیر بالا را وارد نمایید', isSucces: false);
+      showMessage(
+          text: 'لطفاً مقادیر بالا را به درستی وارد کنید', isSucces: false);
     }
   }
 }

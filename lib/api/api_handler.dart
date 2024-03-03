@@ -83,9 +83,11 @@ class ApiProvider extends GetConnect {
         'order_by',
         '${switch (orderBy) {
           OrderBy.none => null,
-          OrderBy.date => 'date',
+          OrderBy.favorite => 'date',
           OrderBy.imdb => 'imdb',
-          OrderBy.modified => 'modified',
+          OrderBy.newest => 'modified',
+          OrderBy.releaseDate => 'modified',
+          OrderBy.update => 'modified',
         }}');
     Response res = isLogin
         ? await get('${base_url}archive/post_type', query: m, headers: head)
@@ -499,14 +501,12 @@ class ApiProvider extends GetConnect {
     var data = FormData({
       "plan_id": plan_id,
       "gateway": gateway,
-
     });
-    if(discount_code != null)
+    if (discount_code != null)
       data.fields.add(MapEntry("discount_doce", discount_code));
 
-    Response res = await post(
-        '${base_url}vip/select_plan', data,
-        headers: head);
+    Response res =
+        await post('${base_url}vip/select_plan', data, headers: head);
     return res;
   }
 }

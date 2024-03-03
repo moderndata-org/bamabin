@@ -79,6 +79,7 @@ class CustomMainAppBar extends GetView<MainController> {
                           shadows: [bsText],
                         ))),
               Spacer(),
+              //! Search Button
               MyTextButton(
                   onTap: () {
                     Get.find<PublicController>().clearAndOpenSearch();

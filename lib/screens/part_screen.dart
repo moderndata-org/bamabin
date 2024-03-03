@@ -69,33 +69,20 @@ class PartScreen extends GetView<MainController> {
                             onTap: () {},
                             alignment: Alignment.center,
                             title: switch (controller.selectedOrder.value) {
-                              OrderBy.none => "مرتب سازی",
-                              OrderBy.date => 'زمان انتشار',
-                              OrderBy.imdb => 'براساس imdb',
-                              OrderBy.modified => 'به‌روزرسانی',
+                              OrderBy.none => 'مرتب سازی',
+                              OrderBy.update => 'به روزترین',
+                              OrderBy.newest => 'جدیدترین',
+                              OrderBy.releaseDate => 'سال انتشار',
+                              OrderBy.imdb => 'امتیاز imdb',
+                              OrderBy.favorite => 'محبوب‌ترین',
                             },
                             list: [
                               DropdownMenuItem(
                                   value: 0,
                                   onTap: () => controller.changeOrder(
-                                      orderBy: OrderBy.date),
+                                      orderBy: OrderBy.update),
                                   child: Center(
-                                      child: MyText(text: 'زمان انتشار'))),
-                              DropdownMenuItem(
-                                  value: 1,
-                                  onTap: () => controller.changeOrder(
-                                      orderBy: OrderBy.modified),
-                                  child: Center(
-                                      child: MyText(text: 'به‌روزرسانی'))),
-                              DropdownMenuItem(
-                                  value: 2,
-                                  onTap: () => controller.changeOrder(
-                                      orderBy: OrderBy.imdb),
-                                  child: Center(
-                                      child: MyText(
-                                    text: 'براساس امتیاز imdb',
-                                    textAlign: TextAlign.center,
-                                  ))),
+                                      child: MyText(text: 'به روزترین'))),
                             ],
                           ))),
                   SizedBox(
@@ -106,17 +93,62 @@ class PartScreen extends GetView<MainController> {
                             alignment: Alignment.center,
                             title:
                                 '${controller.selectedImdbRate.value == 0 ? "امتیاز IMDB" : controller.selectedImdbRate.value}',
-                            list: List.generate(
-                                10,
-                                (index) => DropdownMenuItem(
-                                    value: index,
-                                    onTap: () => controller.changeImdbRate(
-                                        imdbRate: index + 1),
-                                    child: Center(
-                                      child: MyText(
-                                          text: '${index + 1}',
-                                          textAlign: TextAlign.center),
-                                    ))),
+                            list: [
+                              DropdownMenuItem(
+                                  value: 9,
+                                  onTap: () =>
+                                      controller.changeImdbRate(imdbRate: 9),
+                                  child: Center(
+                                    child: MyText(
+                                        text: 'بالای 9',
+                                        textAlign: TextAlign.center),
+                                  )),
+                              DropdownMenuItem(
+                                  value: 8,
+                                  onTap: () =>
+                                      controller.changeImdbRate(imdbRate: 8),
+                                  child: Center(
+                                    child: MyText(
+                                        text: 'بالای 8',
+                                        textAlign: TextAlign.center),
+                                  )),
+                              DropdownMenuItem(
+                                  value: 7,
+                                  onTap: () =>
+                                      controller.changeImdbRate(imdbRate: 7),
+                                  child: Center(
+                                    child: MyText(
+                                        text: 'بالای 7',
+                                        textAlign: TextAlign.center),
+                                  )),
+                              DropdownMenuItem(
+                                  value: 6,
+                                  onTap: () =>
+                                      controller.changeImdbRate(imdbRate: 6),
+                                  child: Center(
+                                    child: MyText(
+                                        text: 'بالای 6',
+                                        textAlign: TextAlign.center),
+                                  )),
+                              DropdownMenuItem(
+                                  value: 5,
+                                  onTap: () =>
+                                      controller.changeImdbRate(imdbRate: 5),
+                                  child: Center(
+                                    child: MyText(
+                                        text: 'بالای 5',
+                                        textAlign: TextAlign.center),
+                                  )),
+                              DropdownMenuItem(
+                                  value: 1,
+                                  onTap: () =>
+                                      controller.changeImdbRate(imdbRate: 1),
+                                  child: Center(
+                                    child: MyText(
+                                        text: 'زیر 5',
+                                        textAlign: TextAlign.center),
+                                  )),
+                            ],
                           ))),
                   SizedBox(
                     width: 2,

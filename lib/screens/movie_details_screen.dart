@@ -25,6 +25,7 @@ import '../controller/recent_controller.dart';
 import '../models/recent_model.dart';
 import '../widgets/custom_shimmer.dart';
 import '../widgets/movie_detail/actors_widget.dart';
+import 'package:chewie/chewie.dart';
 
 late double padding = 10;
 
@@ -556,6 +557,16 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                     ),
                   ),
                 )),
+
+            Obx(() => controller.isLoadingNewData.isTrue
+                ? SizedBox()
+                : SizedBox(
+                    width: Get.width,
+                    height: 150,
+                    child: Chewie(
+                      controller: controller.trailerControllerChieview!,
+                    ),
+                  )),
 
             //! TrailerSection
             Obx(() => controller.isLoadingNewData.isTrue

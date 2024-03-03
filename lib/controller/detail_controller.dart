@@ -5,6 +5,7 @@ import 'package:bamabin/controller/auth_controller.dart';
 import 'package:bamabin/controller/recent_controller.dart';
 import 'package:bamabin/models/film_model.dart';
 import 'package:bamabin/models/recent_model.dart';
+import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:video_player/video_player.dart';
@@ -30,6 +31,8 @@ class DetailController extends GetxController {
   RxBool isLoadingLikeStatus = false.obs;
   RxBool isSubmittingBugReport = false.obs;
   VideoPlayerController? trailerController;
+  VideoPlayerController? trailerControllerTest;
+  ChewieController? trailerControllerChieview;
   AuthController? authController;
   RxList<DepartmentModel> departments = <DepartmentModel>[].obs;
   RxBool loadingDepartments = false.obs;
@@ -91,7 +94,10 @@ class DetailController extends GetxController {
             isSubmmitingComment(false);
             if (res.body != null) {
               if (res.body['status'] == true) {
-                showMessage(text: 'نظر شما با موفقیت ثبت شد و پس از تایید نمایش داده میشود.', isSucces: true);
+                showMessage(
+                    text:
+                        'نظر شما با موفقیت ثبت شد و پس از تایید نمایش داده میشود.',
+                    isSucces: true);
                 getNewData();
               }
             }
@@ -130,7 +136,7 @@ class DetailController extends GetxController {
     trailerController = VideoPlayerController.networkUrl(
         Uri.parse('${selectedFilm.value.trailer_url}'))
       ..initialize().then((value) {
-        isLoadingTrailer(false);
+        // isLoadingTrailer(false);
         trailerController?.addListener(() {
           trailerPosition(
               trailerController?.value.position.inSeconds.toDouble());
@@ -141,6 +147,19 @@ class DetailController extends GetxController {
             trailerController?.seekTo(Duration.zero);
           }
         });
+      });
+    trailerControllerTest = VideoPlayerController.networkUrl(
+        Uri.parse('${selectedFilm.value.trailer_url}'))
+      ..initialize().then((value) {
+        trailerControllerChieview = ChewieController(
+            videoPlayerController: trailerControllerTest!,
+            autoPlay: false,
+            allowFullScreen: false,
+            fullScreenByDefault: false,
+            allowMuting: false,
+            showOptions: false,
+            aspectRatio: 16 / 9);
+        isLoadingTrailer(false);
       });
   }
 

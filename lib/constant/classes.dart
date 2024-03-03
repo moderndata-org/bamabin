@@ -13,7 +13,7 @@ enum FavoriteAction {
   Remove,
 }
 
-enum OrderBy { none, date, modified, imdb }
+enum OrderBy { none, newest, update, releaseDate, favorite, imdb }
 
 enum BottomNavType { home, movies, series, animations, anime }
 

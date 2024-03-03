@@ -52,6 +52,7 @@ class SearchScreen extends GetView<PublicController> {
                               child: TextField(
                             controller: controller.txtSearch,
                             cursorColor: cW,
+                            textInputAction: TextInputAction.search,
                             maxLines: 1,
                             style: TextStyle(color: cW, fontSize: 14),
                             textDirection: TextDirection.rtl,

@@ -13,28 +13,16 @@ import '../../widgets/MyTextButton.dart';
 import '../../widgets/MyTextField.dart';
 import '../../widgets/custom_dropdown.dart';
 
-class SearchAdvancedDialog extends StatefulWidget {
+class SearchAdvancedDialog extends GetView<PublicController> {
   SearchAdvancedDialog({super.key});
 
-  @override
-  State<SearchAdvancedDialog> createState() => _SearchAdvancedDialogState();
-}
-
-class _SearchAdvancedDialogState extends State<SearchAdvancedDialog> {
-  TextEditingController txtFromYear = TextEditingController();
-  TextEditingController txtToYear = TextEditingController();
-  TextEditingController txtFromImdb = TextEditingController();
-  TextEditingController txtToImdb = TextEditingController();
-  final controller = Get.find<PublicController>();
+  final FocusNode fnFromY = FocusNode();
+  final FocusNode fnToY = FocusNode();
+  final FocusNode fnFromR = FocusNode();
+  final FocusNode fnToR = FocusNode();
 
   @override
   Widget build(BuildContext context) {
-    controller.hasDubbed(false);
-    controller.hasSubtitle(false);
-    controller.selectedAge(AgeRate());
-    controller.selectedCountry(Country());
-    controller.selectedGenre(Genre());
-    controller.selectedType(AdvancedSearchType.none);
     return Dialog(
       shadowColor: cB,
       surfaceTintColor: cB,
@@ -250,9 +238,13 @@ class _SearchAdvancedDialogState extends State<SearchAdvancedDialog> {
                   children: [
                     Expanded(
                       child: MyTextField(
+                        focusNode: fnFromY,
                         borderRadius: 5,
+                        action: TextInputAction.next,
                         hint: "از سال",
-                        controller: txtFromYear,
+                        onActionClicked: (text) =>
+                            FocusScope.of(context).requestFocus(fnToY),
+                        controller: controller.txtFromYear,
                         inputType: TextInputType.number,
                         maxLength: 4,
                       ),
@@ -262,9 +254,13 @@ class _SearchAdvancedDialogState extends State<SearchAdvancedDialog> {
                     ),
                     Expanded(
                       child: MyTextField(
+                        focusNode: fnToY,
                         borderRadius: 5,
                         hint: "تا سال",
-                        controller: txtToYear,
+                        action: TextInputAction.next,
+                        onActionClicked: (text) =>
+                            FocusScope.of(context).requestFocus(fnFromR),
+                        controller: controller.txtToYear,
                         inputType: TextInputType.number,
                         maxLength: 4,
                       ),
@@ -278,15 +274,19 @@ class _SearchAdvancedDialogState extends State<SearchAdvancedDialog> {
                   children: [
                     Expanded(
                       child: MyTextField(
+                        focusNode: fnFromR,
+                        action: TextInputAction.next,
                         borderRadius: 5,
+                        onActionClicked: (text) =>
+                            FocusScope.of(context).requestFocus(fnToR),
                         hint: "امتیاز از",
                         inputType: TextInputType.number,
-                        controller: txtFromImdb,
+                        controller: controller.txtFromImdb,
                         maxLength: 2,
                         onchangedAction: (text) {
                           if (text.length == 2) {
                             if (int.tryParse(text)! > 10) {
-                              txtFromImdb.clear();
+                              controller.txtFromImdb.clear();
                             }
                           }
                         },
@@ -297,15 +297,32 @@ class _SearchAdvancedDialogState extends State<SearchAdvancedDialog> {
                     ),
                     Expanded(
                       child: MyTextField(
+                        focusNode: fnToR,
                         borderRadius: 5,
                         hint: "امتیاز تا",
+                        action: TextInputAction.search,
+                        onActionClicked: (text) =>
+                            controller.checkAndSendAdvancedSearch(
+                          FromImdb: controller.txtFromImdb.text == ''
+                              ? null
+                              : controller.txtFromImdb.text,
+                          ToImdb: controller.txtToImdb.text == ''
+                              ? null
+                              : controller.txtToImdb.text,
+                          FromYear: controller.txtFromYear.text == ''
+                              ? null
+                              : controller.txtFromYear.text,
+                          ToYear: controller.txtToYear.text == ''
+                              ? null
+                              : controller.txtToYear.text,
+                        ),
                         inputType: TextInputType.number,
-                        controller: txtToImdb,
+                        controller: controller.txtToImdb,
                         maxLength: 2,
                         onchangedAction: (text) {
                           if (text.length == 2) {
                             if (int.tryParse(text)! > 10) {
-                              txtToImdb.clear();
+                              controller.txtToImdb.clear();
                             }
                           }
                         },
@@ -321,12 +338,18 @@ class _SearchAdvancedDialogState extends State<SearchAdvancedDialog> {
               child: MyTextButton(
                   onTap: () {
                     controller.checkAndSendAdvancedSearch(
-                      FromImdb:
-                          txtFromImdb.text == '' ? null : txtFromImdb.text,
-                      ToImdb: txtToImdb.text == '' ? null : txtToImdb.text,
-                      FromYear:
-                          txtFromYear.text == '' ? null : txtFromYear.text,
-                      ToYear: txtToYear.text == '' ? null : txtToYear.text,
+                      FromImdb: controller.txtFromImdb.text == ''
+                          ? null
+                          : controller.txtFromImdb.text,
+                      ToImdb: controller.txtToImdb.text == ''
+                          ? null
+                          : controller.txtToImdb.text,
+                      FromYear: controller.txtFromYear.text == ''
+                          ? null
+                          : controller.txtFromYear.text,
+                      ToYear: controller.txtToYear.text == ''
+                          ? null
+                          : controller.txtToYear.text,
                     );
                   },
                   size: Size(Get.width, 40),

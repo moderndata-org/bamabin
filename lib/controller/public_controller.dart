@@ -34,6 +34,10 @@ class PublicController extends GetxController {
   Rx<Country> selectedCountry = Country().obs;
   Rx<AgeRate> selectedAge = AgeRate().obs;
   //! Advanced Search
+  TextEditingController txtFromYear = TextEditingController();
+  TextEditingController txtToYear = TextEditingController();
+  TextEditingController txtFromImdb = TextEditingController();
+  TextEditingController txtToImdb = TextEditingController();
   AdvancedSearchType? lasttype;
   String? lastgenre;
   String? lastage;
@@ -71,6 +75,8 @@ class PublicController extends GetxController {
     isAdvancedSearch(false);
     isShowShimmerSearch(false);
     isLoadingSearchResults(false);
+    hasDubbed(false);
+    hasSubtitle(false);
     txtSearch.clear();
     searchText = '';
     listSearch.clear();
