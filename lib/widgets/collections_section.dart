@@ -34,7 +34,7 @@ class CollectionsSection extends StatelessWidget {
                 width: 10,
               ),
               MyText(
-                text: 'کالکشن ها',
+                text: 'کالکشن‌ها',
                 size: 15,
               ),
             ],

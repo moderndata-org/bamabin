@@ -44,6 +44,8 @@ class GenreItem extends StatelessWidget {
                 CachedNetworkImage(imageUrl: this.imageUrl!,width: 23,) : Icon(Icons.emoji_emotions_outlined,color: Colors.white,size: 23,),
                 Text(
                   '${this.title}',
+                  textAlign: TextAlign.center,
+                  textDirection: TextDirection.rtl,
                   style: TextStyle(
                       color: Colors.white, fontSize: 13, shadows: [bs010]),
                 ),

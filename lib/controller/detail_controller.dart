@@ -91,7 +91,7 @@ class DetailController extends GetxController {
             isSubmmitingComment(false);
             if (res.body != null) {
               if (res.body['status'] == true) {
-                showMessage(text: 'باموفقیت ثبت شد', isSucces: true);
+                showMessage(text: 'نظر شما با موفقیت ثبت شد و پس از تایید نمایش داده میشود.', isSucces: true);
                 getNewData();
               }
             }

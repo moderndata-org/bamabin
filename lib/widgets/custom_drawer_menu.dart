@@ -109,7 +109,21 @@ class CustomDrawerMenu extends GetView<MainController> {
                                                 ),
                                               ],
                                             ))
-                                        : SizedBox();
+                                        : Align(
+                                        alignment: Alignment.centerRight,
+                                        child: Row(
+                                          textDirection: TextDirection.rtl,
+                                          children: [
+                                            Expanded(
+                                              child: MyText(
+                                                text:
+                                                'شما اشتراک فعالی ندارید',
+                                                size: 10,
+                                                maxLines: 1,
+                                              ),
+                                            )
+                                          ],
+                                        ));
                                   }),
                                   Align(
                                     alignment: Alignment.centerRight,
@@ -156,10 +170,10 @@ class CustomDrawerMenu extends GetView<MainController> {
                             size: Size.fromHeight(45),
                             boxShadow: bsTextLowOpacity,
                             bgColor:
-                                authController.paymentController.isVip.value &&
+                                (authController.paymentController.isVip.value &&
                                         authController.paymentController
                                                 .remainVipDays <=
-                                            7
+                                            7) || authController.paymentController.isVip.isFalse
                                     ? cR.withOpacity(.5)
                                     : cBgDrawerItem,
                             onTap: () {
@@ -291,7 +305,7 @@ class CustomDrawerMenu extends GetView<MainController> {
                                 width: 10,
                               ),
                               MyText(
-                                text: 'علاقه‌مندی ‌ها',
+                                text: 'علاقه‌مندی ها',
                                 color: cW,
                                 size: 14,
                                 shadows: [bsText],
@@ -486,7 +500,7 @@ class CustomDrawerMenu extends GetView<MainController> {
                                 width: 10,
                               ),
                               MyText(
-                                text: 'درباره ما',
+                                text: 'درباره‌ی ما',
                                 color: cW,
                                 size: 14,
                                 shadows: [bsText],

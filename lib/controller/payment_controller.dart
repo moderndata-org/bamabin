@@ -52,6 +52,7 @@ class PaymentController extends GetxController {
     gateways.clear();
     ApiProvider().gateways().then((value) {
       gateways.clear();
+      print(value.body);
       if (value.isOk) {
         if (value.body["status"] == true) {
           (value.body["result"] as List).forEach((element) {

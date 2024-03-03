@@ -57,6 +57,7 @@ class CommentsSection extends GetView<DetailController> {
                       user: comment.author,
                       date: getPersianDate(dateTime: '${comment.createdAt}'),
                       text: comment.content,
+                      avatar: comment.avatar,
                       replyFunc: () {
                         controller.selectedCommentForReply(comment);
                         controller.movieDetailScrollController.animateTo(
