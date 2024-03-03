@@ -53,7 +53,8 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
 
   @override
   void dispose() {
-    controller.trailerController?.dispose();
+    controller.trailerControllerChieview?.dispose();
+    controller.trailerControllerTest?.dispose();
     super.dispose();
   }
 
@@ -558,129 +559,172 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                   ),
                 )),
 
+            //! TrailerSection New
             Obx(() => controller.isLoadingNewData.isTrue
-                ? SizedBox()
-                : SizedBox(
+                ? CustomShimmerWidget(
+                    height: 200,
                     width: Get.width,
-                    height: 150,
-                    child: Chewie(
-                      controller: controller.trailerControllerChieview!,
-                    ),
-                  )),
-
-            //! TrailerSection
-            Obx(() => controller.isLoadingNewData.isTrue
-                ? SizedBox()
+                  )
                 : controller.selectedFilm.value.trailer_url == '' ||
                         controller.selectedFilm.value.trailer_url == null
                     ? SizedBox()
-                    : Container(
-                        width: Get.width,
-                        color: cPrimaryDark,
-                        padding: EdgeInsets.only(top: 15),
-                        child: Column(
-                          children: [
-                            Row(
-                              textDirection: TextDirection.rtl,
+                    : controller.isLoadingTrailer.isTrue
+                        ? CustomShimmerWidget(
+                            height: 200,
+                            width: Get.width,
+                          )
+                        : Container(
+                            width: Get.width,
+                            color: cPrimaryDark,
+                            padding: EdgeInsets.only(top: 15),
+                            child: Column(
                               children: [
-                                SizedBox(
-                                  width: 15,
-                                ),
-                                Icon(
-                                  Icons.theaters_rounded,
-                                  color: cW,
-                                ),
-                                SizedBox(
-                                  width: 10,
-                                ),
-                                MyText(
-                                  text: 'تریلر',
-                                  size: 15,
-                                ),
-                              ],
-                            ),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            GestureDetector(
-                              onTap: () {
-                                if (controller.isLoadingTrailer.isFalse) {
-                                  if (controller
-                                      .trailerController!.value.isPlaying) {
-                                    controller.trailerController?.pause();
-                                    controller.isPlayingTrailer(false);
-                                  } else {
-                                    controller.trailerController?.play();
-
-                                    controller.isPlayingTrailer(true);
-                                  }
-                                }
-                              },
-                              child: SizedBox(
-                                height: 200,
-                                width: Get.width,
-                                child: Stack(
+                                Row(
+                                  textDirection: TextDirection.rtl,
                                   children: [
                                     SizedBox(
-                                        height: 200,
-                                        width: Get.width,
-                                        child: VideoPlayer(
-                                            controller.trailerController!)),
-                                    Obx(() => controller.isPlayingTrailer.value
-                                        ? Positioned(
-                                            bottom: 10,
-                                            right: 10,
-                                            left: 10,
-                                            child: Container(
-                                              child: Obx(() => Slider(
-                                                    inactiveColor:
-                                                        cW.withOpacity(.7),
-                                                    activeColor: cW,
-                                                    value: controller
-                                                        .trailerPosition.value,
-                                                    min: 0,
-                                                    max: controller
-                                                        .trailerController!
-                                                        .value
-                                                        .duration
-                                                        .inSeconds
-                                                        .toDouble(),
-                                                    onChanged: (value) {
-                                                      controller
-                                                          .trailerPosition(
-                                                              value);
-                                                      controller
-                                                          .trailerController!
-                                                          .seekTo(Duration(
-                                                              seconds: value
-                                                                  .toInt()));
-                                                    },
-                                                  )),
-                                            ))
-                                        : Container(
-                                            height: 200,
-                                            width: Get.width,
-                                            color: cB.withOpacity(.6),
-                                            child: Center(
-                                              child: controller
-                                                      .isLoadingTrailer.value
-                                                  ? MyCircularProgress(
-                                                      color: cY)
-                                                  : Icon(
-                                                      Icons
-                                                          .play_circle_fill_rounded,
-                                                      color: cW.withOpacity(.7),
-                                                      size: 70,
-                                                    ),
-                                            ),
-                                          ))
+                                      width: 15,
+                                    ),
+                                    Icon(
+                                      Icons.theaters_rounded,
+                                      color: cW,
+                                    ),
+                                    SizedBox(
+                                      width: 10,
+                                    ),
+                                    MyText(
+                                      text: 'تریلر',
+                                      size: 15,
+                                    ),
                                   ],
                                 ),
-                              ),
-                            )
-                          ],
-                        ),
-                      )),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                SizedBox(
+                                  width: Get.width,
+                                  height: 200,
+                                  child: Chewie(
+                                    controller:
+                                        controller.trailerControllerChieview!,
+                                  ),
+                                )
+                              ],
+                            ),
+                          )),
+            // //! TrailerSection Bk
+            // Obx(() => controller.isLoadingNewData.isTrue
+            //     ? SizedBox()
+            //     : controller.selectedFilm.value.trailer_url == '' ||
+            //             controller.selectedFilm.value.trailer_url == null
+            //         ? SizedBox()
+            //         : Container(
+            //             width: Get.width,
+            //             color: cPrimaryDark,
+            //             padding: EdgeInsets.only(top: 15),
+            //             child: Column(
+            //               children: [
+            //                 Row(
+            //                   textDirection: TextDirection.rtl,
+            //                   children: [
+            //                     SizedBox(
+            //                       width: 15,
+            //                     ),
+            //                     Icon(
+            //                       Icons.theaters_rounded,
+            //                       color: cW,
+            //                     ),
+            //                     SizedBox(
+            //                       width: 10,
+            //                     ),
+            //                     MyText(
+            //                       text: 'تریلر',
+            //                       size: 15,
+            //                     ),
+            //                   ],
+            //                 ),
+            //                 SizedBox(
+            //                   height: 10,
+            //                 ),
+            //                 GestureDetector(
+            //                   onTap: () {
+            //                     if (controller.isLoadingTrailer.isFalse) {
+            //                       if (controller
+            //                           .trailerController!.value.isPlaying) {
+            //                         controller.trailerController?.pause();
+            //                         controller.isPlayingTrailer(false);
+            //                       } else {
+            //                         controller.trailerController?.play();
+
+            //                         controller.isPlayingTrailer(true);
+            //                       }
+            //                     }
+            //                   },
+            //                   child: SizedBox(
+            //                     height: 200,
+            //                     width: Get.width,
+            //                     child: Stack(
+            //                       children: [
+            //                         SizedBox(
+            //                             height: 200,
+            //                             width: Get.width,
+            //                             child: VideoPlayer(
+            //                                 controller.trailerController!)),
+            //                         Obx(() => controller.isPlayingTrailer.value
+            //                             ? Positioned(
+            //                                 bottom: 10,
+            //                                 right: 10,
+            //                                 left: 10,
+            //                                 child: Container(
+            //                                   child: Obx(() => Slider(
+            //                                         inactiveColor:
+            //                                             cW.withOpacity(.7),
+            //                                         activeColor: cW,
+            //                                         value: controller
+            //                                             .trailerPosition.value,
+            //                                         min: 0,
+            //                                         max: controller
+            //                                             .trailerController!
+            //                                             .value
+            //                                             .duration
+            //                                             .inSeconds
+            //                                             .toDouble(),
+            //                                         onChanged: (value) {
+            //                                           controller
+            //                                               .trailerPosition(
+            //                                                   value);
+            //                                           controller
+            //                                               .trailerController!
+            //                                               .seekTo(Duration(
+            //                                                   seconds: value
+            //                                                       .toInt()));
+            //                                         },
+            //                                       )),
+            //                                 ))
+            //                             : Container(
+            //                                 height: 200,
+            //                                 width: Get.width,
+            //                                 color: cB.withOpacity(.6),
+            //                                 child: Center(
+            //                                   child: controller
+            //                                           .isLoadingTrailer.value
+            //                                       ? MyCircularProgress(
+            //                                           color: cY)
+            //                                       : Icon(
+            //                                           Icons
+            //                                               .play_circle_fill_rounded,
+            //                                           color: cW.withOpacity(.7),
+            //                                           size: 70,
+            //                                         ),
+            //                                 ),
+            //                               ))
+            //                       ],
+            //                     ),
+            //                   ),
+            //                 )
+            //               ],
+            //             ),
+            //           )),
             SizedBox(
               height: 15,
             ),

@@ -30,7 +30,7 @@ class DetailController extends GetxController {
   RxBool showGoToTop = false.obs;
   RxBool isLoadingLikeStatus = false.obs;
   RxBool isSubmittingBugReport = false.obs;
-  VideoPlayerController? trailerController;
+  // VideoPlayerController? trailerController;
   VideoPlayerController? trailerControllerTest;
   ChewieController? trailerControllerChieview;
   AuthController? authController;
@@ -131,47 +131,66 @@ class DetailController extends GetxController {
   }
 
   void setNewurlTrailer() {
+    // trailerController = null;
     isLoadingTrailer(true);
-    trailerController = null;
-    trailerController = VideoPlayerController.networkUrl(
-        Uri.parse('${selectedFilm.value.trailer_url}'))
-      ..initialize().then((value) {
-        // isLoadingTrailer(false);
-        trailerController?.addListener(() {
-          trailerPosition(
-              trailerController?.value.position.inSeconds.toDouble());
-          isPlayingTrailer(trailerController!.value.isPlaying);
-          if (trailerController?.value.position ==
-              trailerController?.value.duration) {
-            isPlayingTrailer(false);
-            trailerController?.seekTo(Duration.zero);
-          }
-        });
-      });
+    // trailerControllerTest = null;
     trailerControllerTest = VideoPlayerController.networkUrl(
-        Uri.parse('${selectedFilm.value.trailer_url}'))
-      ..initialize().then((value) {
-        trailerControllerChieview = ChewieController(
+        Uri.parse('${selectedFilm.value.trailer_url}'),
+        videoPlayerOptions: VideoPlayerOptions(allowBackgroundPlayback: true))
+      ..initialize().then((value) async {
+        print('oopsssssssssss Before ');
+        trailerControllerChieview = await ChewieController(
             videoPlayerController: trailerControllerTest!,
+            materialProgressColors: ChewieProgressColors(
+                handleColor: Colors.white,
+                bufferedColor: Colors.white.withOpacity(.3),
+                backgroundColor: Colors.white.withOpacity(.1),
+                playedColor: Colors.white.withOpacity(.8)),
+            autoInitialize: true,
             autoPlay: false,
             allowFullScreen: false,
             fullScreenByDefault: false,
             allowMuting: false,
+            cupertinoProgressColors: ChewieProgressColors(
+                backgroundColor: Colors.white.withOpacity(.3),
+                playedColor: Colors.white),
             showOptions: false,
-            aspectRatio: 16 / 9);
+            aspectRatio: Get.width / 200,
+            looping: false,
+            showControlsOnInitialize: true,
+            showControls: true,
+            hideControlsTimer: Duration(seconds: 2));
         isLoadingTrailer(false);
+        print('oopsssssssssss After ');
+        // trailerControllerChieview!.pause();
+        // Timer(Duration.zero, () {
+        //   trailerControllerChieview!.seekTo(Duration.zero);
+        // });
       });
+    // trailerController = VideoPlayerController.networkUrl(
+    //     Uri.parse('${selectedFilm.value.trailer_url}'))
+    //   ..initialize().then((value) {
+    //     // isLoadingTrailer(false);
+    //     trailerController?.addListener(() {
+    //       trailerPosition(
+    //           trailerController?.value.position.inSeconds.toDouble());
+    //       isPlayingTrailer(trailerController!.value.isPlaying);
+    //       if (trailerController?.value.position ==
+    //           trailerController?.value.duration) {
+    //         isPlayingTrailer(false);
+    //         trailerController?.seekTo(Duration.zero);
+    //       }
+    //     });
+    //   });
   }
 
   void getNewData() {
     movieLikeStatus(LikeAction.notSelected);
     isLoadingNewData(true);
-    if (selectedFilm.value.trailer_url != '' &&
-        selectedFilm.value.trailer_url != null) {
-      setNewurlTrailer();
-      isPlayingTrailer(false);
-      isLoadingTrailer(true);
-    }
+    // if (selectedFilm.value.trailer_url != '' &&
+    //     selectedFilm.value.trailer_url != null) {
+    //   setNewurlTrailer();
+    // }
     ApiProvider()
         .getMovieDetail(
             id: '${selectedFilm.value.id}',
