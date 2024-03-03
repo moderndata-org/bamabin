@@ -1,3 +1,4 @@
+import 'package:bamabin/constant/classes.dart';
 import 'package:bamabin/constant/colors.dart';
 import 'package:bamabin/constant/utils.dart';
 import 'package:bamabin/controller/movie_request_controller.dart';
@@ -82,6 +83,9 @@ class MovieRequestListScreen extends GetView<MovieRequestController> {
                       color: cW, fontWeight: FontWeight.bold, fontSize: 15),
                 ),
                 onTap: () {
+                  controller.selectedType(AdvancedSearchType.none);
+                  controller.txtYear.clear();
+                  controller.txtMovieName.clear();
                   showDialog(
                     context: context,
                     barrierColor: cBgDialogColor,

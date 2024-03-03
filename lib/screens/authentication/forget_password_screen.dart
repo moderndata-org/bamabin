@@ -82,7 +82,8 @@ class ForgetPasswordScreen extends GetView<AuthController> {
                       Expanded(
                         child: MyText(
                           textAlign: TextAlign.right,
-                          text: 'رمز به ایمیل شما ارسال خواهد شد',
+                          text:
+                              'لینک بازیابی رمزعبور به ایمیل شما ارسال خواهد شد',
                           color: cW,
                         ),
                       )

@@ -176,10 +176,11 @@ class AuthController extends GetxController {
               isLoadingRegister(false);
               if (res.body != null) {
                 if (res.body['status'] == true) {
+                  Get.back();
+                  isLogin(true);
                   showMessage(text: '${res.body['message']}', isSucces: true);
                   box.write('api_key', res.body['api_key']);
                   box.save();
-                  Get.back();
                 } else {
                   showMessage(text: res.body['message'], isSucces: false);
                 }
@@ -232,7 +233,7 @@ class AuthController extends GetxController {
     Get.back();
   }
 
-  void signInWithGoogle(){
+  void signInWithGoogle() {
     const List<String> scopes = <String>[
       'email',
       'https://www.googleapis.com/auth/contacts.readonly',
@@ -241,9 +242,9 @@ class AuthController extends GetxController {
     GoogleSignIn _googleSignIn = GoogleSignIn(
       scopes: scopes,
     );
-    _googleSignIn.signIn().then((value){
+    _googleSignIn.signIn().then((value) {
       print(value);
-    }).onError((error, stackTrace){
+    }).onError((error, stackTrace) {
       print(error);
     });
   }

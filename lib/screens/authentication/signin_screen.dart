@@ -77,7 +77,7 @@ class SigninScreen extends GetView<AuthController> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       GestureDetector(
-                        onTap: () => Get.toNamed('/signup'),
+                        onTap: () => Get.offNamed('/signup'),
                         child: MyText(
                           text: 'ثبت نام کنید',
                           color: cW,
@@ -86,7 +86,7 @@ class SigninScreen extends GetView<AuthController> {
                         ),
                       ),
                       GestureDetector(
-                        onTap: () => Get.toNamed('/forgetpassword'),
+                        onTap: () => Get.offNamed('/forgetpassword'),
                         child: MyText(
                           text: 'فراموشی رمز ورود',
                           color: cW,
