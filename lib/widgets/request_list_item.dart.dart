@@ -1,5 +1,6 @@
 // ignore_for_file: must_be_immutable
 
+import 'package:bamabin/widgets/MyText.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -56,19 +57,26 @@ class RequestItem extends StatelessWidget {
             height: 10,
           ),
           Row(
-            textDirection: TextDirection.ltr,
+            textDirection: TextDirection.rtl,
             mainAxisAlignment: MainAxisAlignment.end,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "$request",
+                ": درخواست",
                 style: TextStyle(color: cW, fontSize: 16),
               ),
               SizedBox(
                 width: 5,
               ),
-              Text(
-                ": درخواست",
-                style: TextStyle(color: cW, fontSize: 16),
+              Expanded(
+                child: MyText(
+                  text: "$request",
+                  size: 16,
+                  color: cW,
+                ),
+              ),
+              SizedBox(
+                width: 5,
               ),
             ],
           ),

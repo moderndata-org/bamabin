@@ -1,4 +1,7 @@
+import 'dart:async';
+
 import 'package:bamabin/constant/colors.dart';
+import 'package:bamabin/controller/detail_controller.dart';
 import 'package:bamabin/controller/player_controller.dart';
 import 'package:bamabin/screens/dialogs/player_dialogs/player_season_dialog.dart';
 import 'package:bamabin/screens/dialogs/player_dialogs/player_subtitle_dialog.dart';
@@ -18,6 +21,7 @@ class PlayerScreen extends StatefulWidget {
 
 class _PlayerScreenState extends State<PlayerScreen> {
   PlayerController controller = Get.find();
+  DetailController detailController = Get.find<DetailController>();
 
   @override
   void initState() {
@@ -45,6 +49,8 @@ class _PlayerScreenState extends State<PlayerScreen> {
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
         overlays: [SystemUiOverlay.top]);
     controller.video_controller.dispose();
+    detailController.selectedFilm.value
+        .generateSmallItemsList(fullWidth: Get.width);
     super.dispose();
   }
 

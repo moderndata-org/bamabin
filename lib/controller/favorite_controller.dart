@@ -43,17 +43,24 @@ class FavoriteController extends GetxController {
       {required String id, required FavoriteAction favoriteAction}) {
     isSettingFavorites(true);
     String action = '';
+    bool isFavorite;
     switch (favoriteAction) {
       case FavoriteAction.Add:
-        action = 'add';
+        {
+          action = 'add';
+          isFavorite = true;
+        }
       case FavoriteAction.Remove:
-        action = 'remove';
+        {
+          action = 'remove';
+          isFavorite = false;
+        }
     }
     ApiProvider().setFavorite(action: action, id: id).then((res) {
       if (res.body != null) {
         if (res.body['status'] == true) {
           var _detailcontroller = Get.find<DetailController>();
-          _detailcontroller.isFavorite(!_detailcontroller.isFavorite.value);
+          _detailcontroller.selectedFilm.value.is_watchlist = isFavorite;
           getFavoritesList();
           showMessage(text: res.body['message'], isSucces: true);
         } else {

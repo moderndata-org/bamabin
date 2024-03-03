@@ -56,6 +56,11 @@ class SearchScreen extends GetView<PublicController> {
                             style: TextStyle(color: cW, fontSize: 14),
                             textDirection: TextDirection.rtl,
                             textAlign: TextAlign.right,
+                            onSubmitted: (value) {
+                              if (controller.txtSearch.text.trim().length > 0) {
+                                controller.search(isFirstPage: true);
+                              }
+                            },
                             decoration: InputDecoration(
                                 hintText: "اسم فیلم یا ...",
                                 hintStyle: TextStyle(

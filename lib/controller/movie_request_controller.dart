@@ -41,34 +41,37 @@ class MovieRequestController extends GetxController {
   void submitRequest() {
     if (selectedType.value != AdvancedSearchType.none &&
         txtYear.text.length == 4 &&
-        int.parse(txtYear.text) > 1900 &&
-        int.parse(txtYear.text) <= DateTime.now().year &&
         txtMovieName.text.length > 3) {
-      String type = switch (selectedType.value) {
-        AdvancedSearchType.none => 'نوع',
-        AdvancedSearchType.animations => 'animations',
-        AdvancedSearchType.anime => 'anime',
-        AdvancedSearchType.movies => 'movies',
-        AdvancedSearchType.series => 'series',
-        AdvancedSearchType.all => '',
-      };
-      isLoadingSubmitting(true);
-      ApiProvider()
-          .sendMovieRequest(
-              title: txtMovieName.text, release: txtYear.text, type: type)
-          .then((res) {
-        isLoadingSubmitting(false);
-        if (res.body != null) {
-          if (res.body['status'] == true) {
-            Get.back();
-            getRequests();
-            showMessage(text: 'ثبت شد', isSucces: true);
+      if (int.parse(txtYear.text) > 1900 &&
+          int.parse(txtYear.text) <= DateTime.now().year) {
+        String type = switch (selectedType.value) {
+          AdvancedSearchType.none => 'نوع',
+          AdvancedSearchType.animations => 'animations',
+          AdvancedSearchType.anime => 'anime',
+          AdvancedSearchType.movies => 'movies',
+          AdvancedSearchType.series => 'series',
+          AdvancedSearchType.all => '',
+        };
+        isLoadingSubmitting(true);
+        ApiProvider()
+            .sendMovieRequest(
+                title: txtMovieName.text, release: txtYear.text, type: type)
+            .then((res) {
+          isLoadingSubmitting(false);
+          if (res.body != null) {
+            if (res.body['status'] == true) {
+              Get.back();
+              getRequests();
+              showMessage(text: 'ثبت شد', isSucces: true);
+            } else {}
           }
-        }
-        print(res.body);
-      });
+          print(res.body);
+        });
+      } else {
+        showMessage(text: 'لطفا سال را درست وارد نمایید', isSucces: false);
+      }
     } else {
-      showMessage(text: 'لطفا مقادیر بالا را وادر نمایید', isSucces: false);
+      showMessage(text: 'لطفا مقادیر بالا را وارد نمایید', isSucces: false);
     }
   }
 }

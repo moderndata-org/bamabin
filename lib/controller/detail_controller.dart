@@ -27,7 +27,6 @@ class DetailController extends GetxController {
   RxDouble trailerPosition = 0.0.obs;
   TextEditingController? txtComment;
   RxBool showGoToTop = false.obs;
-  RxBool isFavorite = false.obs;
   RxBool isLoadingLikeStatus = false.obs;
   RxBool isSubmittingBugReport = false.obs;
   VideoPlayerController? trailerController;
@@ -146,16 +145,6 @@ class DetailController extends GetxController {
   }
 
   void getNewData() {
-    RecentModel rm = RecentModel(
-        bg_cover: selectedFilm.value.bgThumbnail,
-        cover: selectedFilm.value.thumbnail,
-        hasDubbed: selectedFilm.value.hasDubbed,
-        hasSubtitle: selectedFilm.value.hasSubtitle,
-        id: selectedFilm.value.id,
-        imdb: selectedFilm.value.imdbRate,
-        title: selectedFilm.value.title,
-        year: selectedFilm.value.releaseYear);
-    Get.find<RecentContoller>().addToRecent(recentModel: rm);
     movieLikeStatus(LikeAction.notSelected);
     isLoadingNewData(true);
     if (selectedFilm.value.trailer_url != '' &&

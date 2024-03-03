@@ -17,9 +17,12 @@ import 'package:bamabin/widgets/movie_item_widget.dart';
 import 'package:bamabin/widgets/scores_section.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:video_player/video_player.dart';
 import '../constant/utils.dart';
+import '../controller/recent_controller.dart';
+import '../models/recent_model.dart';
 import '../widgets/custom_shimmer.dart';
 import '../widgets/movie_detail/actors_widget.dart';
 
@@ -55,7 +58,6 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    print(controller.selectedFilm.value.collection_posts?.length);
     // print(controller.selectedFilm.value.releaseYear);
     // print(controller.selectedFilm.value.releaseMovie);
     return SafeArea(
@@ -870,6 +872,7 @@ class ButtonSectionMovieDetailWidget extends GetView<DetailController> {
   @override
   Widget build(BuildContext context) {
     final favoritecontroller = Get.find<FavoriteController>();
+    final authController = Get.find<AuthController>();
     return Container(
       margin: EdgeInsets.only(top: 10),
       width: Get.width,
@@ -915,9 +918,10 @@ class ButtonSectionMovieDetailWidget extends GetView<DetailController> {
                   fgColor: cW,
                   onTap: () => favoritecontroller.setFavorite(
                       id: '${controller.selectedFilm.value.id}',
-                      favoriteAction: controller.isFavorite.isTrue
-                          ? FavoriteAction.Remove
-                          : FavoriteAction.Add),
+                      favoriteAction:
+                          controller.selectedFilm.value.is_watchlist == true
+                              ? FavoriteAction.Remove
+                              : FavoriteAction.Add),
                   bgColor: cGrey,
                   boxShadow: bsBtnMovieDetail,
                   size: Size.fromHeight(60),
@@ -955,24 +959,28 @@ class ButtonSectionMovieDetailWidget extends GetView<DetailController> {
             width: 5,
           ),
           Expanded(
-              child: MyTextButton(
+              child: Obx(() => MyTextButton(
                   borderRadius: 5,
                   padding: EdgeInsets.zero,
                   fgColor: cB,
                   onTap: () {
-                    showDialog(
-                      context: context,
-                      builder: (context) => controller.isSerial.value
-                          ? DownloadSerialDialog(
-                              actionMethod: ActionMethod.Download,
-                              title: 'Monarch',
-                            )
-                          : DownloadMovieDialog(
-                              actionMethod: ActionMethod.Download,
-                              isSerial: controller.isSerial.value,
-                              title: 'Forrest',
-                            ),
-                    );
+                    if (authController.paymentController.isVip.isFalse) {
+                      Get.toNamed('/subscribe');
+                    } else {
+                      showDialog(
+                        context: context,
+                        builder: (context) => controller.isSerial.value
+                            ? DownloadSerialDialog(
+                                actionMethod: ActionMethod.Download,
+                                title: 'Monarch',
+                              )
+                            : DownloadMovieDialog(
+                                actionMethod: ActionMethod.Download,
+                                isSerial: controller.isSerial.value,
+                                title: 'Forrest',
+                              ),
+                      );
+                    }
                   },
                   bgColor: cG,
                   boxShadow: bsBtnMovieDetail,
@@ -981,24 +989,33 @@ class ButtonSectionMovieDetailWidget extends GetView<DetailController> {
                     children: [
                       Expanded(
                         child: Center(
-                          child: Icon(
-                            Icons.download_rounded,
-                            size: 25,
-                            color: cW,
-                          ),
+                          child: authController.paymentController.isVip.isFalse
+                              ? SvgPicture.asset('assets/svg/ic_subscribe.svg')
+                              : Icon(
+                                  Icons.download_rounded,
+                                  size: 25,
+                                  color: cW,
+                                ),
                         ),
                       ),
-                      MyText(text: 'دانلود'),
+                      MyText(
+                          text: authController.paymentController.isVip.isFalse
+                              ? 'خرید اشتراک'
+                              : 'دانلود'),
                       SizedBox(
                         height: 5,
                       )
                     ],
-                  ))),
+                  )))),
           SizedBox(
-            width: controller.selectedFilm.value.hasPlay != 'on' ? 0 : 5,
+            width: controller.selectedFilm.value.hasPlay != 'on' &&
+                    authController.paymentController.isVip.isFalse
+                ? 0
+                : 5,
           ),
           //! Play Button
-          controller.selectedFilm.value.hasPlay != 'on'
+          controller.selectedFilm.value.hasPlay != 'on' &&
+                  authController.paymentController.isVip.isFalse
               ? SizedBox()
               : Expanded(
                   child: MyTextButton(
@@ -1006,6 +1023,18 @@ class ButtonSectionMovieDetailWidget extends GetView<DetailController> {
                       padding: EdgeInsets.zero,
                       fgColor: cB,
                       onTap: () {
+                        RecentModel rm = RecentModel(
+                            bg_cover: controller.selectedFilm.value.bgThumbnail,
+                            cover: controller.selectedFilm.value.thumbnail,
+                            hasDubbed: controller.selectedFilm.value.hasDubbed,
+                            hasSubtitle:
+                                controller.selectedFilm.value.hasSubtitle,
+                            id: controller.selectedFilm.value.id,
+                            imdb: controller.selectedFilm.value.imdbRate,
+                            title: controller.selectedFilm.value.title,
+                            year: controller.selectedFilm.value.releaseYear);
+                        Get.find<RecentContoller>()
+                            .addToRecent(recentModel: rm);
                         Get.toNamed('/player');
                         // showDialog(
                         //   context: context,
