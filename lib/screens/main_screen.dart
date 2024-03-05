@@ -14,6 +14,7 @@ class MainScreen extends GetView<PublicController> {
   MainScreen({super.key});
   final mainController = Get.find<MainController>();
 
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -27,24 +28,48 @@ class MainScreen extends GetView<PublicController> {
           SizedBox(
             width: Get.width,
             height: Get.height,
-            child: Obx(() {
-              return IndexedStack(
-                index: switch (mainController.selectedBottomNav.value) {
-                  BottomNavType.home => 0,
-                  BottomNavType.movies => 1,
-                  BottomNavType.series => 2,
-                  BottomNavType.animations => 3,
-                  BottomNavType.anime => 4,
-                },
-                children: [
-                  HomeScreen(),
-                  PartScreen(),
-                  PartScreen(),
-                  PartScreen(),
-                  PartScreen(),
-                ],
-              );
-            }),
+            child: PageView(
+              reverse: true,
+              controller: mainController.pageController,
+              children: [
+                HomeScreen(),
+                PartScreen(),
+                PartScreen(),
+                PartScreen(),
+                PartScreen(),
+              ],
+              onPageChanged: (value) {
+                switch(value){
+                  case 0:
+                    mainController.selectedBottomNav(BottomNavType.home);
+                    break;
+                  case 1:
+                    mainController.isVisibleAppbar(true);
+                    mainController.selectedBottomNav(BottomNavType.movies);
+                    mainController.appBarCenterText('فیلم');
+                    mainController.runBottomNavAnimation();
+                    break;
+                  case 2:
+                    mainController.isVisibleAppbar(true);
+                    mainController.selectedBottomNav(BottomNavType.series);
+                    mainController.appBarCenterText('سریال');
+                    mainController.runBottomNavAnimation();
+                    break;
+                  case 3:
+                    mainController.isVisibleAppbar(true);
+                    mainController.selectedBottomNav(BottomNavType.animations);
+                    mainController.appBarCenterText('انیمیشن');
+                    mainController.runBottomNavAnimation();
+                    break;
+                  case 4:
+                    mainController.isVisibleAppbar(true);
+                    mainController.selectedBottomNav(BottomNavType.anime);
+                    mainController.appBarCenterText('انیمه');
+                    mainController.runBottomNavAnimation();
+                    break;
+                }
+              },
+            ),
           ),
           //! Appbar
           Positioned(top: 0, left: 0, right: 0, child: CustomMainAppBar())

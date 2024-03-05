@@ -1,4 +1,8 @@
+import 'package:bamabin/constant/utils.dart';
+import 'package:bamabin/controller/auth_controller.dart';
+import 'package:bamabin/widgets/MyCircularProgress.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 import '../../constant/colors.dart';
@@ -6,8 +10,9 @@ import '../../widgets/MyText.dart';
 import '../../widgets/MyTextButton.dart';
 import '../../widgets/MyTextField.dart';
 
-class TokenBotDialog extends StatelessWidget {
+class TokenBotDialog extends GetView<AuthController> {
   const TokenBotDialog({super.key});
+  
 
   @override
   Widget build(BuildContext context) {
@@ -80,7 +85,10 @@ class TokenBotDialog extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       MyTextButton(
-                        onTap: () {},
+                        onTap: () {
+                          Clipboard.setData(ClipboardData(text: "${controller.botToken}"));
+                          showMessage(text: "توکن ربات کپی شد", isSucces: true);
+                        },
                         size: Size(Get.width / 5.6, 35),
                         bgColor: cSecondaryLight,
                         child: MyText(
@@ -93,13 +101,13 @@ class TokenBotDialog extends StatelessWidget {
                         width: 10,
                       ),
                       Expanded(
-                        child: MyText(
-                          text: "RTh9876543Ddf%ss",
+                        child: Obx(() => MyText(
+                          text: "${controller.botToken}",
                           textDirection: TextDirection.ltr,
                           textAlign: TextAlign.left,
                           color: cW,
                           textOverflow: TextOverflow.ellipsis,
-                        ),
+                        )),
                       ),
                       SizedBox(
                         width: 10,
@@ -129,7 +137,7 @@ class TokenBotDialog extends StatelessWidget {
                 borderRadius: 5,
                 height: 45,
                 hint: "توکن داخل ربات را اینجا ورد کنید",
-                controller: new TextEditingController(),
+                controller: controller.botTokenController,
                 maxLines: 3,
                 suffixIcon: Icon(
                   Icons.description,
@@ -139,14 +147,20 @@ class TokenBotDialog extends StatelessWidget {
               ),
             ),
             MyTextButton(
-              onTap: () {},
+              onTap: () {
+                if(controller.botTokenController.text.trim().isNotEmpty){
+                  controller.migrateBotToApp(telegram_bot_site_token: controller.botTokenController.text.trim());
+                }else{
+                  showMessage(text: "لطفا توکن را وارد کنید.", isSucces: false);
+                }
+              },
               size: Size(Get.width / 1.4, 35),
               bgColor: cY,
-              child: MyText(
+              child: Obx(() => controller.migrationLoading.isTrue ? Center(child: MyCircularProgress(color: Colors.black,size: 18,)) : MyText(
                 text: "ادغام ربات با سایت",
                 size: 14,
                 color: cB,
-              ),
+              )),
             ),
             SizedBox(
               height: 15,

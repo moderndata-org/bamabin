@@ -562,7 +562,7 @@ class CustomDrawerMenu extends GetView<MainController> {
                       width: 10,
                     ),
                     MyText(
-                      text: 'تلگرام',
+                      text: 'تلگرام بامابین',
                       color: cW,
                       size: 14,
                       shadows: [bsText],
@@ -601,7 +601,7 @@ class CustomDrawerMenu extends GetView<MainController> {
                         width: 10,
                       ),
                       MyText(
-                        text: 'اینستاگرام',
+                        text: 'اینستاگرام بامابین',
                         color: cW,
                         size: 14,
                         shadows: [bsText],

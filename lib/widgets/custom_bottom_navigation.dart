@@ -22,6 +22,7 @@ class CustomBottomNavigation extends GetView<MainController> {
                 controller.isVisibleAppbar(true);
                 controller.selectedBottomNav(BottomNavType.home);
                 controller.runBottomNavAnimation();
+                controller.pageController.jumpToPage(0);
               },
               iconActive: 'assets/svg/home_s.svg',
               iconDeactive: 'assets/svg/home_d.svg',
@@ -38,6 +39,7 @@ class CustomBottomNavigation extends GetView<MainController> {
                   controller.selectedBottomNav(BottomNavType.movies);
                   controller.appBarCenterText('فیلم');
                   controller.runBottomNavAnimation();
+                  controller.pageController.jumpToPage(1);
                 }
               },
               iconActive: 'assets/svg/film_s.svg',
@@ -55,6 +57,7 @@ class CustomBottomNavigation extends GetView<MainController> {
                   controller.selectedBottomNav(BottomNavType.series);
                   controller.appBarCenterText('سریال');
                   controller.runBottomNavAnimation();
+                  controller.pageController.jumpToPage(2);
                 }
               },
               iconActive: 'assets/svg/serial_s.svg',
@@ -72,6 +75,7 @@ class CustomBottomNavigation extends GetView<MainController> {
                   controller.selectedBottomNav(BottomNavType.animations);
                   controller.appBarCenterText('انیمیشن');
                   controller.runBottomNavAnimation();
+                  controller.pageController.jumpToPage(3);
                 }
               },
               iconActive: 'assets/svg/animation_s.svg',
@@ -89,6 +93,7 @@ class CustomBottomNavigation extends GetView<MainController> {
                   controller.selectedBottomNav(BottomNavType.anime);
                   controller.appBarCenterText('انیمه');
                   controller.runBottomNavAnimation();
+                  controller.pageController.jumpToPage(4);
                 }
               },
               iconActive: 'assets/svg/anime_s.svg',

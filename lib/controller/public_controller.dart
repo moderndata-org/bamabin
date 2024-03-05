@@ -51,6 +51,9 @@ class PublicController extends GetxController {
   //! End Advanced Search
   //! Search Page End
 
+
+
+
   void getAboutUs() {
     isLoadingAboutUs(true);
     ApiProvider().aboutUs().then((res) {
@@ -296,6 +299,7 @@ class PublicController extends GetxController {
       });
     }
   }
+
 
   @override
   void onInit() {
