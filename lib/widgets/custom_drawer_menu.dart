@@ -211,275 +211,279 @@ class CustomDrawerMenu extends GetView<MainController> {
                       SizedBox(
                         height: 5,
                       ),
-                      MyTextButton(
-                          size: Size.fromHeight(45),
-                          boxShadow: bsTextLowOpacity,
-                          bgColor: cBgDrawerItem,
-                          onTap: () {
-                            Get.toNamed('/notifications');
-                            controller.scaffolState.currentState!
-                                .closeEndDrawer();
-                          },
-                          child: Row(
-                            textDirection: TextDirection.rtl,
-                            children: [
-                              Icon(
-                                shadows: [bsTextLowOpacity],
-                                Icons.notifications,
-                                color: cW,
-                              ),
-                              SizedBox(
-                                width: 10,
-                              ),
-                              MyText(
-                                text: 'اعلانات',
-                                color: cW,
-                                size: 14,
-                                shadows: [bsText],
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ],
-                          )),
-                      SizedBox(
-                        height: 5,
-                      ),
-                      MyTextButton(
-                          size: Size.fromHeight(45),
-                          boxShadow: bsTextLowOpacity,
-                          bgColor: cBgDrawerItem,
-                          onTap: () {
-                            Get.toNamed('/recent-views');
-                            Get.find<RecentContoller>().refreshData();
-                            controller.scaffolState.currentState!
-                                .closeEndDrawer();
-                          },
-                          child: Row(
-                            textDirection: TextDirection.rtl,
-                            children: [
-                              Icon(
-                                shadows: [bsTextLowOpacity],
-                                Icons.access_time_filled_rounded,
-                                color: cW,
-                              ),
-                              SizedBox(
-                                width: 10,
-                              ),
-                              MyText(
-                                text: 'لیست مشاهده‌ی اخیر',
-                                color: cW,
-                                size: 14,
-                                shadows: [bsText],
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ],
-                          )),
-                      SizedBox(
-                        height: 5,
-                      ),
-                      MyTextButton(
-                          size: Size.fromHeight(45),
-                          boxShadow: bsTextLowOpacity,
-                          bgColor: cBgDrawerItem,
-                          onTap: () {
-                            FavoriteController fc =
-                                Get.find<FavoriteController>();
-                            if (authController.isLogin.isTrue) {
-                              fc.getFavoritesList();
-                              fc.isLoadingFavorites(true);
-                              Get.toNamed('/favorite');
-                            } else {
-                              Get.toNamed('/signin');
-                            }
-                            controller.scaffolState.currentState!
-                                .closeEndDrawer();
-                          },
-                          child: Row(
-                            textDirection: TextDirection.rtl,
-                            children: [
-                              Icon(
-                                shadows: [bsTextLowOpacity],
-                                Icons.favorite,
-                                color: cW,
-                              ),
-                              SizedBox(
-                                width: 10,
-                              ),
-                              MyText(
-                                text: 'علاقه‌مندی ها',
-                                color: cW,
-                                size: 14,
-                                shadows: [bsText],
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ],
-                          )),
-                      SizedBox(
-                        height: 5,
-                      ),
-                      MyTextButton(
-                          size: Size.fromHeight(45),
-                          boxShadow: bsTextLowOpacity,
-                          bgColor: cBgDrawerItem,
-                          onTap: () {
-                            Get.toNamed('/download-manager');
-                            controller.scaffolState.currentState!
-                                .closeEndDrawer();
-                          },
-                          child: Row(
-                            textDirection: TextDirection.rtl,
-                            children: [
-                              Icon(
-                                shadows: [bsTextLowOpacity],
-                                Icons.download_rounded,
-                                color: cW,
-                              ),
-                              SizedBox(
-                                width: 10,
-                              ),
-                              MyText(
-                                text: 'دانلود‌ها',
-                                color: cW,
-                                size: 14,
-                                shadows: [bsText],
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ],
-                          )),
-                      SizedBox(
-                        height: 5,
-                      ),
-                      MyTextButton(
-                          size: Size.fromHeight(45),
-                          boxShadow: bsTextLowOpacity,
-                          bgColor: cBgDrawerItem,
-                          onTap: () {
-                            controller.scaffolState.currentState!
-                                .closeEndDrawer();
-                            Get.put(OrderListController());
-                          },
-                          child: Row(
-                            textDirection: TextDirection.rtl,
-                            children: [
-                              Icon(
-                                shadows: [bsTextLowOpacity],
-                                Icons.folder_special_rounded,
-                                color: cW,
-                              ),
-                              SizedBox(
-                                width: 10,
-                              ),
-                              MyText(
-                                text: 'لیست سفارشی',
-                                color: cW,
-                                size: 14,
-                                shadows: [bsText],
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ],
-                          )),
-                      SizedBox(
-                        height: 5,
-                      ),
-                      MyTextButton(
-                          size: Size.fromHeight(45),
-                          boxShadow: bsTextLowOpacity,
-                          bgColor: cBgDrawerItem,
-                          onTap: () {
-                            Get.toNamed('/tickets');
-                            controller.scaffolState.currentState!
-                                .closeEndDrawer();
-                          },
-                          child: Row(
-                            textDirection: TextDirection.rtl,
-                            children: [
-                              Icon(
-                                shadows: [bsTextLowOpacity],
-                                Icons.confirmation_num_rounded,
-                                color: cW,
-                              ),
-                              SizedBox(
-                                width: 10,
-                              ),
-                              MyText(
-                                text: 'تیکت',
-                                color: cW,
-                                size: 14,
-                                shadows: [bsText],
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ],
-                          )),
-                      SizedBox(
-                        height: 5,
-                      ),
-                      MyTextButton(
-                          size: Size.fromHeight(45),
-                          boxShadow: bsTextLowOpacity,
-                          bgColor: cBgDrawerItem,
-                          onTap: () {
-                            Get.put(MovieRequestController());
-                            controller.scaffolState.currentState!
-                                .closeEndDrawer();
-                          },
-                          child: Row(
-                            textDirection: TextDirection.rtl,
-                            children: [
-                              Icon(
-                                shadows: [bsTextLowOpacity],
-                                Icons.video_call_rounded,
-                                color: cW,
-                              ),
-                              SizedBox(
-                                width: 10,
-                              ),
-                              MyText(
-                                text: 'درخواست فیلم و سریال',
-                                color: cW,
-                                size: 14,
-                                shadows: [bsText],
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ],
-                          )),
-                      SizedBox(
-                        height: 5,
-                      ),
-                      MyTextButton(
-                          size: Size.fromHeight(45),
-                          boxShadow: bsTextLowOpacity,
-                          bgColor: cBgDrawerItem,
-                          onTap: () {
-                            showDialog(
-                              barrierColor: cBgDialogColor,
-                              context: context,
-                              builder: (context) {
-                                return TokenBotDialog();
-                              },
-                            );
-                          },
-                          child: Row(
-                            textDirection: TextDirection.rtl,
-                            children: [
-                              Icon(
-                                shadows: [bsTextLowOpacity],
-                                Icons.smart_toy_rounded,
-                                color: cW,
-                              ),
-                              SizedBox(
-                                width: 10,
-                              ),
-                              MyText(
-                                text: 'توکن ربات و انتقال اشتراک',
-                                color: cW,
-                                size: 14,
-                                shadows: [bsText],
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ],
-                          )),
-                      SizedBox(
-                        height: 5,
-                      ),
+                      Obx(() => Visibility(
+                        visible: authController.isLogin.isTrue,
+                          child: Column(children: [
+                        MyTextButton(
+                            size: Size.fromHeight(45),
+                            boxShadow: bsTextLowOpacity,
+                            bgColor: cBgDrawerItem,
+                            onTap: () {
+                              Get.toNamed('/notifications');
+                              controller.scaffolState.currentState!
+                                  .closeEndDrawer();
+                            },
+                            child: Row(
+                              textDirection: TextDirection.rtl,
+                              children: [
+                                Icon(
+                                  shadows: [bsTextLowOpacity],
+                                  Icons.notifications,
+                                  color: cW,
+                                ),
+                                SizedBox(
+                                  width: 10,
+                                ),
+                                MyText(
+                                  text: 'اعلانات',
+                                  color: cW,
+                                  size: 14,
+                                  shadows: [bsText],
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ],
+                            )),
+                        SizedBox(
+                          height: 5,
+                        ),
+                        MyTextButton(
+                            size: Size.fromHeight(45),
+                            boxShadow: bsTextLowOpacity,
+                            bgColor: cBgDrawerItem,
+                            onTap: () {
+                              Get.toNamed('/recent-views');
+                              Get.find<RecentContoller>().refreshData();
+                              controller.scaffolState.currentState!
+                                  .closeEndDrawer();
+                            },
+                            child: Row(
+                              textDirection: TextDirection.rtl,
+                              children: [
+                                Icon(
+                                  shadows: [bsTextLowOpacity],
+                                  Icons.access_time_filled_rounded,
+                                  color: cW,
+                                ),
+                                SizedBox(
+                                  width: 10,
+                                ),
+                                MyText(
+                                  text: 'لیست مشاهده‌ی اخیر',
+                                  color: cW,
+                                  size: 14,
+                                  shadows: [bsText],
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ],
+                            )),
+                        SizedBox(
+                          height: 5,
+                        ),
+                        MyTextButton(
+                            size: Size.fromHeight(45),
+                            boxShadow: bsTextLowOpacity,
+                            bgColor: cBgDrawerItem,
+                            onTap: () {
+                              FavoriteController fc =
+                              Get.find<FavoriteController>();
+                              if (authController.isLogin.isTrue) {
+                                fc.getFavoritesList();
+                                fc.isLoadingFavorites(true);
+                                Get.toNamed('/favorite');
+                              } else {
+                                Get.toNamed('/signin');
+                              }
+                              controller.scaffolState.currentState!
+                                  .closeEndDrawer();
+                            },
+                            child: Row(
+                              textDirection: TextDirection.rtl,
+                              children: [
+                                Icon(
+                                  shadows: [bsTextLowOpacity],
+                                  Icons.favorite,
+                                  color: cW,
+                                ),
+                                SizedBox(
+                                  width: 10,
+                                ),
+                                MyText(
+                                  text: 'علاقه‌مندی ها',
+                                  color: cW,
+                                  size: 14,
+                                  shadows: [bsText],
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ],
+                            )),
+                        SizedBox(
+                          height: 5,
+                        ),
+                        MyTextButton(
+                            size: Size.fromHeight(45),
+                            boxShadow: bsTextLowOpacity,
+                            bgColor: cBgDrawerItem,
+                            onTap: () {
+                              Get.toNamed('/download-manager');
+                              controller.scaffolState.currentState!
+                                  .closeEndDrawer();
+                            },
+                            child: Row(
+                              textDirection: TextDirection.rtl,
+                              children: [
+                                Icon(
+                                  shadows: [bsTextLowOpacity],
+                                  Icons.download_rounded,
+                                  color: cW,
+                                ),
+                                SizedBox(
+                                  width: 10,
+                                ),
+                                MyText(
+                                  text: 'دانلود‌ها',
+                                  color: cW,
+                                  size: 14,
+                                  shadows: [bsText],
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ],
+                            )),
+                        SizedBox(
+                          height: 5,
+                        ),
+                        MyTextButton(
+                            size: Size.fromHeight(45),
+                            boxShadow: bsTextLowOpacity,
+                            bgColor: cBgDrawerItem,
+                            onTap: () {
+                              controller.scaffolState.currentState!
+                                  .closeEndDrawer();
+                              Get.put(OrderListController());
+                            },
+                            child: Row(
+                              textDirection: TextDirection.rtl,
+                              children: [
+                                Icon(
+                                  shadows: [bsTextLowOpacity],
+                                  Icons.folder_special_rounded,
+                                  color: cW,
+                                ),
+                                SizedBox(
+                                  width: 10,
+                                ),
+                                MyText(
+                                  text: 'لیست سفارشی',
+                                  color: cW,
+                                  size: 14,
+                                  shadows: [bsText],
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ],
+                            )),
+                        SizedBox(
+                          height: 5,
+                        ),
+                        MyTextButton(
+                            size: Size.fromHeight(45),
+                            boxShadow: bsTextLowOpacity,
+                            bgColor: cBgDrawerItem,
+                            onTap: () {
+                              Get.toNamed('/tickets');
+                              controller.scaffolState.currentState!
+                                  .closeEndDrawer();
+                            },
+                            child: Row(
+                              textDirection: TextDirection.rtl,
+                              children: [
+                                Icon(
+                                  shadows: [bsTextLowOpacity],
+                                  Icons.confirmation_num_rounded,
+                                  color: cW,
+                                ),
+                                SizedBox(
+                                  width: 10,
+                                ),
+                                MyText(
+                                  text: 'تیکت',
+                                  color: cW,
+                                  size: 14,
+                                  shadows: [bsText],
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ],
+                            )),
+                        SizedBox(
+                          height: 5,
+                        ),
+                        MyTextButton(
+                            size: Size.fromHeight(45),
+                            boxShadow: bsTextLowOpacity,
+                            bgColor: cBgDrawerItem,
+                            onTap: () {
+                              Get.put(MovieRequestController());
+                              controller.scaffolState.currentState!
+                                  .closeEndDrawer();
+                            },
+                            child: Row(
+                              textDirection: TextDirection.rtl,
+                              children: [
+                                Icon(
+                                  shadows: [bsTextLowOpacity],
+                                  Icons.video_call_rounded,
+                                  color: cW,
+                                ),
+                                SizedBox(
+                                  width: 10,
+                                ),
+                                MyText(
+                                  text: 'درخواست فیلم و سریال',
+                                  color: cW,
+                                  size: 14,
+                                  shadows: [bsText],
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ],
+                            )),
+                        SizedBox(
+                          height: 5,
+                        ),
+                        MyTextButton(
+                            size: Size.fromHeight(45),
+                            boxShadow: bsTextLowOpacity,
+                            bgColor: cBgDrawerItem,
+                            onTap: () {
+                              showDialog(
+                                barrierColor: cBgDialogColor,
+                                context: context,
+                                builder: (context) {
+                                  return TokenBotDialog();
+                                },
+                              );
+                            },
+                            child: Row(
+                              textDirection: TextDirection.rtl,
+                              children: [
+                                Icon(
+                                  shadows: [bsTextLowOpacity],
+                                  Icons.smart_toy_rounded,
+                                  color: cW,
+                                ),
+                                SizedBox(
+                                  width: 10,
+                                ),
+                                MyText(
+                                  text: 'توکن ربات و انتقال اشتراک',
+                                  color: cW,
+                                  size: 14,
+                                  shadows: [bsText],
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ],
+                            )),
+                        SizedBox(
+                          height: 5,
+                        ),
+                      ],))),
                       MyTextButton(
                           size: Size.fromHeight(45),
                           boxShadow: bsTextLowOpacity,
@@ -511,6 +515,7 @@ class CustomDrawerMenu extends GetView<MainController> {
                       SizedBox(
                         height: 5,
                       ),
+                      (authController.isLogin.isTrue) ?
                       MyTextButton(
                           size: Size.fromHeight(45),
                           boxShadow: bsTextLowOpacity,
@@ -537,7 +542,7 @@ class CustomDrawerMenu extends GetView<MainController> {
                                 fontWeight: FontWeight.w500,
                               ),
                             ],
-                          )),
+                          )) : Container(),
 
                       //! End Buttons
                     ]),
