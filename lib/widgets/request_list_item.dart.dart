@@ -1,5 +1,7 @@
 // ignore_for_file: must_be_immutable
 
+import 'package:bamabin/controller/detail_controller.dart';
+import 'package:bamabin/models/film_model.dart';
 import 'package:bamabin/widgets/MyText.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -8,18 +10,18 @@ import '../constant/colors.dart';
 import '../constant/utils.dart';
 import 'MyTextButton.dart';
 
-class RequestItem extends StatelessWidget {
+class RequestItem extends GetView<DetailController> {
   String? id;
   String? request;
   String? condition;
-  String? referral_link;
+  FilmModel? post;
   String? date;
   String? message;
   RequestItem(
       {this.id,
       this.request,
       this.condition,
-      this.referral_link,
+      this.post,
       this.date,
       this.message,
       super.key});
@@ -106,13 +108,16 @@ class RequestItem extends StatelessWidget {
             textDirection: TextDirection.ltr,
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              (referral_link == null)
+              (post == null)
                   ? Text(
                       "ندارد",
                       style: TextStyle(color: Colors.white, fontSize: 16),
                     )
                   : MyTextButton(
-                      onTap: () {},
+                      onTap: () {
+                        controller.selectedFilm(post);
+                        Get.toNamed('/movie-detail');
+                      },
                       size: Size(70, 35),
                       bgColor: cAccent,
                       child: Text(

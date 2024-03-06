@@ -12,6 +12,7 @@ import '../constant/bindings.dart';
 import '../constant/strings.dart';
 import 'firebase_options.dart';
 import 'routes/route.dart';
+import 'package:flutter_downloader/flutter_downloader.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -19,6 +20,12 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  await FlutterDownloader.initialize(
+      debug:
+          true, // optional: set to false to disable printing logs to console (default: true)
+      ignoreSsl:
+          true // option: set to false to disable working with http links (default: false)
+      );
   await Hive.initFlutter();
   Hive.registerAdapter(RecentModelAdapter());
   await Hive.openBox<RecentModel>('recents');

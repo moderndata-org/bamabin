@@ -48,7 +48,13 @@ class MovieRequestModel {
     imdbId = json['imdb_id'];
     id = json['id'];
     user = json['user'] != null ? new User.fromJson(json['user']) : null;
-    post = json['post'] != null ? new FilmModel.fromJson(json['post']) : null;
+    if (json['post'] is List) {
+      post = null;
+    } else if (json['post'] != null) {
+      post = new FilmModel.fromJson(json['post']);
+    } else {
+      post == null;
+    }
   }
 
   Map<String, dynamic> toJson() {

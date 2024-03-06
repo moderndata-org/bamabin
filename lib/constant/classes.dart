@@ -13,6 +13,13 @@ enum FavoriteAction {
   Remove,
 }
 
+enum DownloadState {
+  play,
+  pause,
+  retry,
+  failed,
+}
+
 enum OrderBy { none, newest, update, releaseDate, favorite, imdb }
 
 enum BottomNavType { home, movies, series, animations, anime }
