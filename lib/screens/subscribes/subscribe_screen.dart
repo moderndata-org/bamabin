@@ -1,5 +1,6 @@
 import 'package:bamabin/constant/colors.dart';
 import 'package:bamabin/constant/utils.dart';
+import 'package:bamabin/controller/auth_controller.dart';
 import 'package:bamabin/controller/payment_controller.dart';
 import 'package:bamabin/widgets/MyCircularProgress.dart';
 import 'package:bamabin/widgets/MyText.dart';
@@ -13,12 +14,12 @@ import 'package:simple_shadow/simple_shadow.dart';
 
 import '../../widgets/MyTextButton.dart';
 
-class SubscribeScreen extends GetView<PaymentController> {
+class SubscribeScreen extends GetView<AuthController> {
   const SubscribeScreen({super.key});
 
   void init() {
-    controller.getPlans();
-    controller.getGateways();
+    controller.paymentController.getPlans();
+    controller.paymentController.getGateways();
   }
 
   @override
@@ -48,7 +49,7 @@ class SubscribeScreen extends GetView<PaymentController> {
           children: [
             Expanded(
               child: Obx(() {
-                if (controller.loadingPlans.isTrue)
+                if (controller.paymentController.loadingPlans.isTrue)
                   return Center(
                     child: MyCircularProgress(
                       color: cAccent,
@@ -58,26 +59,26 @@ class SubscribeScreen extends GetView<PaymentController> {
 
                 return ListView.builder(
                   physics: BouncingScrollPhysics(),
-                  itemCount: controller.plans.length,
+                  itemCount: controller.paymentController.plans.length,
                   padding: EdgeInsets.only(right: 10, left: 10),
                   itemBuilder: (context, index) {
-                    var plan = controller.plans[index];
+                    var plan = controller.paymentController.plans[index];
                     return SubscribeItem(
                       price: "${plan.price}",
-                      is_selected: controller.selectedPlan.value.id == plan.id,
+                      is_selected: controller.paymentController.selectedPlan.value.id == plan.id,
                       price_of: "${plan.discountPrice}",
                       title: "اشتراک ${plan.name}",
                       svg_image: plan.iconUrl,
                       onTap: () {
-                        controller.selectedPlan(plan);
-                        controller.plans.refresh();
+                        controller.paymentController.selectedPlan(plan);
+                        controller.paymentController.plans.refresh();
                       },
                     );
                   },
                 );
               }),
             ),
-            Obx(() => (controller.selectedPlan.value.id != null)
+            Obx(() => (controller.paymentController.selectedPlan.value.id != null)
                 ? Container(
                     padding: EdgeInsets.all(10),
                     width: Get.width,
@@ -93,10 +94,10 @@ class SubscribeScreen extends GetView<PaymentController> {
                           MyTextButton(
                             size: Size(120, 35),
                             onTap: () {
-                              if (controller.discountTextController.text
+                              if (controller.paymentController.discountTextController.text
                                   .trim()
                                   .isNotEmpty) {
-                                controller.checkDiscountCode();
+                                controller.paymentController.checkDiscountCode();
                               } else {
                                 showMessage(
                                     text: "لطفا کد تخفیف را وارد کنید",
@@ -105,7 +106,7 @@ class SubscribeScreen extends GetView<PaymentController> {
                             },
                             child: Center(
                               child: Obx(() {
-                                if (controller.loadingDiscountCode.isTrue)
+                                if (controller.paymentController.loadingDiscountCode.isTrue)
                                   return MyCircularProgress(
                                     color: Colors.black,
                                     size: 20,
@@ -128,7 +129,7 @@ class SubscribeScreen extends GetView<PaymentController> {
                               child: MyTextField(
                                 hint: "کد تخفیف",
                                 maxLines: 1,
-                                controller: controller.discountTextController,
+                                controller: controller.paymentController.discountTextController,
                               ),
                             ),
                           ),
@@ -162,7 +163,7 @@ class SubscribeScreen extends GetView<PaymentController> {
                                   Column(
                                     children: [
                                       Text(
-                                        "${controller.selectedPlan.value.price} تومان",
+                                        "${controller.paymentController.selectedPlan.value.price} تومان",
                                         textDirection: TextDirection.rtl,
                                         style: TextStyle(
                                             fontSize: 13,
@@ -175,7 +176,7 @@ class SubscribeScreen extends GetView<PaymentController> {
                                         textDirection: TextDirection.rtl,
                                         children: [
                                           Text(
-                                            "${controller.selectedPlan.value.discountPrice}",
+                                            "${controller.paymentController.selectedPlan.value.discountPrice}",
                                             style: TextStyle(
                                                 color: cAccent, fontSize: 17),
                                             textDirection: TextDirection.rtl,
@@ -198,7 +199,12 @@ class SubscribeScreen extends GetView<PaymentController> {
                               MyTextButton(
                                 size: Size(120, 35),
                                 onTap: () {
-                                  controller.showGatewayDialog();
+                                  if(controller.isLogin.isTrue)
+                                  controller.paymentController.showGatewayDialog();
+                                  else{
+                                    showMessage(text: "برای خرید ابتدا وارد شوید.", isSucces: false);
+                                    Get.toNamed("/signin");
+                                  }
                                 },
                                 child: Text(
                                   "پرداخت",

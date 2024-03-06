@@ -46,6 +46,11 @@ class SplashScreen extends StatelessWidget {
                 MyText(
                   text: 'Bamabin',
                   size: 20,
+                ),
+                SizedBox(height: 10,),
+                MyText(
+                  text: 'هزاران فیلم و سریال رو با بامابین ببین!',
+                  size: 18,
                 )
               ],
             ),

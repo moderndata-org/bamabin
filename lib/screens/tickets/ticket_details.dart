@@ -166,7 +166,7 @@ class TicketDetails extends GetView<TicketController> {
                       Expanded(
                           child: Container(
                         padding: EdgeInsets.all(5),
-                        height: 50,
+
                         decoration: BoxDecoration(
                             color: cPrimaryDark,
                             borderRadius: BorderRadius.circular(10)),

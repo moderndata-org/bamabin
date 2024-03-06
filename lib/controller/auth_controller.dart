@@ -15,6 +15,7 @@ class AuthController extends GetxController {
   TextEditingController txtPasswrod = TextEditingController();
   TextEditingController txtPasswrod2 = TextEditingController();
   TextEditingController txtEmail = TextEditingController();
+  TextEditingController botTokenController = TextEditingController();
   RxBool terms = true.obs;
   RxBool isLoadingUpdateProfile = false.obs;
   RxBool isLoadingRegister = false.obs;
@@ -22,8 +23,11 @@ class AuthController extends GetxController {
   RxBool isLoadingLogin = false.obs;
   RxBool isChangingPassword = false.obs;
   var profile = ProfileModel().obs;
+  
+  var migrationLoading = false.obs;
 
   PaymentController paymentController = Get.find();
+  var botToken = "".obs;
 
   GetStorage box = GetStorage('bamabin');
   var isLogin = false.obs;
@@ -75,6 +79,8 @@ class AuthController extends GetxController {
           if (isLogin.isTrue) {
             getProfile();
             paymentController.checkVip();
+            getBotToken();
+
           }
         }
       });
@@ -246,6 +252,32 @@ class AuthController extends GetxController {
       print(value);
     }).onError((error, stackTrace) {
       print(error);
+    });
+  }
+
+  void getBotToken(){
+    ApiProvider().getBotToken().then((value){
+      if(value.isOk){
+        if(value.body["status"] == true){
+          botToken(value.body["result"]["telegram_bot_token"]);
+        }
+      }
+    });
+  }
+  
+  void migrateBotToApp({required String? telegram_bot_site_token}){
+    migrationLoading(true);
+    ApiProvider().migrateBotToApp(telegram_bot_site_token: telegram_bot_site_token).then((value){
+      if(value.isOk){
+        if(value.body["status"] == true){
+          botTokenController.clear();
+          showMessage(text: "اشتراک ربات با موفقیت منتقل شد", isSucces: true);
+        }else{
+          showMessage(text: value.body["message"], isSucces: false);
+        }
+      }
+
+      migrationLoading(false);
     });
   }
 }

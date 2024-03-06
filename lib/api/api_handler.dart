@@ -509,4 +509,20 @@ class ApiProvider extends GetConnect {
         await post('${base_url}vip/select_plan', data, headers: head);
     return res;
   }
+
+  Future<Response> getBotToken() async {
+    Response res =
+    await get('${base_url}telegram/get_token', headers: head);
+    return res;
+  }
+
+  Future<Response> migrateBotToApp(
+      {required String? telegram_bot_site_token}) async {
+    var data = FormData({
+      "telegram_bot_site_token": telegram_bot_site_token,
+    });
+    Response res =
+    await post('${base_url}telegram/sync', data, headers: head);
+    return res;
+  }
 }

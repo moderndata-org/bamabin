@@ -62,6 +62,7 @@ class TicketsAddDialog extends GetView<TicketController> {
               child: MyTextField(
                 borderRadius: 5,
                 height: 41,
+                maxLines: 1,
                 hint: "عنوان",
                 controller: controller.titleController,
                 suffixIcon: Icon(
@@ -146,7 +147,7 @@ class TicketsAddDialog extends GetView<TicketController> {
                 bgColor: cY,
                 child: Obx(() {
                   if(controller.loadingCreateTicket.isTrue)
-                    return Center(child: MyCircularProgress(color: Colors.white,size: 28,),);
+                    return Center(child: MyCircularProgress(color: Colors.white,size: 17,),);
 
                   return MyText(
                     text: "ارسال تیکت",

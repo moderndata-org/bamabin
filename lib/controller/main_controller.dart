@@ -33,6 +33,10 @@ class MainController extends GetxController {
   var moreFilmList = <FilmModel>[].obs;
   AuthController? _authController;
 
+  final pageController = PageController(
+      initialPage: 0
+  );
+
   @override
   void onInit() {
     Timer(Duration(milliseconds: 50), () {
@@ -52,6 +56,7 @@ class MainController extends GetxController {
       }
     });
     selectedBottomNav.listen((p0) {
+
       if (selectedBottomNav.value != BottomNavType.home) {
         resetFilterMain();
         getArchive(isFirstPage: true);
@@ -91,42 +96,38 @@ class MainController extends GetxController {
   }
 
   void getArchive({required bool isFirstPage}) {
-    if (isLoadingData.isFalse) {
-      // &&
-      //   ((pageNumber != null && pageNumber! < lastPageNumber!) ||
-      //       pageNumber == null)
-      isLoadingData(true);
-      if (isFirstPage) {
-        pageNumber = null;
-        isShowShimmer(true);
-        hasContinue(true);
-      } else {
-        pageNumber == null ? pageNumber = 2 : pageNumber = pageNumber! + 1;
-      }
-      ApiProvider()
-          .archive(
-              isLogin: _authController!.isLogin.value,
-              type: selectedBottomNav.value,
-              page: pageNumber == null ? null : pageNumber.toString(),
-              orderBy: selectedOrder.value,
-              imdb_min_rate:
-                  '${selectedImdbRate.value == 0 ? '' : selectedImdbRate.value}',
-              genreId: '${selectedGenre.value.id ?? ''}')
-          .then((res) {
-        isLoadingData(false);
-        if (isFirstPage) {
-          selectedList.clear();
-          isShowShimmer(false);
-        }
-        if (res.body != null && res.body['status'] == true) {
-          lastPageNumber = res.body['info']['last_page_num'];
-          List tmp = res.body['results'];
-          for (var element in tmp) {
-            selectedList.add(FilmModel.fromJson(element));
-          }
-        }
-      });
+    print("Getting archive for ${selectedBottomNav.value}");
+    isLoadingData(true);
+    if (isFirstPage) {
+      pageNumber = null;
+      isShowShimmer(true);
+      hasContinue(true);
+    } else {
+      pageNumber == null ? pageNumber = 2 : pageNumber = pageNumber! + 1;
     }
+    ApiProvider()
+        .archive(
+        isLogin: _authController!.isLogin.value,
+        type: selectedBottomNav.value,
+        page: pageNumber == null ? null : pageNumber.toString(),
+        orderBy: selectedOrder.value,
+        imdb_min_rate:
+        '${selectedImdbRate.value == 0 ? '' : selectedImdbRate.value}',
+        genreId: '${selectedGenre.value.id ?? ''}')
+        .then((res) {
+      isLoadingData(false);
+      if (isFirstPage) {
+        selectedList.clear();
+        isShowShimmer(false);
+      }
+      if (res.body != null && res.body['status'] == true) {
+        lastPageNumber = res.body['info']['last_page_num'];
+        List tmp = res.body['results'];
+        for (var element in tmp) {
+          selectedList.add(FilmModel.fromJson(element));
+        }
+      }
+    });
   }
 
   void getSliders() {
