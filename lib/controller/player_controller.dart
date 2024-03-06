@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:chewie/chewie.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:video_player/video_player.dart';
@@ -13,6 +14,7 @@ class PlayerController extends GetxController {
   var fullscreen_status = false.obs;
   Timer? timer;
   late VideoPlayerController video_controller;
+  var chewieController;
 
   //! new
   RxBool isInit = false.obs;
@@ -62,7 +64,6 @@ class PlayerController extends GetxController {
   }
 
   void StartVideo() {
-    // if(!video_controller.value.isInitialized){
     video_controller = VideoPlayerController.networkUrl(Uri.parse(
         'https://flutter.github.io/assets-for-api-docs/assets/videos/bee.mp4'))
       ..initialize().then((value) {
@@ -82,5 +83,12 @@ class PlayerController extends GetxController {
         }
       });
     });
+
+    chewieController = ChewieController(
+      videoPlayerController: video_controller,
+      autoPlay: true,
+      looping: true,
+    );
+
   }
 }
