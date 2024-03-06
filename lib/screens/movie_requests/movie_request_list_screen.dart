@@ -67,8 +67,7 @@ class MovieRequestListScreen extends GetView<MovieRequestController> {
                           request: mr.title,
                           message: mr.message,
                           date: getPersianDate(dateTime: '${mr.createdAt}'),
-                          referral_link:
-                              mr.referralLink == '' ? null : mr.referralLink,
+                          post: mr.post,
                         );
                       },
                     )),

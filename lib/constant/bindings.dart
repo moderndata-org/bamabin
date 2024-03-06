@@ -1,5 +1,6 @@
 import 'package:bamabin/controller/auth_controller.dart';
 import 'package:bamabin/controller/detail_controller.dart';
+import 'package:bamabin/controller/download_manager_controller.dart';
 import 'package:bamabin/controller/favorite_controller.dart';
 import 'package:bamabin/controller/main_controller.dart';
 import 'package:bamabin/controller/notification_controller.dart';
@@ -42,6 +43,9 @@ class MyBindings extends Bindings {
     );
     Get.put(
       RecentContoller(),
+    );
+    Get.put(
+      DownloadManagerController(),
     );
   }
 }
