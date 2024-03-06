@@ -28,9 +28,8 @@ class RequestItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.only(top: 10),
-      padding: EdgeInsets.only(right: 10, top: 20),
+      padding: EdgeInsets.only(right: 10, top: 20, bottom: 20),
       width: Get.width - 20,
-      height: Get.height / 3.1,
       decoration: BoxDecoration(
           color: cSecondary, borderRadius: BorderRadius.circular(5)),
       child: Column(
@@ -113,7 +112,7 @@ class RequestItem extends StatelessWidget {
                       style: TextStyle(color: Colors.white, fontSize: 16),
                     )
                   : MyTextButton(
-                      onTap: () => launchTheUrl(url: '$referral_link'),
+                      onTap: () {},
                       size: Size(70, 35),
                       bgColor: cAccent,
                       child: Text(

@@ -19,7 +19,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:video_player/video_player.dart';
 import '../constant/utils.dart';
 import '../controller/recent_controller.dart';
 import '../models/recent_model.dart';
@@ -60,8 +59,6 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // print(controller.selectedFilm.value.releaseYear);
-    // print(controller.selectedFilm.value.releaseMovie);
     return SafeArea(
       child: Scaffold(
         floatingActionButton: Obx(() => controller.showGoToTop.value

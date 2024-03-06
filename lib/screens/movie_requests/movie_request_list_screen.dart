@@ -54,6 +54,7 @@ class MovieRequestListScreen extends GetView<MovieRequestController> {
                       itemBuilder: (context, index) {
                         MovieRequestModel mr =
                             controller.listMovieRequest[index];
+
                         return RequestItem(
                           id: mr.id,
                           condition: switch (mr.status) {
