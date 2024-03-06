@@ -10,6 +10,7 @@ import 'package:bamabin/widgets/MyText.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:video_player/video_player.dart';
 
 class PlayerScreen extends StatefulWidget {
@@ -69,7 +70,7 @@ class _PlayerScreenState extends State<PlayerScreen> {
         }, child: Obx(
           () {
             print("State updated");
-            print("Playing status is:${controller.playing_status}");
+            print("Playing status is:${controller.current_buffer_progress.value.toDouble()}");
             return Stack(
               children: [
                 Obx(() => Container(
@@ -192,6 +193,8 @@ class _PlayerScreenState extends State<PlayerScreen> {
                                                       .position
                                                       .inSeconds
                                                       .toDouble(),
+                                                  secondaryActiveColor: Colors.blueAccent,
+                                                  secondaryTrackValue: controller.current_buffer_progress.value.toDouble(),
                                                   onChanged: (value) {
                                                     controller.current_progress(
                                                         value.toInt());

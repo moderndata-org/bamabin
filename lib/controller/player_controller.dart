@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:chewie/chewie.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:video_player/video_player.dart';
@@ -9,13 +8,13 @@ class PlayerController extends GetxController {
   var name = "".obs;
   var max_progress = 0.obs;
   var current_progress = 0.obs;
+  var current_buffer_progress = 0.obs;
   var hide_bars = false.obs;
   var playing_status = false.obs;
   var fullscreen_status = false.obs;
   Timer? timer;
   late VideoPlayerController video_controller;
-  var chewieController;
-
+  var _isBuffering = false.obs;
   //! new
   RxBool isInit = false.obs;
 
@@ -64,31 +63,43 @@ class PlayerController extends GetxController {
   }
 
   void StartVideo() {
+    // if(!video_controller.value.isInitialized){
     video_controller = VideoPlayerController.networkUrl(Uri.parse(
         'https://flutter.github.io/assets-for-api-docs/assets/videos/bee.mp4'))
       ..initialize().then((value) {
+
         video_controller.play();
         playing_status(true);
         isInit(true);
         max_progress(video_controller.value.duration.inMilliseconds);
+
+
+
+        video_controller.addListener(() {
+          bool isBuffering = video_controller.value.isBuffering;
+          print("Buffered:${video_controller.value.buffered}");
+          if (isBuffering != _isBuffering){
+            // TODO Here
+            if(video_controller.value.buffered.last.end.inMilliseconds < max_progress.value)
+            current_buffer_progress(video_controller.value.buffered.last.end.inMilliseconds);
+          };
+          if (video_controller.value.isPlaying != playing_status || isBuffering != _isBuffering) {
+            playing_status(video_controller.value.isPlaying);
+            _isBuffering(isBuffering);
+          }
+
+          video_controller.position.then((value) {
+            if (value != null && value.inMilliseconds <= max_progress.toInt()) {
+              current_progress(value.inMilliseconds);
+            } else {
+              playing_status(false);
+              current_progress(0);
+            }
+          });
+        });
+
       });
 
-    video_controller.addListener(() {
-      video_controller.position.then((value) {
-        if (value != null && value.inMilliseconds <= max_progress.toInt()) {
-          current_progress(value.inMilliseconds);
-        } else {
-          playing_status(false);
-          current_progress(0);
-        }
-      });
-    });
-
-    chewieController = ChewieController(
-      videoPlayerController: video_controller,
-      autoPlay: true,
-      looping: true,
-    );
 
   }
 }

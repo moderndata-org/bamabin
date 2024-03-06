@@ -23,7 +23,6 @@ import '../screens/more_screen.dart';
 import '../screens/orders/order_list_edit_items_screen.dart';
 import '../screens/orders/order_list_screen.dart';
 import '../screens/movie_requests/movie_request_list_screen.dart';
-import '../screens/player/new_player_screen.dart';
 import '../screens/splash_screen.dart';
 
 class Routes {
@@ -33,7 +32,7 @@ class Routes {
         GetPage(name: '/signin-qrcode', page: () => const SignInQrCodeScreen()),
         GetPage(name: '/notifications', page: () => const NotificationScreen()),
         GetPage(name: '/ticket-details', page: () => TicketDetails()),
-        GetPage(name: '/player', page: () =>  NewPlayerScreen()),
+        GetPage(name: '/player', page: () =>  PlayerScreen()),
         GetPage(
             name: '/forgetpassword', page: () => const ForgetPasswordScreen()),
         GetPage(name: '/signup', page: () => const SignupScreen()),
