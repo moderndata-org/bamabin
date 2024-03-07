@@ -2,6 +2,9 @@ import 'dart:io';
 import 'dart:isolate';
 import 'dart:ui';
 
+import 'package:bamabin/constant/utils.dart';
+import 'package:bamabin/widgets/MySncakBar.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:get/get.dart';
 import 'package:path_provider/path_provider.dart';
@@ -23,6 +26,7 @@ class DownloadManagerController extends GetxController {
     //   }
     // });
     _bindBackgroundIsolate();
+    refreshDownloadList();
     FlutterDownloader.registerCallback(downloadCallback);
 
     super.onInit();
@@ -86,26 +90,57 @@ class DownloadManagerController extends GetxController {
   }
 
   void _unbindBackgroundIsolate() {
+    print('unbinded');
     IsolateNameServer.removePortNameMapping('downloader_send_port');
   }
 
   void download() async {
-    final directory = await getExternalStorageDirectory();
-    final savedDir = '${directory?.path}/download/bamabin/';
-    final fileName = 'SquidGameTrailesr.mp4';
+    // final directory = await getExternalStorageDirectory();
+    // final savedDir = '${directory?.path}/download/bamabin/';
+    String? savedDir = await getDownloadPath();
+    print('savedDir : $savedDir');
+    final fileName = 'SquidGameTrailesr${UniqueKey()}.mp4';
     final url =
         'https://dl1.irantell.top/Trailers/Series/S/Squid.Game.The.Challenge.tt28104766/Squid.Game.The.Challenge.S01.Teaser.mp4';
     await Permission.notification.request();
-    await Permission.manageExternalStorage.request();
+    // final taskId =
+    if (savedDir == null) {
+      showMessage(text: 'Download Error', isSucces: false);
+    } else {
+      await FlutterDownloader.enqueue(
+        url: url,
+        savedDir: savedDir, // Directory where the file will be saved
+        fileName: fileName,
+        showNotification: true,
+        openFileFromNotification: false, saveInPublicStorage: true,
+      );
+      refreshDownloadList();
+    }
+  }
+
+  Future<String?> getDownloadPath() async {
+    //! Attention for IOS
+    //     UISupportsDocumentBrowser
+    // to Info.plist and set true
+    // Then you can see the folder with your app name in file app.
+    // But need to use
+    // await getApplicationDocumentsDirectory();
+    // to save the file to be available in file app in iOs.
+
     await Permission.storage.request();
-    final taskId = await FlutterDownloader.enqueue(
-      url: url,
-      savedDir: savedDir, // Directory where the file will be saved
-      fileName: fileName,
-      showNotification: true,
-      openFileFromNotification: false, saveInPublicStorage: true,
-    );
-    refreshDownloadList();
+    Directory? directory;
+    try {
+      if (Platform.isIOS) {
+        directory = await getApplicationDocumentsDirectory();
+      } else {
+        directory = Directory('/storage/emulated/0/Download');
+        if (!await directory.exists())
+          directory = await getExternalStorageDirectory();
+      }
+    } catch (err, stack) {
+      print("Cannot get download folder path");
+    }
+    return directory?.path;
   }
 
   void resumeDownload({required String taskId}) {
@@ -118,7 +153,6 @@ class DownloadManagerController extends GetxController {
 
   void refreshDownloadList() async {
     final tasks = await FlutterDownloader.loadTasks();
-
     listDownloads.clear();
     tasks?.forEach((element) {
       listDownloads.add(element);

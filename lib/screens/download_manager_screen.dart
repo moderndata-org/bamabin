@@ -103,22 +103,22 @@ class DownloadManagerItemWidget extends StatelessWidget {
     var state;
     switch (status) {
       case DownloadTaskStatus.canceled:
-        state = 'لغو شده';
+        state = 'تلاش مجدد';
         break;
       case DownloadTaskStatus.complete:
-        state = 'دانلود شده';
+        state = 'نمایش';
         break;
       case DownloadTaskStatus.enqueued:
-        state = 'در صف دانلود';
+        state = 'در حال دانلود';
         break;
       case DownloadTaskStatus.failed:
-        state = 'مشکل دارد';
+        state = 'تلاش مجدد';
         break;
       case DownloadTaskStatus.paused:
-        state = 'متوقف شده';
+        state = 'ادامه';
         break;
       case DownloadTaskStatus.running:
-        state = 'در حالدانلود';
+        state = 'درحال دانلود';
         break;
       default:
     }
