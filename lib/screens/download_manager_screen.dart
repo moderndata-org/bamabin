@@ -1,6 +1,4 @@
-import 'package:bamabin/constant/classes.dart';
 import 'package:bamabin/controller/download_manager_controller.dart';
-import 'package:bamabin/controller/public_controller.dart';
 import 'package:bamabin/widgets/MyText.dart';
 import 'package:bamabin/widgets/MyTextButton.dart';
 import 'package:flutter/material.dart';
@@ -10,9 +8,16 @@ import 'package:get/get.dart';
 import '../constant/colors.dart';
 import '../widgets/custom_appbar.dart';
 
-class DownloadManagerScreen extends GetView<DownloadManagerController> {
+class DownloadManagerScreen extends StatefulWidget {
   const DownloadManagerScreen({super.key});
 
+  @override
+  State<DownloadManagerScreen> createState() => _DownloadManagerScreenState();
+}
+
+class _DownloadManagerScreenState extends State<DownloadManagerScreen> {
+  final DownloadManagerController controller =
+      Get.find<DownloadManagerController>();
   @override
   Widget build(BuildContext context) {
     controller.refreshDownloadList();
@@ -41,11 +46,32 @@ class DownloadManagerScreen extends GetView<DownloadManagerController> {
                 print(dltask.status);
                 return DownloadManagerItemWidget(
                   title: dltask.filename,
-                  buttonText: dltask.status.toString(),
                   status: dltask.status,
+                  percent: dltask.progress,
                   onTap: () {
                     // controller.refreshDownloadList();
-                    controller.retryDownload(taskId: dltask.taskId);
+                    switch (dltask.status) {
+                      case DownloadTaskStatus.complete:
+                        FlutterDownloader.open(taskId: dltask.taskId);
+                        break;
+                      case DownloadTaskStatus.failed:
+                        FlutterDownloader.retry(taskId: dltask.taskId);
+                        break;
+                      case DownloadTaskStatus.paused:
+                        FlutterDownloader.resume(taskId: dltask.taskId);
+                        break;
+                      case DownloadTaskStatus.enqueued ||
+                            DownloadTaskStatus.running:
+                        FlutterDownloader.pause(taskId: dltask.taskId);
+                        break;
+                      default:
+                    }
+                    setState(() {});
+                    controller.refreshDownloadList();
+                    // if (dltask.status == DownloadTaskStatus.complete) {
+                    //   FlutterDownloader.open(taskId: dltask.taskId);
+                    // }
+                    // controller.retryDownload(taskId: dltask.taskId);
                     // controller.download();
                   },
                 );
@@ -59,8 +85,7 @@ class DownloadManagerScreen extends GetView<DownloadManagerController> {
 class DownloadManagerItemWidget extends StatelessWidget {
   const DownloadManagerItemWidget({
     this.onTap,
-    this.buttonText,
-    this.percent,
+    this.percent = 0,
     this.speed,
     this.title,
     this.status,
@@ -69,9 +94,8 @@ class DownloadManagerItemWidget extends StatelessWidget {
 
   final Function()? onTap;
   final String? title;
-  final String? buttonText;
   final String? speed;
-  final double? percent;
+  final int? percent;
   final DownloadTaskStatus? status;
 
   @override
@@ -170,7 +194,7 @@ class DownloadManagerItemWidget extends StatelessWidget {
                     thumbShape: RoundSliderThumbShape(enabledThumbRadius: 0)),
                 child: Slider(
                   thumbColor: Colors.transparent,
-                  value: percent ?? 0,
+                  value: percent!.toDouble(),
                   min: 0,
                   max: 100,
                   onChanged: null,
