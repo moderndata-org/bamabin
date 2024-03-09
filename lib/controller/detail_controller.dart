@@ -1,10 +1,6 @@
-import 'dart:async';
-
 import 'package:bamabin/api/api_handler.dart';
 import 'package:bamabin/controller/auth_controller.dart';
-import 'package:bamabin/controller/recent_controller.dart';
 import 'package:bamabin/models/film_model.dart';
-import 'package:bamabin/models/recent_model.dart';
 import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -131,57 +127,67 @@ class DetailController extends GetxController {
   }
 
   void setNewurlTrailer() {
-    // trailerController = null;
+    print('oopsssssssssss sss ');
     isLoadingTrailer(true);
+    // trailerController = null;
     // trailerControllerTest = null;
-    trailerControllerTest = VideoPlayerController.networkUrl(
-        Uri.parse('${selectedFilm.value.trailer_url}'),
-        videoPlayerOptions: VideoPlayerOptions(allowBackgroundPlayback: true))
-      ..initialize().then((value) async {
-        print('oopsssssssssss Before ');
-        trailerControllerChieview = await ChewieController(
-            videoPlayerController: trailerControllerTest!,
-            materialProgressColors: ChewieProgressColors(
-                handleColor: Colors.white,
-                bufferedColor: Colors.white.withOpacity(.3),
-                backgroundColor: Colors.white.withOpacity(.1),
-                playedColor: Colors.white.withOpacity(.8)),
-            autoInitialize: true,
-            autoPlay: false,
-            allowFullScreen: false,
-            fullScreenByDefault: false,
-            allowMuting: false,
-            cupertinoProgressColors: ChewieProgressColors(
-                backgroundColor: Colors.white.withOpacity(.3),
-                playedColor: Colors.white),
-            showOptions: false,
-            aspectRatio: Get.width / 200,
-            looping: false,
-            showControlsOnInitialize: true,
-            showControls: true,
-            hideControlsTimer: Duration(seconds: 2));
-        isLoadingTrailer(false);
-        print('oopsssssssssss After ');
-        // trailerControllerChieview!.pause();
-        // Timer(Duration.zero, () {
-        //   trailerControllerChieview!.seekTo(Duration.zero);
-        // });
-      });
-    // trailerController = VideoPlayerController.networkUrl(
-    //     Uri.parse('${selectedFilm.value.trailer_url}'))
-    //   ..initialize().then((value) {
-    //     // isLoadingTrailer(false);
-    //     trailerController?.addListener(() {
-    //       trailerPosition(
-    //           trailerController?.value.position.inSeconds.toDouble());
-    //       isPlayingTrailer(trailerController!.value.isPlaying);
-    //       if (trailerController?.value.position ==
-    //           trailerController?.value.duration) {
-    //         isPlayingTrailer(false);
-    //         trailerController?.seekTo(Duration.zero);
-    //       }
-    //     });
-    //   });
+    if (selectedFilm.value.trailer_url != '' ||
+        selectedFilm.value.trailer_url != null) {
+      trailerControllerTest = VideoPlayerController.networkUrl(
+          Uri.parse('${selectedFilm.value.trailer_url}'),
+          videoPlayerOptions: VideoPlayerOptions(allowBackgroundPlayback: true))
+        ..initialize().then((value) async {
+          print('oopsssssssssss Before ');
+          trailerControllerChieview = await ChewieController(
+              videoPlayerController: trailerControllerTest!,
+              materialProgressColors: ChewieProgressColors(
+                  handleColor: Colors.white,
+                  bufferedColor: Colors.white.withOpacity(.3),
+                  backgroundColor: Colors.white.withOpacity(.1),
+                  playedColor: Colors.white.withOpacity(.7)),
+              autoInitialize: true,
+              autoPlay: false,
+              allowFullScreen: false,
+              fullScreenByDefault: false,
+              allowMuting: false,
+              cupertinoProgressColors: ChewieProgressColors(
+                  backgroundColor: Colors.white.withOpacity(.3),
+                  playedColor: Colors.white),
+              showOptions: false,
+              aspectRatio: Get.width / 200,
+              looping: false,
+              showControlsOnInitialize: true,
+              showControls: true,
+              hideControlsTimer: Duration(seconds: 2));
+          print('oopsssssssssss After ');
+
+          isLoadingTrailer(false);
+          // trailerControllerChieview!.pause();
+          // Timer(Duration.zero, () {
+          //   trailerControllerChieview!.seekTo(Duration.zero);
+          // });
+        });
+      // trailerController = VideoPlayerController.networkUrl(
+      //     Uri.parse('${selectedFilm.value.trailer_url}'))
+      //   ..initialize().then((value) {
+      //     // isLoadingTrailer(false);
+      //     trailerController?.addListener(() {
+      //       trailerPosition(
+      //           trailerController?.value.position.inSeconds.toDouble());
+      //       isPlayingTrailer(trailerController!.value.isPlaying);
+      //       if (trailerController?.value.position ==
+      //           trailerController?.value.duration) {
+      //         isPlayingTrailer(false);
+      //         trailerController?.seekTo(Duration.zero);
+      //       }
+      //     });
+      //   });
+    } else {
+      print('ooooops else');
+      trailerControllerChieview = null;
+      selectedFilm.value.trailer_url = null;
+      selectedFilm.refresh();
+    }
   }
 
   void getNewData() {
@@ -199,6 +205,7 @@ class DetailController extends GetxController {
       isLoadingNewData(false);
       if (res.body != null) {
         selectedFilm(FilmModel.fromJson(res.body['result']));
+        print(selectedFilm.value.trailer_url);
         setNewurlTrailer();
         isTextExpandedMovieDetail(false);
       }

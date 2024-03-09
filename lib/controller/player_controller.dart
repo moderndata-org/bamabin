@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:bamabin/models/dlbox_item_model.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:video_player/video_player.dart';
@@ -15,6 +16,9 @@ class PlayerController extends GetxController {
   Timer? timer;
   late VideoPlayerController video_controller;
   var _isBuffering = false.obs;
+
+  Rx<DlboxItem> selectedDlBoxItem = DlboxItem().obs;
+
   //! new
   RxBool isInit = false.obs;
 
@@ -67,23 +71,24 @@ class PlayerController extends GetxController {
     video_controller = VideoPlayerController.networkUrl(Uri.parse(
         'https://flutter.github.io/assets-for-api-docs/assets/videos/bee.mp4'))
       ..initialize().then((value) {
-
         video_controller.play();
         playing_status(true);
         isInit(true);
         max_progress(video_controller.value.duration.inMilliseconds);
 
-
-
         video_controller.addListener(() {
           bool isBuffering = video_controller.value.isBuffering;
           print("Buffered:${video_controller.value.buffered}");
-          if (isBuffering != _isBuffering){
+          if (isBuffering != _isBuffering) {
             // TODO Here
-            if(video_controller.value.buffered.last.end.inMilliseconds < max_progress.value)
-            current_buffer_progress(video_controller.value.buffered.last.end.inMilliseconds);
-          };
-          if (video_controller.value.isPlaying != playing_status || isBuffering != _isBuffering) {
+            if (video_controller.value.buffered.last.end.inMilliseconds <
+                max_progress.value)
+              current_buffer_progress(
+                  video_controller.value.buffered.last.end.inMilliseconds);
+          }
+          ;
+          if (video_controller.value.isPlaying != playing_status ||
+              isBuffering != _isBuffering) {
             playing_status(video_controller.value.isPlaying);
             _isBuffering(isBuffering);
           }
@@ -97,9 +102,6 @@ class PlayerController extends GetxController {
             }
           });
         });
-
       });
-
-
   }
 }

@@ -164,35 +164,35 @@ class SigninScreen extends GetView<AuthController> {
                       ),
                     ),
                   ),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  Expanded(
-                    child: MyTextButton(
-                      borderRadius: 5,
-                      size: Size.fromHeight(55),
-                      bgColor: Colors.transparent,
-                      onTap: () {
-                        controller.signInWithGoogle();
-                      },
-                      strokeColor: cAccent,
-                      child: Row(
-                        textDirection: TextDirection.rtl,
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          SizedBox.square(
-                              dimension: 25,
-                              child: Image.asset(
-                                  'assets/images/ic_google_logo.png')),
-                          MyText(
-                            text: 'ورود با گوگل',
-                            color: cW,
-                            size: 15,
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
+                  // SizedBox(
+                  //   width: 10,
+                  // ),
+                  // Expanded(
+                  //   child: MyTextButton(
+                  //     borderRadius: 5,
+                  //     size: Size.fromHeight(55),
+                  //     bgColor: Colors.transparent,
+                  //     onTap: () {
+                  //       controller.signInWithGoogle();
+                  //     },
+                  //     strokeColor: cAccent,
+                  //     child: Row(
+                  //       textDirection: TextDirection.rtl,
+                  //       mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  //       children: [
+                  //         SizedBox.square(
+                  //             dimension: 25,
+                  //             child: Image.asset(
+                  //                 'assets/images/ic_google_logo.png')),
+                  //         MyText(
+                  //           text: 'ورود با گوگل',
+                  //           color: cW,
+                  //           size: 15,
+                  //         ),
+                  //       ],
+                  //     ),
+                  //   ),
+                  // ),
                 ],
               ),
             ),

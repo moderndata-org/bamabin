@@ -200,7 +200,7 @@ class DownloadSerialDialog extends GetView<PublicController> {
                                               encoder: 'YIFY',
                                               movieSize: '5GB',
                                               movieType: MovieType.Subtitle,
-                                              quality: Quality.FHD,
+                                              quality: 'sss',
                                               subtitleType:
                                                   SubtitleType.HardSub,
                                             ),

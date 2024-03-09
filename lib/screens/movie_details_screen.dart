@@ -50,16 +50,16 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
     super.initState();
   }
 
-  @override
-  void dispose() {
-    controller.trailerControllerChieview?.dispose();
-    controller.trailerControllerTest?.dispose();
-    super.dispose();
-  }
+  // @override
+  // void dispose() {
+  //   controller.trailerControllerChieview?.dispose();
+  //   controller.trailerControllerTest?.dispose();
+  //   super.dispose();
+  // }
 
   @override
   Widget build(BuildContext context) {
-    print(controller.selectedFilm.value.trailer_url);
+    print(controller.selectedFilm.value.id);
     return SafeArea(
       child: Scaffold(
         floatingActionButton: Obx(() => controller.showGoToTop.value
@@ -563,8 +563,10 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                     height: 200,
                     width: Get.width,
                   )
-                : controller.selectedFilm.value.trailer_url == '' ||
-                        controller.selectedFilm.value.trailer_url == null
+                : (controller.selectedFilm.value.trailer_url == '' ||
+                            controller.selectedFilm.value.trailer_url ==
+                                null) &&
+                        controller.trailerControllerChieview != null
                     ? SizedBox()
                     : controller.isLoadingTrailer.isTrue
                         ? CustomShimmerWidget(
@@ -1018,7 +1020,19 @@ class ButtonSectionMovieDetailWidget extends GetView<DetailController> {
                   fgColor: cB,
                   onTap: () {
                     if (authController.paymentController.isVip.isFalse) {
-                      Get.toNamed('/subscribe');
+                      // Get.toNamed('/subscribe');
+                      //TODO : // Change this
+                      showDialog(
+                        context: context,
+                        builder: (context) => controller.isSerial.value
+                            ? DownloadSerialDialog(
+                                actionMethod: ActionMethod.Download,
+                                title: 'Monarch',
+                              )
+                            : DownloadMovieDialog(
+                                film: controller.selectedFilm.value,
+                              ),
+                      );
                     } else {
                       showDialog(
                         context: context,
@@ -1028,9 +1042,7 @@ class ButtonSectionMovieDetailWidget extends GetView<DetailController> {
                                 title: 'Monarch',
                               )
                             : DownloadMovieDialog(
-                                actionMethod: ActionMethod.Download,
-                                isSerial: controller.isSerial.value,
-                                title: 'Forrest',
+                                film: controller.selectedFilm.value,
                               ),
                       );
                     }

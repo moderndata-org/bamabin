@@ -6,26 +6,28 @@ import 'package:get/get.dart';
 
 class MovieItemDialogWidget extends StatelessWidget {
   const MovieItemDialogWidget(
-      {this.quality = Quality.FourK,
+      {this.quality,
       this.movieType = MovieType.None,
       this.subtitleType,
       this.encoder,
       this.movieSize,
       this.margin,
       this.width,
-      this.onTap,
+      this.onDownloadTap,
+      this.onPlayTap,
       this.isSerial = false,
       this.hasOnlinePlay = true,
       super.key});
 
-  final Quality? quality;
+  final String? quality;
   final MovieType? movieType;
   final SubtitleType? subtitleType;
   final String? encoder;
   final String? movieSize;
   final EdgeInsetsGeometry? margin;
   final double? width;
-  final Function()? onTap;
+  final Function()? onDownloadTap;
+  final Function()? onPlayTap;
   final bool? isSerial;
   final bool? hasOnlinePlay;
 
@@ -59,14 +61,7 @@ class MovieItemDialogWidget extends StatelessWidget {
                 ),
                 Expanded(
                     child: MyText(
-                  text: switch (quality) {
-                    Quality.FourK => '4K',
-                    Quality.FHD => 'FHD',
-                    Quality.HD => 'HD',
-                    Quality.SD => 'SD',
-                    Quality.Cam => 'Cam',
-                    null => '',
-                  },
+                  text: '$quality',
                   textDirection: TextDirection.ltr,
                   color: cEntryText,
                   size: 14,
@@ -192,8 +187,8 @@ class MovieItemDialogWidget extends StatelessWidget {
                           child: MyText(
                         textDirection: TextDirection.ltr,
                         text: switch (subtitleType) {
-                          SubtitleType.HardSub => 'HardSub',
-                          SubtitleType.SoftSub => 'SoftSub',
+                          SubtitleType.HardSub => 'هارد ساب',
+                          SubtitleType.SoftSub => 'سافت ساب',
                           null => '',
                         },
                         color: cEntryText,
@@ -269,56 +264,67 @@ class MovieItemDialogWidget extends StatelessWidget {
                     child: Row(
                       textDirection: TextDirection.rtl,
                       children: [
+                        hasOnlinePlay != true
+                            ? SizedBox()
+                            : Expanded(
+                                flex: 3,
+                                child: GestureDetector(
+                                  onTap: onPlayTap,
+                                  child: Container(
+                                    height: 40,
+                                    decoration: BoxDecoration(
+                                        color: switch (movieType) {
+                                          MovieType.Subtitle => cSecondaryLight,
+                                          MovieType.Dubbed => cR,
+                                          MovieType.None => cY,
+                                          MovieType.Cam => cGreyLight,
+                                          null => null,
+                                        },
+                                        borderRadius: BorderRadius.only(
+                                            topRight: Radius.circular(5),
+                                            bottomRight: Radius.circular(5))),
+                                    child: Icon(
+                                      Icons.play_circle_outline_rounded,
+                                      shadows: [bsTextLowOpacity],
+                                      color: switch (movieType) {
+                                        MovieType.Subtitle => cW,
+                                        MovieType.Dubbed => cW,
+                                        MovieType.None => cB,
+                                        MovieType.Cam => cB,
+                                        null => null,
+                                      },
+                                    ),
+                                  ),
+                                ),
+                              ),
                         Expanded(
-                          flex: 3,
-                          child: Container(
-                            height: 50,
-                            decoration: BoxDecoration(
-                                color: switch (movieType) {
-                                  MovieType.Subtitle => cSecondaryLight,
-                                  MovieType.Dubbed => cR,
-                                  MovieType.None => cY,
-                                  MovieType.Cam => cGreyLight,
-                                  null => null,
-                                },
-                                borderRadius: BorderRadius.only(
-                                    topRight: Radius.circular(5),
-                                    bottomRight: Radius.circular(5))),
-                            child: Icon(
-                              Icons.play_circle_outline_rounded,
-                              shadows: [bsTextLowOpacity],
-                              color: switch (movieType) {
-                                MovieType.Subtitle => cW,
-                                MovieType.Dubbed => cW,
-                                MovieType.None => cB,
-                                MovieType.Cam => cB,
-                                null => null,
-                              },
-                            ),
-                          ),
-                        ),
-                        Expanded(
-                            flex: 8,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              textDirection: TextDirection.rtl,
-                              children: [
-                                Icon(
-                                  Icons.download_rounded,
-                                  color: cW,
-                                  shadows: [bsTextLowOpacity],
-                                  size: 20,
+                            flex: hasOnlinePlay == true ? 8 : 1,
+                            child: GestureDetector(
+                              onTap: onDownloadTap,
+                              child: Container(
+                                height: 40,
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  textDirection: TextDirection.rtl,
+                                  children: [
+                                    Icon(
+                                      Icons.download_rounded,
+                                      color: cW,
+                                      shadows: [bsTextLowOpacity],
+                                      size: 20,
+                                    ),
+                                    SizedBox(
+                                      width: 10,
+                                    ),
+                                    MyText(
+                                      text: 'دانلود',
+                                      shadows: [bsTextLowOpacity],
+                                      size: 15,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ],
                                 ),
-                                SizedBox(
-                                  width: 10,
-                                ),
-                                MyText(
-                                  text: 'دانلود',
-                                  shadows: [bsTextLowOpacity],
-                                  size: 15,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ],
+                              ),
                             ))
                       ],
                     ),

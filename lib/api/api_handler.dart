@@ -7,7 +7,7 @@ import 'package:get_storage/get_storage.dart';
 import '../constant/classes.dart';
 
 class ApiProvider extends GetConnect {
-  String base_url = "https://www.aliamaterasu.ir/api/";
+  String base_url = "https://bamabin1.top/api/";
   var head;
   var timeout = const Duration(seconds: 15);
   var maxAuthRetries = 5;
@@ -226,6 +226,8 @@ class ApiProvider extends GetConnect {
       "username": username,
       "password": password,
     });
+    print('${base_url}login');
+    print(data.fields);
     Response res = await post('${base_url}login', data);
     return res;
   }
@@ -511,8 +513,7 @@ class ApiProvider extends GetConnect {
   }
 
   Future<Response> getBotToken() async {
-    Response res =
-    await get('${base_url}telegram/get_token', headers: head);
+    Response res = await get('${base_url}telegram/get_token', headers: head);
     return res;
   }
 
@@ -521,8 +522,7 @@ class ApiProvider extends GetConnect {
     var data = FormData({
       "telegram_bot_site_token": telegram_bot_site_token,
     });
-    Response res =
-    await post('${base_url}telegram/sync', data, headers: head);
+    Response res = await post('${base_url}telegram/sync', data, headers: head);
     return res;
   }
 }

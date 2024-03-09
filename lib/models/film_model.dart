@@ -1,4 +1,5 @@
 import 'package:bamabin/models/actor.dart';
+import 'package:bamabin/models/dlbox_movies_model.dart';
 import 'package:bamabin/models/release_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -73,7 +74,6 @@ class FilmModel {
   String? faPlotMovie;
   String? movieUpdateText;
   String? movieThumbBg;
-  String? moviesDlbox;
   String? sYoastWpseoPrimaryMovieCats;
   String? sYoastWpseoPrimaryCollection;
   String? sYoastWpseoFocuskw;
@@ -123,119 +123,122 @@ class FilmModel {
   List<String>? genresListForDetail;
   List<FilmModel>? collection_posts;
   List<FilmModel>? related_posts;
+  // List<DlboxModel>? dlbox;
+  DlboxMoviesModel? moviesDlbox;
 
-  FilmModel(
-      {this.id,
-      this.authorId,
-      this.releaseYear,
-      this.production_budget,
-      this.broadcast_day,
-      this.genresListForDetail,
-      this.date,
-      this.dateGmt,
-      this.content,
-      this.sales_amount,
-      this.title,
-      this.mdl_rate,
-      this.excerpt,
-      this.status,
-      this.commentStatus,
-      this.pingStatus,
-      this.is_watchlist,
-      this.broadcast_status,
-      this.password,
-      this.name,
-      this.toPing,
-      this.pinged,
-      this.modified,
-      this.modifiedGmt,
-      this.contentFiltered,
-      this.parent,
-      this.guid,
-      this.menuOrder,
-      this.postType,
-      this.type,
-      this.collection_posts,
-      this.related_posts,
-      this.mimeType,
-      this.commentCount,
-      this.filter,
-      this.thumbnail,
-      this.bgThumbnail,
-      this.link,
-      this.authorName,
-      this.authorEmail,
-      this.authorAvatar,
-      this.comments,
-      this.isFinished,
-      this.countries,
-      this.trailer_url,
-      this.release,
-      this.actors,
-      this.directors,
-      this.networks,
-      this.languages,
-      this.genres,
-      this.sEditLock,
-      this.sThumbnailId,
-      this.sEditLast,
-      this.sYoastIndexnowLastPing,
-      this.titleMovie,
-      this.faTitleMovie,
-      this.releaseMovie,
-      this.countryMovie,
-      this.languageMovie,
-      this.genreMovie,
-      this.imdbRateMovie,
-      this.starsMovie,
-      this.directorMovie,
-      this.imdbidMovie,
-      this.voteMovie,
-      this.runtimeMovie,
-      this.faPlotMovie,
-      this.movieUpdateText,
-      this.movieThumbBg,
-      this.moviesDlbox,
-      this.sYoastWpseoPrimaryMovieCats,
-      this.sYoastWpseoPrimaryCollection,
-      this.sYoastWpseoFocuskw,
-      this.sYoastWpseoLinkdex,
-      this.sYoastWpseoFocuskeywords,
-      this.sYoastWpseoKeywordsynonyms,
-      this.sYoastWpseoEstimatedReadingTimeMinutes,
-      this.sYoastWpseoWordproofTimestamp,
-      this.postViewsCount,
-      this.postRates,
-      this.playonlineActive,
-      this.hasSubtitle,
-      this.metacriticRate,
-      this.dlboxSubtitle,
-      this.dlboxAudio,
-      this.importerPath,
-      this.suggestedMovie,
-      this.hasDubbed,
-      this.ageMovie,
-      this.summaryAwards,
-      this.top250movie,
-      this.malSiteId,
-      this.malRateMovie,
-      this.malVoteMovie,
-      this.enPlotMovie,
-      this.titles,
-      this.enTitle,
-      this.faTitle,
-      this.enSummary,
-      this.faSummary,
-      this.updateDescription,
-      this.ageRate,
-      this.hasPlay,
-      this.runtime,
-      this.imdbId,
-      this.imdbRate,
-      this.imdbVoteCount,
-      this.likeInfo,
-      this.malRate,
-      this.malVoteCount});
+  FilmModel({
+    this.id,
+    this.authorId,
+    this.releaseYear,
+    this.production_budget,
+    this.broadcast_day,
+    this.genresListForDetail,
+    this.date,
+    this.dateGmt,
+    this.content,
+    this.sales_amount,
+    this.title,
+    this.mdl_rate,
+    this.excerpt,
+    this.status,
+    this.commentStatus,
+    this.pingStatus,
+    this.is_watchlist,
+    this.broadcast_status,
+    this.password,
+    this.name,
+    this.toPing,
+    this.pinged,
+    this.modified,
+    this.modifiedGmt,
+    this.contentFiltered,
+    this.parent,
+    this.guid,
+    this.menuOrder,
+    this.postType,
+    this.type,
+    this.collection_posts,
+    this.related_posts,
+    this.mimeType,
+    this.commentCount,
+    this.filter,
+    this.thumbnail,
+    this.bgThumbnail,
+    this.link,
+    this.authorName,
+    this.authorEmail,
+    this.authorAvatar,
+    this.comments,
+    this.isFinished,
+    this.countries,
+    this.trailer_url,
+    this.release,
+    this.actors,
+    this.directors,
+    this.networks,
+    this.languages,
+    this.genres,
+    this.sEditLock,
+    this.sThumbnailId,
+    this.sEditLast,
+    this.sYoastIndexnowLastPing,
+    this.titleMovie,
+    this.faTitleMovie,
+    this.releaseMovie,
+    this.countryMovie,
+    this.languageMovie,
+    this.genreMovie,
+    this.imdbRateMovie,
+    this.starsMovie,
+    this.directorMovie,
+    this.imdbidMovie,
+    this.voteMovie,
+    this.runtimeMovie,
+    this.faPlotMovie,
+    this.movieUpdateText,
+    this.movieThumbBg,
+    this.sYoastWpseoPrimaryMovieCats,
+    this.sYoastWpseoPrimaryCollection,
+    this.sYoastWpseoFocuskw,
+    this.sYoastWpseoLinkdex,
+    this.sYoastWpseoFocuskeywords,
+    this.sYoastWpseoKeywordsynonyms,
+    this.sYoastWpseoEstimatedReadingTimeMinutes,
+    this.sYoastWpseoWordproofTimestamp,
+    this.postViewsCount,
+    this.postRates,
+    this.playonlineActive,
+    this.hasSubtitle,
+    this.metacriticRate,
+    this.dlboxSubtitle,
+    this.dlboxAudio,
+    this.importerPath,
+    this.suggestedMovie,
+    this.hasDubbed,
+    this.ageMovie,
+    this.summaryAwards,
+    this.top250movie,
+    this.malSiteId,
+    this.malRateMovie,
+    this.malVoteMovie,
+    this.enPlotMovie,
+    this.titles,
+    this.enTitle,
+    this.faTitle,
+    this.enSummary,
+    this.faSummary,
+    this.updateDescription,
+    this.ageRate,
+    this.hasPlay,
+    this.runtime,
+    this.imdbId,
+    this.imdbRate,
+    this.imdbVoteCount,
+    this.likeInfo,
+    this.malRate,
+    this.malVoteCount,
+    this.moviesDlbox,
+  });
 
   FilmModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -326,6 +329,29 @@ class FilmModel {
         languages!.add(new Language.fromJson(v));
       });
     }
+
+    if (type == 'series') {
+      //! series
+
+      // if (json['dlbox'] != null) {
+      //   dlbox = <DlboxMoviesModel>[];
+      //   json['dlbox'].forEach((v) {
+      //     dlbox!.add(new DlboxMoviesModel.fromJson(v));
+      //   });
+      // }
+    }
+    if (type == 'movies') {
+      //! movies
+      moviesDlbox = json['dlbox'] != null
+          ? new DlboxMoviesModel.fromJson(json['dlbox'])
+          : null;
+      // if (json['dlbox'] != null) {
+      //   moviesDlbox = <DlboxMoviesModel>[];
+      //   json['dlbox'].forEach((v) {
+      //     moviesDlbox!.add(new DlboxMoviesModel.fromJson(v));
+      //   });
+      // }
+    }
     if (json['genres'] != null) {
       genres = <Genre>[];
       json['genres'].forEach((v) {
@@ -351,7 +377,7 @@ class FilmModel {
     faPlotMovie = json['fa_plot_movie'];
     movieUpdateText = json['movie_update_text'];
     movieThumbBg = json['movie_thumb_bg'];
-    moviesDlbox = json['movies_dlbox'];
+    // moviesDlbox = json['movies_dlbox'];
     sYoastWpseoPrimaryMovieCats = json['_yoast_wpseo_primary_movie_cats'];
     sYoastWpseoPrimaryCollection = json['_yoast_wpseo_primary_collection'];
     sYoastWpseoFocuskw = json['_yoast_wpseo_focuskw'];
