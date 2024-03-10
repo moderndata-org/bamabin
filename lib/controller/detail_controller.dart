@@ -130,6 +130,7 @@ class DetailController extends GetxController {
     isLoadingTrailer(true);
     // trailerController = null;
     // trailerControllerTest = null;
+    bool isInitialize = false;
     if (GetUtils.isURL('${selectedFilm.value.trailer_url}')) {
       trailerController = VideoPlayerController.networkUrl(
           Uri.parse('${selectedFilm.value.trailer_url}'),
@@ -158,21 +159,28 @@ class DetailController extends GetxController {
               showControls: true,
               hideControlsTimer: Duration(seconds: 2));
           // print('oopsssssssssss After ');
+          isInitialize = true;
           isLoadingTrailer(false);
         });
-    } else {
-      trailerControllerChieview = null;
-      selectedFilm.value.trailer_url = null;
-      selectedFilm.refresh();
     }
     //! When url is currupt or is filter
-    trailerController?.addListener(() {
-      if (trailerController!.value.hasError) {
-        // print('catch it');
-        selectedFilm.value.trailer_url = '';
-        selectedFilm.refresh();
-      }
-    });
+    print('is INIT $isInitialize');
+    if (isInitialize) {
+      trailerController!.addListener(() {
+        if (trailerController!.value.hasError) {
+          // print('catch it');
+          selectedFilm.value.trailer_url = '';
+          selectedFilm.refresh();
+          trailerControllerChieview = null;
+          isLoadingTrailer(false);
+        }
+      });
+    } else {
+      selectedFilm.value.trailer_url = null;
+      selectedFilm.refresh();
+      trailerControllerChieview = null;
+      isLoadingTrailer(false);
+    }
   }
 
   void getNewData() {
