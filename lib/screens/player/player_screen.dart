@@ -182,16 +182,10 @@ class _PlayerScreenState extends State<PlayerScreen> {
                                                   inactiveColor: Colors.white
                                                       .withOpacity(0.2),
                                                   max: controller
-                                                      .video_controller
-                                                      .value
-                                                      .duration
-                                                      .inSeconds
+                                                      .max_progress
                                                       .toDouble(),
                                                   value: controller
-                                                      .video_controller
-                                                      .value
-                                                      .position
-                                                      .inSeconds
+                                                      .current_progress
                                                       .toDouble(),
                                                   secondaryActiveColor: Colors.blueAccent,
                                                   secondaryTrackValue: controller.current_buffer_progress.value.toDouble(),
@@ -200,7 +194,7 @@ class _PlayerScreenState extends State<PlayerScreen> {
                                                         value.toInt());
                                                     controller.video_controller
                                                         .seekTo(Duration(
-                                                            seconds:
+                                                            milliseconds:
                                                                 value.toInt()));
                                                   },
                                                 ),
@@ -365,7 +359,7 @@ class _PlayerScreenState extends State<PlayerScreen> {
                                                                         BorderRadius.circular(
                                                                             3)),
                                                                 child: MyText(
-                                                                  text: '1080p',
+                                                                  text: '${controller.selectedDlBoxItem.value.qualityCode}',
                                                                   color: cW,
                                                                   size: 7,
                                                                 ),

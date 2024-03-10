@@ -207,7 +207,7 @@ class DownloadMovieDialog extends StatelessWidget {
             movieSize: computeTheCapacity(size: item.size!),
             onPlayTap: () {
               Get.toNamed('/player');
-              Get.find<PlayerController>().selectedDlBoxItem();
+              Get.find<PlayerController>().selectedDlBoxItem(item);
             },
           ),
         );
@@ -228,7 +228,7 @@ class DownloadMovieDialog extends StatelessWidget {
           MovieItemDialogWidget(
             onPlayTap: () {
               Get.toNamed('/player');
-              Get.find<PlayerController>().selectedDlBoxItem();
+              Get.find<PlayerController>().selectedDlBoxItem(item);
             },
             hasOnlinePlay: item.playStatus == 'on',
             quality: item.originalQuality ?? '',
@@ -256,7 +256,7 @@ class DownloadMovieDialog extends StatelessWidget {
           MovieItemDialogWidget(
             onPlayTap: () {
               Get.toNamed('/player');
-              Get.find<PlayerController>().selectedDlBoxItem();
+              Get.find<PlayerController>().selectedDlBoxItem(item);
             },
             hasOnlinePlay: item.playStatus == 'on',
             quality: item.originalQuality ?? '',
@@ -283,7 +283,7 @@ class DownloadMovieDialog extends StatelessWidget {
           MovieItemDialogWidget(
             onPlayTap: () {
               Get.toNamed('/player');
-              Get.find<PlayerController>().selectedDlBoxItem();
+              Get.find<PlayerController>().selectedDlBoxItem(item);
             },
             hasOnlinePlay: item.playStatus == 'on',
             quality: item.originalQuality ?? '',
