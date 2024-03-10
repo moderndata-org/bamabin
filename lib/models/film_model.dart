@@ -1,6 +1,7 @@
 import 'package:bamabin/models/actor.dart';
 import 'package:bamabin/models/dlbox_movies_model.dart';
 import 'package:bamabin/models/release_model.dart';
+import 'package:bamabin/models/series_dlbox_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -125,6 +126,7 @@ class FilmModel {
   List<FilmModel>? related_posts;
   // List<DlboxModel>? dlbox;
   DlboxMoviesModel? moviesDlbox;
+  List<SeriesModel>? seriesDlbox;
 
   FilmModel({
     this.id,
@@ -238,6 +240,7 @@ class FilmModel {
     this.malRate,
     this.malVoteCount,
     this.moviesDlbox,
+    this.seriesDlbox,
   });
 
   FilmModel.fromJson(Map<String, dynamic> json) {
@@ -431,20 +434,21 @@ class FilmModel {
     if (type == 'movies') {
       //! movies
       // print(json['dlbox']);
-      try {
-        moviesDlbox = json['dlbox'] != null
-            ? new DlboxMoviesModel.fromJson(json['dlbox'])
-            : null;
-      } catch (e) {
-        print(id);
-        print(title);
+      moviesDlbox = json['dlbox'] != null
+          ? new DlboxMoviesModel.fromJson(json['dlbox'])
+          : null;
+    }
+
+    if (type == 'series') {
+      //! movies
+      // print('sssssshhhhhhhhhhhhhhhhhhhhhhhhit');
+      // print(json['dlbox']);
+      if (json['dlbox'] != null) {
+        seriesDlbox = <SeriesModel>[];
+        json['dlbox'].forEach((v) {
+          seriesDlbox!.add(new SeriesModel.fromJson(v));
+        });
       }
-      // if (json['dlbox'] != null) {
-      //   moviesDlbox = <DlboxMoviesModel>[];
-      //   json['dlbox'].forEach((v) {
-      //     moviesDlbox!.add(new DlboxMoviesModel.fromJson(v));
-      //   });
-      // }
     }
   }
 

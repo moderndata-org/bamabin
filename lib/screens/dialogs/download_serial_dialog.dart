@@ -2,16 +2,15 @@ import 'package:accordion/accordion.dart';
 import 'package:bamabin/constant/classes.dart';
 import 'package:bamabin/constant/colors.dart';
 import 'package:bamabin/controller/public_controller.dart';
+import 'package:bamabin/models/series_dlbox_model.dart';
 import 'package:bamabin/widgets/MyText.dart';
 import 'package:bamabin/widgets/dialog_items/movie_item_dialog_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class DownloadSerialDialog extends GetView<PublicController> {
-  const DownloadSerialDialog(
-      {this.title, this.actionMethod = ActionMethod.Download, super.key});
-  final String? title;
-  final ActionMethod? actionMethod;
+  const DownloadSerialDialog({this.listSeries, super.key});
+  final List<SeriesModel>? listSeries;
 
   @override
   Widget build(BuildContext context) {
@@ -60,18 +59,14 @@ class DownloadSerialDialog extends GetView<PublicController> {
                               direction: Axis.vertical,
                               children: [
                                 Icon(
-                                  actionMethod == ActionMethod.Play
-                                      ? Icons.play_arrow_rounded
-                                      : Icons.download_rounded,
+                                  Icons.download_rounded,
                                   color: cW,
                                   shadows: [bsText],
                                 ),
                                 MyText(
                                   shadows: [bsText],
                                   textDirection: TextDirection.rtl,
-                                  text: actionMethod == ActionMethod.Download
-                                      ? 'لینک دانلود سریال $title'
-                                      : 'پخش سریال $title',
+                                  text: 'لینک دانلود سریال ',
                                   color: cW,
                                   fontWeight: FontWeight.w900,
                                   size: 15,

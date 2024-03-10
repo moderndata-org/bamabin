@@ -166,7 +166,7 @@ class DetailController extends GetxController {
       selectedFilm.refresh();
     }
     //! When url is currupt or is filter
-    trailerController!.addListener(() {
+    trailerController?.addListener(() {
       if (trailerController!.value.hasError) {
         // print('catch it');
         selectedFilm.value.trailer_url = '';
