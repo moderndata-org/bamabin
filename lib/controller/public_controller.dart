@@ -51,9 +51,6 @@ class PublicController extends GetxController {
   //! End Advanced Search
   //! Search Page End
 
-
-
-
   void getAboutUs() {
     isLoadingAboutUs(true);
     ApiProvider().aboutUs().then((res) {
@@ -210,7 +207,13 @@ class PublicController extends GetxController {
           .then((res) {
         isLoadingSearchResults(false);
         if (res.body != null && res.body['status'] == true) {
-          List tmp = res.body['result']['movies'];
+          List tmp = [];
+          if (res.body['result']['movies'] != null) {
+            tmp = res.body['result']['movies'];
+          }
+          if (res.body['result']['series'] != null) {
+            tmp = res.body['result']['series'];
+          }
           tmp.forEach((element) {
             listSearchAdvanced.add(FilmModel.fromJson(element));
           });
@@ -263,7 +266,13 @@ class PublicController extends GetxController {
       isShowShimmerSearch(false);
       listSearchAdvanced.clear();
       if (res.body != null && res.body['status'] == true) {
-        List tmp = res.body['result']['movies'];
+        List tmp = [];
+        if (res.body['result']['movies'] != null) {
+          tmp = res.body['result']['movies'];
+        }
+        if (res.body['result']['series'] != null) {
+          tmp = res.body['result']['series'];
+        }
         tmp.forEach((element) {
           listSearchAdvanced.add(FilmModel.fromJson(element));
         });
@@ -276,7 +285,6 @@ class PublicController extends GetxController {
       isAdvancedSearch(false);
       isLoadingSearchResults(true);
       if (isFirstPage) {
-        print('this');
         searchText = txtSearch.text.trim();
         page = 1;
         isShowShimmerSearch(true);
@@ -289,8 +297,13 @@ class PublicController extends GetxController {
           isLoadingSearchResults(false);
           isShowShimmerSearch(false);
           if (res.body['status'] == true) {
-            print(res.body);
-            List tmp = res.body['result']['movies'];
+            List tmp = [];
+            if (res.body['result']['movies'] != null) {
+              tmp = res.body['result']['movies'];
+            }
+            if (res.body['result']['series'] != null) {
+              tmp = res.body['result']['series'];
+            }
             tmp.forEach((element) {
               listSearch.add(FilmModel.fromJson(element));
             });
@@ -299,7 +312,6 @@ class PublicController extends GetxController {
       });
     }
   }
-
 
   @override
   void onInit() {

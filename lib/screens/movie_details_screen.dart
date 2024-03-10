@@ -1023,29 +1023,34 @@ class ButtonSectionMovieDetailWidget extends GetView<DetailController> {
                     if (authController.paymentController.isVip.isFalse) {
                       // Get.toNamed('/subscribe');
                       //TODO : // Change this
-                      showDialog(
-                        context: context,
-                        builder: (context) => controller.isSerial.value
-                            ? DownloadSerialDialog(
-                                actionMethod: ActionMethod.Download,
-                                title: 'Monarch',
-                              )
-                            : DownloadMovieDialog(
-                                film: controller.selectedFilm.value,
-                              ),
-                      );
+                      if (controller.selectedFilm.value.type == 'movies') {
+                        showDialog(
+                          context: context,
+                          builder: (context) => DownloadMovieDialog(
+                            film: controller.selectedFilm.value,
+                          ),
+                        );
+                      }
+                      if (controller.selectedFilm.value.type == 'series') {
+                        showDialog(
+                            context: context,
+                            builder: (context) => DownloadSerialDialog(
+                                  listSeries:
+                                      controller.selectedFilm.value.seriesDlbox,
+                                ));
+                      }
                     } else {
-                      showDialog(
-                        context: context,
-                        builder: (context) => controller.isSerial.value
-                            ? DownloadSerialDialog(
-                                actionMethod: ActionMethod.Download,
-                                title: 'Monarch',
-                              )
-                            : DownloadMovieDialog(
-                                film: controller.selectedFilm.value,
-                              ),
-                      );
+                      // showDialog(
+                      //   context: context,
+                      //   builder: (context) => controller.isSerial.value
+                      //       ? DownloadSerialDialog(
+                      //           actionMethod: ActionMethod.Download,
+                      //           title: 'Monarch',
+                      //         )
+                      //       : DownloadMovieDialog(
+                      //           film: controller.selectedFilm.value,
+                      //         ),
+                      // );
                     }
                   },
                   bgColor: cG,

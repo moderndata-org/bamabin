@@ -7,7 +7,7 @@ import 'package:get_storage/get_storage.dart';
 import '../constant/classes.dart';
 
 class ApiProvider extends GetConnect {
-  String base_url = "https://bamabin66.sbs/api/";
+  String base_url = "https://bamabin67.sbs/api/";
   var head;
   var timeout = const Duration(seconds: 15);
   var maxAuthRetries = 5;
