@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:bamabin/controller/detail_controller.dart';
 import 'package:bamabin/models/dlbox_item_model.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -18,6 +19,7 @@ class PlayerController extends GetxController {
   var _isBuffering = false.obs;
 
   Rx<DlboxItem> selectedDlBoxItem = DlboxItem().obs;
+  DetailController detailController = Get.find();
 
   //! new
   RxBool isInit = false.obs;
@@ -25,26 +27,7 @@ class PlayerController extends GetxController {
   //! new
 
   PlayerController() {
-    // timer = Timer(Duration(seconds: 1), () {
-    //   if(current_progress.value == max_progress.value){
-    //     playing_status(false);
-    //     update();
-    //   }else{
-    //     print("Playing");
-    //     playing_status(true);
-    //     update();
-    //   }
-    // });
-    // playing_status.listen((p0) {
-    //   print(p0);
-    //   if(p0 == true){
-    //     current_progress++;
-    //   }else{
-    //     timer!.cancel();
-    //   }
-    //
-    //
-    // });
+
   }
   void fullScreen() {
     if (fullscreen_status.isTrue) {
@@ -68,34 +51,41 @@ class PlayerController extends GetxController {
 
   void StartVideo() {
     // if(!video_controller.value.isInitialized){
+    print(selectedDlBoxItem.value.link!);
     video_controller = VideoPlayerController.networkUrl(Uri.parse(
-        'https://flutter.github.io/assets-for-api-docs/assets/videos/bee.mp4'))
+        selectedDlBoxItem.value.link!))
       ..initialize().then((value) {
         video_controller.play();
         playing_status(true);
         isInit(true);
+
+        print("Max:${video_controller.value.duration}");
         max_progress(video_controller.value.duration.inMilliseconds);
 
         video_controller.addListener(() {
+
           bool isBuffering = video_controller.value.isBuffering;
-          print("Buffered:${video_controller.value.buffered}");
+          print("Buffered:${video_controller.value.buffered[0].end.inMilliseconds} / ${video_controller.value.duration.inMilliseconds}");
           if (isBuffering != _isBuffering) {
             // TODO Here
-            if (video_controller.value.buffered.last.end.inMilliseconds <
-                max_progress.value)
-              current_buffer_progress(
-                  video_controller.value.buffered.last.end.inMilliseconds);
+            if (video_controller.value.buffered[0].end.inMilliseconds <
+                max_progress.value){
+              print("Here set current");
+              current_buffer_progress(video_controller.value.buffered[0].end.inMilliseconds);
+
+            }
           }
-          ;
+
           if (video_controller.value.isPlaying != playing_status ||
               isBuffering != _isBuffering) {
-            playing_status(video_controller.value.isPlaying);
+            // playing_status(video_controller.value.isPlaying);
             _isBuffering(isBuffering);
           }
 
           video_controller.position.then((value) {
             if (value != null && value.inMilliseconds <= max_progress.toInt()) {
               current_progress(value.inMilliseconds);
+              playing_status(true);
             } else {
               playing_status(false);
               current_progress(0);
