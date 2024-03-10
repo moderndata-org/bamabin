@@ -80,9 +80,33 @@ class PartScreen extends GetView<MainController> {
                               DropdownMenuItem(
                                   value: 0,
                                   onTap: () => controller.changeOrder(
+                                      orderBy: OrderBy.newest),
+                                  child:
+                                      Center(child: MyText(text: 'جدیدترین'))),
+                              DropdownMenuItem(
+                                  value: 1,
+                                  onTap: () => controller.changeOrder(
                                       orderBy: OrderBy.update),
                                   child: Center(
                                       child: MyText(text: 'به روزترین'))),
+                              DropdownMenuItem(
+                                  value: 2,
+                                  onTap: () => controller.changeOrder(
+                                      orderBy: OrderBy.releaseDate),
+                                  child: Center(
+                                      child: MyText(text: 'سال انتشار'))),
+                              DropdownMenuItem(
+                                  value: 3,
+                                  onTap: () => controller.changeOrder(
+                                      orderBy: OrderBy.imdb),
+                                  child: Center(
+                                      child: MyText(text: 'امتیاز imdb'))),
+                              DropdownMenuItem(
+                                  value: 4,
+                                  onTap: () => controller.changeOrder(
+                                      orderBy: OrderBy.favorite),
+                                  child: Center(
+                                      child: MyText(text: 'محبوب‌ترین'))),
                             ],
                           ))),
                   SizedBox(

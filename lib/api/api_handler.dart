@@ -7,7 +7,7 @@ import 'package:get_storage/get_storage.dart';
 import '../constant/classes.dart';
 
 class ApiProvider extends GetConnect {
-  String base_url = "https://bamabin1.top/api/";
+  String base_url = "https://bamabin66.sbs/api/";
   var head;
   var timeout = const Duration(seconds: 15);
   var maxAuthRetries = 5;
@@ -83,10 +83,10 @@ class ApiProvider extends GetConnect {
         'order_by',
         '${switch (orderBy) {
           OrderBy.none => null,
-          OrderBy.favorite => 'date',
+          OrderBy.favorite => 'popular',
           OrderBy.imdb => 'imdb',
-          OrderBy.newest => 'modified',
-          OrderBy.releaseDate => 'modified',
+          OrderBy.newest => 'date',
+          OrderBy.releaseDate => 'release_year',
           OrderBy.update => 'modified',
         }}');
     Response res = isLogin
@@ -229,6 +229,7 @@ class ApiProvider extends GetConnect {
     print('${base_url}login');
     print(data.fields);
     Response res = await post('${base_url}login', data);
+    print(res.body);
     return res;
   }
 

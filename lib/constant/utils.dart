@@ -28,7 +28,18 @@ Future<void> launchTheUrl({required String url}) async {
 
 String getPersianDate({required String dateTime}) {
   Jalali j = DateTime.parse(dateTime).toJalali();
-  String a =
-      '${j.year}/${j.month.toString().padLeft(2, '0')}/${j.day.toString().padLeft(2, '0')}';
+  String a = '${j.year}/${j.formatter.mm}/${j.formatter.dd}';
+  return a;
+}
+
+String computeTheCapacity({required double size}) {
+  String a = '';
+  double cap = size / 2048;
+  if (cap >= 1000) {
+    cap = cap / 1024;
+    a = '${cap.toStringAsFixed(2)} MB';
+  } else {
+    a = '${cap.toStringAsFixed(2)} GB';
+  }
   return a;
 }

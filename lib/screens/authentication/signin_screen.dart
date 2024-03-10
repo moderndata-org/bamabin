@@ -5,6 +5,7 @@ import 'package:bamabin/widgets/MyText.dart';
 import 'package:bamabin/widgets/MyTextField.dart';
 import 'package:bamabin/widgets/back_button_custom.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:bamabin/widgets/MyTextButton.dart';
 
@@ -102,41 +103,13 @@ class SigninScreen extends GetView<AuthController> {
               ),
             ),
             Spacer(),
-            MyTextButton(
-              borderRadius: 5,
-              size: Size(Get.width * .8, 55),
-              bgColor: cAccent,
-              onTap: () {
-                if (controller.txtUsername.text.trim().isNotEmpty &&
-                    controller.txtPasswrod.text.trim().isNotEmpty) {
-                  controller.login(
-                      username: controller.txtUsername.text.trim(),
-                      password: controller.txtPasswrod.text.trim());
-                }
-              },
-              child: Obx(() {
-                return (controller.isLoadingLogin.isTrue)
-                    ? Center(
-                        child: MyCircularProgress(
-                          size: 25,
-                          color: Colors.black,
-                        ),
-                      )
-                    : MyText(
-                        text: 'ورود',
-                        color: cB,
-                        size: 17,
-                        fontWeight: FontWeight.bold,
-                      );
-              }),
-            ),
             SizedBox(
               height: 10,
             ),
             SizedBox(
               width: Get.width * .8,
               child: Row(
-                textDirection: TextDirection.rtl,
+                textDirection: TextDirection.ltr,
                 children: [
                   Expanded(
                     child: MyTextButton(
@@ -164,9 +137,39 @@ class SigninScreen extends GetView<AuthController> {
                       ),
                     ),
                   ),
-                  // SizedBox(
-                  //   width: 10,
-                  // ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  Expanded(
+                    child: MyTextButton(
+                      size: Size.fromHeight(55),
+                      borderRadius: 5,
+                      bgColor: cAccent,
+                      onTap: () {
+                        if (controller.txtUsername.text.trim().isNotEmpty &&
+                            controller.txtPasswrod.text.trim().isNotEmpty) {
+                          controller.login(
+                              username: controller.txtUsername.text.trim(),
+                              password: controller.txtPasswrod.text.trim());
+                        }
+                      },
+                      child: Obx(() {
+                        return (controller.isLoadingLogin.isTrue)
+                            ? Center(
+                                child: MyCircularProgress(
+                                  size: 25,
+                                  color: Colors.black,
+                                ),
+                              )
+                            : MyText(
+                                text: 'ورود',
+                                color: cB,
+                                size: 17,
+                                fontWeight: FontWeight.bold,
+                              );
+                      }),
+                    ),
+                  ),
                   // Expanded(
                   //   child: MyTextButton(
                   //     borderRadius: 5,

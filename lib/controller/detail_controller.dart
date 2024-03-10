@@ -27,7 +27,7 @@ class DetailController extends GetxController {
   RxBool isLoadingLikeStatus = false.obs;
   RxBool isSubmittingBugReport = false.obs;
   // VideoPlayerController? trailerController;
-  VideoPlayerController? trailerControllerTest;
+  VideoPlayerController? trailerController;
   ChewieController? trailerControllerChieview;
   AuthController? authController;
   RxList<DepartmentModel> departments = <DepartmentModel>[].obs;
@@ -127,19 +127,17 @@ class DetailController extends GetxController {
   }
 
   void setNewurlTrailer() {
-    print('oopsssssssssss sss ');
     isLoadingTrailer(true);
     // trailerController = null;
     // trailerControllerTest = null;
-    if (selectedFilm.value.trailer_url != '' ||
-        selectedFilm.value.trailer_url != null) {
-      trailerControllerTest = VideoPlayerController.networkUrl(
+    if (GetUtils.isURL('${selectedFilm.value.trailer_url}')) {
+      trailerController = VideoPlayerController.networkUrl(
           Uri.parse('${selectedFilm.value.trailer_url}'),
           videoPlayerOptions: VideoPlayerOptions(allowBackgroundPlayback: true))
         ..initialize().then((value) async {
-          print('oopsssssssssss Before ');
+          // print('oopsssssssssss Before ');
           trailerControllerChieview = await ChewieController(
-              videoPlayerController: trailerControllerTest!,
+              videoPlayerController: trailerController!,
               materialProgressColors: ChewieProgressColors(
                   handleColor: Colors.white,
                   bufferedColor: Colors.white.withOpacity(.3),
@@ -159,44 +157,27 @@ class DetailController extends GetxController {
               showControlsOnInitialize: true,
               showControls: true,
               hideControlsTimer: Duration(seconds: 2));
-          print('oopsssssssssss After ');
-
+          // print('oopsssssssssss After ');
           isLoadingTrailer(false);
-          // trailerControllerChieview!.pause();
-          // Timer(Duration.zero, () {
-          //   trailerControllerChieview!.seekTo(Duration.zero);
-          // });
         });
-      // trailerController = VideoPlayerController.networkUrl(
-      //     Uri.parse('${selectedFilm.value.trailer_url}'))
-      //   ..initialize().then((value) {
-      //     // isLoadingTrailer(false);
-      //     trailerController?.addListener(() {
-      //       trailerPosition(
-      //           trailerController?.value.position.inSeconds.toDouble());
-      //       isPlayingTrailer(trailerController!.value.isPlaying);
-      //       if (trailerController?.value.position ==
-      //           trailerController?.value.duration) {
-      //         isPlayingTrailer(false);
-      //         trailerController?.seekTo(Duration.zero);
-      //       }
-      //     });
-      //   });
     } else {
-      print('ooooops else');
       trailerControllerChieview = null;
       selectedFilm.value.trailer_url = null;
       selectedFilm.refresh();
     }
+    //! When url is currupt or is filter
+    trailerController!.addListener(() {
+      if (trailerController!.value.hasError) {
+        // print('catch it');
+        selectedFilm.value.trailer_url = '';
+        selectedFilm.refresh();
+      }
+    });
   }
 
   void getNewData() {
     movieLikeStatus(LikeAction.notSelected);
     isLoadingNewData(true);
-    // if (selectedFilm.value.trailer_url != '' &&
-    //     selectedFilm.value.trailer_url != null) {
-    //   setNewurlTrailer();
-    // }
     ApiProvider()
         .getMovieDetail(
             id: '${selectedFilm.value.id}',

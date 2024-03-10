@@ -340,18 +340,6 @@ class FilmModel {
       //   });
       // }
     }
-    if (type == 'movies') {
-      //! movies
-      moviesDlbox = json['dlbox'] != null
-          ? new DlboxMoviesModel.fromJson(json['dlbox'])
-          : null;
-      // if (json['dlbox'] != null) {
-      //   moviesDlbox = <DlboxMoviesModel>[];
-      //   json['dlbox'].forEach((v) {
-      //     moviesDlbox!.add(new DlboxMoviesModel.fromJson(v));
-      //   });
-      // }
-    }
     if (json['genres'] != null) {
       genres = <Genre>[];
       json['genres'].forEach((v) {
@@ -439,6 +427,25 @@ class FilmModel {
       releaseYear = '';
     }
     sortCommentList();
+
+    if (type == 'movies') {
+      //! movies
+      // print(json['dlbox']);
+      try {
+        moviesDlbox = json['dlbox'] != null
+            ? new DlboxMoviesModel.fromJson(json['dlbox'])
+            : null;
+      } catch (e) {
+        print(id);
+        print(title);
+      }
+      // if (json['dlbox'] != null) {
+      //   moviesDlbox = <DlboxMoviesModel>[];
+      //   json['dlbox'].forEach((v) {
+      //     moviesDlbox!.add(new DlboxMoviesModel.fromJson(v));
+      //   });
+      // }
+    }
   }
 
   void sortCommentList() {
@@ -674,21 +681,26 @@ class _SmallItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      //  Get.width / 4.22
-      width: width,
-      child: MovieItemSmallDetailWidget(
-        icon: image != null
-            ? SizedBox(height: 20, width: 20, child: Image.asset('${image}'))
-            : Padding(
-                padding: const EdgeInsets.only(bottom: 2),
-                child: Icon(
-                  icon,
-                  color: cW,
-                  size: 19,
+    return Tooltip(
+      preferBelow: false,
+      message: text,
+      showDuration: Duration(seconds: 3),
+      child: SizedBox(
+        //  Get.width / 4.22
+        width: width,
+        child: MovieItemSmallDetailWidget(
+          icon: image != null
+              ? SizedBox(height: 20, width: 20, child: Image.asset('${image}'))
+              : Padding(
+                  padding: const EdgeInsets.only(bottom: 2),
+                  child: Icon(
+                    icon,
+                    color: cW,
+                    size: 19,
+                  ),
                 ),
-              ),
-        title: '${text}',
+          title: '${text}',
+        ),
       ),
     );
   }

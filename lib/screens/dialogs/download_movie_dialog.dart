@@ -8,6 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 
+import '../../constant/utils.dart';
+
 class DownloadMovieDialog extends StatelessWidget {
   const DownloadMovieDialog({required this.film, super.key});
   final FilmModel film;
@@ -295,18 +297,6 @@ class DownloadMovieDialog extends StatelessWidget {
     }
     return a;
   }
-}
-
-String computeTheCapacity({required double size}) {
-  String a = '';
-  double cap = size / 2048;
-  if (cap >= 1000) {
-    cap = cap / 1024;
-    a = '${cap.toStringAsFixed(2)} MB';
-  } else {
-    a = '${cap.toStringAsFixed(2)} GB';
-  }
-  return a;
 }
 
 class downloadSectionWidget extends StatelessWidget {

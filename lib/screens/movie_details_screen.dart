@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:bamabin/constant/classes.dart';
 import 'package:bamabin/constant/colors.dart';
 import 'package:bamabin/controller/auth_controller.dart';
@@ -177,7 +179,6 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                               ),
                             )),
                   ),
-
                   //! Poster
                   Positioned(
                       right: padding,
