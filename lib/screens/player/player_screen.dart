@@ -42,6 +42,19 @@ class _PlayerScreenState extends State<PlayerScreen> {
     }
   }
 
+  String convertSecondsToHMS(int seconds) {
+    int hours = seconds ~/ 3600;
+    int remainingSeconds = seconds % 3600;
+    int minutes = remainingSeconds ~/ 60;
+    int finalSeconds = remainingSeconds % 60;
+
+    String formattedTime = '${hours.toString().padLeft(2, '0')}:'
+        '${minutes.toString().padLeft(2, '0')}:'
+        '${finalSeconds.toString().padLeft(2, '0')}';
+
+    return formattedTime;
+  }
+
   @override
   void dispose() {
     SystemChrome.setPreferredOrientations([
@@ -120,12 +133,13 @@ class _PlayerScreenState extends State<PlayerScreen> {
                                           )),
                                       Spacer(),
                                       MyText(
-                                        text: "Monarch",
+                                        text: "${detailController.selectedFilm.value.name} ${controller.selectedDlBoxItem.value.quality}",
                                         fontWeight: FontWeight.w500,
                                         size: 15,
                                       ),
                                       Spacer(),
                                       //! Serial List
+                                      (detailController.selectedFilm.value.type == "series") ?
                                       IconButton(
                                           onPressed: () {
                                             controller.video_controller.pause();
@@ -139,7 +153,7 @@ class _PlayerScreenState extends State<PlayerScreen> {
                                             Icons.playlist_play,
                                             color: Colors.white,
                                             size: 35,
-                                          )),
+                                          )) : Container(),
                                     ],
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
@@ -166,7 +180,7 @@ class _PlayerScreenState extends State<PlayerScreen> {
                                           children: [
                                             MyText(
                                               text:
-                                                  '${controller.video_controller.value.position.inMinutes}:${controller.video_controller.value.position.inSeconds}',
+                                                  '${convertSecondsToHMS(controller.video_controller.value.position.inSeconds)}',
                                               size: 15,
                                             ),
                                             Expanded(
@@ -202,7 +216,7 @@ class _PlayerScreenState extends State<PlayerScreen> {
                                             ),
                                             MyText(
                                               text:
-                                                  '${controller.video_controller.value.duration.inMinutes}:${controller.video_controller.value.duration.inSeconds}',
+                                                  '${convertSecondsToHMS(controller.video_controller.value.duration.inSeconds)}',
                                               size: 15,
                                             ),
                                           ],
@@ -267,9 +281,16 @@ class _PlayerScreenState extends State<PlayerScreen> {
                                                 SizedBox(
                                                   width: 20,
                                                 ),
-                                                Icon(Icons.replay_10_rounded,
+                                                IconButton(onPressed: (){
+                                                  controller.video_controller.position.then((value){
+                                                    var d = value ?? Duration(seconds: 10) - Duration(minutes: 1);
+                                                    controller.current_progress(d.inSeconds);
+                                                    controller.video_controller.seekTo(d);
+
+                                                  });
+                                                }, icon: Icon(Icons.replay_10_rounded,
                                                     color: Colors.white,
-                                                    size: 30),
+                                                    size: 30)),
                                                 SizedBox(
                                                   width: 20,
                                                 ),

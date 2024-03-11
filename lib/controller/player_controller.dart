@@ -42,10 +42,9 @@ class PlayerController extends GetxController {
   void playPauseClicked() {
     if (playing_status.isTrue) {
       video_controller.pause();
-      playing_status(false);
+
     } else {
       video_controller.play();
-      playing_status(true);
     }
   }
 
@@ -56,21 +55,17 @@ class PlayerController extends GetxController {
         selectedDlBoxItem.value.link!))
       ..initialize().then((value) {
         video_controller.play();
-        playing_status(true);
         isInit(true);
 
-        print("Max:${video_controller.value.duration}");
         max_progress(video_controller.value.duration.inMilliseconds);
 
         video_controller.addListener(() {
-
+          playing_status(video_controller.value.isPlaying);
           bool isBuffering = video_controller.value.isBuffering;
-          print("Buffered:${video_controller.value.buffered[0].end.inMilliseconds} / ${video_controller.value.duration.inMilliseconds}");
           if (isBuffering != _isBuffering) {
             // TODO Here
             if (video_controller.value.buffered[0].end.inMilliseconds <
                 max_progress.value){
-              print("Here set current");
               current_buffer_progress(video_controller.value.buffered[0].end.inMilliseconds);
 
             }
@@ -85,9 +80,7 @@ class PlayerController extends GetxController {
           video_controller.position.then((value) {
             if (value != null && value.inMilliseconds <= max_progress.toInt()) {
               current_progress(value.inMilliseconds);
-              playing_status(true);
             } else {
-              playing_status(false);
               current_progress(0);
             }
           });
