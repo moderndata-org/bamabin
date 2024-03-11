@@ -15,11 +15,13 @@ class MovieItemDialogWidget extends StatelessWidget {
       this.width,
       this.onDownloadTap,
       this.onPlayTap,
+      this.seriesCount = 0,
       this.isSerial = false,
       this.hasOnlinePlay = true,
       super.key});
 
   final String? quality;
+  final int? seriesCount;
   final MovieType? movieType;
   final SubtitleType? subtitleType;
   final String? encoder;
@@ -164,7 +166,7 @@ class MovieItemDialogWidget extends StatelessWidget {
                     : Expanded(
                         child: MyText(
                         textDirection: TextDirection.rtl,
-                        text: '8 قسمت',
+                        text: '$seriesCount قسمت',
                         color: cEntryText,
                         size: 14,
                       ))

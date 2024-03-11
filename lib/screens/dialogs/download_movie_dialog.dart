@@ -9,6 +9,7 @@ import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 
 import '../../constant/utils.dart';
+import '../../widgets/download_section_widget.dart';
 
 class DownloadMovieDialog extends StatelessWidget {
   const DownloadMovieDialog({required this.film, super.key});
@@ -245,7 +246,7 @@ class DownloadMovieDialog extends StatelessWidget {
     if (film.moviesDlbox?.screen != null && film.moviesDlbox?.screen != []) {
       a.add(
         downloadSectionWidget(
-          icon: Icons.local_movies_rounded,
+          icon: Icons.movie_creation_rounded,
           color: cGreyLight,
           title: 'نسخه روی پرده',
         ),
@@ -272,7 +273,7 @@ class DownloadMovieDialog extends StatelessWidget {
     if (film.moviesDlbox?.dubbed != null && film.moviesDlbox?.dubbed != []) {
       a.add(
         downloadSectionWidget(
-          icon: Icons.local_movies_rounded,
+          icon: Icons.mic,
           color: cR,
           title: 'نسخه دوبله فارسی',
         ),
@@ -296,47 +297,5 @@ class DownloadMovieDialog extends StatelessWidget {
       });
     }
     return a;
-  }
-}
-
-class downloadSectionWidget extends StatelessWidget {
-  const downloadSectionWidget({
-    required this.icon,
-    required this.title,
-    required this.color,
-    super.key,
-  });
-  final IconData icon;
-  final String title;
-  final Color color;
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      textDirection: TextDirection.rtl,
-      children: [
-        Icon(
-          icon,
-          color: color,
-        ),
-        SizedBox(
-          width: 5,
-        ),
-        MyText(
-          text: title,
-          shadows: [bsText],
-          fontWeight: FontWeight.w500,
-          size: 15,
-        ),
-        SizedBox(
-          width: 5,
-        ),
-        Expanded(
-            child: Container(
-          height: 1,
-          color: color,
-        ))
-      ],
-    );
   }
 }

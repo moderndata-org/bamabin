@@ -248,18 +248,12 @@ class MovieItemShimmer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Shimmer(
+    return Shimmer.fromColors(
+      baseColor: Color.fromARGB(255, 52, 52, 52),
+      highlightColor: Color.fromARGB(255, 93, 93, 93),
       direction: ShimmerDirection.ltr,
       period: Duration(seconds: 3),
       enabled: true,
-      gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [
-            Color.fromARGB(255, 52, 52, 52),
-            Color.fromARGB(255, 93, 93, 93),
-            Color.fromARGB(255, 52, 52, 52),
-          ]),
       child: Column(
         children: [
           Container(

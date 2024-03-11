@@ -28,7 +28,6 @@ class DlboxMoviesModel {
       });
     }
     if (json['dubbed'] != null) {
-      print("json is:${json}");
       dubbed = <DlboxItem>[];
       json['dubbed'].forEach((v) {
         dubbed!.add(new DlboxItem.fromJson(v));

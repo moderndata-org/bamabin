@@ -34,12 +34,16 @@ String getPersianDate({required String dateTime}) {
 
 String computeTheCapacity({required double size}) {
   String a = '';
-  double cap = size / 2048;
-  if (cap >= 1000) {
+  double cap = size / 2048 / 1024;
+  // print('size $size');
+  // print('cap $cap');
+  // print(size / 2048);
+  // print(cap >= 1000);
+  if (cap >= 1000.0) {
     cap = cap / 1024;
-    a = '${cap.toStringAsFixed(2)} MB';
-  } else {
     a = '${cap.toStringAsFixed(2)} GB';
+  } else {
+    a = '${cap.toStringAsFixed(2)} MB';
   }
   return a;
 }

@@ -1041,6 +1041,22 @@ class ButtonSectionMovieDetailWidget extends GetView<DetailController> {
                                 ));
                       }
                     } else {
+                      if (controller.selectedFilm.value.type == 'movies') {
+                        showDialog(
+                          context: context,
+                          builder: (context) => DownloadMovieDialog(
+                            film: controller.selectedFilm.value,
+                          ),
+                        );
+                      }
+                      if (controller.selectedFilm.value.type == 'series') {
+                        showDialog(
+                            context: context,
+                            builder: (context) => DownloadSerialDialog(
+                                  listSeries:
+                                      controller.selectedFilm.value.seriesDlbox,
+                                ));
+                      }
                       // showDialog(
                       //   context: context,
                       //   builder: (context) => controller.isSerial.value

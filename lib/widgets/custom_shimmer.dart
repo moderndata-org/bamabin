@@ -15,7 +15,9 @@ class CustomShimmerWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Shimmer(
+    return Shimmer.fromColors(
+      baseColor: Color.fromARGB(255, 52, 52, 52),
+      highlightColor: Color.fromARGB(255, 93, 93, 93),
       child: Container(
         height: height,
         width: width,
@@ -23,14 +25,6 @@ class CustomShimmerWidget extends StatelessWidget {
             color: Colors.white,
             borderRadius: BorderRadius.circular(radius ?? 5)),
       ),
-      gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [
-            Color.fromARGB(255, 52, 52, 52),
-            Color.fromARGB(255, 93, 93, 93),
-            Color.fromARGB(255, 52, 52, 52),
-          ]),
     );
   }
 }

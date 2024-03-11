@@ -430,7 +430,6 @@ class FilmModel {
       releaseYear = '';
     }
     sortCommentList();
-
     if (type == 'movies') {
       //! movies
       // print(json['dlbox']);
@@ -438,10 +437,8 @@ class FilmModel {
           ? new DlboxMoviesModel.fromJson(json['dlbox'])
           : null;
     }
-
     if (type == 'series') {
       //! movies
-      // print('sssssshhhhhhhhhhhhhhhhhhhhhhhhit');
       // print(json['dlbox']);
       if (json['dlbox'] != null) {
         seriesDlbox = <SeriesModel>[];
