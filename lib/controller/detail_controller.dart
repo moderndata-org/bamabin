@@ -32,6 +32,7 @@ class DetailController extends GetxController {
   AuthController? authController;
   RxList<DepartmentModel> departments = <DepartmentModel>[].obs;
   RxBool loadingDepartments = false.obs;
+  RxBool showTrailer = false.obs;
   Rx<DepartmentModel> selectedDepartment = DepartmentModel().obs;
   Rx<CommentModel> selectedCommentForReply = CommentModel().obs;
 
@@ -128,6 +129,7 @@ class DetailController extends GetxController {
 
   void setNewurlTrailer() {
     isLoadingTrailer(true);
+    showTrailer(false);
     // trailerController = null;
     // trailerControllerTest = null;
     bool isInitialize = false;
@@ -160,11 +162,9 @@ class DetailController extends GetxController {
               hideControlsTimer: Duration(seconds: 2));
           // print('oopsssssssssss After ');
           isInitialize = true;
-          isLoadingTrailer(false);
         });
     }
     //! When url is currupt or is filter
-    print('is INIT $isInitialize');
     if (isInitialize) {
       trailerController!.addListener(() {
         if (trailerController!.value.hasError) {
@@ -172,15 +172,17 @@ class DetailController extends GetxController {
           selectedFilm.value.trailer_url = '';
           selectedFilm.refresh();
           trailerControllerChieview = null;
-          isLoadingTrailer(false);
+        } else {
+          showTrailer(true);
         }
       });
     } else {
       selectedFilm.value.trailer_url = null;
       selectedFilm.refresh();
       trailerControllerChieview = null;
-      isLoadingTrailer(false);
     }
+
+    isLoadingTrailer(false);
   }
 
   void getNewData() {

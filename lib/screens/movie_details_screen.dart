@@ -557,7 +557,6 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                     ),
                   ),
                 )),
-
             //! TrailerSection New
             Obx(() => controller.isLoadingNewData.isTrue
                 ? CustomShimmerWidget(
@@ -574,45 +573,47 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                             height: 200,
                             width: Get.width,
                           )
-                        : Container(
-                            width: Get.width,
-                            color: cPrimaryDark,
-                            padding: EdgeInsets.only(top: 15),
-                            child: Column(
-                              children: [
-                                Row(
-                                  textDirection: TextDirection.rtl,
+                        : controller.showTrailer.isFalse
+                            ? SizedBox()
+                            : Container(
+                                width: Get.width,
+                                color: cPrimaryDark,
+                                padding: EdgeInsets.only(top: 15),
+                                child: Column(
                                   children: [
+                                    Row(
+                                      textDirection: TextDirection.rtl,
+                                      children: [
+                                        SizedBox(
+                                          width: 15,
+                                        ),
+                                        Icon(
+                                          Icons.theaters_rounded,
+                                          color: cW,
+                                        ),
+                                        SizedBox(
+                                          width: 10,
+                                        ),
+                                        MyText(
+                                          text: 'تریلر',
+                                          size: 15,
+                                        ),
+                                      ],
+                                    ),
                                     SizedBox(
-                                      width: 15,
-                                    ),
-                                    Icon(
-                                      Icons.theaters_rounded,
-                                      color: cW,
+                                      height: 10,
                                     ),
                                     SizedBox(
-                                      width: 10,
-                                    ),
-                                    MyText(
-                                      text: 'تریلر',
-                                      size: 15,
-                                    ),
+                                      width: Get.width,
+                                      height: 200,
+                                      child: Chewie(
+                                        controller: controller
+                                            .trailerControllerChieview!,
+                                      ),
+                                    )
                                   ],
                                 ),
-                                SizedBox(
-                                  height: 10,
-                                ),
-                                SizedBox(
-                                  width: Get.width,
-                                  height: 200,
-                                  child: Chewie(
-                                    controller:
-                                        controller.trailerControllerChieview!,
-                                  ),
-                                )
-                              ],
-                            ),
-                          )),
+                              )),
             // //! TrailerSection Bk
             // Obx(() => controller.isLoadingNewData.isTrue
             //     ? SizedBox()
