@@ -9,6 +9,7 @@ import 'package:bamabin/widgets/dialog_items/movie_item_dialog_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
+import 'package:video_player/video_player.dart';
 
 import '../../constant/utils.dart';
 import '../../controller/player_controller.dart';
@@ -165,7 +166,7 @@ class DownloadSerialDialog extends GetView<DetailController> {
 
   List<Widget> generateSeasonList({required SeriesModel series}) {
     List<Widget> a = [];
-    //!  Subtitles
+    //!  subtitle
     if (series.types?.subtitle != null && series.types?.subtitle != []) {
       a.add(
         downloadSectionWidget(
@@ -184,7 +185,7 @@ class DownloadSerialDialog extends GetView<DetailController> {
         );
       });
     }
-    //! Noskhe Kham
+    //! native
     if (series.types?.native != null && series.types?.native != []) {
       a.add(
         downloadSectionWidget(
@@ -203,7 +204,7 @@ class DownloadSerialDialog extends GetView<DetailController> {
         );
       });
     }
-    //! cam
+    //! screen
     if (series.types?.screen != null && series.types?.screen != []) {
       a.add(
         downloadSectionWidget(
@@ -312,6 +313,8 @@ class SerialAccordion extends StatelessWidget {
                   children: item.items == null
                       ? []
                       : List.generate(item.items!.length, (index) {
+                          var videoPlayerController =
+                              Get.find<PlayerController>();
                           DlboxItem dl = item.items![index];
                           DlboxItem dl2 = index > item.items!.length - 2
                               ? DlboxItem()
@@ -327,8 +330,14 @@ class SerialAccordion extends StatelessWidget {
                                   children: [
                                     Expanded(
                                       child: DownloadButtonDialog(
+                                        onPlay: () {
+                                          videoPlayerController
+                                              .selectedDlBoxItem(dl);
+                                          Get.toNamed('/player');
+                                        },
                                         color: color,
                                         title: 'قسمت $part',
+                                        hasPlay: dl.playStatus == 'on',
                                       ),
                                     ),
                                     SizedBox(
@@ -338,8 +347,14 @@ class SerialAccordion extends StatelessWidget {
                                         ? Spacer()
                                         : Expanded(
                                             child: DownloadButtonDialog(
+                                              onPlay: () {
+                                                videoPlayerController
+                                                    .selectedDlBoxItem(dl);
+                                                Get.toNamed('/player');
+                                              },
                                               color: color,
                                               title: 'قسمت $part2',
+                                              hasPlay: dl2.playStatus == 'on',
                                             ),
                                           ),
                                   ],
@@ -354,11 +369,17 @@ class SerialAccordion extends StatelessWidget {
 class DownloadButtonDialog extends StatelessWidget {
   const DownloadButtonDialog({
     this.title,
+    this.onPlay,
+    this.onDownload,
+    this.hasPlay,
     required this.color,
     super.key,
   });
   final String? title;
   final Color color;
+  final Function()? onPlay;
+  final Function()? onDownload;
+  final bool? hasPlay;
 
   @override
   Widget build(BuildContext context) {
@@ -369,35 +390,44 @@ class DownloadButtonDialog extends StatelessWidget {
       child: Row(
         textDirection: TextDirection.rtl,
         children: [
-          Expanded(
-            flex: 3,
-            child: GestureDetector(
-              child: Container(
-                height: 50,
-                decoration: BoxDecoration(
-                    color: color,
-                    borderRadius: BorderRadius.only(
-                        topRight: Radius.circular(5),
-                        bottomRight: Radius.circular(5))),
-                child: Icon(
-                  Icons.play_circle_outline_rounded,
-                  shadows: [bsTextLowOpacity],
-                  color: cW,
+          hasPlay != true
+              ? SizedBox()
+              : Expanded(
+                  flex: 3,
+                  child: GestureDetector(
+                    onTap: onPlay,
+                    child: Container(
+                      height: 50,
+                      decoration: BoxDecoration(
+                          color: color,
+                          borderRadius: BorderRadius.only(
+                              topRight: Radius.circular(5),
+                              bottomRight: Radius.circular(5))),
+                      child: Icon(
+                        Icons.play_circle_outline_rounded,
+                        shadows: [bsTextLowOpacity],
+                        color: color == cY || color == cGreyLight ? cB : cW,
+                      ),
+                    ),
+                  ),
                 ),
-              ),
-            ),
-          ),
           SizedBox(
-            width: 5,
+            width: hasPlay == true ? 5 : 0,
           ),
           Expanded(
-              flex: 8,
-              child: Center(
-                child: MyText(
-                  text: '$title',
-                  shadows: [bsTextLowOpacity],
-                  size: 14,
-                  fontWeight: FontWeight.bold,
+              flex: hasPlay == true ? 8 : 1,
+              child: GestureDetector(
+                onTap: onDownload,
+                child: Container(
+                  color: Colors.transparent,
+                  child: Center(
+                    child: MyText(
+                      text: '$title',
+                      shadows: [bsTextLowOpacity],
+                      size: 14,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
                 ),
               ))
         ],

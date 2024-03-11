@@ -226,7 +226,13 @@ class MovieItemDialogWidget extends StatelessWidget {
                             borderRadius: BorderRadius.circular(5)),
                         child: MyText(
                           text: 'لینک‌ها',
-                          color: cW,
+                          color: switch (movieType) {
+                            MovieType.Subtitle => cW,
+                            MovieType.Dubbed => cW,
+                            MovieType.None => cB,
+                            MovieType.Cam => cB,
+                            null => null,
+                          },
                           size: 15,
                           fontWeight: FontWeight.w500,
                           shadows: [bsText],
