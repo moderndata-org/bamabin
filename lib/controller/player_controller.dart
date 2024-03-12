@@ -18,6 +18,7 @@ class PlayerController extends GetxController {
   var playing_status = false.obs;
   var fullscreen_status = false.obs;
   var is_dubbed = false.obs;
+  var show_caption = false.obs;
   Timer? timer;
   late VideoPlayerController video_controller;
   var _isBuffering = false.obs;
@@ -26,9 +27,9 @@ class PlayerController extends GetxController {
   DetailController detailController = Get.find();
   var subtitle_style = {
     "bg_color":Colors.black,
-    "text_opacity":100,
+    "text_opacity":255,
     "text_color":Colors.white,
-    "bg_opacity":100
+    "bg_opacity":255
   }.obs;
 
   //! new
@@ -79,8 +80,13 @@ class PlayerController extends GetxController {
       ..initialize().then((value) {
         video_controller.play();
         isInit(true);
-        if(is_dubbed.isTrue)
-        video_controller.setClosedCaptionFile(init_subtitle());
+        print("is_dubbed: ${is_dubbed}");
+        if(is_dubbed.isFalse){
+          video_controller.setClosedCaptionFile(init_subtitle());
+          show_caption(true);
+        }else{
+          show_caption(false);
+        }
 
         max_progress(video_controller.value.duration.inMilliseconds);
 

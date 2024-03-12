@@ -106,19 +106,19 @@ class _PlayerScreenState extends State<PlayerScreen> {
                     )),
                 Container(
                   child: Obx(() =>
-                      Container(
-                        padding: EdgeInsets.all(5),
-                        margin: EdgeInsets.only(bottom: 15),
-                        alignment: Alignment.bottomCenter,
-                        child: Text(controller.video_controller.value.caption.text,
-                        textDirection: TextDirection.rtl,
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          color: (controller.subtitle_style["text_color"] as Color).withAlpha(controller.subtitle_style["text_opacity"] as int),
-                          backgroundColor: (controller.subtitle_style["bg_color"] as Color).withAlpha(controller.subtitle_style["bg_opacity"] as int),
+                  (controller.show_caption.isTrue) ? Container(
+                    padding: EdgeInsets.all(5),
+                    margin: EdgeInsets.only(bottom: 15),
+                    alignment: Alignment.bottomCenter,
+                    child: Text(controller.video_controller.value.caption.text,
+                      textDirection: TextDirection.rtl,
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: (controller.subtitle_style["text_color"] as Color).withAlpha(controller.subtitle_style["text_opacity"] as int),
+                        backgroundColor: (controller.subtitle_style["bg_color"] as Color).withAlpha(controller.subtitle_style["bg_opacity"] as int),
 
-                        ),
-                      ),)
+                      ),
+                    ),) : Container()
 
 
                       ),
@@ -280,22 +280,27 @@ class _PlayerScreenState extends State<PlayerScreen> {
                                                         color: Colors.white,
                                                         size: 25,
                                                       )),
-                                                  IconButton(
-                                                      onPressed: () {
-                                                        controller
-                                                            .video_controller
-                                                            .pause();
-                                                        showDialog(
-                                                          context: context,
-                                                          builder: (context) =>
-                                                              PlayerSubtitleDialog(),
-                                                        );
-                                                      },
-                                                      icon: Icon(
-                                                        Icons.tune,
-                                                        color: Colors.white,
-                                                        size: 25,
-                                                      )),
+
+
+                                                  Visibility(
+                                                      visible: controller.is_dubbed.isFalse,
+                                                      child: IconButton(
+                                                          onPressed: () {
+                                                            controller
+                                                                .video_controller
+                                                                .pause();
+                                                            showDialog(
+                                                              context: context,
+                                                              builder: (context) =>
+                                                                  PlayerSubtitleDialog(),
+                                                            );
+                                                          },
+
+                                                          icon: Icon(
+                                                            Icons.tune,
+                                                            color: Colors.white,
+                                                            size: 25,
+                                                          )),),
                                                 ],
                                               ),
                                             ),
@@ -413,14 +418,21 @@ class _PlayerScreenState extends State<PlayerScreen> {
                                                       size: 30,
                                                     ),
                                                   ),
-                                                  IconButton(
-                                                    onPressed: () {},
+                                                  Visibility(
+                                                      visible: controller.is_dubbed.isFalse,
+                                                      child: IconButton(
+                                                    onPressed: () {
+                                                      if(controller.show_caption.isTrue)
+                                                        controller.show_caption(false);
+                                                      else
+                                                        controller.show_caption(true);
+                                                    },
                                                     icon: Icon(
-                                                      Icons.closed_caption,
+                                                      (controller.show_caption.isTrue) ? Icons.closed_caption : Icons.closed_caption_off,
                                                       color: Colors.white,
                                                       size: 30,
                                                     ),
-                                                  ),
+                                                  )),
                                                   IconButton(
                                                     onPressed: () {},
                                                     icon: SizedBox(

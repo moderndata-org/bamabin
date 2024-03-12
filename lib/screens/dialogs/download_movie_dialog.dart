@@ -299,7 +299,7 @@ class DownloadMovieDialog extends StatelessWidget {
             onPlayTap: () {
               Get.toNamed('/player');
               videoController.selectedDlBoxItem(item);
-              videoController.is_dubbed(false);
+              videoController.is_dubbed(true);
             },
             hasOnlinePlay: item.playStatus == 'on',
             quality: item.originalQuality ?? '',
