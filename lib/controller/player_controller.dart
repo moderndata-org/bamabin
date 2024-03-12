@@ -17,6 +17,7 @@ class PlayerController extends GetxController {
   var hide_bars = false.obs;
   var playing_status = false.obs;
   var fullscreen_status = false.obs;
+  var is_dubbed = false.obs;
   Timer? timer;
   late VideoPlayerController video_controller;
   var _isBuffering = false.obs;
@@ -24,7 +25,7 @@ class PlayerController extends GetxController {
   Rx<DlboxItem> selectedDlBoxItem = DlboxItem().obs;
   DetailController detailController = Get.find();
   var subtitle_style = {
-    "bg_color":"000000",
+    "bg_color":Colors.black,
     "text_opacity":100,
     "text_color":Colors.white,
     "bg_opacity":100
@@ -60,6 +61,7 @@ class PlayerController extends GetxController {
 
   Future<ClosedCaptionFile>? init_subtitle() async{
     var d = jsonDecode(detailController.selectedFilm.value.dlboxSubtitle!);
+    print(d);
     var value = await ApiProvider().getSubtitleContent(d["1"]["link"]);
     var c = SubRipCaptionFile(value.body);
     return c;

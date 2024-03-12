@@ -105,14 +105,23 @@ class _PlayerScreenState extends State<PlayerScreen> {
                             ),
                     )),
                 Container(
-                  child: Obx(() => ClosedCaption(
-                    text: controller.video_controller.value.caption.text,
-                    textStyle: TextStyle(
-                        color: (controller.subtitle_style["text_color"] as Color).withAlpha(controller.subtitle_style["text_opacity"] as int),
-                        backgroundColor: (controller.subtitle_style["bg_color"] as Color).withAlpha(controller.subtitle_style["bg_opacity"] as int),
+                  child: Obx(() =>
+                      Container(
+                        padding: EdgeInsets.all(5),
+                        margin: EdgeInsets.only(bottom: 15),
+                        alignment: Alignment.bottomCenter,
+                        child: Text(controller.video_controller.value.caption.text,
+                        textDirection: TextDirection.rtl,
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: (controller.subtitle_style["text_color"] as Color).withAlpha(controller.subtitle_style["text_opacity"] as int),
+                          backgroundColor: (controller.subtitle_style["bg_color"] as Color).withAlpha(controller.subtitle_style["bg_opacity"] as int),
 
-                    ) ,
-                  )),
+                        ),
+                      ),)
+
+
+                      ),
                 ),
                 Obx(() => // Player,
                     AnimatedOpacity(

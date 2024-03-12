@@ -173,14 +173,14 @@ class PlayerSubtitleDialog extends GetView<PlayerController> {
                                               activeTickMarkColor: cW,
                                               thumbShape: RoundSliderThumbShape(
                                                   enabledThumbRadius: 5)),
-                                          child: Slider(
+                                          child: Obx(() => Slider(
                                             min: 1,
                                             max: 255,
                                             value: (controller.subtitle_style["text_opacity"] as int).toDouble(),
                                             onChanged: (value) {
-                                              controller.subtitle_style["text_opacity"] = value;
+                                              controller.subtitle_style["text_opacity"] = value.toInt();
                                             },
-                                          ),
+                                          )),
                                         ),
                                       ),
                                     ),
@@ -280,14 +280,14 @@ class PlayerSubtitleDialog extends GetView<PlayerController> {
                                               activeTickMarkColor: cW,
                                               thumbShape: RoundSliderThumbShape(
                                                   enabledThumbRadius: 5)),
-                                          child: Slider(
+                                          child: Obx(() => Slider(
                                             min: 1,
                                             max: 255,
                                             value: (controller.subtitle_style["bg_opacity"] as int).toDouble(),
                                             onChanged: (value) {
-                                              controller.subtitle_style["bg_opacity"] = value;
+                                              controller.subtitle_style["bg_opacity"] = value.toInt();
                                             },
-                                          ),
+                                          )),
                                         ),
                                       ),
                                     ),
