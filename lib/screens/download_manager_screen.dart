@@ -26,13 +26,10 @@ class _DownloadManagerScreenState extends State<DownloadManagerScreen> {
       backgroundColor: cPrimary,
       appBar: CustomAppbar(
           title: 'دانلود‌ها',
-          icon: GestureDetector(
-            onTap: () => controller.download(),
-            child: Icon(
-              Icons.download_rounded,
-              color: cW,
-              shadows: [bsTextLowOpacity],
-            ),
+          icon: Icon(
+            Icons.download_rounded,
+            color: cW,
+            shadows: [bsTextLowOpacity],
           )),
       body: SizedBox(
         width: Get.width,
@@ -43,13 +40,11 @@ class _DownloadManagerScreenState extends State<DownloadManagerScreen> {
               padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
               itemBuilder: (context, index) {
                 DownloadTask dltask = controller.listDownloads[index];
-                print(dltask.status);
                 return DownloadManagerItemWidget(
                   title: dltask.filename,
                   status: dltask.status,
                   percent: dltask.progress,
                   onTap: () {
-                    // controller.refreshDownloadList();
                     switch (dltask.status) {
                       case DownloadTaskStatus.complete:
                         FlutterDownloader.open(taskId: dltask.taskId);
@@ -66,13 +61,7 @@ class _DownloadManagerScreenState extends State<DownloadManagerScreen> {
                         break;
                       default:
                     }
-                    setState(() {});
                     controller.refreshDownloadList();
-                    // if (dltask.status == DownloadTaskStatus.complete) {
-                    //   FlutterDownloader.open(taskId: dltask.taskId);
-                    // }
-                    // controller.retryDownload(taskId: dltask.taskId);
-                    // controller.download();
                   },
                 );
               },
@@ -86,7 +75,6 @@ class DownloadManagerItemWidget extends StatelessWidget {
   const DownloadManagerItemWidget({
     this.onTap,
     this.percent = 0,
-    this.speed,
     this.title,
     this.status,
     super.key,
@@ -94,7 +82,6 @@ class DownloadManagerItemWidget extends StatelessWidget {
 
   final Function()? onTap;
   final String? title;
-  final String? speed;
   final int? percent;
   final DownloadTaskStatus? status;
 
@@ -143,26 +130,22 @@ class DownloadManagerItemWidget extends StatelessWidget {
                 width: 10,
               ),
               Expanded(
-                child: MyText(
-                  text: title ?? '',
-                  fontWeight: FontWeight.w500,
-                  textOverflow: TextOverflow.ellipsis,
+                child: Tooltip(
+                  showDuration: Duration(seconds: 5),
+                  preferBelow: false,
+                  message: title ?? '',
+                  child: MyText(
+                    text: title ?? '',
+                    fontWeight: FontWeight.w500,
+                    textOverflow: TextOverflow.ellipsis,
+                  ),
                 ),
               ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  MyText(
-                    textDirection: TextDirection.ltr,
-                    text: speed ?? '0 mbps',
-                    size: 11,
-                    color: cY,
-                  ),
-                  MyText(
-                      textDirection: TextDirection.ltr,
-                      text: '$percent%',
-                      size: 11),
-                ],
+              MyText(
+                textDirection: TextDirection.ltr,
+                text: '$percent%',
+                size: 13,
+                color: cY,
               ),
               SizedBox(
                 width: 5,
@@ -186,22 +169,50 @@ class DownloadManagerItemWidget extends StatelessWidget {
           SizedBox(
             height: 20,
             width: Get.width,
-            child: SliderTheme(
-                data: SliderThemeData(
-                    disabledActiveTrackColor: cW,
-                    disabledInactiveTrackColor: cW.withOpacity(.4),
-                    trackHeight: 2,
-                    thumbShape: RoundSliderThumbShape(enabledThumbRadius: 0)),
-                child: Slider(
-                  thumbColor: Colors.transparent,
-                  value: percent!.toDouble(),
-                  min: 0,
-                  max: 100,
-                  onChanged: null,
-                )),
-          )
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(10),
+              child: Stack(
+                clipBehavior: Clip.none,
+                children: [
+                  Positioned(
+                    right: -5,
+                    top: 0,
+                    bottom: 0,
+                    left: -5,
+                    child: SliderTheme(
+                        data: SliderThemeData(
+                          thumbColor: Colors.white,
+                          disabledThumbColor: Colors.white,
+                          thumbShape: RoundSliderThumbShape(
+                            enabledThumbRadius: 2.5,
+                          ),
+                          overlayShape:
+                              RoundSliderOverlayShape(overlayRadius: 20.0),
+                          trackShape: RoundedRectSliderTrackShape(),
+                          trackHeight: 2,
+                          disabledActiveTrackColor: cW,
+                          disabledInactiveTrackColor: cW.withOpacity(.4),
+                        ),
+                        child: Slider(
+                          thumbColor: Colors.transparent,
+                          value: percent!.toDouble(),
+                          min: 0,
+                          max: 100,
+                          onChanged: null,
+                        )),
+                  ),
+                ],
+              ),
+            ),
+          ),
         ],
       ),
     );
+  }
+
+  Future<String> getTheSpeed() async {
+    String a = '';
+
+    return a;
   }
 }

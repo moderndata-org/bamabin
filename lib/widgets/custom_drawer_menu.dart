@@ -200,6 +200,8 @@ class CustomDrawerMenu extends GetView<MainController> {
                                     : cBgDrawerItem,
                             onTap: () {
                               Get.toNamed('/subscribe');
+                              controller.scaffolState.currentState!
+                                  .closeEndDrawer();
                             },
                             child: Row(
                               textDirection: TextDirection.rtl,

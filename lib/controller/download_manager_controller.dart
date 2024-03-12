@@ -3,8 +3,7 @@ import 'dart:isolate';
 import 'dart:ui';
 
 import 'package:bamabin/constant/utils.dart';
-import 'package:bamabin/widgets/MySncakBar.dart';
-import 'package:flutter/material.dart';
+import 'package:bamabin/models/dlbox_item_model.dart';
 import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:get/get.dart';
 import 'package:path_provider/path_provider.dart';
@@ -94,14 +93,17 @@ class DownloadManagerController extends GetxController {
     IsolateNameServer.removePortNameMapping('downloader_send_port');
   }
 
-  void download() async {
+  void download(
+      {required bool goingToDownloadPage, required DlboxItem dlBox}) async {
     // final directory = await getExternalStorageDirectory();
     // final savedDir = '${directory?.path}/download/bamabin/';
+    if (goingToDownloadPage) {
+      Get.toNamed('/download-manager');
+    }
     String? savedDir = await getDownloadPath();
     print('savedDir : $savedDir');
-    final fileName = 'SquidGameTrailesr${UniqueKey()}.mp4';
-    final url =
-        'https://dl1.irantell.top/Trailers/Series/S/Squid.Game.The.Challenge.tt28104766/Squid.Game.The.Challenge.S01.Teaser.mp4';
+    // final fileName = '${dlBox.}';
+    final url = '${dlBox.link}';
     await Permission.notification.request();
     // final taskId =
     if (savedDir == null) {
@@ -109,8 +111,8 @@ class DownloadManagerController extends GetxController {
     } else {
       await FlutterDownloader.enqueue(
         url: url,
-        savedDir: savedDir, // Directory where the file will be saved
-        fileName: fileName,
+        savedDir: savedDir,
+        // fileName: fileName,
         showNotification: true,
         openFileFromNotification: false, saveInPublicStorage: true,
       );

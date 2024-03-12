@@ -2,6 +2,7 @@ import 'package:accordion/accordion.dart';
 import 'package:bamabin/constant/classes.dart';
 import 'package:bamabin/constant/colors.dart';
 import 'package:bamabin/controller/detail_controller.dart';
+import 'package:bamabin/controller/download_manager_controller.dart';
 import 'package:bamabin/models/dlbox_item_model.dart';
 import 'package:bamabin/models/series_dlbox_model.dart';
 import 'package:bamabin/widgets/MyText.dart';
@@ -315,6 +316,8 @@ class SerialAccordion extends StatelessWidget {
                       : List.generate(item.items!.length, (index) {
                           var videoPlayerController =
                               Get.find<PlayerController>();
+                          var downloadManagerController =
+                              Get.find<DownloadManagerController>();
                           DlboxItem dl = item.items![index];
                           DlboxItem dl2 = index > item.items!.length - 2
                               ? DlboxItem()
@@ -335,6 +338,11 @@ class SerialAccordion extends StatelessWidget {
                                               .selectedDlBoxItem(dl);
                                           Get.toNamed('/player');
                                         },
+                                        onDownload: () {
+                                          downloadManagerController.download(
+                                              goingToDownloadPage: true,
+                                              dlBox: dl);
+                                        },
                                         color: color,
                                         title: 'قسمت $part',
                                         hasPlay: dl.playStatus == 'on',
@@ -351,6 +359,13 @@ class SerialAccordion extends StatelessWidget {
                                                 videoPlayerController
                                                     .selectedDlBoxItem(dl);
                                                 Get.toNamed('/player');
+                                              },
+                                              onDownload: () {
+                                                downloadManagerController
+                                                    .download(
+                                                        goingToDownloadPage:
+                                                            true,
+                                                        dlBox: dl2);
                                               },
                                               color: color,
                                               title: 'قسمت $part2',
@@ -419,6 +434,7 @@ class DownloadButtonDialog extends StatelessWidget {
               child: GestureDetector(
                 onTap: onDownload,
                 child: Container(
+                  height: 50,
                   color: Colors.transparent,
                   child: Center(
                     child: MyText(
