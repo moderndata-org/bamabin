@@ -19,6 +19,7 @@ import 'package:bamabin/widgets/movie_item_widget.dart';
 import 'package:bamabin/widgets/scores_section.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import '../constant/utils.dart';
@@ -61,7 +62,6 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    print(controller.selectedFilm.value.id);
     return SafeArea(
       child: Scaffold(
         floatingActionButton: Obx(() => controller.showGoToTop.value
@@ -1021,53 +1021,29 @@ class ButtonSectionMovieDetailWidget extends GetView<DetailController> {
                   padding: EdgeInsets.zero,
                   fgColor: cB,
                   onTap: () {
-                    if (authController.paymentController.isVip.isFalse) {
-                      // Get.toNamed('/subscribe');
-                      //TODO : // Change this
-                      if (controller.selectedFilm.value.type == 'movies') {
-                        showDialog(
-                          context: context,
-                          builder: (context) => DownloadMovieDialog(
-                            film: controller.selectedFilm.value,
-                          ),
-                        );
-                      }
-                      if (controller.selectedFilm.value.type == 'series') {
-                        showDialog(
+                    if (authController.isLogin.isTrue) {
+                      if (authController.paymentController.isVip.isFalse) {
+                        Get.toNamed('/subscribe');
+                      } else {
+                        if (controller.selectedFilm.value.type == 'movies') {
+                          showDialog(
                             context: context,
-                            builder: (context) => DownloadSerialDialog(
-                                  listSeries:
-                                      controller.selectedFilm.value.seriesDlbox,
-                                ));
+                            builder: (context) => DownloadMovieDialog(
+                              film: controller.selectedFilm.value,
+                            ),
+                          );
+                        }
+                        if (controller.selectedFilm.value.type == 'series') {
+                          showDialog(
+                              context: context,
+                              builder: (context) => DownloadSerialDialog(
+                                    listSeries: controller
+                                        .selectedFilm.value.seriesDlbox,
+                                  ));
+                        }
                       }
                     } else {
-                      if (controller.selectedFilm.value.type == 'movies') {
-                        showDialog(
-                          context: context,
-                          builder: (context) => DownloadMovieDialog(
-                            film: controller.selectedFilm.value,
-                          ),
-                        );
-                      }
-                      if (controller.selectedFilm.value.type == 'series') {
-                        showDialog(
-                            context: context,
-                            builder: (context) => DownloadSerialDialog(
-                                  listSeries:
-                                      controller.selectedFilm.value.seriesDlbox,
-                                ));
-                      }
-                      // showDialog(
-                      //   context: context,
-                      //   builder: (context) => controller.isSerial.value
-                      //       ? DownloadSerialDialog(
-                      //           actionMethod: ActionMethod.Download,
-                      //           title: 'Monarch',
-                      //         )
-                      //       : DownloadMovieDialog(
-                      //           film: controller.selectedFilm.value,
-                      //         ),
-                      // );
+                      Get.toNamed('/signin');
                     }
                   },
                   bgColor: cG,
@@ -1077,19 +1053,31 @@ class ButtonSectionMovieDetailWidget extends GetView<DetailController> {
                     children: [
                       Expanded(
                         child: Center(
-                          child: authController.paymentController.isVip.isFalse
-                              ? SvgPicture.asset('assets/svg/ic_subscribe.svg')
-                              : Icon(
-                                  Icons.download_rounded,
+                          child: authController.isLogin.isFalse
+                              ? Icon(
+                                  Icons.account_circle_rounded,
                                   size: 25,
                                   color: cW,
-                                ),
+                                )
+                              : authController.paymentController.isVip.isFalse
+                                  ? SvgPicture.asset(
+                                      'assets/svg/ic_subscribe.svg')
+                                  : Icon(
+                                      Icons.download_rounded,
+                                      size: 25,
+                                      color: cW,
+                                    ),
                         ),
                       ),
-                      MyText(
-                          text: authController.paymentController.isVip.isFalse
-                              ? 'خرید اشتراک'
-                              : 'دانلود'),
+                      FittedBox(
+                        fit: BoxFit.scaleDown,
+                        child: MyText(
+                            text: authController.isLogin.isFalse
+                                ? 'ورود به‌ حساب کاربری'
+                                : authController.paymentController.isVip.isFalse
+                                    ? 'خرید اشتراک'
+                                    : 'دانلود'),
+                      ),
                       SizedBox(
                         height: 5,
                       )
@@ -1102,10 +1090,10 @@ class ButtonSectionMovieDetailWidget extends GetView<DetailController> {
                 : 5,
           ),
           //! Play Button
-          controller.selectedFilm.value.hasPlay != 'on' &&
-                  authController.paymentController.isVip.isFalse
-              ? SizedBox()
-              : Expanded(
+          Obx(() => controller.selectedFilm.value.hasPlay == 'on' &&
+                  authController.paymentController.isVip.isTrue &&
+                  authController.isLogin.isTrue
+              ? Expanded(
                   child: MyTextButton(
                       borderRadius: 5,
                       padding: EdgeInsets.zero,
@@ -1124,19 +1112,6 @@ class ButtonSectionMovieDetailWidget extends GetView<DetailController> {
                         Get.find<RecentContoller>()
                             .addToRecent(recentModel: rm);
                         Get.toNamed('/player');
-                        // showDialog(
-                        //   context: context,
-                        //   builder: (context) =>
-                        //       controller.isSerialOpenedDetail.value
-                        //           ? DownloadSerialDialog(
-                        //               actionMethod: ActionMethod.Play,
-                        //               title: 'Monarch',
-                        //             )
-                        //           : DownloadMovieDialog(
-                        //               actionMethod: ActionMethod.Play,
-                        //               title: 'Forrest',
-                        //             ),
-                        // );
                       },
                       bgColor: cY,
                       boxShadow: bsBtnMovieDetail,
@@ -1160,7 +1135,8 @@ class ButtonSectionMovieDetailWidget extends GetView<DetailController> {
                             height: 5,
                           )
                         ],
-                      ))),
+                      )))
+              : SizedBox()),
           SizedBox(
             width: padding,
           ),

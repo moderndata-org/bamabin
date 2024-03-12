@@ -161,7 +161,6 @@ class ApiProvider extends GetConnect {
 
   Future<Response> getMainSections() async {
     Response res = await get('${base_url}home/sections');
-    print(res.body);
     return res;
   }
 

@@ -1,5 +1,6 @@
 import 'package:bamabin/constant/classes.dart';
 import 'package:bamabin/constant/colors.dart';
+import 'package:bamabin/controller/download_manager_controller.dart';
 import 'package:bamabin/controller/player_controller.dart';
 import 'package:bamabin/models/film_model.dart';
 import 'package:bamabin/widgets/MyText.dart';
@@ -174,14 +175,7 @@ class DownloadMovieDialog extends StatelessWidget {
   }
 
   List<Widget> generateList() {
-    print('film.moviesDlbox?.dubbed');
-    print(film.moviesDlbox?.dubbed);
-    print('film.moviesDlbox?.native');
-    print(film.moviesDlbox?.native);
-    print('film.moviesDlbox?.screen');
-    print(film.moviesDlbox?.screen);
-    print('film.moviesDlbox?.subtitle');
-    print(film.moviesDlbox?.subtitle);
+    final downloadManagerController = Get.find<DownloadManagerController>();
     List<Widget> a = [];
     //!  Subtitles
     if (film.moviesDlbox?.subtitle != null &&
@@ -210,6 +204,10 @@ class DownloadMovieDialog extends StatelessWidget {
               Get.toNamed('/player');
               Get.find<PlayerController>().selectedDlBoxItem(item);
             },
+            onDownloadTap: () {
+              downloadManagerController.download(
+                  goingToDownloadPage: true, dlBox: item);
+            },
           ),
         );
       });
@@ -227,6 +225,10 @@ class DownloadMovieDialog extends StatelessWidget {
         // print(item.size);
         a.add(
           MovieItemDialogWidget(
+            onDownloadTap: () {
+              downloadManagerController.download(
+                  goingToDownloadPage: true, dlBox: item);
+            },
             onPlayTap: () {
               Get.toNamed('/player');
               Get.find<PlayerController>().selectedDlBoxItem(item);
@@ -255,6 +257,10 @@ class DownloadMovieDialog extends StatelessWidget {
         // print(item.size);
         a.add(
           MovieItemDialogWidget(
+            onDownloadTap: () {
+              downloadManagerController.download(
+                  goingToDownloadPage: true, dlBox: item);
+            },
             onPlayTap: () {
               Get.toNamed('/player');
               Get.find<PlayerController>().selectedDlBoxItem(item);
@@ -282,6 +288,10 @@ class DownloadMovieDialog extends StatelessWidget {
         // print(item.size);
         a.add(
           MovieItemDialogWidget(
+            onDownloadTap: () {
+              downloadManagerController.download(
+                  goingToDownloadPage: true, dlBox: item);
+            },
             onPlayTap: () {
               Get.toNamed('/player');
               Get.find<PlayerController>().selectedDlBoxItem(item);
