@@ -79,6 +79,7 @@ class PlayerController extends GetxController {
       ..initialize().then((value) {
         video_controller.play();
         isInit(true);
+        if(is_dubbed.isTrue)
         video_controller.setClosedCaptionFile(init_subtitle());
 
         max_progress(video_controller.value.duration.inMilliseconds);
