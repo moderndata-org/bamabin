@@ -7,7 +7,7 @@ import 'package:get_storage/get_storage.dart';
 import '../constant/classes.dart';
 
 class ApiProvider extends GetConnect {
-  String base_url = "https://bamabin71.sbs/api/";
+  String base_url = "https://bamabin75.sbs/api/";
   var head;
   var timeout = const Duration(seconds: 15);
   var maxAuthRetries = 5;
@@ -161,6 +161,7 @@ class ApiProvider extends GetConnect {
 
   Future<Response> getMainSections() async {
     Response res = await get('${base_url}home/sections');
+    print(res.body);
     return res;
   }
 
@@ -524,6 +525,11 @@ class ApiProvider extends GetConnect {
       "telegram_bot_site_token": telegram_bot_site_token,
     });
     Response res = await post('${base_url}telegram/sync', data, headers: head);
+    return res;
+  }
+
+  Future<Response> getSubtitleContent(url) async {
+    Response res = await get(url);
     return res;
   }
 }

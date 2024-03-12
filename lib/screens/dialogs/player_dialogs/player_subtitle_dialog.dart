@@ -1,11 +1,12 @@
 import 'package:accordion/accordion.dart';
 import 'package:bamabin/constant/colors.dart';
+import 'package:bamabin/controller/player_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../widgets/MyText.dart';
 
-class PlayerSubtitleDialog extends StatelessWidget {
+class PlayerSubtitleDialog extends GetView<PlayerController> {
   const PlayerSubtitleDialog({super.key});
 
   @override
@@ -102,17 +103,39 @@ class PlayerSubtitleDialog extends StatelessWidget {
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
-                                        MyText(
-                                          text: 'سفید',
+                                        GestureDetector(
+
+                                          child: MyText(
+                                            text: 'سفید',
+                                          ),
+                                          onTap: (){
+                                            controller.subtitle_style["text_color"] = Colors.white;
+                                          },
                                         ),
                                         SizedBox(
                                           height: 5,
                                         ),
-                                        MyText(text: 'زرد'),
+                                        GestureDetector(
+
+                                          child: MyText(
+                                            text: 'زرد',
+                                          ),
+                                          onTap: (){
+                                            controller.subtitle_style["text_color"] = Colors.yellow;
+                                          },
+                                        ),
                                         SizedBox(
                                           height: 5,
                                         ),
-                                        MyText(text: 'قرمز'),
+                                        GestureDetector(
+
+                                          child: MyText(
+                                            text: 'قرمز',
+                                          ),
+                                          onTap: (){
+                                            controller.subtitle_style["text_color"] = Colors.red;
+                                          },
+                                        ),
                                       ],
                                     ),
                                   )),
@@ -151,8 +174,12 @@ class PlayerSubtitleDialog extends StatelessWidget {
                                               thumbShape: RoundSliderThumbShape(
                                                   enabledThumbRadius: 5)),
                                           child: Slider(
-                                            value: 0.5,
-                                            onChanged: (value) {},
+                                            min: 1,
+                                            max: 255,
+                                            value: (controller.subtitle_style["text_opacity"] as int).toDouble(),
+                                            onChanged: (value) {
+                                              controller.subtitle_style["text_opacity"] = value;
+                                            },
                                           ),
                                         ),
                                       ),
@@ -183,17 +210,39 @@ class PlayerSubtitleDialog extends StatelessWidget {
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
-                                        MyText(
+                                        GestureDetector(
+
+                                          child: MyText(
                                           text: 'سفید',
                                         ),
+                                        onTap: (){
+                                            controller.subtitle_style["bg_color"] = Colors.white;
+                                        },
+                                        ),
                                         SizedBox(
                                           height: 5,
                                         ),
-                                        MyText(text: 'زرد'),
+                                        GestureDetector(
+
+                                          child: MyText(
+                                            text: 'زرد',
+                                          ),
+                                          onTap: (){
+                                            controller.subtitle_style["bg_color"] = Colors.yellow;
+                                          },
+                                        ),
                                         SizedBox(
                                           height: 5,
                                         ),
-                                        MyText(text: 'قرمز'),
+                                        GestureDetector(
+
+                                          child: MyText(
+                                            text: 'قرمز',
+                                          ),
+                                          onTap: (){
+                                            controller.subtitle_style["bg_color"] = Colors.red;
+                                          },
+                                        ),
                                       ],
                                     ),
                                   )),
@@ -232,8 +281,12 @@ class PlayerSubtitleDialog extends StatelessWidget {
                                               thumbShape: RoundSliderThumbShape(
                                                   enabledThumbRadius: 5)),
                                           child: Slider(
-                                            value: 0.5,
-                                            onChanged: (value) {},
+                                            min: 1,
+                                            max: 255,
+                                            value: (controller.subtitle_style["bg_opacity"] as int).toDouble(),
+                                            onChanged: (value) {
+                                              controller.subtitle_style["bg_opacity"] = value;
+                                            },
                                           ),
                                         ),
                                       ),

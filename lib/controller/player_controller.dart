@@ -1,7 +1,10 @@
 import 'dart:async';
+import 'dart:convert';
 
+import 'package:bamabin/api/api_handler.dart';
 import 'package:bamabin/controller/detail_controller.dart';
 import 'package:bamabin/models/dlbox_item_model.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:video_player/video_player.dart';
@@ -20,9 +23,16 @@ class PlayerController extends GetxController {
 
   Rx<DlboxItem> selectedDlBoxItem = DlboxItem().obs;
   DetailController detailController = Get.find();
+  var subtitle_style = {
+    "bg_color":"000000",
+    "text_opacity":100,
+    "text_color":Colors.white,
+    "bg_opacity":100
+  }.obs;
 
   //! new
   RxBool isInit = false.obs;
+  var captions = <Caption>[];
 
   //! new
 
@@ -48,14 +58,26 @@ class PlayerController extends GetxController {
     }
   }
 
+  Future<ClosedCaptionFile>? init_subtitle() async{
+    var d = jsonDecode(detailController.selectedFilm.value.dlboxSubtitle!);
+    var value = await ApiProvider().getSubtitleContent(d["1"]["link"]);
+    var c = SubRipCaptionFile(value.body);
+    return c;
+  }
+
   void StartVideo() {
+
+
+
     // if(!video_controller.value.isInitialized){
-    print(selectedDlBoxItem.value.link!);
+    print("Video Link: ${jsonDecode(detailController.selectedFilm.value.dlboxSubtitle!)}");
     video_controller = VideoPlayerController.networkUrl(Uri.parse(
-        selectedDlBoxItem.value.link!))
+        selectedDlBoxItem.value.link!),
+        videoPlayerOptions: VideoPlayerOptions(allowBackgroundPlayback: true))
       ..initialize().then((value) {
         video_controller.play();
         isInit(true);
+        video_controller.setClosedCaptionFile(init_subtitle());
 
         max_progress(video_controller.value.duration.inMilliseconds);
 

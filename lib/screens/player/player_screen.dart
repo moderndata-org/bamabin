@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:bamabin/constant/colors.dart';
+import 'package:bamabin/constant/utils.dart';
 import 'package:bamabin/controller/detail_controller.dart';
 import 'package:bamabin/controller/player_controller.dart';
 import 'package:bamabin/screens/dialogs/player_dialogs/player_season_dialog.dart';
@@ -83,7 +84,8 @@ class _PlayerScreenState extends State<PlayerScreen> {
         }, child: Obx(
           () {
             print("State updated");
-            print("Playing status is:${controller.current_buffer_progress.value.toDouble()}");
+            print(
+                "Playing status is:${controller.current_buffer_progress.value.toDouble()}");
             return Stack(
               children: [
                 Obx(() => Container(
@@ -102,6 +104,16 @@ class _PlayerScreenState extends State<PlayerScreen> {
                               ),
                             ),
                     )),
+                Container(
+                  child: Obx(() => ClosedCaption(
+                    text: controller.video_controller.value.caption.text,
+                    textStyle: TextStyle(
+                        color: (controller.subtitle_style["text_color"] as Color).withAlpha(controller.subtitle_style["text_opacity"] as int),
+                        backgroundColor: (controller.subtitle_style["bg_color"] as Color).withAlpha(controller.subtitle_style["bg_opacity"] as int),
+
+                    ) ,
+                  )),
+                ),
                 Obx(() => // Player,
                     AnimatedOpacity(
                       duration: Duration(milliseconds: 300),
@@ -133,32 +145,38 @@ class _PlayerScreenState extends State<PlayerScreen> {
                                           )),
                                       Spacer(),
                                       MyText(
-                                        text: "${detailController.selectedFilm.value.name} ${controller.selectedDlBoxItem.value.quality}",
+                                        text:
+                                            "${detailController.selectedFilm.value.name} ${controller.selectedDlBoxItem.value.quality}",
                                         fontWeight: FontWeight.w500,
                                         size: 15,
                                       ),
                                       Spacer(),
                                       //! Serial List
-                                      (detailController.selectedFilm.value.type == "series") ?
-                                      IconButton(
-                                          onPressed: () {
-                                            controller.video_controller.pause();
-                                            showDialog(
-                                              context: context,
-                                              builder: (context) =>
-                                                  PlayerSeasonDialog(),
-                                            );
-                                          },
-                                          icon: Icon(
-                                            Icons.playlist_play,
-                                            color: Colors.white,
-                                            size: 35,
-                                          )) : Container(),
+                                      (detailController
+                                                  .selectedFilm.value.type ==
+                                              "series")
+                                          ? IconButton(
+                                              onPressed: () {
+                                                controller.video_controller
+                                                    .pause();
+                                                showDialog(
+                                                  context: context,
+                                                  builder: (context) =>
+                                                      PlayerSeasonDialog(),
+                                                );
+                                              },
+                                              icon: Icon(
+                                                Icons.playlist_play,
+                                                color: Colors.white,
+                                                size: 35,
+                                              ))
+                                          : Container(),
                                     ],
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
                                   ),
                                 ),
+
                                 //! Bottom Bar
                                 Container(
                                   height: 130,
@@ -195,14 +213,17 @@ class _PlayerScreenState extends State<PlayerScreen> {
                                                   activeColor: Colors.white,
                                                   inactiveColor: Colors.white
                                                       .withOpacity(0.2),
-                                                  max: controller
-                                                      .max_progress
+                                                  max: controller.max_progress
                                                       .toDouble(),
                                                   value: controller
                                                       .current_progress
                                                       .toDouble(),
-                                                  secondaryActiveColor: Colors.blueAccent,
-                                                  secondaryTrackValue: controller.current_buffer_progress.value.toDouble(),
+                                                  secondaryActiveColor:
+                                                      Colors.blueAccent,
+                                                  secondaryTrackValue: controller
+                                                      .current_buffer_progress
+                                                      .value
+                                                      .toDouble(),
                                                   onChanged: (value) {
                                                     controller.current_progress(
                                                         value.toInt());
@@ -273,24 +294,50 @@ class _PlayerScreenState extends State<PlayerScreen> {
                                               mainAxisSize: MainAxisSize.min,
                                               textDirection: TextDirection.ltr,
                                               children: [
-                                                Icon(
-                                                  Icons.skip_previous_rounded,
-                                                  color: Colors.white,
-                                                  size: 40,
+                                                Visibility(
+                                                  visible: controller
+                                                          .selectedDlBoxItem
+                                                          .value
+                                                          .type ==
+                                                      "series",
+                                                  child: Row(
+                                                    children: [
+                                                      Icon(
+                                                        Icons
+                                                            .skip_previous_rounded,
+                                                        color: Colors.white,
+                                                        size: 40,
+                                                      ),
+                                                      SizedBox(
+                                                        width: 20,
+                                                      ),
+                                                    ],
+                                                  ),
                                                 ),
-                                                SizedBox(
-                                                  width: 20,
-                                                ),
-                                                IconButton(onPressed: (){
-                                                  controller.video_controller.position.then((value){
-                                                    var d = value ?? Duration(seconds: 10) - Duration(minutes: 1);
-                                                    controller.current_progress(d.inSeconds);
-                                                    controller.video_controller.seekTo(d);
-
-                                                  });
-                                                }, icon: Icon(Icons.replay_10_rounded,
-                                                    color: Colors.white,
-                                                    size: 30)),
+                                                IconButton(
+                                                    onPressed: () {
+                                                      controller
+                                                          .video_controller
+                                                          .position
+                                                          .then((value) {
+                                                        var d = value ??
+                                                            Duration(
+                                                                    seconds:
+                                                                        10) -
+                                                                Duration(
+                                                                    minutes: 1);
+                                                        controller
+                                                            .current_progress(
+                                                                d.inSeconds);
+                                                        controller
+                                                            .video_controller
+                                                            .seekTo(d);
+                                                      });
+                                                    },
+                                                    icon: Icon(
+                                                        Icons.replay_10_rounded,
+                                                        color: Colors.white,
+                                                        size: 30)),
                                                 SizedBox(
                                                   width: 20,
                                                 ),
@@ -321,12 +368,25 @@ class _PlayerScreenState extends State<PlayerScreen> {
                                                 Icon(Icons.forward_10_rounded,
                                                     color: Colors.white,
                                                     size: 30),
-                                                SizedBox(
-                                                  width: 20,
+                                                Visibility(
+                                                  visible: controller
+                                                          .selectedDlBoxItem
+                                                          .value
+                                                          .type ==
+                                                      "series",
+                                                  child: Row(
+                                                    children: [
+                                                      SizedBox(
+                                                        width: 20,
+                                                      ),
+                                                      Icon(
+                                                          Icons
+                                                              .skip_next_rounded,
+                                                          color: Colors.white,
+                                                          size: 40),
+                                                    ],
+                                                  ),
                                                 ),
-                                                Icon(Icons.skip_next_rounded,
-                                                    color: Colors.white,
-                                                    size: 40),
                                               ],
                                             ),
                                             //! Right
@@ -380,7 +440,8 @@ class _PlayerScreenState extends State<PlayerScreen> {
                                                                         BorderRadius.circular(
                                                                             3)),
                                                                 child: MyText(
-                                                                  text: '${controller.selectedDlBoxItem.value.qualityCode}',
+                                                                  text:
+                                                                      '${controller.selectedDlBoxItem.value.qualityCode}',
                                                                   color: cW,
                                                                   size: 7,
                                                                 ),
