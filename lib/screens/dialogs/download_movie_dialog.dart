@@ -176,6 +176,7 @@ class DownloadMovieDialog extends StatelessWidget {
 
   List<Widget> generateList() {
     final downloadManagerController = Get.find<DownloadManagerController>();
+    final videoController = Get.find<PlayerController>();
     List<Widget> a = [];
     //!  Subtitles
     if (film.moviesDlbox?.subtitle != null &&
@@ -202,7 +203,8 @@ class DownloadMovieDialog extends StatelessWidget {
             movieSize: computeTheCapacity(size: item.size!),
             onPlayTap: () {
               Get.toNamed('/player');
-              Get.find<PlayerController>().selectedDlBoxItem(item);
+              videoController.selectedDlBoxItem(item);
+              videoController.is_dubbed(false);
             },
             onDownloadTap: () {
               downloadManagerController.download(
@@ -231,7 +233,8 @@ class DownloadMovieDialog extends StatelessWidget {
             },
             onPlayTap: () {
               Get.toNamed('/player');
-              Get.find<PlayerController>().selectedDlBoxItem(item);
+              videoController.selectedDlBoxItem(item);
+              videoController.is_dubbed(false);
             },
             hasOnlinePlay: item.playStatus == 'on',
             quality: item.originalQuality ?? '',
@@ -263,7 +266,8 @@ class DownloadMovieDialog extends StatelessWidget {
             },
             onPlayTap: () {
               Get.toNamed('/player');
-              Get.find<PlayerController>().selectedDlBoxItem(item);
+              videoController.selectedDlBoxItem(item);
+              videoController.is_dubbed(false);
             },
             hasOnlinePlay: item.playStatus == 'on',
             quality: item.originalQuality ?? '',
@@ -294,7 +298,8 @@ class DownloadMovieDialog extends StatelessWidget {
             },
             onPlayTap: () {
               Get.toNamed('/player');
-              Get.find<PlayerController>().selectedDlBoxItem(item);
+              videoController.selectedDlBoxItem(item);
+              videoController.is_dubbed(false);
             },
             hasOnlinePlay: item.playStatus == 'on',
             quality: item.originalQuality ?? '',

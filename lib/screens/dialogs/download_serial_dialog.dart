@@ -238,6 +238,7 @@ class DownloadSerialDialog extends GetView<DetailController> {
           SerialAccordion(
             item: item,
             type: MovieType.Dubbed,
+            isDubbed: true,
             color: cR,
           ),
         );
@@ -249,10 +250,15 @@ class DownloadSerialDialog extends GetView<DetailController> {
 
 class SerialAccordion extends StatelessWidget {
   const SerialAccordion(
-      {required this.item, required this.color, required this.type, super.key});
+      {required this.item,
+      this.isDubbed,
+      required this.color,
+      required this.type,
+      super.key});
   final SeasonBoxModel item;
   final MovieType type;
   final Color color;
+  final bool? isDubbed;
   @override
   Widget build(BuildContext context) {
     return Accordion(
@@ -318,6 +324,7 @@ class SerialAccordion extends StatelessWidget {
                               Get.find<PlayerController>();
                           var downloadManagerController =
                               Get.find<DownloadManagerController>();
+                          videoPlayerController.is_dubbed(isDubbed == true);
                           DlboxItem dl = item.items![index];
                           DlboxItem dl2 = index > item.items!.length - 2
                               ? DlboxItem()
