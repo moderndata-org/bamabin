@@ -1,9 +1,13 @@
 import 'dart:io';
 
+import 'package:bamabin/constant/utils.dart';
+import 'package:bamabin/controller/auth_controller.dart';
+import 'package:bamabin/widgets/MyCircularProgress.dart';
 import 'package:bamabin/widgets/MyTextField.dart';
 import 'package:bamabin/widgets/back_button_custom.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 
 import '../../constant/colors.dart';
@@ -19,7 +23,9 @@ class SignInQrCodeScreen extends StatefulWidget {
 class _SignInQrCodeScreenState extends State<SignInQrCodeScreen> {
   final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
   Barcode? result;
+  bool? can_login;
   QRViewController? controller;
+  AuthController authController = Get.find();
 
   @override
   void reassemble() {
@@ -77,7 +83,8 @@ class _SignInQrCodeScreenState extends State<SignInQrCodeScreen> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text(
-                                  "اسکن کنید یا کد را وارد کنید",
+                                  "لطفا QR را از وبسایت اسکن کنید",
+                                  textDirection: TextDirection.rtl,
                                   style: TextStyle(color: Colors.white),
                                 ),
                                 SizedBox(
@@ -94,27 +101,10 @@ class _SignInQrCodeScreenState extends State<SignInQrCodeScreen> {
                           SizedBox(
                             height: 10,
                           ),
-                          MyTextField(
-                            hint: "QRCode کد ",
-                            textStyle: TextStyle(color: Colors.white),
-                            controller: new TextEditingController(),
-                            width: Get.width * .8,
-                            textAlign: TextAlign.center,
-                            textDirection: TextDirection.rtl,
-                          ),
                           SizedBox(
                             height: 10,
                           ),
-                          MyTextButton(
-                            bgColor: cAccent,
-                            child: Text(
-                              "ورود",
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                            onTap: () {},
-                          )
+
                         ],
                       ),
                     )
@@ -131,6 +121,16 @@ class _SignInQrCodeScreenState extends State<SignInQrCodeScreen> {
     controller.scannedDataStream.listen((scanData) {
       setState(() {
         result = scanData;
+        print("Code------${scanData}");
+        if(result != null){
+          print("Code------${scanData}");
+          GetStorage('bamabin')
+            ..write("api_key", "${result!.code}")
+            ..save();
+          authController.checkLogin();
+          Get.back();
+        }
+        
       });
     });
   }
