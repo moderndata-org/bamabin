@@ -69,7 +69,7 @@ class OrderListController extends GetxController {
     required FilmModel filmModel,
     required int index,
   }) {
-    Get.back();
+    // Get.back();
     isLoadingDetails(true);
     ApiProvider()
         .addOrderListItem(

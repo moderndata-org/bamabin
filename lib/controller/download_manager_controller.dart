@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 import 'dart:isolate';
 import 'dart:ui';
@@ -24,8 +25,12 @@ class DownloadManagerController extends GetxController {
     //     }
     //   }
     // });
-    _bindBackgroundIsolate();
-    refreshDownloadList();
+    //! Disable for now
+    // _bindBackgroundIsolate();
+    //! Enable for now
+    Timer.periodic(Duration(milliseconds: 100), (timer) {
+      refreshDownloadList();
+    });
     FlutterDownloader.registerCallback(downloadCallback);
 
     super.onInit();

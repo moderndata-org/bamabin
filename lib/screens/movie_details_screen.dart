@@ -6,6 +6,7 @@ import 'package:bamabin/controller/auth_controller.dart';
 import 'package:bamabin/controller/detail_controller.dart';
 import 'package:bamabin/controller/favorite_controller.dart';
 import 'package:bamabin/models/comment_model.dart';
+import 'package:bamabin/models/genre_model.dart';
 import 'package:bamabin/screens/dialogs/download_movie_dialog.dart';
 import 'package:bamabin/screens/dialogs/download_serial_dialog.dart';
 import 'package:bamabin/screens/dialogs/report_bug_dialog.dart';
@@ -62,6 +63,7 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    print(controller.selectedFilm.value.trailer_url);
     return SafeArea(
       child: Scaffold(
         floatingActionButton: Obx(() => controller.showGoToTop.value
@@ -132,8 +134,7 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                       )),
                   //! Geners
                   Obx(
-                    () => controller.selectedFilm.value.genresListForDetail ==
-                            null
+                    () => controller.selectedFilm.value.genres == null
                         ? SizedBox()
                         : Positioned(
                             right: 140,
@@ -148,12 +149,12 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                                   padding:
                                       EdgeInsets.symmetric(horizontal: padding),
                                   physics: BouncingScrollPhysics(),
-                                  itemCount: controller.selectedFilm.value
-                                      .genresListForDetail?.length,
+                                  itemCount: controller
+                                      .selectedFilm.value.genres?.length,
                                   scrollDirection: Axis.horizontal,
                                   itemBuilder: (context, index) {
-                                    String genre = controller.selectedFilm.value
-                                        .genresListForDetail![index];
+                                    Genre genre = controller
+                                        .selectedFilm.value.genres![index];
                                     return Container(
                                         decoration: BoxDecoration(
                                             color: cbgGenerMovieDetail
@@ -171,7 +172,7 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                                             top: 4,
                                             bottom: 4),
                                         child: MyText(
-                                          text: '$genre',
+                                          text: '${genre.name}',
                                           size: 11,
                                         ));
                                   },
@@ -558,62 +559,53 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                   ),
                 )),
             //! TrailerSection New
-            Obx(() => controller.isLoadingNewData.isTrue
+            Obx(() => controller.isLoadingTrailer.isTrue ||
+                    controller.isLoadingNewData.isTrue
                 ? CustomShimmerWidget(
                     height: 200,
                     width: Get.width,
                   )
-                : (controller.selectedFilm.value.trailer_url == '' ||
-                            controller.selectedFilm.value.trailer_url ==
-                                null) &&
-                        controller.trailerControllerChieview != null
+                : controller.showTrailer.isFalse
                     ? SizedBox()
-                    : controller.isLoadingTrailer.isTrue
-                        ? CustomShimmerWidget(
-                            height: 200,
-                            width: Get.width,
-                          )
-                        : controller.showTrailer.isFalse
-                            ? SizedBox()
-                            : Container(
-                                width: Get.width,
-                                color: cPrimaryDark,
-                                padding: EdgeInsets.only(top: 15),
-                                child: Column(
-                                  children: [
-                                    Row(
-                                      textDirection: TextDirection.rtl,
-                                      children: [
-                                        SizedBox(
-                                          width: 15,
-                                        ),
-                                        Icon(
-                                          Icons.theaters_rounded,
-                                          color: cW,
-                                        ),
-                                        SizedBox(
-                                          width: 10,
-                                        ),
-                                        MyText(
-                                          text: 'تریلر',
-                                          size: 15,
-                                        ),
-                                      ],
-                                    ),
-                                    SizedBox(
-                                      height: 10,
-                                    ),
-                                    SizedBox(
-                                      width: Get.width,
-                                      height: 200,
-                                      child: Chewie(
-                                        controller: controller
-                                            .trailerControllerChieview!,
-                                      ),
-                                    )
-                                  ],
+                    : Container(
+                        width: Get.width,
+                        color: cPrimaryDark,
+                        padding: EdgeInsets.only(top: 15),
+                        child: Column(
+                          children: [
+                            Row(
+                              textDirection: TextDirection.rtl,
+                              children: [
+                                SizedBox(
+                                  width: 15,
                                 ),
-                              )),
+                                Icon(
+                                  Icons.theaters_rounded,
+                                  color: cW,
+                                ),
+                                SizedBox(
+                                  width: 10,
+                                ),
+                                MyText(
+                                  text: 'تریلر',
+                                  size: 15,
+                                ),
+                              ],
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            SizedBox(
+                              width: Get.width,
+                              height: 200,
+                              child: Chewie(
+                                controller:
+                                    controller.trailerControllerChieview!,
+                              ),
+                            )
+                          ],
+                        ),
+                      )),
             // //! TrailerSection Bk
             // Obx(() => controller.isLoadingNewData.isTrue
             //     ? SizedBox()

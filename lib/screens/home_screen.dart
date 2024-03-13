@@ -47,22 +47,9 @@ class HomeScreen extends GetView<PublicController> {
                 height: 200,
                 width: Get.width,
                 child: (mainController.isLoadingBanners.isTrue)
-                    ? Shimmer(
-                        child: Container(
-                          height: 200,
-                          width: Get.width,
-                          decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(5)),
-                        ),
-                        gradient: LinearGradient(
-                            begin: Alignment.topLeft,
-                            end: Alignment.bottomRight,
-                            colors: [
-                              Color.fromARGB(255, 52, 52, 52),
-                              Color.fromARGB(255, 93, 93, 93),
-                              Color.fromARGB(255, 52, 52, 52),
-                            ]),
+                    ? CustomShimmerWidget(
+                        height: 200,
+                        width: Get.width,
                       )
                     : CarouselSlider(
                         options: CarouselOptions(

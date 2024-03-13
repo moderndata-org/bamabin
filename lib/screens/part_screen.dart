@@ -252,7 +252,7 @@ class MovieItemShimmer extends StatelessWidget {
       baseColor: Color.fromARGB(255, 52, 52, 52),
       highlightColor: Color.fromARGB(255, 93, 93, 93),
       direction: ShimmerDirection.ltr,
-      period: Duration(seconds: 3),
+      period: Duration(seconds: 1),
       enabled: true,
       child: Column(
         children: [

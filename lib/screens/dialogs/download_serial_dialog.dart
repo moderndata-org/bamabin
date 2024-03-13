@@ -7,6 +7,7 @@ import 'package:bamabin/models/dlbox_item_model.dart';
 import 'package:bamabin/models/series_dlbox_model.dart';
 import 'package:bamabin/widgets/MyText.dart';
 import 'package:bamabin/widgets/dialog_items/movie_item_dialog_widget.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
@@ -32,63 +33,62 @@ class DownloadSerialDialog extends GetView<DetailController> {
           child: Column(
             children: [
               SizedBox(
-                height: 40,
                 width: Get.width,
-                child: Stack(
-                  alignment: Alignment.center,
+                child: Row(
+                  textDirection: TextDirection.rtl,
                   children: [
-                    Positioned(
-                        top: 0,
-                        right: 7,
-                        child: IconButton(
-                            splashRadius: 10,
-                            onPressed: () => Navigator.pop(context),
-                            icon: Icon(
-                              Icons.cancel,
-                              color: cR,
-                            ))),
-                    Positioned(
-                      top: 0,
-                      child: ClipRRect(
-                        child: Container(
-                          height: 40,
-                          width: Get.width * .7,
-                          alignment: Alignment.center,
-                          padding: EdgeInsets.only(
-                              top: 5, right: 10, left: 10, bottom: 5),
-                          decoration: BoxDecoration(
-                              color: cSecondaryLight,
-                              borderRadius: BorderRadius.only(
-                                bottomRight: Radius.circular(5),
-                                bottomLeft: Radius.circular(5),
-                              )),
-                          child:
-                              Row(textDirection: TextDirection.rtl, children: [
-                            Icon(
-                              Icons.download_rounded,
-                              color: cW,
-                              shadows: [bsText],
-                            ),
-                            SizedBox(
-                              width: 5,
-                            ),
-                            Expanded(
-                              child: Center(
-                                child: MyText(
-                                  shadows: [bsText],
-                                  textDirection: TextDirection.rtl,
-                                  text:
-                                      'لینک ${controller.selectedFilm.value.title}',
-                                  color: cW,
-                                  fontWeight: FontWeight.w900,
-                                  textOverflow: TextOverflow.ellipsis,
-                                  size: 15,
-                                ),
+                    SizedBox(
+                      width: 50,
+                      height: 40,
+                      child: IconButton(
+                          splashRadius: 10,
+                          onPressed: () => Navigator.pop(context),
+                          icon: Icon(
+                            Icons.cancel,
+                            color: cR,
+                          )),
+                    ),
+                    Expanded(
+                      child: Container(
+                        constraints: BoxConstraints(minHeight: 40),
+                        alignment: Alignment.center,
+                        padding: EdgeInsets.only(
+                            top: 5, right: 10, left: 10, bottom: 5),
+                        decoration: BoxDecoration(
+                            color: cSecondaryLight,
+                            borderRadius: BorderRadius.only(
+                              bottomRight: Radius.circular(5),
+                              bottomLeft: Radius.circular(5),
+                            )),
+                        child: Row(textDirection: TextDirection.rtl, children: [
+                          Icon(
+                            Icons.download_rounded,
+                            color: cW,
+                            shadows: [bsText],
+                          ),
+                          SizedBox(
+                            width: 5,
+                          ),
+                          Expanded(
+                            child: Center(
+                              child: MyText(
+                                shadows: [bsText],
+                                textDirection: TextDirection.rtl,
+                                text:
+                                    'لینک ${controller.selectedFilm.value.title}',
+                                color: cW,
+                                fontWeight: FontWeight.w900,
+                                maxLines: 2,
+                                textOverflow: TextOverflow.ellipsis,
+                                size: 15,
                               ),
                             ),
-                          ]),
-                        ),
+                          ),
+                        ]),
                       ),
+                    ),
+                    SizedBox(
+                      width: 50,
                     )
                   ],
                 ),
@@ -117,6 +117,7 @@ class DownloadSerialDialog extends GetView<DetailController> {
                             contentVerticalPadding: 0,
                             scaleWhenAnimating: true,
                             openAndCloseAnimation: true,
+                            maxOpenSections: 20,
                             headerPadding: EdgeInsets.zero,
                             disableScrolling: true,
                             children: generateList())),
@@ -130,9 +131,10 @@ class DownloadSerialDialog extends GetView<DetailController> {
 
   List<AccordionSection> generateList() {
     List<AccordionSection> a = [];
+    bool isOpen = true;
     controller.selectedFilm.value.seriesDlbox?.forEach((series) {
       a.add(AccordionSection(
-        isOpen: false,
+        isOpen: isOpen,
         rightIcon: Icon(
           Icons.keyboard_arrow_down_rounded,
           color: cW,
@@ -300,7 +302,8 @@ class SerialAccordion extends StatelessWidget {
               movieSize: computeTheCapacity(
                   size: item.info?.size == null
                       ? 0
-                      : double.parse(item.info!.size.toString())),
+                      : double.parse(
+                          (item.info!.size! / item.items!.length).toString())),
               movieType: type,
               quality: '${item.info?.quality}',
               subtitleType: item.info?.subtitleType == 'hard'

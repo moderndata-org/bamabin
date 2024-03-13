@@ -35,6 +35,7 @@ class DetailController extends GetxController {
   RxBool showTrailer = false.obs;
   Rx<DepartmentModel> selectedDepartment = DepartmentModel().obs;
   Rx<CommentModel> selectedCommentForReply = CommentModel().obs;
+  FocusNode txtCommentFocus = FocusNode();
 
   void setLikeAction({required LikeAction action, required String id}) {
     isLoadingLikeStatus(true);
@@ -160,29 +161,52 @@ class DetailController extends GetxController {
               showControlsOnInitialize: true,
               showControls: true,
               hideControlsTimer: Duration(seconds: 2));
-          // print('oopsssssssssss After ');
-          isInitialize = true;
         });
-    }
-    //! When url is currupt or is filter
-    if (isInitialize) {
       trailerController!.addListener(() {
+        // if (trailerControllerChieview
+        //         ?.videoPlayerController.value.hasError ==
+        //     true) {
+        //   print('shit');
+        // }
+        // if(trailerController.value.errorDescription !=null){
+
+        // }
         if (trailerController!.value.hasError) {
-          // print('catch it');
+          print('catch it');
+          showTrailer(false);
+          isLoadingTrailer(false);
           selectedFilm.value.trailer_url = '';
           selectedFilm.refresh();
           trailerControllerChieview = null;
         } else {
+          print('catch iss');
           showTrailer(true);
+          isLoadingTrailer(false);
         }
       });
     } else {
-      selectedFilm.value.trailer_url = null;
-      selectedFilm.refresh();
-      trailerControllerChieview = null;
+      isLoadingTrailer(false);
+      showTrailer(false);
     }
+    //! When url is currupt or is filter
+    // if (isInitialize) {
+    //   trailerController!.addListener(() {
+    //     if (trailerController!.value.hasError) {
+    //       // print('catch it');
+    //       selectedFilm.value.trailer_url = '';
+    //       selectedFilm.refresh();
+    //       trailerControllerChieview = null;
+    //     } else {
+    //       showTrailer(true);
+    //     }
+    //   });
+    // } else {
+    //   selectedFilm.value.trailer_url = null;
+    //   selectedFilm.refresh();
+    //   trailerControllerChieview = null;
+    // }
 
-    isLoadingTrailer(false);
+    print('isInitialize : $isInitialize');
   }
 
   void getNewData() {
@@ -207,7 +231,8 @@ class DetailController extends GetxController {
   void onInit() {
     txtComment = TextEditingController();
     movieDetailScrollController.addListener(() {
-      if (movieDetailScrollController.offset > Get.height / 5) {
+      if (txtCommentFocus.hasFocus ==
+          false) if (movieDetailScrollController.offset > Get.height / 5) {
         showGoToTop(true);
       } else {
         showGoToTop(false);

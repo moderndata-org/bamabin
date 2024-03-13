@@ -14,7 +14,7 @@ class CommentItem extends StatelessWidget {
       this.user,
       this.replyFunc,
       this.date,
-        this.avatar,
+      this.avatar,
       this.text});
   bool? isReply;
   String? user;
@@ -24,6 +24,7 @@ class CommentItem extends StatelessWidget {
   final Function()? replyFunc;
   @override
   Widget build(BuildContext context) {
+    print(avatar);
     return Container(
       margin: EdgeInsets.only(top: 10, right: 10, left: 10),
       width: Get.width - 20,
@@ -31,9 +32,13 @@ class CommentItem extends StatelessWidget {
         textDirection: TextDirection.rtl,
         children: [
           isReply == true ? Spacer() : SizedBox(),
-          CircleAvatar(
-            child: (avatar != null) ? CachedNetworkImage(imageUrl: avatar!,) :  Image.asset("assets/images/ic_logo.png"),
-          ),
+          avatar == null
+              ? CircleAvatar(
+                  backgroundImage: AssetImage("assets/images/ic_logo.png"),
+                )
+              : CircleAvatar(
+                  backgroundImage: NetworkImage(avatar!),
+                ),
           SizedBox(
             width: 10,
           ),
@@ -84,10 +89,13 @@ class CommentItem extends StatelessWidget {
                                 onTap: replyFunc,
                                 bgColor: cY,
                                 fgColor: cB,
-                                child: MyText(
-                                  text: 'پاسخ',
-                                  color: cB,
-                                  size: 11,
+                                child: FittedBox(
+                                  fit: BoxFit.fitHeight,
+                                  child: MyText(
+                                    text: 'پاسخ',
+                                    color: cB,
+                                    size: 12,
+                                  ),
                                 ),
                               )
                       ],

@@ -27,9 +27,9 @@ class _OrderlistEditDialogState extends State<OrderlistEditDialog> {
   @override
   void initState() {
     txtEditlistTitle = TextEditingController()
-      ..text = '${widget.orderListModel.content}';
+      ..text = '${widget.orderListModel.title ?? ''}';
     txtEditlistDescription = TextEditingController()
-      ..text = '${widget.orderListModel.content}';
+      ..text = '${widget.orderListModel.content ?? ''}';
     super.initState();
   }
 

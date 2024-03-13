@@ -62,6 +62,13 @@ class _OrderlistAddMovieWithSearchDialogState
                       height: 40,
                       child: MyTextField(
                         controller: txtSearch!,
+                        action: TextInputAction.search,
+                        onActionClicked: (text) {
+                          if (txtSearch!.text.trim().length > 0) {
+                            controller.search(
+                                isFirstPage: true, txtSearch: txtSearch!.text);
+                          }
+                        },
                         height: 45,
                         textDirection: TextDirection.rtl,
                         hint: '...جستجو',

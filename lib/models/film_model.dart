@@ -121,7 +121,7 @@ class FilmModel {
   LikeInfoModel? likeInfo;
   int? broadcast_day;
   int? production_budget;
-  List<String>? genresListForDetail;
+  // List<String>? genresListForDetail;
   List<FilmModel>? collection_posts;
   List<FilmModel>? related_posts;
   // List<DlboxModel>? dlbox;
@@ -134,7 +134,7 @@ class FilmModel {
     this.releaseYear,
     this.production_budget,
     this.broadcast_day,
-    this.genresListForDetail,
+    // this.genresListForDetail,
     this.date,
     this.dateGmt,
     this.content,
@@ -333,16 +333,6 @@ class FilmModel {
       });
     }
 
-    if (type == 'series') {
-      //! series
-
-      // if (json['dlbox'] != null) {
-      //   dlbox = <DlboxMoviesModel>[];
-      //   json['dlbox'].forEach((v) {
-      //     dlbox!.add(new DlboxMoviesModel.fromJson(v));
-      //   });
-      // }
-    }
     if (json['genres'] != null) {
       genres = <Genre>[];
       json['genres'].forEach((v) {
@@ -418,7 +408,7 @@ class FilmModel {
         networks!.add(new NetworkModel.fromJson(v));
       });
     }
-    genresListForDetail = genreMovie?.split(',');
+    // genresListForDetail = genreMovie?.split(',');
     if (releaseMovie != null) {
       if (releaseMovie!.contains(',')) {
         List tmp = releaseMovie!.split(',');
@@ -481,6 +471,7 @@ class FilmModel {
     double width = fullWidth / 4;
     String? brStatus;
     String? playChannel;
+    String? playDay;
     if (networks != null) {
       for (int i = 0; i < networks!.length; i++) {
         if (i != 0) {
@@ -489,10 +480,11 @@ class FilmModel {
         playChannel = playChannel ?? '' + '${networks![i].name}';
       }
     }
+    //! Play status
     switch (broadcast_status) {
       case 'finished':
         {
-          brStatus = 'اتمام پخش';
+          playDay = 'اتمام پخش';
           break;
         }
       case 'soon':
@@ -511,11 +503,51 @@ class FilmModel {
           break;
         }
     }
-    list.add(_SmallItem(
-      width: width,
-      text: releaseYear,
-      icon: Icons.calendar_month_rounded,
-    ));
+    //! Play Day
+    switch (broadcast_day) {
+      case 1:
+        {
+          playDay = 'شنبه';
+          break;
+        }
+      case 2:
+        {
+          playDay = 'یکشنبه';
+          break;
+        }
+      case 3:
+        {
+          playDay = 'دوشنبه';
+          break;
+        }
+      case 4:
+        {
+          playDay = 'سه‌شنبه';
+          break;
+        }
+      case 5:
+        {
+          playDay = 'چههارشنبه';
+          break;
+        }
+      case 6:
+        {
+          playDay = 'پنج‌شنبه';
+          break;
+        }
+      case 7:
+        {
+          playDay = 'جمعه';
+          break;
+        }
+    }
+    list.addIf(
+        releaseYear != null && releaseYear != '',
+        _SmallItem(
+          width: width,
+          text: releaseYear,
+          icon: Icons.calendar_month_rounded,
+        ));
     list.addIf(
         countryMovie != null && countryMovie != '',
         _SmallItem(
@@ -530,13 +562,16 @@ class FilmModel {
           text: languageMovie,
           icon: Icons.language,
         ));
-    list.addIf(
-        runtimeMovie != null && runtimeMovie != '',
-        _SmallItem(
-          width: width,
-          text: runtimeMovie,
-          icon: Icons.timer,
-        ));
+
+    if (type == 'series') {
+      list.addIf(
+          runtimeMovie != null && runtimeMovie != '',
+          _SmallItem(
+            width: width,
+            text: runtimeMovie,
+            icon: Icons.timer,
+          ));
+    }
     list.addIf(
         imdbRate != null && imdbRate != '',
         _SmallItem(
@@ -579,27 +614,36 @@ class FilmModel {
           text: ageRate,
           icon: Icons.groups_2,
         ));
-    list.addIf(
-        brStatus != null && brStatus != '',
-        _SmallItem(
-          width: width,
-          text: brStatus,
-          icon: Icons.play_arrow_rounded,
-        ));
-    list.addIf(
-        sales_amount != null && sales_amount != 0,
-        _SmallItem(
-          width: width,
-          text: '$sales_amount',
-          icon: Icons.monetization_on_rounded,
-        ));
-    list.addIf(
-        production_budget != null && production_budget != 0,
-        _SmallItem(
-          width: width,
-          text: '$production_budget',
-          icon: Icons.request_quote_rounded,
-        ));
+    if (type == 'series') {
+      list.addIf(
+          brStatus != null && brStatus != '',
+          _SmallItem(
+            width: width,
+            text: brStatus,
+            icon: Icons.play_arrow_rounded,
+          ));
+      list.addIf(
+          playDay != null && playDay != '',
+          _SmallItem(
+            width: width,
+            text: playDay,
+            icon: Icons.smart_display_rounded,
+          ));
+    }
+    // list.addIf(
+    //     sales_amount != null && sales_amount != 0,
+    //     _SmallItem(
+    //       width: width,
+    //       text: '$sales_amount',
+    //       icon: Icons.monetization_on_rounded,
+    //     ));
+    // list.addIf(
+    //     production_budget != null && production_budget != 0,
+    //     _SmallItem(
+    //       width: width,
+    //       text: '$production_budget',
+    //       icon: Icons.request_quote_rounded,
+    //     ));
     list.addIf(
         playChannel != null && playChannel != '',
         _SmallItem(

@@ -40,6 +40,8 @@ class DlboxItem {
     originalQuality = json['original_quality'];
     // size = double.tryParse(json['size']);
     size = double.tryParse(json['size'].toString());
+    //! This is add by me
+    originalQuality = quality;
     // print('runtimeType' + '${json['size'].runtimeType} : ${json['size']}');
     // if ((size is String && (size != '' || size != null)) || size is int) {
     //   size = double.parse(json['size']);

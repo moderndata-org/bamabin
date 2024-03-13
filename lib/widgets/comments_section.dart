@@ -1,5 +1,7 @@
 // ignore_for_file: must_be_immutable
 
+import 'dart:async';
+
 import 'package:bamabin/constant/colors.dart';
 import 'package:bamabin/constant/utils.dart';
 import 'package:bamabin/controller/detail_controller.dart';
@@ -17,6 +19,13 @@ class CommentsSection extends GetView<DetailController> {
   List<CommentModel>? comments;
   @override
   Widget build(BuildContext context) {
+    controller.txtCommentFocus.addListener(() {
+      if (controller.txtCommentFocus.hasFocus) {
+        controller.showGoToTop(false);
+      } else {
+        controller.showGoToTop(true);
+      }
+    });
     return Container(
       width: Get.width,
       color: cPrimaryDark,
@@ -114,6 +123,7 @@ class CommentsSection extends GetView<DetailController> {
               ),
               Expanded(
                   child: MyTextField(
+                      focusNode: controller.txtCommentFocus,
                       maxLines: null,
                       hint: 'نظر خود را بنویسید',
                       controller: controller.txtComment!)),
