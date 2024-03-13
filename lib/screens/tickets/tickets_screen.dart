@@ -76,6 +76,7 @@ class TicketsScreen extends GetView<TicketController> {
                               return TicketsItem(
                                 id: ticket.id,
                                 title: ticket.title,
+                                status: ticket.status,
                                 department: ticket.department_name,
                                 updated: ticket.updated_at,
                                 date: ticket.created_at,

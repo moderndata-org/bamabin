@@ -1,3 +1,4 @@
+
 import 'package:shamsi_date/shamsi_date.dart';
 
 class TicketModel {
@@ -5,7 +6,7 @@ class TicketModel {
   String? user_id;
   String? title;
   String? department;
-  String? status;
+  String? _status;
   String? department_name;
   String? _created_at;
   String? _updated_at;
@@ -17,7 +18,7 @@ class TicketModel {
     user_id = json['user_id'];
     title = json['title'];
     department = json['department'];
-    status = json['status'];
+    _status = json['status'];
     department_name = json['department_name'];
     _created_at = json['created_at'];
     _updated_at = json['updated_at'];
@@ -33,5 +34,18 @@ class TicketModel {
     DateTime a = DateTime.parse(_updated_at!);
     Jalali j = a.toJalali();
     return '${j.formatter.yyyy}/${j.formatter.mm}/${j.formatter.dd} ${a.hour.toString().padLeft(2, '0')}:${a.minute.toString().padLeft(2, '0')}';
+  }
+
+  String get status{
+    switch(_status){
+      case "progress":
+        return "پاسخ کاربر";
+
+      case "closed":
+        return "بسته شده";
+
+      default:
+        return "پاسخ داده شده";
+    }
   }
 }

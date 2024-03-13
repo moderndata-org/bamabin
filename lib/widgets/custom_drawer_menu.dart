@@ -22,13 +22,6 @@ class CustomDrawerMenu extends GetView<MainController> {
 
   @override
   Widget build(BuildContext context) {
-    print(authController.profile.value.firstName == null ||
-            authController.profile.value.firstName == '' &&
-                authController.profile.value.lastName == null ||
-            authController.profile.value.lastName == ''
-        ? 'sss'
-        : 'bbb');
-    print(authController.profile.value.lastName);
     return Container(
       width: 250,
       height: Get.height,
@@ -266,6 +259,9 @@ class CustomDrawerMenu extends GetView<MainController> {
                                         shadows: [bsText],
                                         fontWeight: FontWeight.w500,
                                       ),
+                                      SizedBox(width: 10,),
+                                      (authController.notificationController.notifications.firstWhereOrNull((element) => element.readStatus == false ) != null) ?
+                                      Icon(Icons.info,color: Colors.yellow,) : Container()
                                     ],
                                   )),
                               SizedBox(

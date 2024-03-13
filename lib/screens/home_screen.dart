@@ -290,13 +290,30 @@ class HomeScreen extends GetView<PublicController> {
                           hasPlay: true,
                           listPromoteDetails: [
                             PromoteDetailWidget(
-                              title: "وضعیت",
+                              title: "مدت زمان",
                               icon: Icon(
                                 Icons.info_outline,
                                 color: Colors.white,
                               ),
-                              description: "${section.post!.status}",
-                            )
+                              description: "${section.post!.runtime}",
+                            ),
+                            PromoteDetailWidget(
+                              title: "کشور",
+                              icon: Icon(
+                                Icons.info_outline,
+                                color: Colors.white,
+                              ),
+                              description: "${section.post!.countryMovie}",
+                            ),
+                            PromoteDetailWidget(
+                              title: "خلاصه",
+                              icon: Icon(
+                                Icons.info_outline,
+                                color: Colors.white,
+                              ),
+                              description: "${section.post!.faSummary}",
+                            ),
+
                           ],
                           onPlay: () {
                             var detail = Get.find<DetailController>();

@@ -1,4 +1,3 @@
-import 'package:bamabin/models/film_model.dart';
 import 'package:bamabin/models/recent_model.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';

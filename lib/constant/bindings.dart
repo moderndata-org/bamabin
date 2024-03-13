@@ -15,6 +15,9 @@ class MyBindings extends Bindings {
   @override
   void dependencies() {
     Get.put(
+      NotificationController(),
+    );
+    Get.put(
       PaymentController(),
     );
     Get.put(
@@ -34,9 +37,6 @@ class MyBindings extends Bindings {
     );
     Get.put(
       MainController(),
-    );
-    Get.put(
-      NotificationController(),
     );
     Get.put(
       TicketController(),

@@ -21,6 +21,7 @@ class PromoteDetailWidget extends StatelessWidget {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 5),
       child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
         textDirection: TextDirection.rtl,
         children: [
           //! Right Box
@@ -84,7 +85,7 @@ class PromoteDetailWidget extends StatelessWidget {
               text: '$description',
               shadows: [bsText],
               size: 14,
-              textOverflow: TextOverflow.ellipsis,
+
             ),
           )
         ],

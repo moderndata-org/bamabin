@@ -61,7 +61,7 @@ class TicketsAddDialog extends GetView<TicketController> {
               padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
               child: MyTextField(
                 borderRadius: 5,
-                height: 41,
+
                 maxLines: 1,
                 hint: "عنوان",
                 controller: controller.titleController,

@@ -12,12 +12,14 @@ class TicketsItem extends StatelessWidget {
   String? department;
   String? condition;
   String? date;
+  String? status;
   String? updated;
   Function? onShow;
   TicketsItem(
       {this.id,
       this.title,
       this.department,
+      this.status,
       this.updated,
       this.date,
         this.onShow,
@@ -108,6 +110,25 @@ class TicketsItem extends StatelessWidget {
               ),
               Text(
                 ": دپارتمان ",
+                style: TextStyle(color: cW, fontSize: 16),
+              ),
+            ],
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              Text(
+                "$status",
+                style: TextStyle(color: cW, fontSize: 16),
+              ),
+              SizedBox(
+                width: 5,
+              ),
+              Text(
+                ": وضعیت ",
                 style: TextStyle(color: cW, fontSize: 16),
               ),
             ],
