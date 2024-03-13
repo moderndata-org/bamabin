@@ -23,12 +23,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:video_player/video_player.dart';
 import '../constant/utils.dart';
 import '../controller/recent_controller.dart';
 import '../models/recent_model.dart';
 import '../widgets/custom_shimmer.dart';
 import '../widgets/movie_detail/actors_widget.dart';
 import 'package:chewie/chewie.dart';
+import 'package:share_plus/share_plus.dart';
 
 late double padding = 10;
 
@@ -936,7 +938,9 @@ class ButtonSectionMovieDetailWidget extends GetView<DetailController> {
                   borderRadius: 5,
                   padding: EdgeInsets.zero,
                   fgColor: cW,
-                  onTap: () {},
+                  onTap: () {
+                    Share.share('${controller.selectedFilm.value.link}');
+                  },
                   bgColor: cGrey,
                   boxShadow: bsBtnMovieDetail,
                   size: Size.fromHeight(60),
@@ -1103,7 +1107,7 @@ class ButtonSectionMovieDetailWidget extends GetView<DetailController> {
                             year: controller.selectedFilm.value.releaseYear);
                         Get.find<RecentContoller>()
                             .addToRecent(recentModel: rm);
-                        Get.toNamed('/player');
+                        controller.playMovieOrSerial();
                       },
                       bgColor: cY,
                       boxShadow: bsBtnMovieDetail,
