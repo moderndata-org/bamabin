@@ -206,9 +206,8 @@ class HomeScreen extends GetView<PublicController> {
                                                   Colors.black.withOpacity(.2)),
                                         ),
                                         onTap: () {
-                                          mainController.changeGenre(
-                                              gener: genre);
-                                          Get.toNamed("/part");
+                                          mainController.changeGenre(gener: genre);
+                                          Get.toNamed("/part",arguments: {"show_app_bar":true});
                                         },
                                       ));
                                     },

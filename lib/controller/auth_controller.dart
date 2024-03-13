@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:bamabin/api/api_handler.dart';
+import 'package:bamabin/controller/notification_controller.dart';
 import 'package:bamabin/controller/payment_controller.dart';
 import 'package:bamabin/models/profile_model.dart';
 import 'package:flutter/material.dart';
@@ -27,6 +28,7 @@ class AuthController extends GetxController {
   var migrationLoading = false.obs;
 
   PaymentController paymentController = Get.find();
+  NotificationController notificationController = Get.find();
   var botToken = "".obs;
 
   GetStorage box = GetStorage('bamabin');
@@ -101,6 +103,8 @@ class AuthController extends GetxController {
           box.write("api_key", res.body["api_key"]);
           isLogin(true);
           getProfile();
+          paymentController.checkVip();
+          notificationController.getNotifications();
           Get.back();
         } else {
           showMessage(text: res.body["message"], isSucces: false);
