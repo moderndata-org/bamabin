@@ -12,21 +12,31 @@ import 'package:get/get.dart';
 import 'package:shimmer/shimmer.dart';
 
 import '../models/film_model.dart';
+import '../widgets/custom_appbar.dart';
 import '../widgets/movie_item_widget.dart';
 
 class PartScreen extends GetView<MainController> {
   PartScreen({Key? key}) : super(key: key);
   final publicController = Get.find<PublicController>();
 
+  var show_app_bar = Get.arguments ?? null;
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
         child: Scaffold(
       backgroundColor: cPrimary,
+      appBar: (show_app_bar != null) ? CustomAppbar(
+          title: '${controller.selectedGenre.value.name}',
+          icon: Icon(
+            Icons.hotel_class_rounded,
+            color: cW,
+            shadows: [bsTextLowOpacity],
+          )) : null ,
       body: Container(
         width: Get.width,
         height: Get.height,
-        padding: EdgeInsets.only(top: 60),
+        padding: (show_app_bar == null) ? EdgeInsets.only(top: 60) : null,
         child: Column(
           children: [
             // Filter Row
