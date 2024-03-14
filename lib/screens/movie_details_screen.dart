@@ -788,12 +788,27 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                                           controller
                                               .selectedFilm.value.directors!);
                                       var actor = actors_list[index];
-
+                                      bool isDirector = false;
+                                      controller.selectedFilm.value.directors
+                                          ?.forEach((element) {
+                                        if (element.id == actor.id) {
+                                          isDirector = true;
+                                          print(element.name);
+                                        }
+                                      });
                                       return Container(
                                         width: 80,
                                         margin:
                                             EdgeInsets.symmetric(horizontal: 7),
                                         child: ActorsWidget(
+                                            onTap: () {
+                                              mainController.openFilterScreen(
+                                                  key: isDirector
+                                                      ? 'directors'
+                                                      : 'actors',
+                                                  id: '${actor.id}',
+                                                  title: '${actor.name}');
+                                            },
                                             imageUrl: '${actor.avatar}',
                                             name: '${actor.name}'),
                                       );

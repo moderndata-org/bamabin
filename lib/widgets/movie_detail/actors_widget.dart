@@ -7,6 +7,7 @@ class ActorsWidget extends StatelessWidget {
   const ActorsWidget({
     this.name,
     this.imageUrl,
+    this.onTap,
     this.height = 80,
     this.width = 80,
     super.key,
@@ -15,41 +16,45 @@ class ActorsWidget extends StatelessWidget {
   final String? imageUrl;
   final double? width;
   final double? height;
+  final Function()? onTap;
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        ClipRRect(
-          borderRadius: BorderRadius.circular(50),
-          child: SizedBox(
-            width: width,
-            height: height,
-            child: CachedNetworkImage(
-              imageUrl: '$imageUrl',
-              fit: BoxFit.cover,
-              placeholder: (context, url) => Center(
-                  child: CustomShimmerWidget(
-                width: width!,
-                height: height!,
-              )),
-              errorWidget: (context, url, error) => CustomShimmerWidget(
-                width: width!,
-                height: height!,
+    return GestureDetector(
+      onTap: onTap,
+      child: Column(
+        children: [
+          ClipRRect(
+            borderRadius: BorderRadius.circular(50),
+            child: SizedBox(
+              width: width,
+              height: height,
+              child: CachedNetworkImage(
+                imageUrl: '$imageUrl',
+                fit: BoxFit.cover,
+                placeholder: (context, url) => Center(
+                    child: CustomShimmerWidget(
+                  width: width!,
+                  height: height!,
+                )),
+                errorWidget: (context, url, error) => CustomShimmerWidget(
+                  width: width!,
+                  height: height!,
+                ),
               ),
             ),
           ),
-        ),
-        SizedBox(
-          height: 5,
-        ),
-        MyText(
-          text: '$name',
-          maxLines: 2,
-          textAlign: TextAlign.center,
-          size: 12,
-        )
-      ],
+          SizedBox(
+            height: 5,
+          ),
+          MyText(
+            text: '$name',
+            maxLines: 2,
+            textAlign: TextAlign.center,
+            size: 12,
+          )
+        ],
+      ),
     );
   }
 }
