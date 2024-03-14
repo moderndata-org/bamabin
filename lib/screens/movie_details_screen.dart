@@ -1,10 +1,12 @@
 import 'dart:convert';
 
+import 'package:bamabin/api/api_handler.dart';
 import 'package:bamabin/constant/classes.dart';
 import 'package:bamabin/constant/colors.dart';
 import 'package:bamabin/controller/auth_controller.dart';
 import 'package:bamabin/controller/detail_controller.dart';
 import 'package:bamabin/controller/favorite_controller.dart';
+import 'package:bamabin/controller/main_controller.dart';
 import 'package:bamabin/models/comment_model.dart';
 import 'package:bamabin/models/genre_model.dart';
 import 'package:bamabin/screens/dialogs/download_movie_dialog.dart';
@@ -43,6 +45,7 @@ class MovieDetailsScreen extends StatefulWidget {
 
 class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
   final controller = Get.find<DetailController>();
+  final mainController = Get.find<MainController>();
 
   @override
   void initState() {
@@ -56,12 +59,12 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
     super.initState();
   }
 
-  // @override
-  // void dispose() {
-  //   controller.trailerControllerChieview?.dispose();
-  //   controller.trailerControllerTest?.dispose();
-  //   super.dispose();
-  // }
+  @override
+  void dispose() {
+    controller.trailerController?.dispose();
+    // controller.trailerControllerChieview?.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -106,7 +109,7 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                           placeholder: (context, url) => Center(
                               child: CustomShimmerWidget(
                             width: Get.width,
-                            height: 220 - 20,
+                            height: 220,
                           )),
                           errorWidget: (context, url, error) =>
                               Icon(Icons.error),
@@ -157,26 +160,34 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                                   itemBuilder: (context, index) {
                                     Genre genre = controller
                                         .selectedFilm.value.genres![index];
-                                    return Container(
-                                        decoration: BoxDecoration(
-                                            color: cbgGenerMovieDetail
-                                                .withOpacity(.6),
-                                            border: Border.all(
-                                              color: cW.withOpacity(.2),
-                                            ),
-                                            borderRadius:
-                                                BorderRadius.circular(5)),
-                                        margin:
-                                            EdgeInsets.symmetric(horizontal: 1),
-                                        padding: EdgeInsets.only(
-                                            left: 10,
-                                            right: 10,
-                                            top: 4,
-                                            bottom: 4),
-                                        child: MyText(
-                                          text: '${genre.name}',
-                                          size: 11,
-                                        ));
+                                    return GestureDetector(
+                                      onTap: () {
+                                        mainController.openFilterScreen(
+                                            key: 'genres',
+                                            id: '${genre.id}',
+                                            title: '${genre.name}');
+                                      },
+                                      child: Container(
+                                          decoration: BoxDecoration(
+                                              color: cbgGenerMovieDetail
+                                                  .withOpacity(.6),
+                                              border: Border.all(
+                                                color: cW.withOpacity(.2),
+                                              ),
+                                              borderRadius:
+                                                  BorderRadius.circular(5)),
+                                          margin: EdgeInsets.symmetric(
+                                              horizontal: 1),
+                                          padding: EdgeInsets.only(
+                                              left: 10,
+                                              right: 10,
+                                              top: 4,
+                                              bottom: 4),
+                                          child: MyText(
+                                            text: '${genre.name}',
+                                            size: 11,
+                                          )),
+                                    );
                                   },
                                 ),
                               ),
@@ -777,6 +788,7 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                                           controller
                                               .selectedFilm.value.directors!);
                                       var actor = actors_list[index];
+
                                       return Container(
                                         width: 80,
                                         margin:
@@ -1012,34 +1024,26 @@ class ButtonSectionMovieDetailWidget extends GetView<DetailController> {
             width: 5,
           ),
           Expanded(
-              child: Obx(() => MyTextButton(
+              child: MyTextButton(
                   borderRadius: 5,
                   padding: EdgeInsets.zero,
                   fgColor: cB,
                   onTap: () {
-                    if (authController.isLogin.isTrue) {
-                      if (authController.paymentController.isVip.isFalse) {
-                        Get.toNamed('/subscribe');
-                      } else {
-                        if (controller.selectedFilm.value.type == 'movies') {
-                          showDialog(
-                            context: context,
-                            builder: (context) => DownloadMovieDialog(
-                              film: controller.selectedFilm.value,
-                            ),
-                          );
-                        }
-                        if (controller.selectedFilm.value.type == 'series') {
-                          showDialog(
-                              context: context,
-                              builder: (context) => DownloadSerialDialog(
-                                    listSeries: controller
-                                        .selectedFilm.value.seriesDlbox,
-                                  ));
-                        }
-                      }
-                    } else {
-                      Get.toNamed('/signin');
+                    if (controller.selectedFilm.value.type == 'movies') {
+                      showDialog(
+                        context: context,
+                        builder: (context) => DownloadMovieDialog(
+                          film: controller.selectedFilm.value,
+                        ),
+                      );
+                    }
+                    if (controller.selectedFilm.value.type == 'series') {
+                      showDialog(
+                          context: context,
+                          builder: (context) => DownloadSerialDialog(
+                                listSeries:
+                                    controller.selectedFilm.value.seriesDlbox,
+                              ));
                     }
                   },
                   bgColor: cG,
@@ -1049,36 +1053,22 @@ class ButtonSectionMovieDetailWidget extends GetView<DetailController> {
                     children: [
                       Expanded(
                         child: Center(
-                          child: authController.isLogin.isFalse
-                              ? Icon(
-                                  Icons.account_circle_rounded,
-                                  size: 25,
-                                  color: cW,
-                                )
-                              : authController.paymentController.isVip.isFalse
-                                  ? SvgPicture.asset(
-                                      'assets/svg/ic_subscribe.svg')
-                                  : Icon(
-                                      Icons.download_rounded,
-                                      size: 25,
-                                      color: cW,
-                                    ),
+                          child: Icon(
+                            Icons.download_rounded,
+                            size: 25,
+                            color: cW,
+                          ),
                         ),
                       ),
                       FittedBox(
                         fit: BoxFit.scaleDown,
-                        child: MyText(
-                            text: authController.isLogin.isFalse
-                                ? 'ورود به‌ حساب کاربری'
-                                : authController.paymentController.isVip.isFalse
-                                    ? 'خرید اشتراک'
-                                    : 'دانلود'),
+                        child: MyText(text: 'دانلود'),
                       ),
                       SizedBox(
                         height: 5,
                       )
                     ],
-                  )))),
+                  ))),
           SizedBox(
             width: controller.selectedFilm.value.hasPlay != 'on' &&
                     authController.paymentController.isVip.isFalse
@@ -1095,19 +1085,30 @@ class ButtonSectionMovieDetailWidget extends GetView<DetailController> {
                       padding: EdgeInsets.zero,
                       fgColor: cB,
                       onTap: () {
-                        RecentModel rm = RecentModel(
-                            bg_cover: controller.selectedFilm.value.bgThumbnail,
-                            cover: controller.selectedFilm.value.thumbnail,
-                            hasDubbed: controller.selectedFilm.value.hasDubbed,
-                            hasSubtitle:
-                                controller.selectedFilm.value.hasSubtitle,
-                            id: controller.selectedFilm.value.id,
-                            imdb: controller.selectedFilm.value.imdbRate,
-                            title: controller.selectedFilm.value.title,
-                            year: controller.selectedFilm.value.releaseYear);
-                        Get.find<RecentContoller>()
-                            .addToRecent(recentModel: rm);
-                        controller.playMovieOrSerial();
+                        if (authController.isLogin.value) {
+                          if (authController.paymentController.isVip.value) {
+                            RecentModel rm = RecentModel(
+                                bg_cover:
+                                    controller.selectedFilm.value.bgThumbnail,
+                                cover: controller.selectedFilm.value.thumbnail,
+                                hasDubbed:
+                                    controller.selectedFilm.value.hasDubbed,
+                                hasSubtitle:
+                                    controller.selectedFilm.value.hasSubtitle,
+                                id: controller.selectedFilm.value.id,
+                                imdb: controller.selectedFilm.value.imdbRate,
+                                title: controller.selectedFilm.value.title,
+                                year:
+                                    controller.selectedFilm.value.releaseYear);
+                            Get.find<RecentContoller>()
+                                .addToRecent(recentModel: rm);
+                            controller.playMovieOrSerial();
+                          } else {
+                            Get.toNamed('/subscribe');
+                          }
+                        } else {
+                          Get.toNamed('/signin');
+                        }
                       },
                       bgColor: cY,
                       boxShadow: bsBtnMovieDetail,

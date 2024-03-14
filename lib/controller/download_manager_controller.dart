@@ -102,26 +102,30 @@ class DownloadManagerController extends GetxController {
       {required bool goingToDownloadPage, required DlboxItem dlBox}) async {
     // final directory = await getExternalStorageDirectory();
     // final savedDir = '${directory?.path}/download/bamabin/';
-    if (goingToDownloadPage) {
-      Get.toNamed('/download-manager');
-    }
-    String? savedDir = await getDownloadPath();
-    print('savedDir : $savedDir');
-    // final fileName = '${dlBox.}';
-    final url = '${dlBox.link}';
-    await Permission.notification.request();
-    // final taskId =
-    if (savedDir == null) {
-      showMessage(text: 'Download Error', isSucces: false);
+    if (dlBox.link != '#') {
+      if (goingToDownloadPage) {
+        Get.toNamed('/download-manager');
+      }
+      String? savedDir = await getDownloadPath();
+      print('savedDir : $savedDir');
+      // final fileName = '${dlBox.}';
+      final url = '${dlBox.link}';
+      await Permission.notification.request();
+      // final taskId =
+      if (savedDir == null) {
+        showMessage(text: 'Download Error', isSucces: false);
+      } else {
+        await FlutterDownloader.enqueue(
+          url: url,
+          savedDir: savedDir,
+          // fileName: fileName,
+          showNotification: true,
+          openFileFromNotification: false, saveInPublicStorage: true,
+        );
+        refreshDownloadList();
+      }
     } else {
-      await FlutterDownloader.enqueue(
-        url: url,
-        savedDir: savedDir,
-        // fileName: fileName,
-        showNotification: true,
-        openFileFromNotification: false, saveInPublicStorage: true,
-      );
-      refreshDownloadList();
+      showMessage(text: 'لینک دانلود مشکل دارد', isSucces: false);
     }
   }
 

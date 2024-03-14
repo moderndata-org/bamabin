@@ -6,6 +6,7 @@ import 'package:bamabin/models/genre_model.dart';
 import 'package:bamabin/models/section_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get/get_rx/get_rx.dart';
 import '../constant/classes.dart';
 
 class MainController extends GetxController {
@@ -33,9 +34,57 @@ class MainController extends GetxController {
   var moreFilmList = <FilmModel>[].obs;
   AuthController? _authController;
 
-  final pageController = PageController(
-      initialPage: 0
-  );
+  final pageController = PageController(initialPage: 0);
+  //! Filter Screen
+  RxInt filterScreenPageNumber = 0.obs;
+  RxList<FilmModel> listFilterScreen = <FilmModel>[].obs;
+  String _key = '';
+  String _id = '';
+  RxString filterScreenTitle = ''.obs;
+  RxBool isLoadingDataFilterScreen = false.obs;
+  RxBool isFetchingFilterScreen = false.obs;
+
+  void openFilterScreen({
+    required String key,
+    required String id,
+    required String title,
+  }) {
+    listFilterScreen.clear();
+    filterScreenPageNumber(0);
+    _key = key;
+    _id = id;
+    filterScreenTitle(title);
+    isLoadingDataFilterScreen(true);
+    isFetchingFilterScreen(false);
+    GetDetailsForFilterScreen();
+    Get.offNamed('/filter');
+  }
+
+  void GetDetailsForFilterScreen() {
+    if (isFetchingFilterScreen.isFalse) {
+      isFetchingFilterScreen(true);
+      filterScreenPageNumber += 1;
+      ApiProvider()
+          .getTaxonomy(_key, _id, '${filterScreenPageNumber.value}')
+          .then((res) {
+        print(res.body);
+        isLoadingDataFilterScreen(false);
+        isFetchingFilterScreen(false);
+        if (res.body != null) {
+          if (res.body['results'] != null) {
+            List tmp = res.body['results'];
+            tmp.forEach((element) {
+              listFilterScreen.add(FilmModel.fromJson(element));
+            });
+          }
+        }
+
+        // if(re)
+      });
+    }
+  }
+
+  //! Filter Screen
 
   @override
   void onInit() {
@@ -56,7 +105,6 @@ class MainController extends GetxController {
       }
     });
     selectedBottomNav.listen((p0) {
-
       if (selectedBottomNav.value != BottomNavType.home) {
         resetFilterMain();
         getArchive(isFirstPage: true);
@@ -107,13 +155,13 @@ class MainController extends GetxController {
     }
     ApiProvider()
         .archive(
-        isLogin: _authController!.isLogin.value,
-        type: selectedBottomNav.value,
-        page: pageNumber == null ? null : pageNumber.toString(),
-        orderBy: selectedOrder.value,
-        imdb_min_rate:
-        '${selectedImdbRate.value == 0 ? '' : selectedImdbRate.value}',
-        genreId: '${selectedGenre.value.id ?? ''}')
+            isLogin: _authController!.isLogin.value,
+            type: selectedBottomNav.value,
+            page: pageNumber == null ? null : pageNumber.toString(),
+            orderBy: selectedOrder.value,
+            imdb_min_rate:
+                '${selectedImdbRate.value == 0 ? '' : selectedImdbRate.value}',
+            genreId: '${selectedGenre.value.id ?? ''}')
         .then((res) {
       isLoadingData(false);
       if (isFirstPage) {

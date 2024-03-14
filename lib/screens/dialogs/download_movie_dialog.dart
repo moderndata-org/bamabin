@@ -1,6 +1,7 @@
 import 'package:bamabin/constant/classes.dart';
 import 'package:bamabin/constant/colors.dart';
 import 'package:bamabin/controller/download_manager_controller.dart';
+import 'package:bamabin/controller/auth_controller.dart';
 import 'package:bamabin/controller/player_controller.dart';
 import 'package:bamabin/models/film_model.dart';
 import 'package:bamabin/widgets/MyText.dart';
@@ -86,94 +87,34 @@ class DownloadMovieDialog extends StatelessWidget {
               ),
               Expanded(
                   child: ListView(
-                physics: BouncingScrollPhysics(),
-                padding: EdgeInsets.symmetric(horizontal: 10, vertical: 30),
-                children: generateList() +
-                    [
-                      // MovieItemDialogWidget(
-                      //   quality: Quality.HD,
-                      //   movieType: MovieType.None,
-                      //   margin: EdgeInsets.symmetric(vertical: 5),
-                      //   encoder: 'e',
-                      //   movieSize: '4 Gb',
-                      // ),
-                      // Row(
-                      //   textDirection: TextDirection.rtl,
-                      //   children: [
-                      //     Icon(
-                      //       Icons.mic,
-                      //       color: cR,
-                      //     ),
-                      //     SizedBox(
-                      //       width: 5,
-                      //     ),
-                      //     MyText(
-                      //       text: 'نسخه دوبله فارسی',
-                      //       shadows: [bsText],
-                      //       fontWeight: FontWeight.w500,
-                      //       size: 15,
-                      //     ),
-                      //     SizedBox(
-                      //       width: 5,
-                      //     ),
-                      //     Expanded(
-                      //         child: Container(
-                      //       height: 1,
-                      //       color: cR,
-                      //     ))
-                      //   ],
-                      // ),
-                      // MovieItemDialogWidget(
-                      //   onTap: () => Get.toNamed('/player'),
-                      //   quality: Quality.FourK,
-                      //   movieType: MovieType.Dubbed,
-                      //   margin: EdgeInsets.symmetric(vertical: 5),
-                      //   encoder: 'e',
-                      //   movieSize: '4 Gb',
-                      // ),
-                      // Row(
-                      //   textDirection: TextDirection.rtl,
-                      //   children: [
-                      //     Icon(
-                      //       Icons.movie_creation_rounded,
-                      //       color: cGreyLight,
-                      //     ),
-                      //     SizedBox(
-                      //       width: 5,
-                      //     ),
-                      //     MyText(
-                      //       text: 'نسخه روی پرده',
-                      //       shadows: [bsText],
-                      //       fontWeight: FontWeight.w500,
-                      //       size: 15,
-                      //     ),
-                      //     SizedBox(
-                      //       width: 5,
-                      //     ),
-                      //     Expanded(
-                      //         child: Container(
-                      //       height: 1,
-                      //       color: cGreyLight,
-                      //     ))
-                      //   ],
-                      // ),
-                      // MovieItemDialogWidget(
-                      //   quality: Quality.Cam,
-                      //   movieType: MovieType.Cam,
-                      //   margin: EdgeInsets.symmetric(vertical: 5),
-                      //   encoder: 'e',
-                      //   movieSize: '4 Gb',
-                      // ),
-                    ],
-              ))
+                      physics: BouncingScrollPhysics(),
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 10, vertical: 30),
+                      children: generateList()))
             ],
           ),
         ));
   }
 
+  bool checkIsVip() {
+    final auth = Get.find<AuthController>();
+    bool a = auth.paymentController.isVip.value;
+    if (a) {
+      return true;
+    } else {
+      if (auth.isLogin.value) {
+        Get.toNamed('/subscribe');
+      } else {
+        Get.toNamed('/signin');
+      }
+      return false;
+    }
+  }
+
   List<Widget> generateList() {
     final downloadManagerController = Get.find<DownloadManagerController>();
     final videoController = Get.find<PlayerController>();
+    final authController = Get.find<AuthController>();
     List<Widget> a = [];
     //!  Subtitles
     if (film.moviesDlbox?.subtitle != null &&
@@ -199,13 +140,17 @@ class DownloadMovieDialog extends StatelessWidget {
             encoder: item.encoder ?? '',
             movieSize: computeTheCapacity(size: item.size!),
             onPlayTap: () {
-              Get.toNamed('/player');
-              videoController.selectedDlBoxItem(item);
-              videoController.is_dubbed(false);
+              if (checkIsVip()) {
+                Get.toNamed('/player');
+                videoController.selectedDlBoxItem(item);
+                videoController.is_dubbed(false);
+              }
             },
             onDownloadTap: () {
-              downloadManagerController.download(
-                  goingToDownloadPage: true, dlBox: item);
+              if (checkIsVip()) {
+                downloadManagerController.download(
+                    goingToDownloadPage: true, dlBox: item);
+              }
             },
           ),
         );
@@ -225,13 +170,17 @@ class DownloadMovieDialog extends StatelessWidget {
         a.add(
           MovieItemDialogWidget(
             onDownloadTap: () {
-              downloadManagerController.download(
-                  goingToDownloadPage: true, dlBox: item);
+              if (checkIsVip()) {
+                downloadManagerController.download(
+                    goingToDownloadPage: true, dlBox: item);
+              }
             },
             onPlayTap: () {
-              Get.toNamed('/player');
-              videoController.selectedDlBoxItem(item);
-              videoController.is_dubbed(false);
+              if (checkIsVip()) {
+                Get.toNamed('/player');
+                videoController.selectedDlBoxItem(item);
+                videoController.is_dubbed(false);
+              }
             },
             hasOnlinePlay: item.playStatus == 'on',
             quality: item.originalQuality ?? '',
@@ -258,13 +207,17 @@ class DownloadMovieDialog extends StatelessWidget {
         a.add(
           MovieItemDialogWidget(
             onDownloadTap: () {
-              downloadManagerController.download(
-                  goingToDownloadPage: true, dlBox: item);
+              if (checkIsVip()) {
+                downloadManagerController.download(
+                    goingToDownloadPage: true, dlBox: item);
+              }
             },
             onPlayTap: () {
-              Get.toNamed('/player');
-              videoController.selectedDlBoxItem(item);
-              videoController.is_dubbed(false);
+              if (checkIsVip()) {
+                Get.toNamed('/player');
+                videoController.selectedDlBoxItem(item);
+                videoController.is_dubbed(false);
+              }
             },
             hasOnlinePlay: item.playStatus == 'on',
             quality: item.originalQuality ?? '',
@@ -290,13 +243,17 @@ class DownloadMovieDialog extends StatelessWidget {
         a.add(
           MovieItemDialogWidget(
             onDownloadTap: () {
-              downloadManagerController.download(
-                  goingToDownloadPage: true, dlBox: item);
+              if (checkIsVip()) {
+                downloadManagerController.download(
+                    goingToDownloadPage: true, dlBox: item);
+              }
             },
             onPlayTap: () {
-              Get.toNamed('/player');
-              videoController.selectedDlBoxItem(item);
-              videoController.is_dubbed(true);
+              if (checkIsVip()) {
+                Get.toNamed('/player');
+                videoController.selectedDlBoxItem(item);
+                videoController.is_dubbed(true);
+              }
             },
             hasOnlinePlay: item.playStatus == 'on',
             quality: item.originalQuality ?? '',

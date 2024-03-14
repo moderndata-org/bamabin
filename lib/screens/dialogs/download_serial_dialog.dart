@@ -14,6 +14,7 @@ import 'package:get/get.dart';
 import 'package:video_player/video_player.dart';
 
 import '../../constant/utils.dart';
+import '../../controller/auth_controller.dart';
 import '../../controller/player_controller.dart';
 import '../../models/film_model.dart';
 import '../../widgets/download_section_widget.dart';
@@ -344,14 +345,18 @@ class SerialAccordion extends StatelessWidget {
                                     Expanded(
                                       child: DownloadButtonDialog(
                                         onPlay: () {
-                                          videoPlayerController
-                                              .selectedDlBoxItem(dl);
-                                          Get.toNamed('/player');
+                                          if (checkIsVip()) {
+                                            videoPlayerController
+                                                .selectedDlBoxItem(dl);
+                                            Get.toNamed('/player');
+                                          }
                                         },
                                         onDownload: () {
-                                          downloadManagerController.download(
-                                              goingToDownloadPage: true,
-                                              dlBox: dl);
+                                          if (checkIsVip()) {
+                                            downloadManagerController.download(
+                                                goingToDownloadPage: true,
+                                                dlBox: dl);
+                                          }
                                         },
                                         color: color,
                                         title: 'قسمت $part',
@@ -366,16 +371,20 @@ class SerialAccordion extends StatelessWidget {
                                         : Expanded(
                                             child: DownloadButtonDialog(
                                               onPlay: () {
-                                                videoPlayerController
-                                                    .selectedDlBoxItem(dl);
-                                                Get.toNamed('/player');
+                                                if (checkIsVip()) {
+                                                  videoPlayerController
+                                                      .selectedDlBoxItem(dl);
+                                                  Get.toNamed('/player');
+                                                }
                                               },
                                               onDownload: () {
-                                                downloadManagerController
-                                                    .download(
-                                                        goingToDownloadPage:
-                                                            true,
-                                                        dlBox: dl2);
+                                                if (checkIsVip()) {
+                                                  downloadManagerController
+                                                      .download(
+                                                          goingToDownloadPage:
+                                                              true,
+                                                          dlBox: dl2);
+                                                }
                                               },
                                               color: color,
                                               title: 'قسمت $part2',
@@ -388,6 +397,21 @@ class SerialAccordion extends StatelessWidget {
             ),
           ),
         ));
+  }
+
+  bool checkIsVip() {
+    final auth = Get.find<AuthController>();
+    bool a = auth.paymentController.isVip.value;
+    if (a) {
+      return true;
+    } else {
+      if (auth.isLogin.value) {
+        Get.toNamed('/subscribe');
+      } else {
+        Get.toNamed('/signin');
+      }
+      return false;
+    }
   }
 }
 

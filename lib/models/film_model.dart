@@ -1,3 +1,4 @@
+import 'package:bamabin/controller/main_controller.dart';
 import 'package:bamabin/models/actor.dart';
 import 'package:bamabin/models/dlbox_movies_model.dart';
 import 'package:bamabin/models/release_model.dart';
@@ -472,6 +473,7 @@ class FilmModel {
     String? brStatus;
     String? playChannel;
     String? playDay;
+    final _mainController = Get.find<MainController>();
     if (networks != null) {
       for (int i = 0; i < networks!.length; i++) {
         if (i != 0) {
@@ -544,6 +546,8 @@ class FilmModel {
     list.addIf(
         releaseYear != null && releaseYear != '',
         _SmallItem(
+          onTap: () => _mainController.openFilterScreen(
+              key: 'release', id: '$releaseYear', title: '$releaseYear'),
           width: width,
           text: releaseYear,
           icon: Icons.calendar_month_rounded,
@@ -647,6 +651,10 @@ class FilmModel {
     list.addIf(
         playChannel != null && playChannel != '',
         _SmallItem(
+          onTap: () {
+            _mainController.openFilterScreen(
+                key: 'networks', id: '$playChannel', title: '$playChannel');
+          },
           width: width,
           text: playChannel,
           icon: Icons.live_tv_rounded,
@@ -716,6 +724,7 @@ class _SmallItem extends StatelessWidget {
     this.text,
     this.image,
     this.icon,
+    this.onTap,
     required this.width,
   });
 
@@ -723,28 +732,33 @@ class _SmallItem extends StatelessWidget {
   final String? image;
   final IconData? icon;
   final double width;
+  final Function()? onTap;
 
   @override
   Widget build(BuildContext context) {
-    return Tooltip(
-      preferBelow: false,
-      message: text,
-      showDuration: Duration(seconds: 3),
-      child: SizedBox(
-        //  Get.width / 4.22
-        width: width,
-        child: MovieItemSmallDetailWidget(
-          icon: image != null
-              ? SizedBox(height: 20, width: 20, child: Image.asset('${image}'))
-              : Padding(
-                  padding: const EdgeInsets.only(bottom: 2),
-                  child: Icon(
-                    icon,
-                    color: cW,
-                    size: 19,
+    return GestureDetector(
+      onTap: onTap,
+      child: Tooltip(
+        preferBelow: false,
+        message: text,
+        showDuration: Duration(seconds: 3),
+        child: SizedBox(
+          //  Get.width / 4.22
+          width: width,
+          child: MovieItemSmallDetailWidget(
+            icon: image != null
+                ? SizedBox(
+                    height: 20, width: 20, child: Image.asset('${image}'))
+                : Padding(
+                    padding: const EdgeInsets.only(bottom: 2),
+                    child: Icon(
+                      icon,
+                      color: cW,
+                      size: 19,
+                    ),
                   ),
-                ),
-          title: '${text}',
+            title: '${text}',
+          ),
         ),
       ),
     );

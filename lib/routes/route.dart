@@ -1,6 +1,7 @@
 import 'package:bamabin/screens/authentication/forget_password_screen.dart';
 import 'package:bamabin/screens/download_manager_screen.dart';
 import 'package:bamabin/screens/favorite_screen.dart';
+import 'package:bamabin/screens/filter_screen.dart';
 import 'package:bamabin/screens/genre_screen.dart';
 import 'package:bamabin/screens/movie_details_screen.dart';
 import 'package:bamabin/screens/notifications_screen.dart';
@@ -32,7 +33,7 @@ class Routes {
         GetPage(name: '/signin-qrcode', page: () => const SignInQrCodeScreen()),
         GetPage(name: '/notifications', page: () => const NotificationScreen()),
         GetPage(name: '/ticket-details', page: () => TicketDetails()),
-        GetPage(name: '/player', page: () =>  PlayerScreen()),
+        GetPage(name: '/player', page: () => PlayerScreen()),
         GetPage(
             name: '/forgetpassword', page: () => const ForgetPasswordScreen()),
         GetPage(name: '/signup', page: () => const SignupScreen()),
@@ -56,5 +57,6 @@ class Routes {
         GetPage(name: '/movie-detail', page: () => const MovieDetailsScreen()),
         GetPage(name: '/geners', page: () => GenreScreen()),
         GetPage(name: '/more', page: () => MoreScreen()),
+        GetPage(name: '/filter', page: () => FilterScreen()),
       ];
 }
