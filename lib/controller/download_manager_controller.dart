@@ -171,8 +171,10 @@ class DownloadManagerController extends GetxController {
   void refreshDownloadList() async {
     final tasks = await FlutterDownloader.loadTasks();
     listDownloads.clear();
+
     tasks?.forEach((element) {
       listDownloads.add(element);
     });
+    listDownloads(listDownloads.reversed.toList());
   }
 }

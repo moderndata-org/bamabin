@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:bamabin/constant/colors.dart';
 import 'package:bamabin/controller/auth_controller.dart';
+import 'package:bamabin/controller/detail_controller.dart';
 import 'package:bamabin/widgets/MyCircularProgress.dart';
 import 'package:bamabin/widgets/MyText.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -27,6 +28,7 @@ class SplashScreen extends StatelessWidget {
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
     ]);
+    Get.find<DetailController>().width(Get.width);
     return SafeArea(
         child: Scaffold(
       backgroundColor: cPrimary,
@@ -47,7 +49,9 @@ class SplashScreen extends StatelessWidget {
                   text: 'Bamabin',
                   size: 20,
                 ),
-                SizedBox(height: 10,),
+                SizedBox(
+                  height: 10,
+                ),
                 MyText(
                   text: 'هزاران فیلم و سریال رو با بامابین ببین!',
                   size: 18,

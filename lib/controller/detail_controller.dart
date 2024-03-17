@@ -38,7 +38,7 @@ class DetailController extends GetxController {
   Rx<DepartmentModel> selectedDepartment = DepartmentModel().obs;
   Rx<CommentModel> selectedCommentForReply = CommentModel().obs;
   FocusNode txtCommentFocus = FocusNode();
-  RxDouble width = Get.width.obs;
+  RxDouble width = 0.0.obs;
 
   void setLikeAction({required LikeAction action, required String id}) {
     isLoadingLikeStatus(true);
