@@ -38,6 +38,7 @@ class DetailController extends GetxController {
   Rx<DepartmentModel> selectedDepartment = DepartmentModel().obs;
   Rx<CommentModel> selectedCommentForReply = CommentModel().obs;
   FocusNode txtCommentFocus = FocusNode();
+  RxDouble width = Get.width.obs;
 
   void setLikeAction({required LikeAction action, required String id}) {
     isLoadingLikeStatus(true);
@@ -225,14 +226,6 @@ class DetailController extends GetxController {
               hideControlsTimer: Duration(seconds: 2));
         });
       trailerController!.addListener(() {
-        // if (trailerControllerChieview
-        //         ?.videoPlayerController.value.hasError ==
-        //     true) {
-        //   print('shit');
-        // }
-        // if(trailerController.value.errorDescription !=null){
-
-        // }
         if (trailerController!.value.hasError) {
           print('catch it');
           showTrailer(false);
@@ -281,10 +274,13 @@ class DetailController extends GetxController {
         .then((res) {
       isLoadingNewData(false);
       if (res.body != null) {
-        selectedFilm(FilmModel.fromJson(res.body['result']));
-        print(selectedFilm.value.trailer_url);
-        setNewurlTrailer();
-        isTextExpandedMovieDetail(false);
+        FilmModel fm = FilmModel.fromJson(res.body['result']);
+        if (fm.id == selectedFilm.value.id) {
+          selectedFilm(fm);
+          print(selectedFilm.value.trailer_url);
+          setNewurlTrailer();
+          isTextExpandedMovieDetail(false);
+        }
       }
     });
   }

@@ -7,16 +7,11 @@ import 'package:bamabin/models/dlbox_item_model.dart';
 import 'package:bamabin/models/series_dlbox_model.dart';
 import 'package:bamabin/widgets/MyText.dart';
 import 'package:bamabin/widgets/dialog_items/movie_item_dialog_widget.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
-import 'package:video_player/video_player.dart';
-
 import '../../constant/utils.dart';
 import '../../controller/auth_controller.dart';
 import '../../controller/player_controller.dart';
-import '../../models/film_model.dart';
 import '../../widgets/download_section_widget.dart';
 
 class DownloadSerialDialog extends GetView<DetailController> {
@@ -353,6 +348,7 @@ class SerialAccordion extends StatelessWidget {
                                         },
                                         onDownload: () {
                                           if (checkIsVip()) {
+                                            Get.back();
                                             downloadManagerController.download(
                                                 goingToDownloadPage: true,
                                                 dlBox: dl);
@@ -379,6 +375,7 @@ class SerialAccordion extends StatelessWidget {
                                               },
                                               onDownload: () {
                                                 if (checkIsVip()) {
+                                                  Get.back();
                                                   downloadManagerController
                                                       .download(
                                                           goingToDownloadPage:

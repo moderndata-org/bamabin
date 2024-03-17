@@ -7,7 +7,7 @@ import 'package:get_storage/get_storage.dart';
 import '../constant/classes.dart';
 
 class ApiProvider extends GetConnect {
-  String base_url = "https://bamabin3.lol/api/";
+  String base_url = "https://bamabin7.lol/api/";
   var head;
   var timeout = const Duration(seconds: 15);
   var maxAuthRetries = 5;
@@ -95,6 +95,8 @@ class ApiProvider extends GetConnect {
             '${base_url}archive/post_type',
             query: m,
           );
+    print('${base_url}archive/post_type');
+    print('${m}');
     return res;
   }
 

@@ -3,9 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:get/get.dart';
 import 'package:shimmer/shimmer.dart';
-
 import '../../constant/colors.dart';
-import '../../controller/detail_controller.dart';
 import '../../models/film_model.dart';
 import '../../widgets/MyText.dart';
 import '../../widgets/custom_appbar.dart';

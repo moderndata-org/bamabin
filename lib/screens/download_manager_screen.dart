@@ -1,3 +1,4 @@
+import 'package:bamabin/constant/utils.dart';
 import 'package:bamabin/controller/download_manager_controller.dart';
 import 'package:bamabin/widgets/MyText.dart';
 import 'package:bamabin/widgets/MyTextButton.dart';
@@ -41,16 +42,18 @@ class _DownloadManagerScreenState extends State<DownloadManagerScreen> {
               itemBuilder: (context, index) {
                 DownloadTask dltask = controller.listDownloads[index];
                 return DownloadManagerItemWidget(
-                  title: dltask.filename,
+                  title: dltask.filename ?? '${dltask.url}',
                   status: dltask.status,
                   percent: dltask.progress,
-                  onTap: () {
+                  onTap: () async {
                     switch (dltask.status) {
                       case DownloadTaskStatus.complete:
-                        FlutterDownloader.open(taskId: dltask.taskId);
+                        // await FlutterDownloader.open(taskId: dltask.taskId);
+                        launchTheUrl(
+                            url: 'file:/${dltask.savedDir}/${dltask.filename}');
                         break;
                       case DownloadTaskStatus.failed:
-                        FlutterDownloader.retry(taskId: dltask.taskId);
+                        await FlutterDownloader.retry(taskId: dltask.taskId);
                         break;
                       case DownloadTaskStatus.paused:
                         FlutterDownloader.resume(taskId: dltask.taskId);

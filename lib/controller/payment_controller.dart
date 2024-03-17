@@ -5,10 +5,8 @@ import 'package:bamabin/models/gateway_model.dart';
 import 'package:bamabin/models/plan_model.dart';
 import 'package:bamabin/widgets/MyCircularProgress.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 
 class PaymentController extends GetxController {
   var isVip = false.obs;
@@ -28,23 +26,27 @@ class PaymentController extends GetxController {
     ApiProvider().checkVip().then((value) {
       if (value.isOk) {
         isVip(value.body["status"]);
-        if(isVip.isTrue){
+        if (isVip.isTrue) {
           getVipDetails();
         }
       }
     });
   }
 
-  void getVipDetails(){
-    ApiProvider().vipInfo().then((value) {
-      if(value.isOk){
-        if(value.body["status"] == true){
-         DateTime start_time = DateTime.fromMillisecondsSinceEpoch(value.body["result"]["start_time"] * 1000);
-         DateTime end_time = DateTime.fromMillisecondsSinceEpoch(value.body["result"]["expire_time"] * 1000);
-         remainVipDays((end_time.difference(start_time)).inDays);
+  void getVipDetails() {
+    ApiProvider().vipInfo().then(
+      (value) {
+        if (value.isOk) {
+          if (value.body["status"] == true) {
+            DateTime start_time = DateTime.fromMillisecondsSinceEpoch(
+                value.body["result"]["start_time"] * 1000);
+            DateTime end_time = DateTime.fromMillisecondsSinceEpoch(
+                value.body["result"]["expire_time"] * 1000);
+            remainVipDays((end_time.difference(start_time)).inDays);
+          }
         }
-      }
-    },);
+      },
+    );
   }
 
   void getGateways() {
@@ -74,8 +76,13 @@ class PaymentController extends GetxController {
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(16), color: cPrimary),
             child: Obx(() {
-              if(paymentLoading.isTrue)
-                return Center(child: MyCircularProgress(color: cAccent,size: 32,),);
+              if (paymentLoading.isTrue)
+                return Center(
+                  child: MyCircularProgress(
+                    color: cAccent,
+                    size: 32,
+                  ),
+                );
 
               return Column(
                 children: [
@@ -84,47 +91,48 @@ class PaymentController extends GetxController {
                   ),
                   Text(
                     "درگاه پرداخت را انتخاب کنید",
-                    style: TextStyle(color: cAccent, fontWeight: FontWeight.bold),
+                    style:
+                        TextStyle(color: cAccent, fontWeight: FontWeight.bold),
                   ),
                   Expanded(
                       child: ListView.builder(
-                        itemCount: gateways.length,
-                        itemBuilder: (context, index) {
-                          var gateway = gateways[index];
-                          return GestureDetector(
-                            child: Container(
-                              padding: EdgeInsets.all(5),
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(8),
-                                  border: Border.all(
-                                      color: Colors.grey.withOpacity(0.5))),
-                              margin: EdgeInsets.only(top: 10, left: 10, right: 10),
-                              child: Row(
-                                textDirection: TextDirection.rtl,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  SizedBox(
-                                    width: 40,
-                                    height: 40,
-                                    child:
+                    itemCount: gateways.length,
+                    itemBuilder: (context, index) {
+                      var gateway = gateways[index];
+                      return GestureDetector(
+                        child: Container(
+                          padding: EdgeInsets.all(5),
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(8),
+                              border: Border.all(
+                                  color: Colors.grey.withOpacity(0.5))),
+                          margin: EdgeInsets.only(top: 10, left: 10, right: 10),
+                          child: Row(
+                            textDirection: TextDirection.rtl,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              SizedBox(
+                                width: 40,
+                                height: 40,
+                                child:
                                     CachedNetworkImage(imageUrl: gateway.icon!),
-                                  ),
-                                  SizedBox(
-                                    width: 10,
-                                  ),
-                                  Text(
-                                    "${gateway.name}",
-                                    style: TextStyle(color: Colors.white),
-                                  )
-                                ],
                               ),
-                            ),
-                            onTap: () {
-                              sendPayment(gateway.id.toString());
-                            },
-                          );
+                              SizedBox(
+                                width: 10,
+                              ),
+                              Text(
+                                "${gateway.name}",
+                                style: TextStyle(color: Colors.white),
+                              )
+                            ],
+                          ),
+                        ),
+                        onTap: () {
+                          sendPayment(gateway.id.toString());
                         },
-                      ))
+                      );
+                    },
+                  ))
                 ],
               );
             }),

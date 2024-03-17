@@ -164,6 +164,7 @@ class MainController extends GetxController {
             genreId: '${selectedGenre.value.id ?? ''}')
         .then((res) {
       isLoadingData(false);
+      print(res.body);
       if (isFirstPage) {
         selectedList.clear();
         isShowShimmer(false);

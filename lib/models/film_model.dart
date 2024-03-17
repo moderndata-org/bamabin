@@ -1,3 +1,4 @@
+import 'package:bamabin/controller/detail_controller.dart';
 import 'package:bamabin/controller/main_controller.dart';
 import 'package:bamabin/models/actor.dart';
 import 'package:bamabin/models/dlbox_movies_model.dart';
@@ -467,12 +468,37 @@ class FilmModel {
     });
   }
 
-  List<Widget> generateSmallItemsList({required double fullWidth}) {
+  List<Widget> generateSmallItemsList() {
+    final detailController = Get.find<DetailController>();
     List<Widget> list = [];
-    double width = fullWidth / 4;
+    double width = (detailController.width / 4) - 5;
     String? brStatus;
     String? playChannel;
     String? playDay;
+    String _country = '';
+    String _language = '';
+    String _networks = '';
+    networks?.forEach((element) {
+      if (_networks == '') {
+        _networks += '${element.name}';
+      } else {
+        _networks += ',${element.name}';
+      }
+    });
+    countries?.forEach((element) {
+      if (_country == '') {
+        _country += '${element.name}';
+      } else {
+        _country += ',${element.name}';
+      }
+    });
+    languages?.forEach((element) {
+      if (_language == '') {
+        _language += '${element.name}';
+      } else {
+        _language += ',${element.name}';
+      }
+    });
     final _mainController = Get.find<MainController>();
     if (networks != null) {
       for (int i = 0; i < networks!.length; i++) {
@@ -552,18 +578,38 @@ class FilmModel {
           text: releaseYear,
           icon: Icons.calendar_month_rounded,
         ));
+
     list.addIf(
-        countryMovie != null && countryMovie != '',
+        _country != '',
         _SmallItem(
+          onTap: () => _mainController.openFilterScreen(
+              key: 'countries',
+              id: '${countries?[0].id}',
+              title: '${countries?[0].name}'),
           width: width,
-          text: countryMovie,
+          text: _country,
           icon: Icons.public,
         ));
     list.addIf(
-        languageMovie != null && languageMovie != '',
+        _language != '',
         _SmallItem(
+          onTap: () => _mainController.openFilterScreen(
+              key: 'languages',
+              id: '${languages?[0].id}',
+              title: '${languages?[0].name}'),
           width: width,
-          text: languageMovie,
+          text: _language,
+          icon: Icons.language,
+        ));
+    list.addIf(
+        _networks != '',
+        _SmallItem(
+          onTap: () => _mainController.openFilterScreen(
+              key: 'networks',
+              id: '${networks?[0].id}',
+              title: '${networks?[0].name}'),
+          width: width,
+          text: _networks,
           icon: Icons.language,
         ));
 
@@ -648,6 +694,7 @@ class FilmModel {
     //       text: '$production_budget',
     //       icon: Icons.request_quote_rounded,
     //     ));
+
     list.addIf(
         playChannel != null && playChannel != '',
         _SmallItem(

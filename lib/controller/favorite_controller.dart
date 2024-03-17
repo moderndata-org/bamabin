@@ -41,34 +41,39 @@ class FavoriteController extends GetxController {
 
   void setFavorite(
       {required String id, required FavoriteAction favoriteAction}) {
-    isSettingFavorites(true);
-    String action = '';
-    bool isFavorite;
-    switch (favoriteAction) {
-      case FavoriteAction.Add:
-        {
-          action = 'add';
-          isFavorite = true;
-        }
-      case FavoriteAction.Remove:
-        {
-          action = 'remove';
-          isFavorite = false;
-        }
-    }
-    ApiProvider().setFavorite(action: action, id: id).then((res) {
-      if (res.body != null) {
-        if (res.body['status'] == true) {
-          var _detailcontroller = Get.find<DetailController>();
-          _detailcontroller.selectedFilm.value.is_watchlist = isFavorite;
-          getFavoritesList();
-          showMessage(text: res.body['message'], isSucces: true);
-        } else {
-          showMessage(text: res.body['message'], isSucces: false);
-        }
+    final _auth = Get.find<AuthController>();
+    if (_auth.isLogin.isFalse) {
+      showMessage(text: 'لطفا وارد حساب کاربری خود شوید', isSucces: false);
+    } else {
+      isSettingFavorites(true);
+      String action = '';
+      bool isFavorite;
+      switch (favoriteAction) {
+        case FavoriteAction.Add:
+          {
+            action = 'add';
+            isFavorite = true;
+          }
+        case FavoriteAction.Remove:
+          {
+            action = 'remove';
+            isFavorite = false;
+          }
       }
-      print(res.body);
-      isSettingFavorites(false);
-    });
+      ApiProvider().setFavorite(action: action, id: id).then((res) {
+        if (res.body != null) {
+          if (res.body['status'] == true) {
+            var _detailcontroller = Get.find<DetailController>();
+            _detailcontroller.selectedFilm.value.is_watchlist = isFavorite;
+            getFavoritesList();
+            showMessage(text: res.body['message'], isSucces: true);
+          } else {
+            showMessage(text: res.body['message'], isSucces: false);
+          }
+        }
+        print(res.body);
+        isSettingFavorites(false);
+      });
+    }
   }
 }

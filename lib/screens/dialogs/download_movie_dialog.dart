@@ -6,11 +6,8 @@ import 'package:bamabin/controller/player_controller.dart';
 import 'package:bamabin/models/film_model.dart';
 import 'package:bamabin/widgets/MyText.dart';
 import 'package:bamabin/widgets/dialog_items/movie_item_dialog_widget.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
-
 import '../../constant/utils.dart';
 import '../../widgets/download_section_widget.dart';
 
@@ -114,7 +111,6 @@ class DownloadMovieDialog extends StatelessWidget {
   List<Widget> generateList() {
     final downloadManagerController = Get.find<DownloadManagerController>();
     final videoController = Get.find<PlayerController>();
-    final authController = Get.find<AuthController>();
     List<Widget> a = [];
     //!  Subtitles
     if (film.moviesDlbox?.subtitle != null &&

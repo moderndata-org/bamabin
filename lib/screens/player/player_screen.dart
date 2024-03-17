@@ -1,7 +1,4 @@
-import 'dart:async';
-
 import 'package:bamabin/constant/colors.dart';
-import 'package:bamabin/constant/utils.dart';
 import 'package:bamabin/controller/detail_controller.dart';
 import 'package:bamabin/controller/player_controller.dart';
 import 'package:bamabin/screens/dialogs/player_dialogs/player_season_dialog.dart';
@@ -11,7 +8,6 @@ import 'package:bamabin/widgets/MyText.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:video_player/video_player.dart';
 
 class PlayerScreen extends StatefulWidget {
@@ -64,8 +60,6 @@ class _PlayerScreenState extends State<PlayerScreen> {
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
         overlays: [SystemUiOverlay.top]);
     controller.video_controller.dispose();
-    detailController.selectedFilm.value
-        .generateSmallItemsList(fullWidth: Get.width);
     super.dispose();
   }
 
@@ -105,23 +99,28 @@ class _PlayerScreenState extends State<PlayerScreen> {
                             ),
                     )),
                 Container(
-                  child: Obx(() =>
-                  (controller.show_caption.isTrue) ? Container(
-                    padding: EdgeInsets.all(5),
-                    margin: EdgeInsets.only(bottom: 15),
-                    alignment: Alignment.bottomCenter,
-                    child: Text(controller.video_controller.value.caption.text,
-                      textDirection: TextDirection.rtl,
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: (controller.subtitle_style["text_color"] as Color).withAlpha(controller.subtitle_style["text_opacity"] as int),
-                        backgroundColor: (controller.subtitle_style["bg_color"] as Color).withAlpha(controller.subtitle_style["bg_opacity"] as int),
-
-                      ),
-                    ),) : Container()
-
-
-                      ),
+                  child: Obx(() => (controller.show_caption.isTrue)
+                      ? Container(
+                          padding: EdgeInsets.all(5),
+                          margin: EdgeInsets.only(bottom: 15),
+                          alignment: Alignment.bottomCenter,
+                          child: Text(
+                            controller.video_controller.value.caption.text,
+                            textDirection: TextDirection.rtl,
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: (controller.subtitle_style["text_color"]
+                                      as Color)
+                                  .withAlpha(controller
+                                      .subtitle_style["text_opacity"] as int),
+                              backgroundColor: (controller
+                                      .subtitle_style["bg_color"] as Color)
+                                  .withAlpha(controller
+                                      .subtitle_style["bg_opacity"] as int),
+                            ),
+                          ),
+                        )
+                      : Container()),
                 ),
                 Obx(() => // Player,
                     AnimatedOpacity(
@@ -280,27 +279,26 @@ class _PlayerScreenState extends State<PlayerScreen> {
                                                         color: Colors.white,
                                                         size: 25,
                                                       )),
-
-
                                                   Visibility(
-                                                      visible: controller.is_dubbed.isFalse,
-                                                      child: IconButton(
-                                                          onPressed: () {
-                                                            controller
-                                                                .video_controller
-                                                                .pause();
-                                                            showDialog(
-                                                              context: context,
-                                                              builder: (context) =>
-                                                                  PlayerSubtitleDialog(),
-                                                            );
-                                                          },
-
-                                                          icon: Icon(
-                                                            Icons.tune,
-                                                            color: Colors.white,
-                                                            size: 25,
-                                                          )),),
+                                                    visible: controller
+                                                        .is_dubbed.isFalse,
+                                                    child: IconButton(
+                                                        onPressed: () {
+                                                          controller
+                                                              .video_controller
+                                                              .pause();
+                                                          showDialog(
+                                                            context: context,
+                                                            builder: (context) =>
+                                                                PlayerSubtitleDialog(),
+                                                          );
+                                                        },
+                                                        icon: Icon(
+                                                          Icons.tune,
+                                                          color: Colors.white,
+                                                          size: 25,
+                                                        )),
+                                                  ),
                                                 ],
                                               ),
                                             ),
@@ -419,20 +417,33 @@ class _PlayerScreenState extends State<PlayerScreen> {
                                                     ),
                                                   ),
                                                   Visibility(
-                                                      visible: controller.is_dubbed.isFalse,
+                                                      visible: controller
+                                                          .is_dubbed.isFalse,
                                                       child: IconButton(
-                                                    onPressed: () {
-                                                      if(controller.show_caption.isTrue)
-                                                        controller.show_caption(false);
-                                                      else
-                                                        controller.show_caption(true);
-                                                    },
-                                                    icon: Icon(
-                                                      (controller.show_caption.isTrue) ? Icons.closed_caption : Icons.closed_caption_off,
-                                                      color: Colors.white,
-                                                      size: 30,
-                                                    ),
-                                                  )),
+                                                        onPressed: () {
+                                                          if (controller
+                                                              .show_caption
+                                                              .isTrue)
+                                                            controller
+                                                                .show_caption(
+                                                                    false);
+                                                          else
+                                                            controller
+                                                                .show_caption(
+                                                                    true);
+                                                        },
+                                                        icon: Icon(
+                                                          (controller
+                                                                  .show_caption
+                                                                  .isTrue)
+                                                              ? Icons
+                                                                  .closed_caption
+                                                              : Icons
+                                                                  .closed_caption_off,
+                                                          color: Colors.white,
+                                                          size: 30,
+                                                        ),
+                                                      )),
                                                   IconButton(
                                                     onPressed: () {},
                                                     icon: SizedBox(

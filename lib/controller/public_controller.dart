@@ -293,16 +293,23 @@ class PublicController extends GetxController {
         page += 1;
       }
       ApiProvider().search(text: searchText, page: page).then((res) {
+        print(res.body);
         if (res.body != null) {
           isLoadingSearchResults(false);
           isShowShimmerSearch(false);
           if (res.body['status'] == true) {
             List tmp = [];
             if (res.body['result']['movies'] != null) {
-              tmp = res.body['result']['movies'];
+              tmp += res.body['result']['movies'];
             }
             if (res.body['result']['series'] != null) {
-              tmp = res.body['result']['series'];
+              tmp += res.body['result']['series'];
+            }
+            if (res.body['result']['animations'] != null) {
+              tmp += res.body['result']['animations'];
+            }
+            if (res.body['result']['anime'] != null) {
+              tmp += res.body['result']['anime'];
             }
             tmp.forEach((element) {
               listSearch.add(FilmModel.fromJson(element));

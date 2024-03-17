@@ -1,6 +1,3 @@
-import 'dart:convert';
-
-import 'package:bamabin/api/api_handler.dart';
 import 'package:bamabin/constant/classes.dart';
 import 'package:bamabin/constant/colors.dart';
 import 'package:bamabin/controller/auth_controller.dart';
@@ -22,10 +19,7 @@ import 'package:bamabin/widgets/movie_item_widget.dart';
 import 'package:bamabin/widgets/scores_section.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:video_player/video_player.dart';
 import '../constant/utils.dart';
 import '../controller/recent_controller.dart';
 import '../models/recent_model.dart';
@@ -69,6 +63,7 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
   @override
   Widget build(BuildContext context) {
     print(controller.selectedFilm.value.trailer_url);
+    // print(controller.selectedFilm.value.);
     return SafeArea(
       child: Scaffold(
         floatingActionButton: Obx(() => controller.showGoToTop.value
@@ -530,7 +525,7 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                         runSpacing: 5,
                         direction: Axis.horizontal,
                         children: controller.selectedFilm.value
-                            .generateSmallItemsList(fullWidth: Get.width - 20)),
+                            .generateSmallItemsList()),
                   ),
                 )),
             //! Buttons Section
@@ -619,119 +614,6 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                           ],
                         ),
                       )),
-            // //! TrailerSection Bk
-            // Obx(() => controller.isLoadingNewData.isTrue
-            //     ? SizedBox()
-            //     : controller.selectedFilm.value.trailer_url == '' ||
-            //             controller.selectedFilm.value.trailer_url == null
-            //         ? SizedBox()
-            //         : Container(
-            //             width: Get.width,
-            //             color: cPrimaryDark,
-            //             padding: EdgeInsets.only(top: 15),
-            //             child: Column(
-            //               children: [
-            //                 Row(
-            //                   textDirection: TextDirection.rtl,
-            //                   children: [
-            //                     SizedBox(
-            //                       width: 15,
-            //                     ),
-            //                     Icon(
-            //                       Icons.theaters_rounded,
-            //                       color: cW,
-            //                     ),
-            //                     SizedBox(
-            //                       width: 10,
-            //                     ),
-            //                     MyText(
-            //                       text: 'تریلر',
-            //                       size: 15,
-            //                     ),
-            //                   ],
-            //                 ),
-            //                 SizedBox(
-            //                   height: 10,
-            //                 ),
-            //                 GestureDetector(
-            //                   onTap: () {
-            //                     if (controller.isLoadingTrailer.isFalse) {
-            //                       if (controller
-            //                           .trailerController!.value.isPlaying) {
-            //                         controller.trailerController?.pause();
-            //                         controller.isPlayingTrailer(false);
-            //                       } else {
-            //                         controller.trailerController?.play();
-
-            //                         controller.isPlayingTrailer(true);
-            //                       }
-            //                     }
-            //                   },
-            //                   child: SizedBox(
-            //                     height: 200,
-            //                     width: Get.width,
-            //                     child: Stack(
-            //                       children: [
-            //                         SizedBox(
-            //                             height: 200,
-            //                             width: Get.width,
-            //                             child: VideoPlayer(
-            //                                 controller.trailerController!)),
-            //                         Obx(() => controller.isPlayingTrailer.value
-            //                             ? Positioned(
-            //                                 bottom: 10,
-            //                                 right: 10,
-            //                                 left: 10,
-            //                                 child: Container(
-            //                                   child: Obx(() => Slider(
-            //                                         inactiveColor:
-            //                                             cW.withOpacity(.7),
-            //                                         activeColor: cW,
-            //                                         value: controller
-            //                                             .trailerPosition.value,
-            //                                         min: 0,
-            //                                         max: controller
-            //                                             .trailerController!
-            //                                             .value
-            //                                             .duration
-            //                                             .inSeconds
-            //                                             .toDouble(),
-            //                                         onChanged: (value) {
-            //                                           controller
-            //                                               .trailerPosition(
-            //                                                   value);
-            //                                           controller
-            //                                               .trailerController!
-            //                                               .seekTo(Duration(
-            //                                                   seconds: value
-            //                                                       .toInt()));
-            //                                         },
-            //                                       )),
-            //                                 ))
-            //                             : Container(
-            //                                 height: 200,
-            //                                 width: Get.width,
-            //                                 color: cB.withOpacity(.6),
-            //                                 child: Center(
-            //                                   child: controller
-            //                                           .isLoadingTrailer.value
-            //                                       ? MyCircularProgress(
-            //                                           color: cY)
-            //                                       : Icon(
-            //                                           Icons
-            //                                               .play_circle_fill_rounded,
-            //                                           color: cW.withOpacity(.7),
-            //                                           size: 70,
-            //                                         ),
-            //                                 ),
-            //                               ))
-            //                       ],
-            //                     ),
-            //                   ),
-            //                 )
-            //               ],
-            //             ),
-            //           )),
             SizedBox(
               height: 15,
             ),
@@ -951,209 +833,248 @@ class ButtonSectionMovieDetailWidget extends GetView<DetailController> {
   Widget build(BuildContext context) {
     final favoritecontroller = Get.find<FavoriteController>();
     final authController = Get.find<AuthController>();
-    return Container(
-      margin: EdgeInsets.only(top: 10),
-      width: Get.width,
-      child: Row(
-        textDirection: TextDirection.rtl,
-        children: [
-          SizedBox(
-            width: padding,
-          ),
-          Expanded(
-              child: MyTextButton(
-                  borderRadius: 5,
-                  padding: EdgeInsets.zero,
-                  fgColor: cW,
-                  onTap: () {
-                    Share.share('${controller.selectedFilm.value.link}');
-                  },
-                  bgColor: cGrey,
-                  boxShadow: bsBtnMovieDetail,
-                  size: Size.fromHeight(60),
-                  child: Column(
-                    children: [
-                      Expanded(
-                        child: Center(
-                          child: Icon(
-                            Icons.share_rounded,
-                            size: 25,
-                            color: cW,
-                          ),
-                        ),
-                      ),
-                      MyText(text: 'اشتراک گذاری', size: 11),
-                      SizedBox(
-                        height: 5,
-                      )
-                    ],
-                  ))),
-          SizedBox(
-            width: 5,
-          ),
-          Expanded(
-              child: MyTextButton(
-                  borderRadius: 5,
-                  padding: EdgeInsets.zero,
-                  fgColor: cW,
-                  onTap: () => favoritecontroller.setFavorite(
-                      id: '${controller.selectedFilm.value.id}',
-                      favoriteAction:
-                          controller.selectedFilm.value.is_watchlist == true
-                              ? FavoriteAction.Remove
-                              : FavoriteAction.Add),
-                  bgColor: cGrey,
-                  boxShadow: bsBtnMovieDetail,
-                  size: Size.fromHeight(60),
-                  child: Obx(() => favoritecontroller.isSettingFavorites.isTrue
-                      ? Center(
-                          child: MyCircularProgress(
-                            color: cW,
-                            size: 25,
-                          ),
-                        )
-                      : Column(
+    Widget space = SizedBox(
+      width: padding,
+    );
+    return Obx(() => controller.isLoadingNewData.value
+        ? Container(
+            margin: EdgeInsets.only(top: 10),
+            height: 60,
+            child: Row(
+              children: [
+                space,
+                Expanded(
+                  child: CustomShimmerWidget(
+                    radius: 5,
+                  ),
+                ),
+                space,
+                Expanded(
+                  child: CustomShimmerWidget(
+                    radius: 5,
+                  ),
+                ),
+                space,
+                Expanded(
+                  child: CustomShimmerWidget(
+                    radius: 5,
+                  ),
+                ),
+                space,
+                Expanded(
+                  child: CustomShimmerWidget(
+                    radius: 5,
+                  ),
+                ),
+                space
+              ],
+            ),
+          )
+        : Container(
+            margin: EdgeInsets.only(top: 10),
+            width: Get.width,
+            child: Row(
+              textDirection: TextDirection.rtl,
+              children: [
+                SizedBox(
+                  width: padding,
+                ),
+                Expanded(
+                    child: MyTextButton(
+                        borderRadius: 5,
+                        padding: EdgeInsets.zero,
+                        fgColor: cW,
+                        onTap: () {
+                          Share.share('${controller.selectedFilm.value.link}');
+                        },
+                        bgColor: cGrey,
+                        boxShadow: bsBtnMovieDetail,
+                        size: Size.fromHeight(60),
+                        child: Column(
                           children: [
                             Expanded(
                               child: Center(
-                                child: Obx(() => Icon(
-                                      controller.selectedFilm.value
-                                                  .is_watchlist ==
-                                              true
-                                          ? Icons.bookmark
-                                          : Icons.bookmark_border_rounded,
-                                      size: 25,
-                                      color: cW,
-                                    )),
+                                child: Icon(
+                                  Icons.share_rounded,
+                                  size: 25,
+                                  color: cW,
+                                ),
                               ),
                             ),
-                            MyText(
-                              text: 'علاقه‌مندی',
+                            MyText(text: 'اشتراک گذاری', size: 11),
+                            SizedBox(
+                              height: 5,
+                            )
+                          ],
+                        ))),
+                SizedBox(
+                  width: 5,
+                ),
+                Expanded(
+                    child: MyTextButton(
+                        borderRadius: 5,
+                        padding: EdgeInsets.zero,
+                        fgColor: cW,
+                        onTap: () => favoritecontroller.setFavorite(
+                            id: '${controller.selectedFilm.value.id}',
+                            favoriteAction:
+                                controller.selectedFilm.value.is_watchlist ==
+                                        true
+                                    ? FavoriteAction.Remove
+                                    : FavoriteAction.Add),
+                        bgColor: cGrey,
+                        boxShadow: bsBtnMovieDetail,
+                        size: Size.fromHeight(60),
+                        child: Obx(
+                            () => favoritecontroller.isSettingFavorites.isTrue
+                                ? Center(
+                                    child: MyCircularProgress(
+                                      color: cW,
+                                      size: 25,
+                                    ),
+                                  )
+                                : Column(
+                                    children: [
+                                      Expanded(
+                                        child: Center(
+                                          child: Obx(() => Icon(
+                                                controller.selectedFilm.value
+                                                            .is_watchlist ==
+                                                        true
+                                                    ? Icons.bookmark
+                                                    : Icons
+                                                        .bookmark_border_rounded,
+                                                size: 25,
+                                                color: cW,
+                                              )),
+                                        ),
+                                      ),
+                                      MyText(
+                                        text: 'علاقه‌مندی',
+                                      ),
+                                      SizedBox(
+                                        height: 5,
+                                      )
+                                    ],
+                                  )))),
+                SizedBox(
+                  width: 5,
+                ),
+                Expanded(
+                    child: MyTextButton(
+                        borderRadius: 5,
+                        padding: EdgeInsets.zero,
+                        fgColor: cB,
+                        onTap: () {
+                          if (controller.selectedFilm.value.type == 'movies') {
+                            showDialog(
+                              context: context,
+                              builder: (context) => DownloadMovieDialog(
+                                film: controller.selectedFilm.value,
+                              ),
+                            );
+                          }
+                          if (controller.selectedFilm.value.type == 'series') {
+                            showDialog(
+                                context: context,
+                                builder: (context) => DownloadSerialDialog(
+                                      listSeries: controller
+                                          .selectedFilm.value.seriesDlbox,
+                                    ));
+                          }
+                        },
+                        bgColor: cG,
+                        boxShadow: bsBtnMovieDetail,
+                        size: Size.fromHeight(60),
+                        child: Column(
+                          children: [
+                            Expanded(
+                              child: Center(
+                                child: Icon(
+                                  Icons.download_rounded,
+                                  size: 25,
+                                  color: cW,
+                                ),
+                              ),
+                            ),
+                            FittedBox(
+                              fit: BoxFit.scaleDown,
+                              child: MyText(text: 'دانلود'),
                             ),
                             SizedBox(
                               height: 5,
                             )
                           ],
-                        )))),
-          SizedBox(
-            width: 5,
-          ),
-          Expanded(
-              child: MyTextButton(
-                  borderRadius: 5,
-                  padding: EdgeInsets.zero,
-                  fgColor: cB,
-                  onTap: () {
-                    if (controller.selectedFilm.value.type == 'movies') {
-                      showDialog(
-                        context: context,
-                        builder: (context) => DownloadMovieDialog(
-                          film: controller.selectedFilm.value,
-                        ),
-                      );
-                    }
-                    if (controller.selectedFilm.value.type == 'series') {
-                      showDialog(
-                          context: context,
-                          builder: (context) => DownloadSerialDialog(
-                                listSeries:
-                                    controller.selectedFilm.value.seriesDlbox,
-                              ));
-                    }
-                  },
-                  bgColor: cG,
-                  boxShadow: bsBtnMovieDetail,
-                  size: Size.fromHeight(60),
-                  child: Column(
-                    children: [
-                      Expanded(
-                        child: Center(
-                          child: Icon(
-                            Icons.download_rounded,
-                            size: 25,
-                            color: cW,
-                          ),
-                        ),
-                      ),
-                      FittedBox(
-                        fit: BoxFit.scaleDown,
-                        child: MyText(text: 'دانلود'),
-                      ),
-                      SizedBox(
-                        height: 5,
-                      )
-                    ],
-                  ))),
-          SizedBox(
-            width: controller.selectedFilm.value.hasPlay != 'on' &&
-                    authController.paymentController.isVip.isFalse
-                ? 0
-                : 5,
-          ),
-          //! Play Button
-          Obx(() => controller.selectedFilm.value.hasPlay == 'on' &&
-                  authController.paymentController.isVip.isTrue &&
-                  authController.isLogin.isTrue
-              ? Expanded(
-                  child: MyTextButton(
-                      borderRadius: 5,
-                      padding: EdgeInsets.zero,
-                      fgColor: cB,
-                      onTap: () {
-                        if (authController.isLogin.value) {
-                          if (authController.paymentController.isVip.value) {
-                            RecentModel rm = RecentModel(
-                                bg_cover:
-                                    controller.selectedFilm.value.bgThumbnail,
-                                cover: controller.selectedFilm.value.thumbnail,
-                                hasDubbed:
-                                    controller.selectedFilm.value.hasDubbed,
-                                hasSubtitle:
-                                    controller.selectedFilm.value.hasSubtitle,
-                                id: controller.selectedFilm.value.id,
-                                imdb: controller.selectedFilm.value.imdbRate,
-                                title: controller.selectedFilm.value.title,
-                                year:
-                                    controller.selectedFilm.value.releaseYear);
-                            Get.find<RecentContoller>()
-                                .addToRecent(recentModel: rm);
-                            controller.playMovieOrSerial();
-                          } else {
-                            Get.toNamed('/subscribe');
-                          }
-                        } else {
-                          Get.toNamed('/signin');
-                        }
-                      },
-                      bgColor: cY,
-                      boxShadow: bsBtnMovieDetail,
-                      size: Size.fromHeight(60),
-                      child: Column(
-                        children: [
-                          Expanded(
-                            child: Center(
-                              child: Icon(
-                                Icons.play_arrow_rounded,
-                                size: 30,
-                                color: cBgBtnMovieDetail,
-                              ),
-                            ),
-                          ),
-                          MyText(
-                            text: 'پخش',
-                            color: cBgBtnMovieDetail,
-                          ),
-                          SizedBox(
-                            height: 5,
-                          )
-                        ],
-                      )))
-              : SizedBox()),
-          SizedBox(
-            width: padding,
-          ),
-        ],
-      ),
-    );
+                        ))),
+                SizedBox(
+                  width: controller.selectedFilm.value.hasPlay != 'on' ? 0 : 5,
+                ),
+                //! Play Button
+                Obx(() => controller.selectedFilm.value.hasPlay == 'on'
+                    ? Expanded(
+                        child: MyTextButton(
+                            borderRadius: 5,
+                            padding: EdgeInsets.zero,
+                            fgColor: cB,
+                            onTap: () {
+                              if (authController.isLogin.value) {
+                                if (authController
+                                    .paymentController.isVip.value) {
+                                  RecentModel rm = RecentModel(
+                                      bg_cover: controller
+                                          .selectedFilm.value.bgThumbnail,
+                                      cover: controller
+                                          .selectedFilm.value.thumbnail,
+                                      hasDubbed: controller
+                                          .selectedFilm.value.hasDubbed,
+                                      hasSubtitle: controller
+                                          .selectedFilm.value.hasSubtitle,
+                                      id: controller.selectedFilm.value.id,
+                                      imdb: controller
+                                          .selectedFilm.value.imdbRate,
+                                      title:
+                                          controller.selectedFilm.value.title,
+                                      year: controller
+                                          .selectedFilm.value.releaseYear);
+                                  Get.find<RecentContoller>()
+                                      .addToRecent(recentModel: rm);
+                                  controller.playMovieOrSerial();
+                                } else {
+                                  Get.toNamed('/subscribe');
+                                }
+                              } else {
+                                Get.toNamed('/signin');
+                              }
+                            },
+                            bgColor: cY,
+                            boxShadow: bsBtnMovieDetail,
+                            size: Size.fromHeight(60),
+                            child: Column(
+                              children: [
+                                Expanded(
+                                  child: Center(
+                                    child: Icon(
+                                      Icons.play_arrow_rounded,
+                                      size: 30,
+                                      color: cBgBtnMovieDetail,
+                                    ),
+                                  ),
+                                ),
+                                MyText(
+                                  text: 'پخش',
+                                  color: cBgBtnMovieDetail,
+                                ),
+                                SizedBox(
+                                  height: 5,
+                                )
+                              ],
+                            )))
+                    : SizedBox()),
+                SizedBox(
+                  width: padding,
+                ),
+              ],
+            ),
+          ));
   }
 }

@@ -1,17 +1,11 @@
 import 'dart:io';
-
-import 'package:bamabin/constant/utils.dart';
 import 'package:bamabin/controller/auth_controller.dart';
-import 'package:bamabin/widgets/MyCircularProgress.dart';
-import 'package:bamabin/widgets/MyTextField.dart';
 import 'package:bamabin/widgets/back_button_custom.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
-
 import '../../constant/colors.dart';
-import '../../widgets/MyTextButton.dart';
 
 class SignInQrCodeScreen extends StatefulWidget {
   const SignInQrCodeScreen({Key? key}) : super(key: key);
@@ -104,7 +98,6 @@ class _SignInQrCodeScreenState extends State<SignInQrCodeScreen> {
                           SizedBox(
                             height: 10,
                           ),
-
                         ],
                       ),
                     )
@@ -122,7 +115,7 @@ class _SignInQrCodeScreenState extends State<SignInQrCodeScreen> {
       setState(() {
         result = scanData;
         print("Code------${scanData}");
-        if(result != null){
+        if (result != null) {
           print("Code------${scanData}");
           GetStorage('bamabin')
             ..write("api_key", "${result!.code}")
@@ -130,7 +123,6 @@ class _SignInQrCodeScreenState extends State<SignInQrCodeScreen> {
           authController.checkLogin();
           Get.back();
         }
-        
       });
     });
   }

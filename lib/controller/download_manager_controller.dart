@@ -13,6 +13,7 @@ import 'package:permission_handler/permission_handler.dart';
 class DownloadManagerController extends GetxController {
   RxList<DownloadTask> listDownloads = <DownloadTask>[].obs;
   ReceivePort _port = ReceivePort();
+  DateTime lastTimeShowMessage = DateTime.now();
 
   @override
   void onInit() {
@@ -26,7 +27,7 @@ class DownloadManagerController extends GetxController {
     //   }
     // });
     //! Disable for now
-    // _bindBackgroundIsolate();
+    _bindBackgroundIsolate();
     //! Enable for now
     Timer.periodic(Duration(milliseconds: 100), (timer) {
       refreshDownloadList();
@@ -102,7 +103,7 @@ class DownloadManagerController extends GetxController {
       {required bool goingToDownloadPage, required DlboxItem dlBox}) async {
     // final directory = await getExternalStorageDirectory();
     // final savedDir = '${directory?.path}/download/bamabin/';
-    if (dlBox.link != '#') {
+    if (dlBox.link != '#' && dlBox.link != '' && dlBox.link != null) {
       if (goingToDownloadPage) {
         Get.toNamed('/download-manager');
       }
@@ -116,16 +117,21 @@ class DownloadManagerController extends GetxController {
         showMessage(text: 'Download Error', isSucces: false);
       } else {
         await FlutterDownloader.enqueue(
-          url: url,
-          savedDir: savedDir,
-          // fileName: fileName,
-          showNotification: true,
-          openFileFromNotification: false, saveInPublicStorage: true,
-        );
+            url: url,
+            savedDir: savedDir,
+            // fileName: fileName,
+            showNotification: true,
+            openFileFromNotification: false,
+            saveInPublicStorage: true,
+            allowCellular: true);
         refreshDownloadList();
       }
     } else {
-      showMessage(text: 'لینک دانلود مشکل دارد', isSucces: false);
+      if (lastTimeShowMessage.difference(DateTime.now()) >
+          Duration(seconds: 5)) {
+        lastTimeShowMessage = DateTime.now();
+        showMessage(text: 'لینک دانلود مشکل دارد', isSucces: false);
+      }
     }
   }
 
@@ -148,7 +154,7 @@ class DownloadManagerController extends GetxController {
         if (!await directory.exists())
           directory = await getExternalStorageDirectory();
       }
-    } catch (err, stack) {
+    } catch (err) {
       print("Cannot get download folder path");
     }
     return directory?.path;
