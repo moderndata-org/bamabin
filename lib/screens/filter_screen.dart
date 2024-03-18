@@ -70,7 +70,8 @@ class FilterScreen extends GetView<MainController> {
                         onTap: () {
                           var detail = Get.find<DetailController>();
                           detail.selectedFilm(fm);
-                          Get.toNamed('/movie-detail');
+                          detail.getNewData();
+                          Get.back();
                         },
                       );
                     },

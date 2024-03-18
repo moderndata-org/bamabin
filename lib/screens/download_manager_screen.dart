@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:bamabin/constant/utils.dart';
 import 'package:bamabin/controller/download_manager_controller.dart';
 import 'package:bamabin/widgets/MyText.dart';
@@ -46,25 +48,45 @@ class _DownloadManagerScreenState extends State<DownloadManagerScreen> {
                   status: dltask.status,
                   percent: dltask.progress,
                   onTap: () async {
-                    switch (dltask.status) {
-                      case DownloadTaskStatus.complete:
-                        // await FlutterDownloader.open(taskId: dltask.taskId);
-                        launchTheUrl(
-                            url: 'file:/${dltask.savedDir}/${dltask.filename}');
-                        break;
-                      case DownloadTaskStatus.failed:
-                        await FlutterDownloader.retry(taskId: dltask.taskId);
-                        break;
-                      case DownloadTaskStatus.paused:
-                        FlutterDownloader.resume(taskId: dltask.taskId);
-                        break;
-                      case DownloadTaskStatus.enqueued ||
-                            DownloadTaskStatus.running:
-                        FlutterDownloader.pause(taskId: dltask.taskId);
-                        break;
-                      default:
+                    File f = File('${dltask.savedDir}/${dltask.filename}');
+                    bool isExist = await f.exists();
+                    if (isExist) {
+                      switch (dltask.status) {
+                        case DownloadTaskStatus.complete:
+                          await FlutterDownloader.open(taskId: dltask.taskId);
+                          break;
+                        case DownloadTaskStatus.failed:
+                          FlutterDownloader.remove(taskId: dltask.taskId);
+                          FlutterDownloader.enqueue(
+                              url: dltask.url,
+                              savedDir: dltask.savedDir,
+                              fileName: dltask.filename,
+                              openFileFromNotification: false,
+                              showNotification: true);
+                          break;
+                        case DownloadTaskStatus.paused:
+                          {
+                            await FlutterDownloader.resume(
+                                taskId: dltask.taskId);
+                            break;
+                          }
+                        case DownloadTaskStatus.enqueued ||
+                              DownloadTaskStatus.running:
+                          FlutterDownloader.pause(taskId: dltask.taskId);
+                          break;
+                        default:
+                      }
+                    } else {
+                      if (DateTime.now()
+                              .difference(controller.lastTimeShowMessage) >
+                          Duration(seconds: 3)) {
+                        controller.lastTimeShowMessage = DateTime.now();
+                        showMessage(
+                            text: 'فایل بر روی دستگاه وجود ندارد',
+                            isSucces: false);
+                        FlutterDownloader.remove(taskId: dltask.taskId);
+                      }
                     }
-                    controller.refreshDownloadList();
                   },
                 );
               },

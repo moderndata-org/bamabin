@@ -57,7 +57,7 @@ class MainController extends GetxController {
     isLoadingDataFilterScreen(true);
     isFetchingFilterScreen(false);
     GetDetailsForFilterScreen();
-    Get.offNamed('/filter');
+    Get.toNamed('/filter');
   }
 
   void GetDetailsForFilterScreen() {

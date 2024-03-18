@@ -66,7 +66,7 @@ class DownloadManagerController extends GetxController {
         if (progress == -1) {
           progress = 0;
         }
-        refreshDownloadList();
+        // refreshDownloadList();
         // for (var i = 0; i < listDownloads.length; i++) {
         //   DownloadTask realtimeTask = listDownloads[i];
         //   if (id == realtimeTask.taskId) {
@@ -124,13 +124,14 @@ class DownloadManagerController extends GetxController {
             openFileFromNotification: false,
             saveInPublicStorage: true,
             allowCellular: true);
-        refreshDownloadList();
+        // refreshDownloadList();
       }
     } else {
-      if (lastTimeShowMessage.difference(DateTime.now()) >
-          Duration(seconds: 5)) {
+      if (DateTime.now().difference(lastTimeShowMessage) >
+          Duration(seconds: 3)) {
         lastTimeShowMessage = DateTime.now();
-        showMessage(text: 'لینک دانلود مشکل دارد', isSucces: false);
+        showMessage(
+            text: 'لینک دانلود به‌زودی قرار خواهد گرفت', isSucces: false);
       }
     }
   }
