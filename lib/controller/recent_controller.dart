@@ -24,16 +24,14 @@ class RecentContoller extends GetxController {
 
   void addToRecent({required RecentModel recentModel}) {
     bool hasThisData = false;
-    print('sht');
     recentHive.values.forEach((element) {
       if (element.id == recentModel.id) {
         hasThisData = true;
-        print('yeye');
       }
     });
     if (hasThisData == false) {
-      print('yeye2');
       recentHive.add(recentModel);
+      refreshData();
     }
   }
 }

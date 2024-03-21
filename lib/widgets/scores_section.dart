@@ -11,6 +11,12 @@ class ScoreSection extends StatelessWidget {
   String? rank;
   @override
   Widget build(BuildContext context) {
+    if (award_summery != null) {
+      award_summery = award_summery!.replaceAll('win', 'برنده');
+    }
+    if (rank != null) {
+      rank = rank!.replaceAll('win', 'برنده');
+    }
     return Container(
       width: Get.width,
       color: cPrimaryDark,

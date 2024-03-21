@@ -112,66 +112,6 @@ class DetailController extends GetxController {
     }
   }
 
-  void playMovieOrSerial() {
-    final playerController = Get.find<PlayerController>();
-    if (selectedFilm.value.type == 'movies') {
-      if (selectedFilm.value.moviesDlbox?.subtitle != null ||
-          selectedFilm.value.moviesDlbox?.subtitle != []) {
-        bool has720 = false;
-        bool has480 = false;
-        DlboxItem p720 = DlboxItem();
-        DlboxItem p480 = DlboxItem();
-        selectedFilm.value.moviesDlbox?.subtitle!.forEach((sub) {
-          if (sub.qualityCode == '720p') {
-            has720 = true;
-            p720 = sub;
-          }
-          if (sub.qualityCode == '480p') {
-            has480 = true;
-            p480 = sub;
-          }
-        });
-        if (has720) {
-          // print('will play 720');
-          playerController.selectedDlBoxItem(p720);
-          Get.toNamed('/player');
-        } else if (has480) {
-          // print('will play 480');
-          playerController.selectedDlBoxItem(p480);
-          Get.toNamed('/player');
-        }
-      } else if (selectedFilm.value.moviesDlbox?.dubbed != null ||
-          selectedFilm.value.moviesDlbox?.dubbed != []) {
-        bool has720 = false;
-        bool has480 = false;
-        DlboxItem p720 = DlboxItem();
-        DlboxItem p480 = DlboxItem();
-        selectedFilm.value.moviesDlbox?.dubbed!.forEach((sub) {
-          if (sub.qualityCode == '720p') {
-            has720 = true;
-            p720 = sub;
-          }
-          if (sub.qualityCode == '480p') {
-            has480 = true;
-            p480 = sub;
-          }
-        });
-        if (has720) {
-          // print('will play 720');
-          playerController.selectedDlBoxItem(p720);
-          Get.toNamed('/player');
-        } else if (has480) {
-          // print('will play 480');
-          playerController.selectedDlBoxItem(p480);
-          Get.toNamed('/player');
-        }
-      }
-    }
-    if (selectedFilm.value.type == 'series') {
-      playerController.showSeriesBox(serial: selectedFilm.value.seriesDlbox);
-    }
-  }
-
   void getDepartments() {
     if (authController!.isLogin.value) {
       departments.clear();

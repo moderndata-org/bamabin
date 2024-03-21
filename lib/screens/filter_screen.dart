@@ -29,7 +29,7 @@ class FilterScreen extends GetView<MainController> {
           )),
       body: Obx(() => controller.isLoadingDataFilterScreen.value
           ? ListView(
-              padding: EdgeInsets.symmetric(horizontal: 5),
+              padding: EdgeInsets.symmetric(horizontal: 5, vertical: 10),
               physics: BouncingScrollPhysics(),
               children: List.generate(
                   5,

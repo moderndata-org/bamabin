@@ -4,6 +4,7 @@ import 'package:bamabin/controller/auth_controller.dart';
 import 'package:bamabin/controller/detail_controller.dart';
 import 'package:bamabin/controller/favorite_controller.dart';
 import 'package:bamabin/controller/main_controller.dart';
+import 'package:bamabin/controller/player_controller.dart';
 import 'package:bamabin/models/comment_model.dart';
 import 'package:bamabin/models/genre_model.dart';
 import 'package:bamabin/screens/dialogs/download_movie_dialog.dart';
@@ -997,10 +998,7 @@ class ButtonSectionMovieDetailWidget extends GetView<DetailController> {
                                 ),
                               ),
                             ),
-                            FittedBox(
-                              fit: BoxFit.scaleDown,
-                              child: MyText(text: 'دانلود'),
-                            ),
+                            MyText(text: 'دانلود'),
                             SizedBox(
                               height: 5,
                             )
@@ -1016,36 +1014,8 @@ class ButtonSectionMovieDetailWidget extends GetView<DetailController> {
                             borderRadius: 5,
                             padding: EdgeInsets.zero,
                             fgColor: cB,
-                            onTap: () {
-                              if (authController.isLogin.value) {
-                                if (authController
-                                    .paymentController.isVip.value) {
-                                  RecentModel rm = RecentModel(
-                                      bg_cover: controller
-                                          .selectedFilm.value.bgThumbnail,
-                                      cover: controller
-                                          .selectedFilm.value.thumbnail,
-                                      hasDubbed: controller
-                                          .selectedFilm.value.hasDubbed,
-                                      hasSubtitle: controller
-                                          .selectedFilm.value.hasSubtitle,
-                                      id: controller.selectedFilm.value.id,
-                                      imdb: controller
-                                          .selectedFilm.value.imdbRate,
-                                      title:
-                                          controller.selectedFilm.value.title,
-                                      year: controller
-                                          .selectedFilm.value.releaseYear);
-                                  Get.find<RecentContoller>()
-                                      .addToRecent(recentModel: rm);
-                                  controller.playMovieOrSerial();
-                                } else {
-                                  Get.toNamed('/subscribe');
-                                }
-                              } else {
-                                Get.toNamed('/signin');
-                              }
-                            },
+                            onTap: () =>
+                                Get.find<PlayerController>().playMovie(),
                             bgColor: cY,
                             boxShadow: bsBtnMovieDetail,
                             size: Size.fromHeight(60),

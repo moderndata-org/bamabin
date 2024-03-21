@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:bamabin/api/api_handler.dart';
+import 'package:bamabin/controller/auth_controller.dart';
 import 'package:bamabin/controller/detail_controller.dart';
 import 'package:bamabin/models/dlbox_item_model.dart';
 import 'package:bamabin/models/series_dlbox_model.dart';
@@ -9,6 +10,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:video_player/video_player.dart';
+
+import '../models/film_model.dart';
+import '../models/recent_model.dart';
+import 'recent_controller.dart';
 
 class PlayerController extends GetxController {
   var name = "".obs;
@@ -44,6 +49,89 @@ class PlayerController extends GetxController {
   void showSeriesBox({List<SeriesModel>? serial}) {
     //! Open Series Dialog that come from Serial Detail
     print('open Dialog');
+  }
+
+  void playMovie() {
+    final authController = Get.find<AuthController>();
+    if (authController.isLogin.value) {
+      if (authController.paymentController.isVip.value) {
+        RecentModel rm = RecentModel(
+            bg_cover: detailController.selectedFilm.value.bgThumbnail,
+            cover: detailController.selectedFilm.value.thumbnail,
+            hasDubbed: detailController.selectedFilm.value.hasDubbed,
+            hasSubtitle: detailController.selectedFilm.value.hasSubtitle,
+            id: detailController.selectedFilm.value.id,
+            imdb: detailController.selectedFilm.value.imdbRate,
+            title: detailController.selectedFilm.value.title,
+            year: detailController.selectedFilm.value.releaseYear);
+        Get.find<RecentContoller>().addToRecent(recentModel: rm);
+
+        if (detailController.selectedFilm.value.type == 'movies') {
+          if (detailController.selectedFilm.value.moviesDlbox?.subtitle !=
+                  null ||
+              detailController.selectedFilm.value.moviesDlbox?.subtitle != []) {
+            bool has720 = false;
+            bool has480 = false;
+            DlboxItem p720 = DlboxItem();
+            DlboxItem p480 = DlboxItem();
+            detailController.selectedFilm.value.moviesDlbox?.subtitle!
+                .forEach((sub) {
+              if (sub.qualityCode == '720p') {
+                has720 = true;
+                p720 = sub;
+              }
+              if (sub.qualityCode == '480p') {
+                has480 = true;
+                p480 = sub;
+              }
+            });
+            if (has720) {
+              // print('will play 720');
+              selectedDlBoxItem(p720);
+              Get.toNamed('/player');
+            } else if (has480) {
+              // print('will play 480');
+              selectedDlBoxItem(p480);
+              Get.toNamed('/player');
+            }
+          } else if (detailController.selectedFilm.value.moviesDlbox?.dubbed !=
+                  null ||
+              detailController.selectedFilm.value.moviesDlbox?.dubbed != []) {
+            bool has720 = false;
+            bool has480 = false;
+            DlboxItem p720 = DlboxItem();
+            DlboxItem p480 = DlboxItem();
+            detailController.selectedFilm.value.moviesDlbox?.dubbed!
+                .forEach((sub) {
+              if (sub.qualityCode == '720p') {
+                has720 = true;
+                p720 = sub;
+              }
+              if (sub.qualityCode == '480p') {
+                has480 = true;
+                p480 = sub;
+              }
+            });
+            if (has720) {
+              // print('will play 720');
+              selectedDlBoxItem(p720);
+              Get.toNamed('/player');
+            } else if (has480) {
+              // print('will play 480');
+              selectedDlBoxItem(p480);
+              Get.toNamed('/player');
+            }
+          }
+        } else if (detailController.selectedFilm.value.type == 'series') {
+          showSeriesBox(
+              serial: detailController.selectedFilm.value.seriesDlbox);
+        }
+      } else {
+        Get.toNamed('/subscribe');
+      }
+    } else {
+      Get.toNamed('/signin');
+    }
   }
 
   void fullScreen() {
