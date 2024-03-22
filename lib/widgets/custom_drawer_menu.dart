@@ -79,22 +79,9 @@ class CustomDrawerMenu extends GetView<MainController> {
                                       alignment: Alignment.centerRight,
                                       child: Obx(() => MyText(
                                           maxLines: 1,
-                                          text: authController.profile.value
-                                                          .firstName ==
-                                                      null ||
-                                                  authController.profile.value
-                                                              .firstName ==
-                                                          '' &&
-                                                      authController.profile
-                                                              .value.lastName ==
-                                                          null ||
-                                                  authController.profile.value
-                                                          .lastName ==
-                                                      ''
-                                              ? 'کاربر مهمان'
-                                              : (authController.isLogin.isTrue)
-                                                  ? '${authController.profile.value.firstName ?? ''} ${authController.profile.value.lastName ?? ''}'
-                                                  : 'کاربر مهمان'))),
+                                          text: (authController.isLogin.isTrue)
+                                              ? '${authController.profile.value.firstName ?? ''} ${authController.profile.value.lastName ?? ''}'
+                                              : 'کاربر مهمان'))),
                                   Obx(() {
                                     return authController
                                             .paymentController.isVip.isTrue
@@ -259,9 +246,20 @@ class CustomDrawerMenu extends GetView<MainController> {
                                         shadows: [bsText],
                                         fontWeight: FontWeight.w500,
                                       ),
-                                      SizedBox(width: 10,),
-                                      (authController.notificationController.notifications.firstWhereOrNull((element) => element.readStatus == false ) != null) ?
-                                      Icon(Icons.info,color: Colors.yellow,) : Container()
+                                      SizedBox(
+                                        width: 10,
+                                      ),
+                                      (authController.notificationController
+                                                  .notifications
+                                                  .firstWhereOrNull((element) =>
+                                                      element.readStatus ==
+                                                      false) !=
+                                              null)
+                                          ? Icon(
+                                              Icons.info,
+                                              color: Colors.yellow,
+                                            )
+                                          : Container()
                                     ],
                                   )),
                               SizedBox(
