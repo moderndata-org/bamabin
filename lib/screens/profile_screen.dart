@@ -30,17 +30,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
   void initState() {
     controller = Get.find<AuthController>();
     txtName = TextEditingController()
-      ..text = '${controller.profile.value.firstName}';
+      ..text = '${controller.profile.value.firstName ?? ''}';
     txtFamily = TextEditingController()
-      ..text = '${controller.profile.value.lastName}';
+      ..text = '${controller.profile.value.lastName ?? ''}';
     txtNickname = TextEditingController()
-      ..text = '${controller.profile.value.nickname}';
+      ..text = '${controller.profile.value.nickname ?? ''}';
     txtCity = TextEditingController()
-      ..text = '${controller.profile.value.city}';
+      ..text = '${controller.profile.value.city ?? ''}';
     txtPhone = TextEditingController()
-      ..text = '${controller.profile.value.phone}';
+      ..text = '${controller.profile.value.phone ?? ''}';
     txtDescription = TextEditingController()
-      ..text = '${controller.profile.value.description}';
+      ..text = '${controller.profile.value.description ?? ''}';
     super.initState();
   }
 
