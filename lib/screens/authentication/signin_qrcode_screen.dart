@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:bamabin/constant/utils.dart';
 import 'package:bamabin/controller/auth_controller.dart';
 import 'package:bamabin/widgets/back_button_custom.dart';
 import 'package:flutter/material.dart';
@@ -29,6 +30,12 @@ class _SignInQrCodeScreenState extends State<SignInQrCodeScreen> {
     } else if (Platform.isIOS) {
       controller!.resumeCamera();
     }
+  }
+
+  @override
+  void dispose() {
+    controller?.dispose();
+    super.dispose();
   }
 
   @override
@@ -111,17 +118,21 @@ class _SignInQrCodeScreenState extends State<SignInQrCodeScreen> {
 
   void _onQRViewCreated(QRViewController controller) {
     this.controller = controller;
+    print("Created");
     controller.scannedDataStream.listen((scanData) {
+      print("Data---${scanData}");
       setState(() {
         result = scanData;
-        print("Code------${scanData}");
         if (result != null) {
-          print("Code------${scanData}");
+
           GetStorage('bamabin')
             ..write("api_key", "${result!.code}")
             ..save();
           authController.checkLogin();
-          Get.back();
+          controller.dispose();
+
+
+          showMessage(text: "توکن با موفقیت اسکن شد", isSucces: true);
         }
       });
     });

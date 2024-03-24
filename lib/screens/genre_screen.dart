@@ -49,7 +49,7 @@ class GenreScreen extends StatelessWidget {
                     backgroundUrl: genre.background_url,
                   ),onTap: (){
                     mainController.changeGenre(gener: genre);
-                    Get.toNamed("/part");
+                    Get.toNamed("/part",arguments: {"show_app_bar":true});
                   },);
                 },
               ))
