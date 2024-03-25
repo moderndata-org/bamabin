@@ -246,6 +246,7 @@ class FilmModel {
   });
 
   FilmModel.fromJson(Map<String, dynamic> json) {
+
     id = json['id'];
     is_watchlist = json['is_watchlist'];
     authorId = json['author_id'];

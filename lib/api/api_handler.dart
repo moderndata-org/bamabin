@@ -161,8 +161,8 @@ class ApiProvider extends GetConnect {
     return res;
   }
 
-  Future<Response> getMainSections() async {
-    Response res = await get('${base_url}home/sections');
+  Future<Response> getMainSections({required bool isLogin}) async {
+    Response res =  (isLogin == true) ? await get('${base_url}home/sections',headers: head) : await get('${base_url}home/sections');
     return res;
   }
 

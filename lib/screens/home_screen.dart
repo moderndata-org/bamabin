@@ -1,5 +1,8 @@
 import 'package:bamabin/constant/classes.dart';
+import 'package:bamabin/constant/utils.dart';
+import 'package:bamabin/controller/auth_controller.dart';
 import 'package:bamabin/controller/main_controller.dart';
+import 'package:bamabin/controller/player_controller.dart';
 import 'package:bamabin/controller/public_controller.dart';
 import 'package:bamabin/screens/part_screen.dart';
 import 'package:bamabin/widgets/custom_shimmer.dart';
@@ -23,6 +26,7 @@ class HomeScreen extends GetView<PublicController> {
 
   final mainController = Get.find<MainController>();
   final detailController = Get.find<DetailController>();
+  final authController = Get.find<AuthController>();
 
   @override
   Widget build(BuildContext context) {
@@ -316,9 +320,17 @@ class HomeScreen extends GetView<PublicController> {
 
                           ],
                           onPlay: () {
-                            var detail = Get.find<DetailController>();
-                            detail.selectedFilm(section.post);
-                            Get.toNamed('/movie-detail');
+                            if(authController.isLogin.isTrue){
+                              var playerController = Get.find<PlayerController>();
+                              var details = Get.find<DetailController>();
+                              details.selectedFilm(section.post);
+                              playerController.playMovie();
+                              Get.toNamed('/player');
+                            }else{
+                              showMessage(text: "برای پخش ابتدا وارد شوید", isSucces: false);
+                              Get.toNamed('/signin');
+                            }
+                            
                           },
                           onDetail: () {
                             var detail = Get.find<DetailController>();

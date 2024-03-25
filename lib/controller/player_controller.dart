@@ -6,6 +6,8 @@ import 'package:bamabin/controller/auth_controller.dart';
 import 'package:bamabin/controller/detail_controller.dart';
 import 'package:bamabin/models/dlbox_item_model.dart';
 import 'package:bamabin/models/series_dlbox_model.dart';
+import 'package:ffmpeg_kit_flutter/ffmpeg_kit.dart';
+import 'package:ffmpeg_kit_flutter/return_code.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -24,6 +26,7 @@ class PlayerController extends GetxController {
   var playing_status = false.obs;
   var fullscreen_status = false.obs;
   var is_dubbed = false.obs;
+  var is_error = false.obs;
   var show_caption = false.obs;
   Timer? timer;
   late VideoPlayerController video_controller;
@@ -153,8 +156,28 @@ class PlayerController extends GetxController {
   }
 
   Future<ClosedCaptionFile>? init_subtitle() async {
+    print('-i ${selectedDlBoxItem.value.link!} -map 0:s:0 file.srt');
+    FFmpegKit.execute('-i ${selectedDlBoxItem.value.link!} -map 0:s:0 file.srt').then((session) async {
+      session.getFailStackTrace().then((value){
+        print("Command: ${value}");
+      });
+      final returnCode = await session.getReturnCode();
+
+      if (ReturnCode.isSuccess(returnCode)) {
+
+        print("Loooooooooooooooooad srt");
+
+      } else if (ReturnCode.isCancel(returnCode)) {
+
+        print("Cancle srt");
+
+      } else {
+
+        print("Error srt:${returnCode}");
+
+      }
+    });
     var d = jsonDecode(detailController.selectedFilm.value.dlboxSubtitle!);
-    print(d);
     var value = await ApiProvider().getSubtitleContent(d["1"]["link"]);
     var c = SubRipCaptionFile(value.body);
     return c;
@@ -162,12 +185,12 @@ class PlayerController extends GetxController {
 
   void StartVideo() {
     // if(!video_controller.value.isInitialized){
-    print(
-        "Video Link: ${jsonDecode(detailController.selectedFilm.value.dlboxSubtitle!)}");
+    is_error(false);
     video_controller = VideoPlayerController.networkUrl(
         Uri.parse(selectedDlBoxItem.value.link!),
-        videoPlayerOptions: VideoPlayerOptions(allowBackgroundPlayback: true))
+        videoPlayerOptions: VideoPlayerOptions(allowBackgroundPlayback: false))
       ..initialize().then((value) {
+
         video_controller.play();
         isInit(true);
         print("is_dubbed: ${is_dubbed}");
@@ -206,6 +229,8 @@ class PlayerController extends GetxController {
             }
           });
         });
+      }).onError((error, stackTrace){
+        is_error(true);
       });
   }
 }

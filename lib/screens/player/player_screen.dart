@@ -94,7 +94,7 @@ class _PlayerScreenState extends State<PlayerScreen> {
                           : Container(
                               child: Center(
                                 child:
-                                    MyCircularProgress(color: cSecondaryLight),
+                                (controller.is_error.isTrue) ? Text("خطایی در بارگزاری ویدئو رخ داده است",style: TextStyle(color: cR),) : MyCircularProgress(color: cSecondaryLight),
                               ),
                             ),
                     )),

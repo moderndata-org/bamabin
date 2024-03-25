@@ -90,10 +90,11 @@ class MainController extends GetxController {
   void onInit() {
     Timer(Duration(milliseconds: 50), () {
       _authController = Get.find<AuthController>();
+      getMainSections();
     });
     //! on open screen
     getSliders();
-    getMainSections();
+
     //!
     mainScrollController.addListener(() {
       if (selectedBottomNav.value == BottomNavType.home) {
@@ -197,17 +198,21 @@ class MainController extends GetxController {
   void getMainSections() {
     sectionsList.clear();
     isLoadingMain(true);
-    ApiProvider().getMainSections().then((value) {
-      sectionsList.clear();
-      if (value.body != null) {
-        if (value.body["status"] == true) {
-          (value.body["result"] as List).forEach((element) {
-            sectionsList.add(SectionModel.fromJson(element));
-          });
+    if(_authController != null){
+      ApiProvider().getMainSections(isLogin: _authController!.isLogin.value).then((value) {
+        print(value.body);
+        sectionsList.clear();
+        if (value.body != null) {
+          if (value.body["status"] == true) {
+            (value.body["result"] as List).forEach((element) {
+              sectionsList.add(SectionModel.fromJson(element));
+            });
+          }
         }
-      }
-      isLoadingMain(false);
-    });
+        isLoadingMain(false);
+      });
+    }
+
   }
 
   void getTaxonomy(String taxonomy, String id) {
