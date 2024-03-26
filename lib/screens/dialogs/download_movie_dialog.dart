@@ -4,6 +4,7 @@ import 'package:bamabin/controller/download_manager_controller.dart';
 import 'package:bamabin/controller/auth_controller.dart';
 import 'package:bamabin/controller/player_controller.dart';
 import 'package:bamabin/models/film_model.dart';
+import 'package:bamabin/screens/dialogs/download_method_dialog.dart';
 import 'package:bamabin/widgets/MyText.dart';
 import 'package:bamabin/widgets/dialog_items/movie_item_dialog_widget.dart';
 import 'package:flutter/material.dart';
@@ -145,8 +146,17 @@ class DownloadMovieDialog extends StatelessWidget {
             },
             onDownloadTap: () {
               if (checkIsVip()) {
-                downloadManagerController.download(
-                    goingToDownloadPage: true, dlBox: item);
+                showDialog(
+                  barrierColor: cBgDialogColor,
+                  context: Get.context!,
+                  builder: (context) {
+                    return DownloadMethodDialog(
+                      dlboxItem: item,
+                    );
+                  },
+                );
+                // downloadManagerController.download(
+                //     goingToDownloadPage: true, dlBox: item);
               }
             },
           ),
@@ -168,8 +178,17 @@ class DownloadMovieDialog extends StatelessWidget {
           MovieItemDialogWidget(
             onDownloadTap: () {
               if (checkIsVip()) {
-                downloadManagerController.download(
-                    goingToDownloadPage: true, dlBox: item);
+                showDialog(
+                  barrierColor: cBgDialogColor,
+                  context: Get.context!,
+                  builder: (context) {
+                    return DownloadMethodDialog(
+                      dlboxItem: item,
+                    );
+                  },
+                );
+                // downloadManagerController.download(
+                //     goingToDownloadPage: true, dlBox: item);
               }
             },
             onPlayTap: () {
@@ -206,8 +225,17 @@ class DownloadMovieDialog extends StatelessWidget {
           MovieItemDialogWidget(
             onDownloadTap: () {
               if (checkIsVip()) {
-                downloadManagerController.download(
-                    goingToDownloadPage: true, dlBox: item);
+                showDialog(
+                  barrierColor: cBgDialogColor,
+                  context: Get.context!,
+                  builder: (context) {
+                    return DownloadMethodDialog(
+                      dlboxItem: item,
+                    );
+                  },
+                );
+                // downloadManagerController.download(
+                //     goingToDownloadPage: true, dlBox: item);
               }
             },
             onPlayTap: () {
@@ -243,8 +271,17 @@ class DownloadMovieDialog extends StatelessWidget {
           MovieItemDialogWidget(
             onDownloadTap: () {
               if (checkIsVip()) {
-                downloadManagerController.download(
-                    goingToDownloadPage: true, dlBox: item);
+                showDialog(
+                  barrierColor: cBgDialogColor,
+                  context: Get.context!,
+                  builder: (context) {
+                    return DownloadMethodDialog(
+                      dlboxItem: item,
+                    );
+                  },
+                );
+                // downloadManagerController.download(
+                //     goingToDownloadPage: true, dlBox: item);
               }
             },
             onPlayTap: () {

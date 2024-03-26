@@ -49,7 +49,6 @@ String computeTheCapacity({required double size}) {
   return a;
 }
 
-
 class ErrorInternetFetchingSubtitle implements Exception {
   final int? code;
   final String? message;
@@ -69,15 +68,13 @@ class HexColor extends Color {
   HexColor(final String hexColor) : super(_getColorFromHex(hexColor));
 }
 
-
-void openADM(String link) async{
+void openADM({required String url}) async {
   AndroidIntent intent = AndroidIntent(
     action: 'action_main',
     package: 'com.dv.adm',
     componentName: 'com.dv.adm.AEditor',
-
     arguments: <String, dynamic>{
-      'android.intent.extra.TEXT': link,
+      'android.intent.extra.TEXT': url,
     },
   );
   await intent.launch();

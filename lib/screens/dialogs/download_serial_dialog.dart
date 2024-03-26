@@ -13,6 +13,7 @@ import '../../constant/utils.dart';
 import '../../controller/auth_controller.dart';
 import '../../controller/player_controller.dart';
 import '../../widgets/download_section_widget.dart';
+import 'download_method_dialog.dart';
 
 class DownloadSerialDialog extends GetView<DetailController> {
   const DownloadSerialDialog({this.listSeries, super.key});
@@ -349,9 +350,18 @@ class SerialAccordion extends StatelessWidget {
                                         onDownload: () {
                                           if (checkIsVip()) {
                                             Get.back();
-                                            downloadManagerController.download(
-                                                goingToDownloadPage: true,
-                                                dlBox: dl);
+                                            showDialog(
+                                              barrierColor: cBgDialogColor,
+                                              context: Get.context!,
+                                              builder: (context) {
+                                                return DownloadMethodDialog(
+                                                  dlboxItem: dl2,
+                                                );
+                                              },
+                                            );
+                                            // downloadManagerController.download(
+                                            //     goingToDownloadPage: true,
+                                            //     dlBox: dl);
                                           }
                                         },
                                         color: color,
@@ -376,11 +386,21 @@ class SerialAccordion extends StatelessWidget {
                                               onDownload: () {
                                                 if (checkIsVip()) {
                                                   Get.back();
-                                                  downloadManagerController
-                                                      .download(
-                                                          goingToDownloadPage:
-                                                              true,
-                                                          dlBox: dl2);
+                                                  showDialog(
+                                                    barrierColor:
+                                                        cBgDialogColor,
+                                                    context: Get.context!,
+                                                    builder: (context) {
+                                                      return DownloadMethodDialog(
+                                                        dlboxItem: dl2,
+                                                      );
+                                                    },
+                                                  );
+                                                  // downloadManagerController
+                                                  //     .download(
+                                                  //         goingToDownloadPage:
+                                                  //             true,
+                                                  //         dlBox: dl2);
                                                 }
                                               },
                                               color: color,
