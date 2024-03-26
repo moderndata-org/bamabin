@@ -140,6 +140,7 @@ class DownloadMovieDialog extends StatelessWidget {
                 Get.toNamed('/player');
                 videoController.selectedDlBoxItem(item);
                 videoController.is_dubbed(false);
+                videoController.selectedMovieType(MovieType.Subtitle);
               }
             },
             onDownloadTap: () {
@@ -176,6 +177,7 @@ class DownloadMovieDialog extends StatelessWidget {
                 Get.toNamed('/player');
                 videoController.selectedDlBoxItem(item);
                 videoController.is_dubbed(false);
+                videoController.selectedMovieType(MovieType.None);
               }
             },
             hasOnlinePlay: item.playStatus == 'on',
@@ -213,6 +215,7 @@ class DownloadMovieDialog extends StatelessWidget {
                 Get.toNamed('/player');
                 videoController.selectedDlBoxItem(item);
                 videoController.is_dubbed(false);
+                videoController.selectedMovieType(MovieType.Cam);
               }
             },
             hasOnlinePlay: item.playStatus == 'on',
@@ -249,6 +252,7 @@ class DownloadMovieDialog extends StatelessWidget {
                 Get.toNamed('/player');
                 videoController.selectedDlBoxItem(item);
                 videoController.is_dubbed(true);
+                videoController.selectedMovieType(MovieType.Dubbed);
               }
             },
             hasOnlinePlay: item.playStatus == 'on',

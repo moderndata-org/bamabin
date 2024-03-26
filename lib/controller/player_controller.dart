@@ -75,6 +75,7 @@ class PlayerController extends GetxController {
           if (detailController.selectedFilm.value.moviesDlbox?.subtitle !=
                   null ||
               detailController.selectedFilm.value.moviesDlbox?.subtitle != []) {
+            selectedMovieType(MovieType.Subtitle);
             bool has720 = false;
             bool has480 = false;
             DlboxItem p720 = DlboxItem();
@@ -102,6 +103,7 @@ class PlayerController extends GetxController {
           } else if (detailController.selectedFilm.value.moviesDlbox?.dubbed !=
                   null ||
               detailController.selectedFilm.value.moviesDlbox?.dubbed != []) {
+            selectedMovieType(MovieType.Dubbed);
             bool has720 = false;
             bool has480 = false;
             DlboxItem p720 = DlboxItem();
@@ -159,24 +161,19 @@ class PlayerController extends GetxController {
 
   Future<ClosedCaptionFile>? init_subtitle() async {
     print('-i ${selectedDlBoxItem.value.link!} -map 0:s:0 file.srt');
-    FFmpegKit.execute('-i ${selectedDlBoxItem.value.link!} -map 0:s:0 file.srt').then((session) async {
-      session.getFailStackTrace().then((value){
+    FFmpegKit.execute('-i ${selectedDlBoxItem.value.link!} -map 0:s:0 file.srt')
+        .then((session) async {
+      session.getFailStackTrace().then((value) {
         print("Command: ${value}");
       });
       final returnCode = await session.getReturnCode();
 
       if (ReturnCode.isSuccess(returnCode)) {
-
         print("Loooooooooooooooooad srt");
-
       } else if (ReturnCode.isCancel(returnCode)) {
-
         print("Cancle srt");
-
       } else {
-
         print("Error srt:${returnCode}");
-
       }
     });
     var d = jsonDecode(detailController.selectedFilm.value.dlboxSubtitle!);
@@ -192,7 +189,6 @@ class PlayerController extends GetxController {
         Uri.parse(selectedDlBoxItem.value.link!),
         videoPlayerOptions: VideoPlayerOptions(allowBackgroundPlayback: false))
       ..initialize().then((value) {
-
         video_controller.play();
         isInit(true);
         print("is_dubbed: ${is_dubbed}");
@@ -231,7 +227,7 @@ class PlayerController extends GetxController {
             }
           });
         });
-      }).onError((error, stackTrace){
+      }).onError((error, stackTrace) {
         is_error(true);
       });
   }
