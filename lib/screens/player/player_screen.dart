@@ -445,7 +445,9 @@ class _PlayerScreenState extends State<PlayerScreen> {
                                                         ),
                                                       )),
                                                   IconButton(
-                                                    onPressed: () {},
+                                                    onPressed: () {
+
+                                                    },
                                                     icon: SizedBox(
                                                       width: 30,
                                                       height: 30,

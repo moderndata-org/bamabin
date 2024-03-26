@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:bamabin/api/api_handler.dart';
+import 'package:bamabin/constant/classes.dart';
 import 'package:bamabin/controller/auth_controller.dart';
 import 'package:bamabin/controller/detail_controller.dart';
 import 'package:bamabin/models/dlbox_item_model.dart';
@@ -28,6 +29,7 @@ class PlayerController extends GetxController {
   var is_dubbed = false.obs;
   var is_error = false.obs;
   var show_caption = false.obs;
+  var selectedMovieType = MovieType.None.obs;
   Timer? timer;
   late VideoPlayerController video_controller;
   var _isBuffering = false.obs;
