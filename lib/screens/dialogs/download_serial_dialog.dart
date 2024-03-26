@@ -463,6 +463,7 @@ class DownloadButtonDialog extends StatelessWidget {
                   child: GestureDetector(
                     onTap: onPlay,
                     child: Container(
+                      color: Colors.transparent,
                       height: 50,
                       decoration: BoxDecoration(
                           color: color,

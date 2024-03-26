@@ -279,6 +279,7 @@ class MovieItemDialogWidget extends StatelessWidget {
                                 child: GestureDetector(
                                   onTap: onPlayTap,
                                   child: Container(
+                                    color: Colors.transparent,
                                     height: 40,
                                     decoration: BoxDecoration(
                                         color: switch (movieType) {
@@ -310,6 +311,7 @@ class MovieItemDialogWidget extends StatelessWidget {
                             child: GestureDetector(
                               onTap: onDownloadTap,
                               child: Container(
+                                color: Colors.transparent,
                                 height: 40,
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
