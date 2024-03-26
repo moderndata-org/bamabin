@@ -1,3 +1,4 @@
+import 'package:bamabin/constant/classes.dart';
 import 'package:bamabin/constant/colors.dart';
 import 'package:bamabin/controller/detail_controller.dart';
 import 'package:bamabin/controller/player_controller.dart';
@@ -446,6 +447,9 @@ class _PlayerScreenState extends State<PlayerScreen> {
                                                       )),
                                                   IconButton(
                                                     onPressed: () {
+                                                      controller.showQualityBox();
+
+
 
                                                     },
                                                     icon: SizedBox(

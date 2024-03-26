@@ -12,6 +12,7 @@ import 'package:ffmpeg_kit_flutter/return_code.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:popover/popover.dart';
 import 'package:video_player/video_player.dart';
 
 import '../models/film_model.dart';
@@ -51,6 +52,54 @@ class PlayerController extends GetxController {
 
   PlayerController() {}
 
+  void showQualityBox(){
+    showPopover(context: Get.context!, bodyBuilder: (context) {
+      return Padding(
+        padding: const EdgeInsets.symmetric(vertical: 8),
+        child: ListView(
+          padding: const EdgeInsets.all(8),
+          children: [
+            InkWell(
+              child: Container(
+                height: 50,
+                color: Colors.amber[100],
+                child: const Center(child: Text('Entry A')),
+              ),
+            ),
+            const Divider(),
+            Container(
+              height: 50,
+              color: Colors.amber[200],
+              child: const Center(child: Text('Entry B')),
+            ),
+            const Divider(),
+            Container(
+              height: 50,
+              color: Colors.amber[300],
+              child: const Center(child: Text('Entry C')),
+            ),
+          ],
+        ),
+      );
+    },
+      direction: PopoverDirection.bottom,
+      width: 200,
+      height: 400,
+      arrowHeight: 15,
+      arrowWidth: 30,
+    );
+    switch(selectedMovieType.value){
+      case MovieType.Subtitle:
+
+        detailController.selectedFilm.value.moviesDlbox!.subtitle!.forEach((element) {
+          print("Quality:${element.qualityCode} ${element.encoder}");
+        });
+        break;
+      default:
+        print("Unknown");
+        break;
+    }
+  }
   void showSeriesBox({List<SeriesModel>? serial}) {
     //! Open Series Dialog that come from Serial Detail
     print('open Dialog');
