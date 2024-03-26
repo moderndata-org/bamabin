@@ -1,3 +1,4 @@
+import 'package:android_intent_plus/android_intent.dart';
 import 'package:flutter/material.dart';
 import 'package:shamsi_date/shamsi_date.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -66,4 +67,18 @@ class HexColor extends Color {
   }
 
   HexColor(final String hexColor) : super(_getColorFromHex(hexColor));
+}
+
+
+void openADM(String link) async{
+  AndroidIntent intent = AndroidIntent(
+    action: 'action_main',
+    package: 'com.dv.adm',
+    componentName: 'com.dv.adm.AEditor',
+
+    arguments: <String, dynamic>{
+      'android.intent.extra.TEXT': link,
+    },
+  );
+  await intent.launch();
 }
