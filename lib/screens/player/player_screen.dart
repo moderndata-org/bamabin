@@ -380,6 +380,7 @@ class _PlayerScreenState extends State<PlayerScreen> {
                                                           )),
 
 
+
                                                       Visibility(
                                                         visible: controller
                                                             .is_dubbed.isFalse,
