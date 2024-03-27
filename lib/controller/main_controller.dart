@@ -43,6 +43,8 @@ class MainController extends GetxController {
   RxString filterScreenTitle = ''.obs;
   RxBool isLoadingDataFilterScreen = false.obs;
   RxBool isFetchingFilterScreen = false.obs;
+  RxDouble height = 0.0.obs;
+  RxDouble width = 0.0.obs;
 
   void openFilterScreen({
     required String key,
@@ -91,6 +93,8 @@ class MainController extends GetxController {
     Timer(Duration(milliseconds: 50), () {
       _authController = Get.find<AuthController>();
       getMainSections();
+      height(Get.height);
+      width(Get.width);
     });
     //! on open screen
     getSliders();
@@ -198,8 +202,10 @@ class MainController extends GetxController {
   void getMainSections() {
     sectionsList.clear();
     isLoadingMain(true);
-    if(_authController != null){
-      ApiProvider().getMainSections(isLogin: _authController!.isLogin.value).then((value) {
+    if (_authController != null) {
+      ApiProvider()
+          .getMainSections(isLogin: _authController!.isLogin.value)
+          .then((value) {
         print(value.body);
         sectionsList.clear();
         if (value.body != null) {
@@ -212,7 +218,6 @@ class MainController extends GetxController {
         isLoadingMain(false);
       });
     }
-
   }
 
   void getTaxonomy(String taxonomy, String id) {
