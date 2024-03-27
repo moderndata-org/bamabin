@@ -383,6 +383,7 @@ class _PlayerScreenState extends State<PlayerScreen> {
                                                             .is_dubbed.isFalse,
                                                         child: IconButton(
                                                             onPressed: () {
+
                                                               controller
                                                                   .video_controller
                                                                   .pause();
