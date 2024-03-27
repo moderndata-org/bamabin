@@ -13,6 +13,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:popover/popover.dart';
+import 'package:screen_brightness/screen_brightness.dart';
 import 'package:video_player/video_player.dart';
 
 import '../models/film_model.dart';
@@ -29,8 +30,14 @@ class PlayerController extends GetxController {
   var fullscreen_status = false.obs;
   var is_dubbed = false.obs;
   var is_error = false.obs;
+  var is_lock = false.obs;
   var show_caption = false.obs;
   var selectedMovieType = MovieType.None.obs;
+
+  var volume = 0.5.obs;
+  var brightness = 0.5.obs;
+  var show_volume = false.obs;
+  var show_brightness = false.obs;
   Timer? timer;
   late VideoPlayerController video_controller;
   var _isBuffering = false.obs;
@@ -50,8 +57,35 @@ class PlayerController extends GetxController {
 
   //! new
 
-  PlayerController() {}
+  PlayerController() {
+    volume.listen((p0) {
+      if(video_controller.value.isInitialized){
+        if(show_volume.isFalse)
+          show_volume(true);
+       video_controller.setVolume(p0);
+      }
+    });
 
+    brightness.listen((p0) {
+      if(video_controller.value.isInitialized){
+        if(show_brightness.isFalse)
+          show_brightness(true);
+       ScreenBrightness().setScreenBrightness(p0);
+      }
+    });
+
+
+
+    ScreenBrightness().current.then((value){
+      brightness(value);
+    });
+
+
+  }
+
+  void lockUnlock(){
+    is_lock(!is_lock.value);
+  }
   void showQualityBox(){
     showPopover(context: Get.context!, bodyBuilder: (context) {
       return Padding(
@@ -209,22 +243,7 @@ class PlayerController extends GetxController {
   }
 
   Future<ClosedCaptionFile>? init_subtitle() async {
-    print('-i ${selectedDlBoxItem.value.link!} -map 0:s:0 file.srt');
-    FFmpegKit.execute('-i ${selectedDlBoxItem.value.link!} -map 0:s:0 file.srt')
-        .then((session) async {
-      session.getFailStackTrace().then((value) {
-        print("Command: ${value}");
-      });
-      final returnCode = await session.getReturnCode();
 
-      if (ReturnCode.isSuccess(returnCode)) {
-        print("Loooooooooooooooooad srt");
-      } else if (ReturnCode.isCancel(returnCode)) {
-        print("Cancle srt");
-      } else {
-        print("Error srt:${returnCode}");
-      }
-    });
     var d = jsonDecode(detailController.selectedFilm.value.dlboxSubtitle!);
     var value = await ApiProvider().getSubtitleContent(d["1"]["link"]);
     var c = SubRipCaptionFile(value.body);

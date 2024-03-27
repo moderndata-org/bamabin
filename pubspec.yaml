@@ -64,6 +64,7 @@ dependencies:
   ffmpeg_kit_flutter: ^6.0.3
   android_intent_plus: ^5.0.1
   popover: ^0.3.0
+  screen_brightness: ^1.0.0
 
 dev_dependencies:
   flutter_test:
