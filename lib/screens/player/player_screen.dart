@@ -378,6 +378,7 @@ class _PlayerScreenState extends State<PlayerScreen> {
                                                             color: Colors.white,
                                                             size: 25,
                                                           )),
+
                                                       Visibility(
                                                         visible: controller
                                                             .is_dubbed.isFalse,
