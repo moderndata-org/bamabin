@@ -322,8 +322,8 @@ class SerialAccordion extends StatelessWidget {
                       : List.generate(item.items!.length, (index) {
                           var videoPlayerController =
                               Get.find<PlayerController>();
-                          var downloadManagerController =
-                              Get.find<DownloadManagerController>();
+                          // var downloadManagerController =
+                          //     Get.find<DownloadManagerController>();
                           videoPlayerController.is_dubbed(isDubbed == true);
                           DlboxItem dl = item.items![index];
                           DlboxItem dl2 = index > item.items!.length - 2
@@ -463,7 +463,6 @@ class DownloadButtonDialog extends StatelessWidget {
                   child: GestureDetector(
                     onTap: onPlay,
                     child: Container(
-                      color: Colors.transparent,
                       height: 50,
                       decoration: BoxDecoration(
                           color: color,

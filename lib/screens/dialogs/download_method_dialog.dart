@@ -7,7 +7,7 @@ import '../../constant/colors.dart';
 import '../../constant/utils.dart';
 import '../../widgets/MyText.dart';
 
-class DownloadMethodDialog extends GetView<DownloadManagerController> {
+class DownloadMethodDialog extends StatelessWidget {
   const DownloadMethodDialog({required this.dlboxItem, super.key});
   final DlboxItem dlboxItem;
 
@@ -58,7 +58,10 @@ class DownloadMethodDialog extends GetView<DownloadManagerController> {
             Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 15),
                 child: MyTextButton(
-                    onTap: () => openADM(url: '${dlboxItem.link}'),
+                    onTap: () {
+                      Get.back();
+                      openADM(url: '${dlboxItem.link}');
+                    },
                     child: MyText(text: 'دانلود با ADM'))),
             SizedBox(
               height: 10,
@@ -66,8 +69,10 @@ class DownloadMethodDialog extends GetView<DownloadManagerController> {
             Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 15),
                 child: MyTextButton(
-                    onTap: () => controller.download(
-                        goingToDownloadPage: false, dlBox: dlboxItem),
+                    onTap: () {
+                      Get.back();
+                      launchTheUrl(url: '${dlboxItem.link}');
+                    },
                     child: MyText(text: 'دانلود با مرورگر'))),
             SizedBox(
               height: 15,

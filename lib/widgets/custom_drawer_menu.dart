@@ -338,38 +338,38 @@ class CustomDrawerMenu extends GetView<MainController> {
                               SizedBox(
                                 height: 5,
                               ),
-                              MyTextButton(
-                                  size: Size.fromHeight(45),
-                                  boxShadow: bsTextLowOpacity,
-                                  bgColor: cBgDrawerItem,
-                                  onTap: () {
-                                    Get.toNamed('/download-manager');
-                                    controller.scaffolState.currentState!
-                                        .closeEndDrawer();
-                                  },
-                                  child: Row(
-                                    textDirection: TextDirection.rtl,
-                                    children: [
-                                      Icon(
-                                        shadows: [bsTextLowOpacity],
-                                        Icons.download_rounded,
-                                        color: cW,
-                                      ),
-                                      SizedBox(
-                                        width: 10,
-                                      ),
-                                      MyText(
-                                        text: 'دانلود‌ها',
-                                        color: cW,
-                                        size: 14,
-                                        shadows: [bsText],
-                                        fontWeight: FontWeight.w500,
-                                      ),
-                                    ],
-                                  )),
-                              SizedBox(
-                                height: 5,
-                              ),
+                              // MyTextButton(
+                              //     size: Size.fromHeight(45),
+                              //     boxShadow: bsTextLowOpacity,
+                              //     bgColor: cBgDrawerItem,
+                              //     onTap: () {
+                              //       Get.toNamed('/download-manager');
+                              //       controller.scaffolState.currentState!
+                              //           .closeEndDrawer();
+                              //     },
+                              //     child: Row(
+                              //       textDirection: TextDirection.rtl,
+                              //       children: [
+                              //         Icon(
+                              //           shadows: [bsTextLowOpacity],
+                              //           Icons.download_rounded,
+                              //           color: cW,
+                              //         ),
+                              //         SizedBox(
+                              //           width: 10,
+                              //         ),
+                              //         MyText(
+                              //           text: 'دانلود‌ها',
+                              //           color: cW,
+                              //           size: 14,
+                              //           shadows: [bsText],
+                              //           fontWeight: FontWeight.w500,
+                              //         ),
+                              //       ],
+                              //     )),
+                              // SizedBox(
+                              //   height: 5,
+                              // ),
                               MyTextButton(
                                   size: Size.fromHeight(45),
                                   boxShadow: bsTextLowOpacity,

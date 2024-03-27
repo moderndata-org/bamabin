@@ -110,7 +110,7 @@ class DownloadMovieDialog extends StatelessWidget {
   }
 
   List<Widget> generateList() {
-    final downloadManagerController = Get.find<DownloadManagerController>();
+    // final downloadManagerController = Get.find<DownloadManagerController>();
     final videoController = Get.find<PlayerController>();
     List<Widget> a = [];
     //!  Subtitles

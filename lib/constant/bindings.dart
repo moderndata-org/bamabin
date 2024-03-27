@@ -44,8 +44,8 @@ class MyBindings extends Bindings {
     Get.put(
       RecentContoller(),
     );
-    Get.put(
-      DownloadManagerController(),
-    );
+    // Get.put(
+    //   DownloadManagerController(),
+    // );
   }
 }

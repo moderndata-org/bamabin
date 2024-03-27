@@ -51,9 +51,9 @@ class Routes {
         GetPage(name: '/part', page: () => PartScreen()),
         GetPage(name: '/recent-views', page: () => const RecentViewsScreen()),
         GetPage(name: '/search', page: () => const SearchScreen()),
-        GetPage(
-            name: '/download-manager',
-            page: () => const DownloadManagerScreen()),
+        // GetPage(
+        //     name: '/download-manager',
+        //     page: () => const DownloadManagerScreen()),
         GetPage(name: '/movie-detail', page: () => const MovieDetailsScreen()),
         GetPage(name: '/geners', page: () => GenreScreen()),
         GetPage(name: '/more', page: () => MoreScreen()),
