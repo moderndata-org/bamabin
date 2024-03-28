@@ -426,9 +426,14 @@ class FilmModel {
     if (type == 'movies') {
       //! movies
       // print(json['dlbox']);
-      moviesDlbox = json['dlbox'] != null
-          ? new DlboxMoviesModel.fromJson(json['dlbox'])
-          : null;
+      try{
+        moviesDlbox = json['dlbox'] != null
+            ? new DlboxMoviesModel.fromJson(json['dlbox'])
+            : null;
+      }on Exception{
+        print(json["title"]);
+      }
+
     }
     if (type == 'series') {
       //! movies

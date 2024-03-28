@@ -1,15 +1,38 @@
 import 'package:bamabin/constant/colors.dart';
+import 'package:bamabin/controller/player_controller.dart';
 import 'package:bamabin/widgets/MyTextButton.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 
 import '../../../widgets/MyText.dart';
 
 class PlayerSeasonDialog extends StatelessWidget {
-  const PlayerSeasonDialog({super.key});
+  PlayerSeasonDialog({super.key});
+
+  PlayerController playerController = Get.find();
+
+  void init(){
+    playerController.detailController.selectedFilm.value.seriesDlbox!.forEach((element) {
+      switch(playerController.selectedDlBoxItem.value.type){
+        case "subtitle":
+          element.types!.subtitle!.where((e) => e.info!.qualityCode == playerController.selectedDlBoxItem.value.qualityCode).forEach((subtitle) {
+            subtitle.items!.forEach((item) {
+
+            });
+          });
+          break;
+
+      }
+
+
+    });
+  }
+
 
   @override
   Widget build(BuildContext context) {
+    Future.delayed(Duration.zero,() => init(),);
     return Dialog(
       child: Container(
         width: Get.width,

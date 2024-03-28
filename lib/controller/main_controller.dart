@@ -206,7 +206,6 @@ class MainController extends GetxController {
       ApiProvider()
           .getMainSections(isLogin: _authController!.isLogin.value)
           .then((value) {
-        print(value.body);
         sectionsList.clear();
         if (value.body != null) {
           if (value.body["status"] == true) {
