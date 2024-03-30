@@ -1,5 +1,6 @@
 import 'package:android_intent_plus/android_intent.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:shamsi_date/shamsi_date.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -22,9 +23,12 @@ void showMessage({required String text, required bool isSucces}) {
 }
 
 Future<void> launchTheUrl({required String url}) async {
-  if (!await launchUrl(Uri.parse(url))) {
-    throw Exception('Could not launch $url');
+  if(url.isURL){
+    if (!await launchUrl(Uri.parse(url))) {
+      throw Exception('Could not launch $url');
+    }
   }
+
 }
 
 String getPersianDate({required String dateTime}) {

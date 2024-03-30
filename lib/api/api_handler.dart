@@ -166,6 +166,11 @@ class ApiProvider extends GetConnect {
     return res;
   }
 
+  Future<Response> checkVersion() async {
+    Response res =  await get('${base_url}version_info');
+    return res;
+  }
+
   Future<Response> getCountries() async {
     Response res = await get('${base_url}filter/countries');
     return res;

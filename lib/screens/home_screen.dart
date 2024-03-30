@@ -224,25 +224,36 @@ class HomeScreen extends GetView<PublicController> {
                                   mainController.isVisibleAppbar(true);
                                   switch (section.post_type!.first) {
                                     case "movies":
+                                      mainController.isVisibleAppbar(true);
+                                      mainController.selectedBottomNav(BottomNavType.movies);
                                       mainController.appBarCenterText('فیلم');
-                                      mainController.selectedBottomNav(
-                                          BottomNavType.movies);
+                                      mainController.runBottomNavAnimation();
+                                      mainController.pageController.jumpToPage(1);
                                       break;
                                     case "series":
+                                      mainController.isVisibleAppbar(true);
                                       mainController.appBarCenterText('سریال');
                                       mainController.selectedBottomNav(
                                           BottomNavType.series);
+                                      mainController.runBottomNavAnimation();
+                                      mainController.pageController.jumpToPage(2);
                                       break;
                                     case "animations":
+                                      mainController.isVisibleAppbar(true);
                                       mainController
                                           .appBarCenterText('انیمیشن');
                                       mainController.selectedBottomNav(
                                           BottomNavType.animations);
+                                      mainController.runBottomNavAnimation();
+                                      mainController.pageController.jumpToPage(3);
                                       break;
                                     case "anime":
+                                      mainController.isVisibleAppbar(true);
                                       mainController.appBarCenterText('انیمه');
                                       mainController.selectedBottomNav(
                                           BottomNavType.anime);
+                                      mainController.runBottomNavAnimation();
+                                      mainController.pageController.jumpToPage(4);
                                       break;
                                   }
                                 } else {

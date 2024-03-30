@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:bamabin/api/api_handler.dart';
+import 'package:bamabin/constant/colors.dart';
 import 'package:bamabin/controller/notification_controller.dart';
 import 'package:bamabin/controller/payment_controller.dart';
 import 'package:bamabin/models/profile_model.dart';
@@ -8,10 +9,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../constant/utils.dart';
 
 class AuthController extends GetxController {
+  var current_version = "1.0.0";
+
   TextEditingController txtUsername = TextEditingController();
   TextEditingController txtPasswrod = TextEditingController();
   TextEditingController txtPasswrod2 = TextEditingController();
@@ -24,7 +28,7 @@ class AuthController extends GetxController {
   RxBool isLoadingLogin = false.obs;
   RxBool isChangingPassword = false.obs;
   var profile = ProfileModel().obs;
-  
+
   var migrationLoading = false.obs;
 
   PaymentController paymentController = Get.find();
@@ -33,6 +37,76 @@ class AuthController extends GetxController {
 
   GetStorage box = GetStorage('bamabin');
   var isLogin = false.obs;
+
+  void updateDialog(var android_link,var ios_link) {
+    showDialog(
+      context: Get.context!,
+      builder: (context) {
+        return Dialog(
+          child: SingleChildScrollView(
+            child: Container(
+              padding: EdgeInsets.all(15),
+              width: Get.width / 1.5,
+              height: Get.height / 4,
+              decoration: BoxDecoration(color: cPrimary),
+              child: Column(
+                children: [
+                  Text(
+                    "نسخه جدید منتشر شد",
+                    style: TextStyle(
+                        color: cAccent,
+                        fontWeight: FontWeight.w700,
+                        fontSize: 20),
+                  ),
+                  SizedBox(height: 20,),
+                  Text("برای استفاده لطفا نسخه جدید اپلیکیشن را دانلود و نصب کنید",
+                    style: TextStyle(color: Colors.white),
+                    textAlign: TextAlign.center,
+                    textDirection: TextDirection.rtl,
+                  ),
+                  SizedBox(height: 20,),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      ElevatedButton(onPressed: (){
+                        launchTheUrl(url: ios_link);
+                      }, child: Row(children: [
+                        Icon(Icons.apple),
+                        Text("IOS")
+
+                      ],)),
+                      ElevatedButton(onPressed: (){
+                        launchTheUrl(url: android_link);
+                      }, child: Row(children: [
+                        Icon(Icons.android),
+                        Text("اندروید")
+
+                      ],))
+                    ],)
+                ],
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  void checkVersion() {
+    ApiProvider().checkVersion().then((value) {
+      if (value.isOk) {
+        if (value.body["status"] == true) {
+          if (value.body["result"]["latest_version"] == current_version) {
+            checkLogin();
+          } else {
+            updateDialog(value.body["result"]["android_app_download_link"],
+                value.body["result"]["ios_app_download_link"]
+            );
+          }
+        }
+      }
+    });
+  }
 
   void changePassword({
     required String current_password,
@@ -82,7 +156,6 @@ class AuthController extends GetxController {
             getProfile();
             paymentController.checkVip();
             getBotToken();
-
           }
         }
       });
@@ -259,24 +332,26 @@ class AuthController extends GetxController {
     });
   }
 
-  void getBotToken(){
-    ApiProvider().getBotToken().then((value){
-      if(value.isOk){
-        if(value.body["status"] == true){
+  void getBotToken() {
+    ApiProvider().getBotToken().then((value) {
+      if (value.isOk) {
+        if (value.body["status"] == true) {
           botToken(value.body["result"]["telegram_bot_token"]);
         }
       }
     });
   }
-  
-  void migrateBotToApp({required String? telegram_bot_site_token}){
+
+  void migrateBotToApp({required String? telegram_bot_site_token}) {
     migrationLoading(true);
-    ApiProvider().migrateBotToApp(telegram_bot_site_token: telegram_bot_site_token).then((value){
-      if(value.isOk){
-        if(value.body["status"] == true){
+    ApiProvider()
+        .migrateBotToApp(telegram_bot_site_token: telegram_bot_site_token)
+        .then((value) {
+      if (value.isOk) {
+        if (value.body["status"] == true) {
           botTokenController.clear();
           showMessage(text: "اشتراک ربات با موفقیت منتقل شد", isSucces: true);
-        }else{
+        } else {
           showMessage(text: value.body["message"], isSucces: false);
         }
       }

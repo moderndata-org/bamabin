@@ -16,7 +16,7 @@ class SplashScreen extends StatelessWidget {
   AuthController authController = Get.find();
 
   void initFireBase() async {
-    authController.checkLogin();
+    authController.checkVersion();
   }
 
   @override

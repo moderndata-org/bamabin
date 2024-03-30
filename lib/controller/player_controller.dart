@@ -76,9 +76,7 @@ class PlayerController extends GetxController {
 
 
 
-    ScreenBrightness().current.then((value){
-      brightness(value);
-    });
+
 
 
   }
@@ -251,6 +249,9 @@ class PlayerController extends GetxController {
   }
 
   void StartVideo() {
+    ScreenBrightness().current.then((value){
+      brightness(value);
+    });
     // if(!video_controller.value.isInitialized){
     is_error(false);
     video_controller = VideoPlayerController.networkUrl(
