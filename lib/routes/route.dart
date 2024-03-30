@@ -7,6 +7,7 @@ import 'package:bamabin/screens/movie_details_screen.dart';
 import 'package:bamabin/screens/notifications_screen.dart';
 import 'package:bamabin/screens/authentication/signin_screen.dart';
 import 'package:bamabin/screens/part_screen.dart';
+import 'package:bamabin/screens/player/new_player.dart';
 import 'package:bamabin/screens/player/player_screen.dart';
 import 'package:bamabin/screens/profile_screen.dart';
 import 'package:bamabin/screens/recent_views_screen.dart';

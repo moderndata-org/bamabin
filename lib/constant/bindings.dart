@@ -11,6 +11,8 @@ import 'package:bamabin/controller/recent_controller.dart';
 import 'package:bamabin/controller/ticket_controller.dart';
 import 'package:get/get.dart';
 
+import '../controller/new_player_controller.dart';
+
 class MyBindings extends Bindings {
   @override
   void dependencies() {
@@ -34,6 +36,9 @@ class MyBindings extends Bindings {
     );
     Get.put(
       PlayerController(),
+    );
+    Get.put(
+      NewPlayerController(),
     );
     Get.put(
       MainController(),

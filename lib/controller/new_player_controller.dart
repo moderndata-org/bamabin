@@ -11,7 +11,6 @@ import 'package:ffmpeg_kit_flutter/ffmpeg_kit.dart';
 import 'package:ffmpeg_kit_flutter/return_code.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_vlc_player/flutter_vlc_player.dart';
 import 'package:get/get.dart';
 import 'package:popover/popover.dart';
 import 'package:screen_brightness/screen_brightness.dart';
@@ -21,7 +20,7 @@ import '../models/film_model.dart';
 import '../models/recent_model.dart';
 import 'recent_controller.dart';
 
-class PlayerController extends GetxController {
+class NewPlayerController extends GetxController {
   var name = "".obs;
   var max_progress = 0.obs;
   var current_progress = 0.obs;
@@ -40,7 +39,7 @@ class PlayerController extends GetxController {
   var show_volume = false.obs;
   var show_brightness = false.obs;
   Timer? timer;
-  late VlcPlayerController video_controller;
+  late VideoPlayerController video_controller;
   var _isBuffering = false.obs;
 
   Rx<DlboxItem> selectedDlBoxItem = DlboxItem().obs;
@@ -63,7 +62,7 @@ class PlayerController extends GetxController {
       if(video_controller.value.isInitialized){
         if(show_volume.isFalse)
           show_volume(true);
-       // video_controller.setVolume(p0);
+       video_controller.setVolume(p0);
       }
     });
 
@@ -255,68 +254,50 @@ class PlayerController extends GetxController {
     });
     // if(!video_controller.value.isInitialized){
     is_error(false);
-    print("Uppppppppp");
-    video_controller = VlcPlayerController.network(
-      selectedDlBoxItem.value.link!,
-      hwAcc: HwAcc.full,
-      autoPlay: true,
-    );
-    video_controller.initialize();
-    video_controller.addOnInitListener(() {
-      isInit(true);
-      print("Iniiiiiiiiit");
-    });
-    video_controller.addListener(() {
-      print("Heyyyyyyyy");
-    });
-    // video_controller.getDuration().then((value){
-    //   print("Duration is: ${value}");
-    // });
+    video_controller = VideoPlayerController.networkUrl(
+        Uri.parse(selectedDlBoxItem.value.link!),
+        videoPlayerOptions: VideoPlayerOptions(allowBackgroundPlayback: false))
+      ..initialize().then((value) {
+        video_controller.play();
+        isInit(true);
+        print("is_dubbed: ${is_dubbed}");
+        if (is_dubbed.isFalse) {
+          video_controller.setClosedCaptionFile(init_subtitle());
+          show_caption(true);
+        } else {
+          show_caption(false);
+        }
 
-    // video_controller = VideoPlayerController.networkUrl(
-    //     Uri.parse(selectedDlBoxItem.value.link!),
-    //     videoPlayerOptions: VideoPlayerOptions(allowBackgroundPlayback: false))
-    //   ..initialize().then((value) {
-    //     video_controller.play();
-    //     isInit(true);
-    //     print("is_dubbed: ${is_dubbed}");
-    //     if (is_dubbed.isFalse) {
-    //       video_controller.setClosedCaptionFile(init_subtitle());
-    //       show_caption(true);
-    //     } else {
-    //       show_caption(false);
-    //     }
-    //
-    //     max_progress(video_controller.value.duration.inMilliseconds);
-    //
-    //     video_controller.addListener(() {
-    //       playing_status(video_controller.value.isPlaying);
-    //       bool isBuffering = video_controller.value.isBuffering;
-    //       if (isBuffering != _isBuffering) {
-    //         // TODO Here
-    //         if (video_controller.value.buffered[0].end.inMilliseconds <
-    //             max_progress.value) {
-    //           current_buffer_progress(
-    //               video_controller.value.buffered[0].end.inMilliseconds);
-    //         }
-    //       }
-    //
-    //       if (video_controller.value.isPlaying != playing_status ||
-    //           isBuffering != _isBuffering) {
-    //         // playing_status(video_controller.value.isPlaying);
-    //         _isBuffering(isBuffering);
-    //       }
-    //
-    //       video_controller.position.then((value) {
-    //         if (value != null && value.inMilliseconds <= max_progress.toInt()) {
-    //           current_progress(value.inMilliseconds);
-    //         } else {
-    //           current_progress(0);
-    //         }
-    //       });
-    //     });
-    //   }).onError((error, stackTrace) {
-    //     is_error(true);
-    //   });
+        max_progress(video_controller.value.duration.inMilliseconds);
+
+        video_controller.addListener(() {
+          playing_status(video_controller.value.isPlaying);
+          bool isBuffering = video_controller.value.isBuffering;
+          if (isBuffering != _isBuffering) {
+            // TODO Here
+            if (video_controller.value.buffered[0].end.inMilliseconds <
+                max_progress.value) {
+              current_buffer_progress(
+                  video_controller.value.buffered[0].end.inMilliseconds);
+            }
+          }
+
+          if (video_controller.value.isPlaying != playing_status ||
+              isBuffering != _isBuffering) {
+            // playing_status(video_controller.value.isPlaying);
+            _isBuffering(isBuffering);
+          }
+
+          video_controller.position.then((value) {
+            if (value != null && value.inMilliseconds <= max_progress.toInt()) {
+              current_progress(value.inMilliseconds);
+            } else {
+              current_progress(0);
+            }
+          });
+        });
+      }).onError((error, stackTrace) {
+        is_error(true);
+      });
   }
 }

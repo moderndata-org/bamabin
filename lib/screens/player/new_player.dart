@@ -1,7 +1,6 @@
 import 'package:bamabin/constant/classes.dart';
 import 'package:bamabin/constant/colors.dart';
 import 'package:bamabin/controller/detail_controller.dart';
-import 'package:bamabin/controller/player_controller.dart';
 import 'package:bamabin/screens/dialogs/player_dialogs/player_season_dialog.dart';
 import 'package:bamabin/screens/dialogs/player_dialogs/player_subtitle_dialog.dart';
 import 'package:bamabin/widgets/MyCircularProgress.dart';
@@ -9,19 +8,20 @@ import 'package:bamabin/widgets/MyText.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_vlc_player/flutter_vlc_player.dart';
 import 'package:get/get.dart';
 import 'package:video_player/video_player.dart';
 
-class PlayerScreen extends StatefulWidget {
-  const PlayerScreen({Key? key}) : super(key: key);
+import '../../controller/new_player_controller.dart';
+
+class NewPlayerScreen extends StatefulWidget {
+  const NewPlayerScreen({Key? key}) : super(key: key);
 
   @override
-  State<PlayerScreen> createState() => _PlayerScreenState();
+  State<NewPlayerScreen> createState() => _NewPlayerScreenState();
 }
 
-class _PlayerScreenState extends State<PlayerScreen> {
-  PlayerController controller = Get.find();
+class _NewPlayerScreenState extends State<NewPlayerScreen> {
+  NewPlayerController controller = Get.find();
   DetailController detailController = Get.find<DetailController>();
 
   @override
@@ -36,7 +36,9 @@ class _PlayerScreenState extends State<PlayerScreen> {
         DeviceOrientation.landscapeRight,
       ]);
       controller.StartVideo();
-
+      controller.video_controller.addListener(() {
+        setState(() {});
+      });
     }
   }
 
@@ -114,55 +116,51 @@ class _PlayerScreenState extends State<PlayerScreen> {
               controller.show_brightness(false);
             },
             child: Obx(
-              () {
+                  () {
                 print("State updated");
                 print(
                     "Playing status is:${controller.current_buffer_progress.value.toDouble()}");
                 return Stack(
                   children: [
                     Obx(() => Container(
-                          width: Get.width,
-                          height: Get.height,
-                          child: controller.isInit.value
-                              ? AspectRatio(
-                                  aspectRatio: controller
-                                      .video_controller.value.aspectRatio,
-                                  child:
-                                  VlcPlayer(
-                                    controller: controller.video_controller,
-                                    aspectRatio: 16 / 9,
-                                    placeholder: Center(child: MyCircularProgress(
-                                        color: cSecondaryLight)),
-                                  ),
-                                )
-                              : Container(
-                                  child: Center(
-                                    child: (controller.is_error.isTrue)
-                                        ? Text(
-                                            "خطایی در بارگزاری ویدئو رخ داده است",
-                                            style: TextStyle(color: cR),
-                                          )
-                                        : Container(),
-                                  ),
-                                ),
-                        )),
+                      width: Get.width,
+                      height: Get.height,
+                      child: controller.isInit.value
+                          ? AspectRatio(
+                        aspectRatio: controller
+                            .video_controller.value.aspectRatio,
+                        child:
+                        VideoPlayer(controller.video_controller),
+                      )
+                          : Container(
+                        child: Center(
+                          child: (controller.is_error.isTrue)
+                              ? Text(
+                            "خطایی در بارگزاری ویدئو رخ داده است",
+                            style: TextStyle(color: cR),
+                          )
+                              : MyCircularProgress(
+                              color: cSecondaryLight),
+                        ),
+                      ),
+                    )),
                     Container(
                       margin: EdgeInsets.only(right: 20),
                       alignment: Alignment.centerRight,
                       child: Obx(
-                        () => (controller.show_volume.isTrue) ? RotatedBox(
+                            () => (controller.show_volume.isTrue) ? RotatedBox(
                           quarterTurns: -1,
                           child: SizedBox(
                             height: 20,
                             width: Get.width / 4,
                             child: Slider(
-                            min: 0.0,
-                            max: 1.0,
-                            allowedInteraction: SliderInteraction.tapOnly,
-                            activeColor: cAccent,
-                            value: controller.volume.value,
-                            onChanged: (value) {},
-                          ),),
+                              min: 0.0,
+                              max: 1.0,
+                              allowedInteraction: SliderInteraction.tapOnly,
+                              activeColor: cAccent,
+                              value: controller.volume.value,
+                              onChanged: (value) {},
+                            ),),
                         ) : Container(),
                       ),
                     ),
@@ -189,27 +187,27 @@ class _PlayerScreenState extends State<PlayerScreen> {
                     Container(
                       child: Obx(() => (controller.show_caption.isTrue)
                           ? Container(
-                              padding: EdgeInsets.all(5),
-                              margin: EdgeInsets.only(bottom: 15),
-                              alignment: Alignment.bottomCenter,
-                              child: Text(
-                                "controller.video_controller.value.caption.text",
-                                textDirection: TextDirection.rtl,
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  color: (controller
-                                              .subtitle_style["text_color"]
-                                          as Color)
-                                      .withAlpha(controller
-                                              .subtitle_style["text_opacity"]
-                                          as int),
-                                  backgroundColor: (controller
-                                          .subtitle_style["bg_color"] as Color)
-                                      .withAlpha(controller
-                                          .subtitle_style["bg_opacity"] as int),
-                                ),
-                              ),
-                            )
+                        padding: EdgeInsets.all(5),
+                        margin: EdgeInsets.only(bottom: 15),
+                        alignment: Alignment.bottomCenter,
+                        child: Text(
+                          controller.video_controller.value.caption.text,
+                          textDirection: TextDirection.rtl,
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: (controller
+                                .subtitle_style["text_color"]
+                            as Color)
+                                .withAlpha(controller
+                                .subtitle_style["text_opacity"]
+                            as int),
+                            backgroundColor: (controller
+                                .subtitle_style["bg_color"] as Color)
+                                .withAlpha(controller
+                                .subtitle_style["bg_opacity"] as int),
+                          ),
+                        ),
+                      )
                           : Container()),
                     ),
                     Obx(() {
@@ -223,8 +221,8 @@ class _PlayerScreenState extends State<PlayerScreen> {
                             padding: EdgeInsets.all(15),
                             margin: EdgeInsets.only(bottom: 15),
                             alignment: Alignment.bottomLeft,
-                              child: Icon(Icons.lock_open,color: Colors.white,),
-                            ),
+                            child: Icon(Icons.lock_open,color: Colors.white,),
+                          ),
                         );
                       }
 
@@ -452,24 +450,24 @@ class _PlayerScreenState extends State<PlayerScreen> {
                                             ),
                                             IconButton(
                                                 onPressed: () {
-                                                  // controller
-                                                  //     .video_controller
-                                                  //     .position
-                                                  //     .then((value) {
-                                                  //   var d = value ??
-                                                  //       Duration(
-                                                  //           seconds:
-                                                  //           10) -
-                                                  //           Duration(
-                                                  //               minutes:
-                                                  //               1);
-                                                  //   controller
-                                                  //       .current_progress(
-                                                  //       d.inSeconds);
-                                                  //   controller
-                                                  //       .video_controller
-                                                  //       .seekTo(d);
-                                                  // });
+                                                  controller
+                                                      .video_controller
+                                                      .position
+                                                      .then((value) {
+                                                    var d = value ??
+                                                        Duration(
+                                                            seconds:
+                                                            10) -
+                                                            Duration(
+                                                                minutes:
+                                                                1);
+                                                    controller
+                                                        .current_progress(
+                                                        d.inSeconds);
+                                                    controller
+                                                        .video_controller
+                                                        .seekTo(d);
+                                                  });
                                                 },
                                                 icon: Icon(
                                                     Icons
