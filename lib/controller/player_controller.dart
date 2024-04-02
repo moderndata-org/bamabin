@@ -3,6 +3,7 @@ import 'dart:convert';
 
 import 'package:bamabin/api/api_handler.dart';
 import 'package:bamabin/constant/classes.dart';
+import 'package:bamabin/constant/colors.dart';
 import 'package:bamabin/controller/auth_controller.dart';
 import 'package:bamabin/controller/detail_controller.dart';
 import 'package:bamabin/models/dlbox_item_model.dart';
@@ -46,9 +47,9 @@ class PlayerController extends GetxController {
   Rx<DlboxItem> selectedDlBoxItem = DlboxItem().obs;
   DetailController detailController = Get.find();
   var subtitle_style = {
-    "bg_color": Colors.black,
+    "bg_color": VlcSubtitleColor.black,
     "text_opacity": 255,
-    "text_color": Colors.white,
+    "text_color": VlcSubtitleColor.white,
     "bg_opacity": 255
   }.obs;
 
@@ -56,86 +57,111 @@ class PlayerController extends GetxController {
   RxBool isInit = false.obs;
   var captions = <Caption>[];
 
-  //! new
+  Future<void> getSubtitleTracks() async {
 
-  PlayerController() {
-    volume.listen((p0) {
-      if(video_controller.value.isInitialized){
-        if(show_volume.isFalse)
-          show_volume(true);
-       // video_controller.setVolume(p0);
-      }
-    });
-
-    brightness.listen((p0) {
-      if(video_controller.value.isInitialized){
-        if(show_brightness.isFalse)
-          show_brightness(true);
-       ScreenBrightness().setScreenBrightness(p0);
-      }
-    });
-
-
-
-
-
-
-  }
-
-  void lockUnlock(){
-    is_lock(!is_lock.value);
-  }
-  void showQualityBox(){
-    showPopover(context: Get.context!, bodyBuilder: (context) {
-      return Padding(
-        padding: const EdgeInsets.symmetric(vertical: 8),
-        child: ListView(
-          padding: const EdgeInsets.all(8),
-          children: [
-            InkWell(
-              child: Container(
-                height: 50,
-                color: Colors.amber[100],
-                child: const Center(child: Text('Entry A')),
+    final subtitleTracks = await video_controller.getSpuTracks();
+    //
+    if (subtitleTracks.isNotEmpty) {
+      final selectedSubId = await showDialog<int>(
+        context: Get.context!,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            backgroundColor: cPrimary,
+            title: const Text('زیر نویس را انتخاب کنید',style: TextStyle(color: Colors.white),textDirection: TextDirection.rtl,textAlign: TextAlign.right,),
+            content: SizedBox(
+              width: double.maxFinite,
+              height: 250,
+              child: ListView.builder(
+                itemCount: subtitleTracks.keys.length + 1,
+                itemBuilder: (context, index) {
+                  return ListTile(
+                    title: Text(
+                      index < subtitleTracks.keys.length
+                          ? subtitleTracks.values.elementAt(index)
+                          : 'غیرفعال',
+                      textAlign: TextAlign.right,
+                      textDirection: TextDirection.rtl,
+                      style: TextStyle(color: Colors.white),
+                    ),
+                    onTap: () {
+                      Navigator.pop(
+                        context,
+                        index < subtitleTracks.keys.length
+                            ? subtitleTracks.keys.elementAt(index)
+                            : -1,
+                      );
+                    },
+                  );
+                },
               ),
             ),
-            const Divider(),
-            Container(
-              height: 50,
-              color: Colors.amber[200],
-              child: const Center(child: Text('Entry B')),
-            ),
-            const Divider(),
-            Container(
-              height: 50,
-              color: Colors.amber[300],
-              child: const Center(child: Text('Entry C')),
-            ),
-          ],
-        ),
+          );
+        },
       );
-    },
-      direction: PopoverDirection.bottom,
-      width: 200,
-      height: 400,
-      arrowHeight: 15,
-      arrowWidth: 30,
-    );
-    switch(selectedMovieType.value){
-      case MovieType.Subtitle:
 
-        detailController.selectedFilm.value.moviesDlbox!.subtitle!.forEach((element) {
-          print("Quality:${element.qualityCode} ${element.encoder}");
-        });
-        break;
-      default:
-        print("Unknown");
-        break;
+      if (selectedSubId != null) {
+        await video_controller.setSpuTrack(selectedSubId);
+      }
     }
   }
-  void showSeriesBox({List<SeriesModel>? serial}) {
-    //! Open Series Dialog that come from Serial Detail
-    print('open Dialog');
+
+  Future<void> getAudioTracks() async {
+
+    final audioTracks = await video_controller.getAudioTracks();
+    //
+    if (audioTracks.isNotEmpty) {
+      final selectedAudioTrackId = await showDialog<int>(
+        context: Get.context!,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            backgroundColor: cPrimary,
+            title: const Text('صدا را انتخاب کنید',style:  TextStyle(color: Colors.white),textDirection: TextDirection.rtl,textAlign: TextAlign.right,),
+            content: SizedBox(
+              width: double.maxFinite,
+              height: 250,
+              child: ListView.builder(
+                itemCount: audioTracks.keys.length + 1,
+                itemBuilder: (context, index) {
+                  return ListTile(
+                    title: Text(
+                      index < audioTracks.keys.length
+                          ? audioTracks.values.elementAt(index)
+                          : 'غیرفعال',
+                      textAlign: TextAlign.right,
+                      textDirection: TextDirection.rtl,
+                      style: TextStyle(color: Colors.white),
+                    ),
+                    onTap: () {
+                      Navigator.pop(
+                        context,
+                        index < audioTracks.keys.length
+                            ? audioTracks.keys.elementAt(index)
+                            : -1,
+                      );
+                    },
+                  );
+                },
+              ),
+            ),
+          );
+        },
+      );
+
+      if (selectedAudioTrackId != null) {
+        await video_controller.setAudioTrack(selectedAudioTrackId);
+
+      }
+    }
+  }
+
+  void fullScreen() {
+    if (fullscreen_status.isTrue) {
+      SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
+      fullscreen_status(false);
+    } else {
+      SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
+      fullscreen_status(true);
+    }
   }
 
   void playMovie() {
@@ -155,7 +181,7 @@ class PlayerController extends GetxController {
 
         if (detailController.selectedFilm.value.type == 'movies') {
           if (detailController.selectedFilm.value.moviesDlbox?.subtitle !=
-                  null ||
+              null ||
               detailController.selectedFilm.value.moviesDlbox?.subtitle != []) {
             selectedMovieType(MovieType.Subtitle);
             bool has720 = false;
@@ -183,7 +209,7 @@ class PlayerController extends GetxController {
               Get.toNamed('/player');
             }
           } else if (detailController.selectedFilm.value.moviesDlbox?.dubbed !=
-                  null ||
+              null ||
               detailController.selectedFilm.value.moviesDlbox?.dubbed != []) {
             selectedMovieType(MovieType.Dubbed);
             bool has720 = false;
@@ -212,8 +238,8 @@ class PlayerController extends GetxController {
             }
           }
         } else if (detailController.selectedFilm.value.type == 'series') {
-          showSeriesBox(
-              serial: detailController.selectedFilm.value.seriesDlbox);
+          // showSeriesBox(
+          //     serial: detailController.selectedFilm.value.seriesDlbox);
         }
       } else {
         Get.toNamed('/subscribe');
@@ -223,100 +249,75 @@ class PlayerController extends GetxController {
     }
   }
 
-  void fullScreen() {
-    if (fullscreen_status.isTrue) {
-      SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
-      fullscreen_status(false);
-    } else {
-      SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
-      fullscreen_status(true);
-    }
-  }
-
   void playPauseClicked() {
-    if (playing_status.isTrue) {
+    if (video_controller.value.playingState == PlayingState.playing) {
       video_controller.pause();
     } else {
       video_controller.play();
     }
   }
 
-  Future<ClosedCaptionFile>? init_subtitle() async {
+  PlayerController() {
 
-    var d = jsonDecode(detailController.selectedFilm.value.dlboxSubtitle!);
-    var value = await ApiProvider().getSubtitleContent(d["1"]["link"]);
-    var c = SubRipCaptionFile(value.body);
-    return c;
   }
 
-  void StartVideo() {
-    ScreenBrightness().current.then((value){
-      brightness(value);
-    });
-    // if(!video_controller.value.isInitialized){
-    is_error(false);
-    print("Uppppppppp");
-    video_controller = VlcPlayerController.network(
-      selectedDlBoxItem.value.link!,
-      hwAcc: HwAcc.full,
-      autoPlay: true,
-    );
-    video_controller.initialize();
-    video_controller.addOnInitListener(() {
+  void seekRelative(Duration seekStep) {
+    if(video_controller.value.isInitialized){
+      video_controller.seekTo(video_controller.value.position + seekStep);
+    }
+
+  }
+  VlcSubtitleOptions getOptions(){
+    print("Calllllllllllllll");
+    return VlcSubtitleOptions([
+      VlcSubtitleOptions.boldStyle(true),
+      VlcSubtitleOptions.color(subtitle_style["text_color"] as VlcSubtitleColor),
+      VlcSubtitleOptions.backgroundColor(subtitle_style["bg_color"] as VlcSubtitleColor),
+      VlcSubtitleOptions.backgroundOpacity((subtitle_style["bg_opacity"] as int)),
+      VlcSubtitleOptions.opacity((subtitle_style["text_opacity"] as int)),
+
+    ]);
+  }
+  void init(){
+    if(isInit.isFalse){
+
+      video_controller = VlcPlayerController.network(
+        selectedDlBoxItem.value.link!,
+        hwAcc: HwAcc.full,
+        autoPlay: true,
+        options: VlcPlayerOptions(
+          subtitle: getOptions(),
+        )
+
+
+      );
       isInit(true);
-      print("Iniiiiiiiiit");
-    });
-    video_controller.addListener(() {
-      print("Heyyyyyyyy");
-    });
-    // video_controller.getDuration().then((value){
-    //   print("Duration is: ${value}");
-    // });
 
-    // video_controller = VideoPlayerController.networkUrl(
-    //     Uri.parse(selectedDlBoxItem.value.link!),
-    //     videoPlayerOptions: VideoPlayerOptions(allowBackgroundPlayback: false))
-    //   ..initialize().then((value) {
-    //     video_controller.play();
-    //     isInit(true);
-    //     print("is_dubbed: ${is_dubbed}");
-    //     if (is_dubbed.isFalse) {
-    //       video_controller.setClosedCaptionFile(init_subtitle());
-    //       show_caption(true);
-    //     } else {
-    //       show_caption(false);
-    //     }
-    //
-    //     max_progress(video_controller.value.duration.inMilliseconds);
-    //
-    //     video_controller.addListener(() {
-    //       playing_status(video_controller.value.isPlaying);
-    //       bool isBuffering = video_controller.value.isBuffering;
-    //       if (isBuffering != _isBuffering) {
-    //         // TODO Here
-    //         if (video_controller.value.buffered[0].end.inMilliseconds <
-    //             max_progress.value) {
-    //           current_buffer_progress(
-    //               video_controller.value.buffered[0].end.inMilliseconds);
-    //         }
-    //       }
-    //
-    //       if (video_controller.value.isPlaying != playing_status ||
-    //           isBuffering != _isBuffering) {
-    //         // playing_status(video_controller.value.isPlaying);
-    //         _isBuffering(isBuffering);
-    //       }
-    //
-    //       video_controller.position.then((value) {
-    //         if (value != null && value.inMilliseconds <= max_progress.toInt()) {
-    //           current_progress(value.inMilliseconds);
-    //         } else {
-    //           current_progress(0);
-    //         }
-    //       });
-    //     });
-    //   }).onError((error, stackTrace) {
-    //     is_error(true);
-    //   });
+      video_controller.addListener(() {
+
+
+
+        switch(video_controller.value.playingState){
+          case PlayingState.initialized:
+            break;
+          case PlayingState.playing:
+            max_progress(video_controller.value.duration.inSeconds);
+            playing_status(true);
+            current_progress(video_controller.value.position.inSeconds);
+            break;
+          default:
+            playing_status(false);
+            break;
+        }
+      });
+
+
+      video_controller.addListener(() {
+
+      });
+    }
+
   }
+
+
 }

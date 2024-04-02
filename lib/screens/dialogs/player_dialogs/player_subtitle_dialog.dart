@@ -2,6 +2,7 @@ import 'package:accordion/accordion.dart';
 import 'package:bamabin/constant/colors.dart';
 import 'package:bamabin/controller/player_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_vlc_player/flutter_vlc_player.dart';
 import 'package:get/get.dart';
 
 import '../../../widgets/MyText.dart';
@@ -109,7 +110,7 @@ class PlayerSubtitleDialog extends GetView<PlayerController> {
                                             text: 'سفید',
                                           ),
                                           onTap: (){
-                                            controller.subtitle_style["text_color"] = Colors.white;
+                                            controller.subtitle_style["text_color"] = VlcSubtitleColor.white;
                                           },
                                         ),
                                         SizedBox(
@@ -121,7 +122,7 @@ class PlayerSubtitleDialog extends GetView<PlayerController> {
                                             text: 'زرد',
                                           ),
                                           onTap: (){
-                                            controller.subtitle_style["text_color"] = Colors.yellow;
+                                            controller.subtitle_style["text_color"] =  VlcSubtitleColor.yellow;
                                           },
                                         ),
                                         SizedBox(
@@ -133,7 +134,7 @@ class PlayerSubtitleDialog extends GetView<PlayerController> {
                                             text: 'قرمز',
                                           ),
                                           onTap: (){
-                                            controller.subtitle_style["text_color"] = Colors.red;
+                                            controller.subtitle_style["text_color"] =  VlcSubtitleColor.red;
                                           },
                                         ),
                                       ],
@@ -216,7 +217,8 @@ class PlayerSubtitleDialog extends GetView<PlayerController> {
                                           text: 'سفید',
                                         ),
                                         onTap: (){
-                                            controller.subtitle_style["bg_color"] = Colors.white;
+                                            controller.subtitle_style["bg_color"] =  VlcSubtitleColor.white;
+                                            print("Callll");
                                         },
                                         ),
                                         SizedBox(
@@ -228,7 +230,7 @@ class PlayerSubtitleDialog extends GetView<PlayerController> {
                                             text: 'زرد',
                                           ),
                                           onTap: (){
-                                            controller.subtitle_style["bg_color"] = Colors.yellow;
+                                            controller.subtitle_style["bg_color"] =  VlcSubtitleColor.yellow;
                                           },
                                         ),
                                         SizedBox(
@@ -240,7 +242,7 @@ class PlayerSubtitleDialog extends GetView<PlayerController> {
                                             text: 'قرمز',
                                           ),
                                           onTap: (){
-                                            controller.subtitle_style["bg_color"] = Colors.red;
+                                            controller.subtitle_style["bg_color"] =  VlcSubtitleColor.red;
                                           },
                                         ),
                                       ],

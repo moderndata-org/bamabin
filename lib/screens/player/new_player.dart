@@ -8,6 +8,7 @@ import 'package:bamabin/widgets/MyText.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_vlc_player/flutter_vlc_player.dart';
 import 'package:get/get.dart';
 import 'package:video_player/video_player.dart';
 
@@ -24,10 +25,17 @@ class _NewPlayerScreenState extends State<NewPlayerScreen> {
   NewPlayerController controller = Get.find();
   DetailController detailController = Get.find<DetailController>();
 
+
+
+
   @override
   void initState() {
     super.initState();
-    controller.isInit(false);
+
+
+
+
+    // controller.isInit(false);
     if (mounted) {
       SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
           overlays: [SystemUiOverlay.bottom]);
@@ -35,10 +43,8 @@ class _NewPlayerScreenState extends State<NewPlayerScreen> {
         DeviceOrientation.landscapeLeft,
         DeviceOrientation.landscapeRight,
       ]);
-      controller.StartVideo();
-      controller.video_controller.addListener(() {
-        setState(() {});
-      });
+      controller.init();
+
     }
   }
 
@@ -54,6 +60,7 @@ class _NewPlayerScreenState extends State<NewPlayerScreen> {
 
     return formattedTime;
   }
+  Future<void> initializePlayer() async {}
 
   @override
   void dispose() {
@@ -68,6 +75,7 @@ class _NewPlayerScreenState extends State<NewPlayerScreen> {
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       backgroundColor: Colors.black,
       body: MediaQuery.removePadding(
@@ -130,7 +138,11 @@ class _NewPlayerScreenState extends State<NewPlayerScreen> {
                         aspectRatio: controller
                             .video_controller.value.aspectRatio,
                         child:
-                        VideoPlayer(controller.video_controller),
+                        VlcPlayer(
+                          controller: controller.video_controller,
+                          aspectRatio: 1 / 1,
+                          placeholder: Center(child: CircularProgressIndicator(color: Colors.black,)),
+                        ),
                       )
                           : Container(
                         child: Center(
@@ -139,8 +151,7 @@ class _NewPlayerScreenState extends State<NewPlayerScreen> {
                             "خطایی در بارگزاری ویدئو رخ داده است",
                             style: TextStyle(color: cR),
                           )
-                              : MyCircularProgress(
-                              color: cSecondaryLight),
+                              : Container(),
                         ),
                       ),
                     )),
@@ -191,7 +202,7 @@ class _NewPlayerScreenState extends State<NewPlayerScreen> {
                         margin: EdgeInsets.only(bottom: 15),
                         alignment: Alignment.bottomCenter,
                         child: Text(
-                          controller.video_controller.value.caption.text,
+                          "controller.video_controller.value.caption.text",
                           textDirection: TextDirection.rtl,
                           textAlign: TextAlign.center,
                           style: TextStyle(
@@ -214,7 +225,7 @@ class _NewPlayerScreenState extends State<NewPlayerScreen> {
                       if(controller.is_lock.isTrue){
                         return GestureDetector(
                           onTap: (){
-                            controller.lockUnlock();
+                            // controller.lockUnlock();
                             controller.hide_bars(false);
                           },
                           child: Container(
@@ -375,8 +386,8 @@ class _NewPlayerScreenState extends State<NewPlayerScreen> {
                                             children: [
                                               IconButton(
                                                   onPressed: () {
-                                                    controller
-                                                        .fullScreen();
+                                                    // controller
+                                                    //     .fullScreen();
                                                   },
                                                   icon: Icon(
                                                     Icons.fullscreen,
@@ -385,7 +396,7 @@ class _NewPlayerScreenState extends State<NewPlayerScreen> {
                                                   )),
                                               IconButton(
                                                   onPressed: () {
-                                                    controller.lockUnlock();
+                                                    // controller.lockUnlock();
                                                   },
                                                   icon: Icon(
                                                     Icons.lock,
@@ -450,24 +461,7 @@ class _NewPlayerScreenState extends State<NewPlayerScreen> {
                                             ),
                                             IconButton(
                                                 onPressed: () {
-                                                  controller
-                                                      .video_controller
-                                                      .position
-                                                      .then((value) {
-                                                    var d = value ??
-                                                        Duration(
-                                                            seconds:
-                                                            10) -
-                                                            Duration(
-                                                                minutes:
-                                                                1);
-                                                    controller
-                                                        .current_progress(
-                                                        d.inSeconds);
-                                                    controller
-                                                        .video_controller
-                                                        .seekTo(d);
-                                                  });
+                                                  controller.seekRelative(Duration(seconds: -10));
                                                 },
                                                 icon: Icon(
                                                     Icons
@@ -504,11 +498,14 @@ class _NewPlayerScreenState extends State<NewPlayerScreen> {
                                             SizedBox(
                                               width: 20,
                                             ),
-                                            Icon(
+                                            IconButton(onPressed: (){
+                                              controller.seekRelative(Duration(seconds: 10));
+
+                                            }, icon: Icon(
                                                 Icons
                                                     .forward_10_rounded,
                                                 color: Colors.white,
-                                                size: 30),
+                                                size: 30)),
                                             Visibility(
                                               visible: controller
                                                   .selectedDlBoxItem
@@ -552,16 +549,20 @@ class _NewPlayerScreenState extends State<NewPlayerScreen> {
                                                       .isFalse,
                                                   child: IconButton(
                                                     onPressed: () {
-                                                      if (controller
-                                                          .show_caption
-                                                          .isTrue)
-                                                        controller
-                                                            .show_caption(
-                                                            false);
-                                                      else
-                                                        controller
-                                                            .show_caption(
-                                                            true);
+                                                      controller.video_controller.getSpuTracks().then((value){
+                                                        print(value);
+                                                      });
+
+                                                      // if (controller
+                                                      //     .show_caption
+                                                      //     .isTrue)
+                                                      //   controller
+                                                      //       .show_caption(
+                                                      //       false);
+                                                      // else
+                                                      //   controller
+                                                      //       .show_caption(
+                                                      //       true);
                                                     },
                                                     icon: Icon(
                                                       (controller
@@ -578,8 +579,8 @@ class _NewPlayerScreenState extends State<NewPlayerScreen> {
                                                   )),
                                               IconButton(
                                                 onPressed: () {
-                                                  controller
-                                                      .showQualityBox();
+                                                  // controller
+                                                  //     .showQualityBox();
                                                 },
                                                 icon: SizedBox(
                                                   width: 30,
@@ -634,11 +635,12 @@ class _NewPlayerScreenState extends State<NewPlayerScreen> {
                         ),
                       );
                     },)
+
                   ],
                 );
               },
             )),
-      ),
+      )
     );
   }
 }

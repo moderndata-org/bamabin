@@ -207,7 +207,8 @@ class MainController extends GetxController {
           .getMainSections(isLogin: _authController!.isLogin.value)
           .then((value) {
         sectionsList.clear();
-        if (value.body != null) {
+        print(value.body);
+        if (value.isOk) {
           if (value.body["status"] == true) {
             (value.body["result"] as List).forEach((element) {
               sectionsList.add(SectionModel.fromJson(element));
