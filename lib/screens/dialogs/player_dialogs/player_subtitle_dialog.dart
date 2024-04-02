@@ -218,7 +218,11 @@ class PlayerSubtitleDialog extends GetView<PlayerController> {
                                         ),
                                         onTap: (){
                                             controller.subtitle_style["bg_color"] =  VlcSubtitleColor.white;
-                                            print("Callll");
+                                            controller.video_controller.stopRendererScanning();
+                                            controller.video_controller.dispose().then((value){
+                                              controller.isInit(false);
+                                              controller.init();
+                                            });
                                         },
                                         ),
                                         SizedBox(
