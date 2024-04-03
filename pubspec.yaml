@@ -61,9 +61,7 @@ dependencies:
   path_provider: ^2.1.2
   permission_handler: ^11.3.0
   share_plus: ^7.2.2
-  ffmpeg_kit_flutter: ^6.0.3
   android_intent_plus: ^5.0.1
-  popover: ^0.3.0
   screen_brightness: ^1.0.0
   flutter_vlc_player: ^7.4.1
 
