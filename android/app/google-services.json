@@ -12,7 +12,12 @@
           "package_name": "com.example.bamabin"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "415579686885-3avde2pblagra65v92p8vg8rbgf7gumu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyBx2a9kH-Uj-f8bda0kuMrSkp0Udpf1T3M"
@@ -20,7 +25,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "415579686885-3avde2pblagra65v92p8vg8rbgf7gumu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }

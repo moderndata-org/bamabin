@@ -5,6 +5,7 @@ import 'package:bamabin/controller/auth_controller.dart';
 import 'package:bamabin/controller/detail_controller.dart';
 import 'package:bamabin/widgets/MyCircularProgress.dart';
 import 'package:bamabin/widgets/MyText.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/material.dart';
@@ -17,6 +18,7 @@ class SplashScreen extends StatelessWidget {
 
   void initFireBase() async {
     authController.checkVersion();
+    await FirebaseAnalytics.instance.logEvent(name: "splash");
   }
 
   @override
@@ -45,16 +47,14 @@ class SplashScreen extends StatelessWidget {
                   dimension: Get.width * .5,
                   child: Image.asset('assets/images/ic_logo.png'),
                 ),
-                MyText(
-                  text: 'Bamabin',
-                  size: 20,
-                ),
+
                 SizedBox(
                   height: 10,
                 ),
                 MyText(
                   text: 'هزاران فیلم و سریال رو با بامابین ببین!',
                   size: 18,
+                  fontWeight: FontWeight.bold,
                 )
               ],
             ),
