@@ -36,13 +36,14 @@ class PlayerController extends GetxController {
   var show_caption = false.obs;
   var selectedMovieType = MovieType.None.obs;
 
-  var volume = 0.5.obs;
+  var volume = 50.obs;
   var brightness = 0.5.obs;
   var show_volume = false.obs;
   var show_brightness = false.obs;
   Timer? timer;
   late VlcPlayerController video_controller;
   var _isBuffering = false.obs;
+
 
   Rx<DlboxItem> selectedDlBoxItem = DlboxItem().obs;
   DetailController detailController = Get.find();
@@ -249,6 +250,9 @@ class PlayerController extends GetxController {
     }
   }
 
+  void lockUnlock(){
+    is_lock(!is_lock.value);
+  }
   void playPauseClicked() {
     if (video_controller.value.playingState == PlayingState.playing) {
       video_controller.pause();
@@ -258,6 +262,20 @@ class PlayerController extends GetxController {
   }
 
   PlayerController() {
+
+    volume.listen((p0) {
+      if(video_controller.value.isInitialized){
+        show_volume(true);
+        video_controller.setVolume(p0.toInt());
+      }
+    });
+
+    brightness.listen((p0) {
+      if(video_controller.value.isInitialized){
+        show_brightness(true);
+        ScreenBrightness().setScreenBrightness(brightness.toDouble());
+      }
+    });
 
   }
 
