@@ -61,6 +61,7 @@ class _PlayerScreenState extends State<PlayerScreen> {
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
         overlays: [SystemUiOverlay.top]);
     controller.video_controller.dispose();
+    controller.current_progress(0);
     super.dispose();
   }
 
@@ -365,7 +366,7 @@ class _PlayerScreenState extends State<PlayerScreen> {
                                                       )),
                                                   IconButton(
                                                       onPressed: () {
-                                                        // controller.lockUnlock();
+                                                        controller.lockUnlock();
                                                       },
                                                       icon: Icon(
                                                         Icons.lock,

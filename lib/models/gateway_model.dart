@@ -1,5 +1,5 @@
 class GatewayModel{
-  int? id;
+  var id;
   String? name;
   String? icon;
 

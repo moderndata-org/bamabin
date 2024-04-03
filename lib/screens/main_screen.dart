@@ -22,14 +22,14 @@ class MainScreen extends GetView<PublicController> {
       endDrawer: CustomDrawerMenu(),
       bottomNavigationBar: CustomBottomNavigation(),
       backgroundColor: cPrimary,
-      body: SizedBox(
+      body: Container(
         width: mainController.width.value,
         height: mainController.height.value,
         child: Stack(
           children: [
             SizedBox(
-              width: Get.width,
-              height: Get.height,
+              width: mainController.width.value,
+              height: mainController.height.value,
               child: PageView(
                 reverse: true,
                 controller: mainController.pageController,
