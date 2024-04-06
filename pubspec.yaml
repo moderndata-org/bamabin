@@ -64,6 +64,8 @@ dependencies:
   android_intent_plus: ^5.0.1
   screen_brightness: ^1.0.0
   flutter_vlc_player: ^7.4.1
+  sentry_flutter: ^7.18.0
+
 
 dev_dependencies:
   flutter_test:

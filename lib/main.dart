@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 import '../constant/ScrollBehavior.dart';
 import '../constant/colors.dart';
 import '../constant/bindings.dart';
@@ -28,10 +29,22 @@ void main() async {
   await Hive.initFlutter();
   Hive.registerAdapter(RecentModelAdapter());
   await Hive.openBox<RecentModel>('recents');
-  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
-      .then((_) {
-    runApp(const Main());
-  });
+  await SentryFlutter.init(
+        (options) {
+      options.dsn = 'https://1ced29258580ebe06548afc530735561@o331112.ingest.us.sentry.io/4507039393513472';
+      // Set tracesSampleRate to 1.0 to capture 100% of transactions for performance monitoring.
+      // We recommend adjusting this value in production.
+      options.tracesSampleRate = 1.0;
+      // The sampling rate for profiling is relative to tracesSampleRate
+      // Setting to 1.0 will profile 100% of sampled transactions:
+      options.profilesSampleRate = 1.0;
+    },
+    appRunner: () => SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
+        .then((_) {
+      runApp(const Main());
+    }),
+  );
+
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
       systemNavigationBarColor: cPrimaryDark, // navigation bar color
       statusBarColor: cPrimaryDark,
